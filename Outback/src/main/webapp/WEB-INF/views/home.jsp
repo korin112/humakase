@@ -11,6 +11,6 @@
 	Hello world!  안뇽
 </h1>
 
-<P>  The time on the server asdasdis ${serverTime}. </P>
+
 </body>
 </html>
