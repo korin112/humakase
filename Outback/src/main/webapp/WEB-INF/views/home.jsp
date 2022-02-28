@@ -8,9 +8,11 @@
 </head>
 <body>
 <h1>
-	Hello world!  안뇽gdgdgdfssdsd
+
+	Hello world!  안뇽 
+
 </h1>
 
-<P>  The time on the server asdasdis ${serverTime}. </P>
+
 </body>
 </html>

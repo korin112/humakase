@@ -3,9 +3,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -24,16 +28,16 @@
 	
 	<context:component-scan base-package="com.human.outback" />
 	<beans:bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-   <beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-   <beans:property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl" />
-   <beans:property name="username" value="ora_user" />
-   <beans:property name="password" value="human123" />
+   <beans:property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
+   <beans:property name="url" value="jdbc:mysql://3.37.121.152:3306/teamproject?useSSL=false&amp;serverTimezone=UTC" />
+   <beans:property name="username" value="newuser" />
+   <beans:property name="password" value="1Q2w3E4r!!@@" />
    </beans:bean>
   <beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<beans:property name="dataSource" ref="dataSource"></beans:property>
 		<beans:property name="mapperLocations" value="classpath:com/human/outback/mapper/*.xml"></beans:property>
 	</beans:bean>
-	<beans:bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+	<beans:bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
 		<beans:constructor-arg index="0" ref="sqlSessionFactory"></beans:constructor-arg>
 	</beans:bean>
 	
