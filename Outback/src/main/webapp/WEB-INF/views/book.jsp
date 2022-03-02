@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<link rel="stylesheet" href="${path}/resources/css/style.css">
 <style>
     *{margin:0; padding:0;}
     ul, li{list-style:none;}
@@ -16,8 +18,8 @@
     .book-list li:first-child{width:150px;}
     .book-list li{width:450px;}
     article{display:inline-block;text-align:center;}
-    .book-list{margin-top:100px; font-size:1rem; vertical-align:top;}
-.book-list article {width:595px; box-sizing:border-box;border:1px solid #ddd; padding:40px; display:inline-block; vertical-align:top; height:550px;}
+    .book-list{font-size:1rem; vertical-align:top;}
+.book-list article {width:595px; box-sizing:border-box;border:1px solid #ddd; padding:40px; display:inline-block; vertical-align:top; height:650px;}
 .book-list article:first-child{margin-right:6px;}
 .book-list input{font-size:1rem; border:none; text-align:right;}
 .book-list input[type=button]{margin:10px 0; cursor:pointer; width:100%; text-align:center; padding:10px 0;}
@@ -42,7 +44,8 @@
 </style>
 </head>
 <body>
-
+	<%@include file ="header.jsp" %>
+	<div class="container O_container">
 		<section class="book-list">
 			<article>
 				<ul class="fixed">
@@ -143,7 +146,8 @@
 				</form>
 			</article> -->
 		</section>
-
+	</div>
+	<%@include file ="footer.jsp" %>
 	<script>
 		// 체크인에 오늘 날짜 입력
 		let in_date= document.getElementById('in_date');
