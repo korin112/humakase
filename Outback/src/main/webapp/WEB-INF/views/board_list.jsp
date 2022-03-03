@@ -9,23 +9,26 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<input type=hidden id=board_id name=board_id>
 	<table>
 		<thead>
 			<tr>
 				<th>번호</th>
+				<th>지점</th>
+				<th>메뉴</th>
 				<th>제목</th>
 				<th>작성자</th>
 				<th>작성일</th>
-				<!-- <th>수정일</th> -->
 			</tr>
 		</thead>
 		<%-- <c:forEach> --%>
 			<tr>
-				<td><c:out value=""/></td>
-				<td><c:out value=""/></td>
-	            <td><c:out value=""/></td>
-	            <td><fmt:formatDate pattern="yyyy/MM/dd" value=""/></td>
-	            <td><fmt:formatDate pattern="yyyy/MM/dd" value=""/></td>
+				<td><c:out value=""/></td> <%-- 번호 --%>
+				<td><c:out value=""/></td> <%-- 지점 --%>
+	            <td><c:out value=""/></td> <%-- 메뉴 --%>
+	            <td><c:out value=""/></td> <%-- 제목 --%>
+	            <td><c:out value=""/></td> <%-- 작성자 --%>
+	            <td><fmt:formatDate pattern="yy/MM/dd" value=""/></td>
 	        </tr>
 		<%-- </c:forEach> --%>
 	</table>
