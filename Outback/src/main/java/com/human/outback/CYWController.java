@@ -17,14 +17,38 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Handles requests for the application home page.
  */
 @Controller
-public class HomeController {
+public class CYWController {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String home(Model model) {
 	      
 		return "home";
+	}
+	
+	@RequestMapping("steak")
+	public String Steak() {
+		
+		return "steak";
+	}
+	
+	@RequestMapping("pasta")
+	public String Pasta() {
+		
+		return "pasta";
+	}
+
+	@RequestMapping("sidemenu")
+	public String Sidemenu() {
+		
+		return "sidemenu";
+	}
+
+	@RequestMapping("drink")
+	public String Drink() {
+		
+		return "drink";
 	}
 	
 }
