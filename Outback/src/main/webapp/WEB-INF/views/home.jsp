@@ -4,13 +4,12 @@
     pageEncoding="UTF-8"%>
 <html>
 <head>
-	<title>Home</title>
+	
 </head>
+<jsp:include page="header.jsp" />
 <body>
-<h1>
-	Hello world!  안뇽gdgdgdfssdsd
-</h1>
 
-<P>  The time on the server asdasdis ${serverTime}. </P>
+
+
 </body>
 </html>
