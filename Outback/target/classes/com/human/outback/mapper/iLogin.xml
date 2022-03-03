@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.human.outback.iLogin">
+<select id="getLogin" resultType="com.human.outback.Member">
+	select userid, passcode, name, mobile, gender,user_type,login_time
+	from member
+	order by name
+</select>
+<select id="confirm_check" resultType="com.human.outback.Member2">
+	select userid from member
+</select>
+<insert id="addLogin">
+	insert into member(userid,passcode,name,mobile,gender,user_type,login_time)
+	values(#{param1},#{param2},#{param3},#{param4},#{param5},0,'')
+</insert>
+<update id="upLogin">
+	update member set login_time=(now()) where userid=#{param1}
+</update>
+<select id="getDig" resultType="com.human.outback.Member3">
+	select userid, user_type
+	from member
+	order by user_type
+</select>
+</mapper>
