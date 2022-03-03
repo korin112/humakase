@@ -21,7 +21,8 @@
 		<table class="cart">
 			<thead><tr><th><input type="checkbox"></th><th>상품명</th><th>수량</th><th>판매가</th><th>합계</th></tr></thead>
 			<tbody>
-				
+<%-- 				<c:forEach> 써서 작업할고--%>
+				<tr><td>총액</td><td>금액이출력되는 부분</td></tr>
 			</tbody>
 		</table>
 	</div>

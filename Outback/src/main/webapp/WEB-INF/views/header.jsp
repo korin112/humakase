@@ -7,7 +7,7 @@
 <header>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 	  <div class="container">
-	    <a class="navbar-brand mb-md-0" href="/hotel/home" style="font-weight:bolder; font-size:35px;">LOGO</a>
+	    <a class="navbar-brand mb-md-0" href="/outback/home" style="font-weight:bolder; font-size:35px;">LOGO</a>
 	    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	      <span class="navbar-toggler-icon"></span>
 	    </button>
