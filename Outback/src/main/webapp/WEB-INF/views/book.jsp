@@ -18,8 +18,9 @@
     .book-list li:first-child{width:150px;}
     .book-list li{width:450px;}
     article{display:inline-block;text-align:center;}
-    .book-list{font-size:1rem; vertical-align:top;}
-.book-list article {width:595px; box-sizing:border-box;border:1px solid #ddd; padding:40px; display:inline-block; vertical-align:top; height:650px;}
+    .book-list, .order-list{font-size:1rem; display:inline-block;}
+    .order-list{margin-right:calc(100% - (601px*2))}
+.book-list article, .order-list article {width:595px; box-sizing:border-box;border:1px solid #ddd; padding:40px; display:inline-block; vertical-align:top; height:650px;}
 .book-list article:first-child{margin-right:6px;}
 .book-list input{font-size:1rem; border:none; text-align:right;}
 .book-list input[type=button]{margin:10px 0; cursor:pointer; width:100%; text-align:center; padding:10px 0;}
@@ -46,6 +47,11 @@
 <body>
 	<%@include file ="header.jsp" %>
 	<div class="container O_container">
+		<section class="order-list">
+			<article>
+				
+			</article>
+		</section>
 		<section class="book-list">
 			<article>
 				<ul class="fixed">
