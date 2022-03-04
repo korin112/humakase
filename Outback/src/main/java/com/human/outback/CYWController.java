@@ -113,16 +113,16 @@ public class CYWController {
 	   }
 	
 	@ResponseBody
-	@RequestMapping(value="/typelist", produces = "apllication/json;charset=utf-8")
+	@RequestMapping(value="/typelist",method = RequestMethod.POST  ,produces = "apllication/json;charset=utf-8")
 	   public String getTypeList() {
 	      iMenu menu = sqlSession.getMapper(iMenu.class);
-	      ArrayList<Menutype> typeList=menu.getMenutype();
+	      ArrayList<Menutype> alType=menu.getMenutype();
 	      
 	      JSONArray ja=new JSONArray();
-	      for(int i=0; i < typeList.size(); i++) {
+	      for(int i=0; i < alType.size(); i++) {
 	         JSONObject jo=new JSONObject();
-	         jo.put("mtype_code", typeList.get(i).getMtype_code());
-	         jo.put("mtype_name", typeList.get(i).getMtype_name());
+	         jo.put("mtype_code", alType.get(i).getMtype_code());
+	         jo.put("mtype_name", alType.get(i).getMtype_name());
 	         ja.add(jo);
 	      }
 	      return ja.toString();
@@ -153,6 +153,14 @@ public class CYWController {
 		return "redirect:/menuadd";
 	}
 	
+	@RequestMapping("deleteType")
+	public String doDeleteType(HttpServletRequest hsr) {
+		int mtype_code=Integer.parseInt(hsr.getParameter("mtype_code"));
+		
+		iType type = sqlSession.getMapper(iType.class);
+		type.deleteType(mtype_code);
+		return "redirect:/typeadd";
+	}
 	
 
 	

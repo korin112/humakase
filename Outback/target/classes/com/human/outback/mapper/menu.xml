@@ -10,7 +10,7 @@
 	order by menu_code
 </select>
 <insert id="insertMenu">
-	insert into menu(menu_code,menu_type,menu_name,menu_price) values(seq_code.nextval,#{param1},#{param2},#{param3})
+	insert into menu(menu_type,menu_name,menu_price) values(#{param1},#{param2},#{param3})
 </insert>
 <delete id="deleteMenu">
 	delete from menu where menu_code=#{param1}

@@ -4,10 +4,16 @@
 
 <mapper namespace="com.human.outback.iType">
 
-<insert id="addType">
-	insert into menutype(mtype_code, mtype_name) values(#{param1},#{param2})
+<insert id="insertType">
+	insert into menutype(mtype_name) values(#{param1})
 </insert>
 <select id="getMenutype" resultType="com.human.outback.Menutype">
-   select mtype_code,mtype_name from menutype1 order by mtype_code
+   select mtype_code,mtype_name from menutype order by mtype_code
 </select>
+<delete id="deleteType">
+	delete from menutype where mtype_code=#{param1}
+</delete>
+<update id="updateType">
+	update menutype set mtype_name=#{param2} where mtype_code=#{param1}
+</update>
 </mapper>

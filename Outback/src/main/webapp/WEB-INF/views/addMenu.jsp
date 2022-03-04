@@ -11,13 +11,16 @@ h1{text-align:center;
    font-size: 30px;
    font-family: Segoe Print;}
 </style>
+<h1>메뉴 관리</h1>
+<hr>
 <meta charset="UTF-8">
-<title>메뉴 관</title>
+<title>메뉴 관리</title>
 </head>
 <body>
 	<table>
 		<tr>
-			<td><select id=getMenu style='width: 200px;' size=10>
+			<td><select id=getMenu style='width: 300px;' size=15>
+
 			</select></td>
 			<td>
 				<form id=frmMenu action="/outback/addMenu">
@@ -26,7 +29,7 @@ h1{text-align:center;
 						<td><input type=text id=menu_code name=menu_code></td></tr>
 						<tr>
 							<td align=right>메뉴 타입 : </td>
-								<td><select id=menu_type name=menu_type>									
+								<td><select id=menu_type name=menu_type>
 								</select>
 							</td>
 						</tr>
@@ -72,14 +75,51 @@ h1{text-align:center;
 			method:'post',
 			success:function(txt){
 				for(i=0; i < txt.length; i++){
-					let str='<option>'+txt[i]['mtype_name']+'</option>';
+					let str='<option value='+txt[i]['mtype_code']+'>'+txt[i]['mtype_name']+'</option>';
 		            console.log(str);
-		            $('#menutype').append(str);
+		            $('#menu_type').append(str);
 				}
 			}
-		});
+		})
 	})
-
+ 	.on('submit','#frmMenu',function() {
+ 				if ($('input[name=menu_name]').val() == ''
+ 						|| $('input[name=menu_type]').val() == ''
+ 						|| $('input[name=menu_price]').val() == ''
+ 						) { 
+ 					alert('모든 값이 입력 되어야 합니다.');
+ 					return false;
+ 				}
+ 				return true;
+ 			})
+ 	.on('click','#btnDelete',function(){
+    let url="/outback/deleteMenu?menu_code="+$('#menu_code').val();
+    console.log(url);
+    document.location=url;
+    return false;
+ }) 
+ .on('click','#getMenu option',function(){ 
+ 	   $('#menu_code').val($(this).val());
+ 	   let str=$(this).text();
+ 	   let ar=str.split(',');
+ 	   console.log(str);
+ 	   console.log(ar);
+ 	   /* let menu_type=$('input[name=menu_type]').val($.trim(ar[0])); */
+  	   $('input[name=menu_name]').val($.trim(ar[1]));
+ 	   $('input[name=menu_price]').val($.trim(ar[2]));
+ 	   
+ 	   let menu_type=$.trim(ar[0]);
+ 	   
+ 	   $('#menu_type').val('');
+ 	   $('#menu_type option').each(function(){
+ 		   if($(this).val()==menu_type){
+ 			   $(this).prop('selected','selected');
+ 			   return false;
+ 		   }
+ 	   });
+    return false;
+ })
+ 
 </script>
 
 </html>
