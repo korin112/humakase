@@ -42,11 +42,20 @@
 					</c:forEach>
 				</tbody>
 				<tfoot>
-					<tr><td><button type="button" id="btnDelete">선택삭제</button></td><td colspan="2">총 결제금액</td><td colspan="2" class="cnt_total">금액이 출력되는 부분</td></tr>
+					<tr>
+						<td><button type="button" id="btnDelete">선택삭제</button></td><td colspan="2">선택한 결제금액</td>
+						<td colspan="2" class="cnt_checkTotal">0</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td colspan="2">총 결제금액</td>
+						<td colspan="2" class="cnt_total"></td>
+					</tr>
 				</tfoot>
 			</table>
 			<div class="ct_btn_wrap">
-				<input type="button" class="submitCart" value="예약하기">
+				<input type="button" class="submitCheckCart" value="선택예약">
+				<input type="button" class="submitCart" value="전체예약">
 			</div>
 		<form action="/outback/book" method="POST" class="bookForm">
 		</form>
@@ -67,6 +76,8 @@
 				cnt_total += parseInt(cnt);
 			}
 			$('.cnt_total').text(cnt_total.toLocaleString() + ' 원');
+			// 선택한 결제금액 기본 값
+			$('.cnt_checkTotal').text($('.cnt_total').text());
 		})
 		.on('change','.cart > tbody > tr > td > input[type=number]', function(){
 			$(this).next('div').children('input').show();
@@ -109,6 +120,21 @@
 			} else {
 				$('input[name=checkAll]').prop('checked',true);
 			}
+			// 체크박스 선택시 선택 결제금액 변경
+
+			let cnt_checkTotal = null;
+			$('.cart > tbody > tr > td:first-child > input[name=check]:checked').each(function(){
+				console.log($(this).val());
+				change_checkTotal_str = $(this).parent('td').siblings('td:last-child').text().split(',');
+				change_checkTotal = '';
+				for(i = 0; i < change_checkTotal_str.length; i++){
+					change_checkTotal += change_checkTotal_str[i];
+				}
+				console.log(change_checkTotal);
+				cnt_checkTotal += parseInt(change_checkTotal);
+			});
+			console.log(cnt_checkTotal);
+			$('.cnt_checkTotal').text(cnt_checkTotal.toLocaleString() + ' 원');
 		})
 		.on('click','#btnDelete',function() {
 			if($('input[name=check]:checked').length==0) {
@@ -136,17 +162,38 @@
 				}
 			});
 		})
-		.on('click', '.submitCart', function(){
-			let book_list = '';
-			$('.cart tbody tr').each(function(){
-				let cart_code = $('td:first-child input[type=checkbox]:checked').val();
-				console.log('cart_code: '+cart_code);
-			});
-			if(!$('.bookForm').empty()){
-				
+		.on('click', '.submitCheckCart', function(){
+			if($('.cart tbody tr td input[name=check]').is(':checked') === true){
+				let book_list_contents = '';
+				i = 0;
+				$('.cart tbody tr').each(function(){
+					let cart_code = $('td input[type=checkbox]:checked', this).val();
+					console.log('cart_code: '+cart_code);
+					if(cart_code != null){
+						let book_list = '<input name="booktest'+ i +'" type="hidden" value="' + cart_code + '">';
+						i++;
+						console.log(book_list);
+						book_list_contents += book_list;
+					}
+				});
+				console.log(book_list_contents);
+				$(".bookForm").html(book_list_contents);
+				$('.bookForm').submit();
 			} else {
 				alert('하나 이상의 메뉴를 선택해주세요.');
 			}
+		})
+		.on('click', '.submitCart', function(){
+			let book_list_contents = '';
+			$('.cart tbody tr').each(function(index){
+				let cart_code = $('td input[type=checkbox]', this).val();
+				console.log('cart_code: '+cart_code);
+				let book_list = '<input name="booktest'+ index +'" type="hidden" value="' + cart_code + '">';
+				book_list_contents += book_list;
+			});
+			console.log(book_list_contents);
+			$(".bookForm").html(book_list_contents);
+			$('.bookForm').submit();
 		})
 		;
 	</script>

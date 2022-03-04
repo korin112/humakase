@@ -21,8 +21,16 @@ public class BookController {
 	private SqlSession sqlSession;
 	
 	@RequestMapping(value="/book", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
-	public String book(Model model) {
-	      
+	public String book(HttpServletRequest hsr, Model model) {
+		iBook ibook = sqlSession.getMapper(iBook.class);
+		ArrayList<Cart> cart = ibook.getCart();
+		String booktest = "booktest" + "0";
+		int cart_code = Integer.parseInt(hsr.getParameter(booktest));
+		ArrayList<Cart> cart2 = ibook.getBooklist(cart_code);
+		model.addAttribute("cart2", cart2);
+		System.out.println(model);
+		System.out.println(cart_code);
+		
 		return "book";
 	}
 	@RequestMapping("/cart")
