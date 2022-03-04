@@ -69,16 +69,6 @@ public class CYWController {
 		return "addType";
 	}
 	
-	@RequestMapping("/addType") 
-	public String doAddType(HttpServletRequest hsr) {
-		int mtype_code=Integer.parseInt(hsr.getParameter("mtype_code"));
-		String mtype_name=hsr.getParameter("mtype_name");
-		
-		iType type=sqlSession.getMapper(iType.class);
-		type.addType(mtype_code,mtype_name);
-		return "addType";
-	}
-	
 	@RequestMapping("/menu")
 	public String doMenuList(Model m) {
 		iMenu menu=sqlSession.getMapper(iMenu.class);
@@ -95,7 +85,7 @@ public class CYWController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/menulist", produces = "apllication/json;charset=utf-8")
+	@RequestMapping(value="/menulist", method = RequestMethod.POST  ,produces = "apllication/json;charset=utf-8")
 	   public String getMenuList() {
 	      iMenu menu = sqlSession.getMapper(iMenu.class);
 	      ArrayList<Menu> alMenu=menu.getMenu();
@@ -144,6 +134,23 @@ public class CYWController {
 		}
 		return "redirect:/menuadd";
 	}
+	
+	@RequestMapping("/addType") 
+	public String doAddType(HttpServletRequest hsr) {
+		String strMtype_code=hsr.getParameter("mtype_code");
+		String mtype_name=hsr.getParameter("mtype_name");
+		
+		
+		iType type=sqlSession.getMapper(iType.class);
+		if(strMtype_code.equals("")) { // insert
+			type.insertType(mtype_name);
+		} else { // update
+			int mtype_code=Integer.parseInt(strMtype_code);
+			type.updateType(mtype_code, mtype_name);
+		}
+		return "redirect:/typeadd";
+	}
+	
 	@RequestMapping("deleteMenu")
 	public String doDeleteMenu(HttpServletRequest hsr) {
 		int menu_code=Integer.parseInt(hsr.getParameter("menu_code"));
