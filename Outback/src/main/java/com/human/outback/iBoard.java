@@ -9,4 +9,6 @@ public interface iBoard {
 	// board list
 	ArrayList<Board> boardList();
 	Board getBoard(int board_id);
+	void updateBoard(int board_id, String title, String content);
+	void deleteBoard(int board_id);
 }

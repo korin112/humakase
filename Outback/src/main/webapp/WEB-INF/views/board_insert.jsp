@@ -13,7 +13,6 @@
 <body>
 	<%@include file ="header.jsp" %>
 	<div class="container O_container">
-	<form action="/hotel/board_insert" method="post">
 	    <div>
 	        <label>제목</label>
 	        <input name="title" id="title">
@@ -45,8 +44,10 @@
 	        <textarea rows="5" id="content" name="content"></textarea>
 	    </div>
 	    <br>
-	    <button id="done">완료</button>
-	</form>
+	    <div>
+		    <button id="done">완료</button>
+		    <button id="cancel">취소</button>
+	    </div>
 	</div>
 	<%@include file ="footer.jsp" %>
 	<script>
@@ -67,13 +68,28 @@
 			});
 		})
 		
-		.on('click','#done',function() {
-			console.log($('#title').val());
-			console.log($('#writer').val());
-			console.log($('#vdate').val());
-			console.log($('#spot').val());
-			console.log($('#menu').val());
-			console.log($('#content').val());
+		.on('click','#done',function() {			
+			let oParam = {title:$('#title').val(), writer:$('#writer').val(),
+						  vdate:$('#vdate').val(), spot:$('#spot').val(),
+						  menu:$('#menu').val(), content:$('#content').val()};
+			$.ajax({url:'/hotel/board_insert',
+				data:oParam,
+				method:'POST',
+				datatype:'json',
+				success:function(txt) {
+					if(txt=="ok") {
+						alert('작성 완료.');
+						document.location='/hotel/board_list';
+					} else {
+						alert('다시 작성해주세요.');
+					}
+				}
+		});
+		})
+		
+		.on('click','#cancel',function() {
+			document.location="/hotel/board_list";
 		})
 	</script>
 </body>
+</html>

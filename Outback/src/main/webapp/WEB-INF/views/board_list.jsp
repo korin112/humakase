@@ -16,7 +16,6 @@
 <body>
 	<%@include file ="header.jsp" %>
 	<div class="container O_container">
-		
 		<table>
 			<thead>
 				<tr>
@@ -29,7 +28,7 @@
 				</tr>
 			</thead>
 			<c:forEach items="${b_list}" var="b">
-				<tr>
+				<tr id="getBoard">
 					<td><c:out value="${b.board_id}"/></td>
 					<td><c:out value="${b.spot_code}"/></td>
 		            <td><c:out value="${b.menu_name}"/></td>
@@ -44,8 +43,24 @@
 	<%@include file ="footer.jsp" %>
 	<script>
 		$(document)
+		.ready(function() {
+			let result="${result}";
+			if(result=="delete") {
+				alert("삭제");
+			}
+		})
 		.on('click','#insert',function() {
 			document.location="/hotel/board_insert";
+		})
+		
+		.on('click','#getBoard',function() {
+			var tr=$(this);
+			var td=tr.children();
+			var board_id=td.eq(0).text();
+			
+			console.log(board_id);
+			
+			document.location="/hotel/getBoard?board_id="+board_id;
 		})
 	</script>
 </body>

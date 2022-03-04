@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -21,83 +22,128 @@ public class HController {
 	private SqlSession sqlSession;
 	
 	// 게시판 목록
-		@RequestMapping(value = "/board_list")
-		public String BoardList(Model m) {
-			iBoard board=sqlSession.getMapper(iBoard.class);	
-			m.addAttribute("b_list",board.boardList());
-			return "board_list";
-		}
+	@RequestMapping(value = "/board_list")
+	public String BoardList(Model m) {
+		iBoard board=sqlSession.getMapper(iBoard.class);	
+		m.addAttribute("b_list",board.boardList());
+		return "board_list";
+	}
 		
-		// 게시판 조회
-		@RequestMapping("/getBoard")
-		public String Board(Model m,int board_id) {
-			iBoard board=sqlSession.getMapper(iBoard.class);	
-			m.addAttribute("b",board.getBoard(board_id));
-			return "board";
-		}
+	// 게시판 조회
+	@RequestMapping("/getBoard")
+	public String Board(Model m, int board_id) {
+		iBoard board=sqlSession.getMapper(iBoard.class);	
+		m.addAttribute("b",board.getBoard(board_id));
+		return "board";
+	}
+	
+	// 게시판 삭제
+	@RequestMapping("/board_delete")
+	public String BoardDelete(int board_id, RedirectAttributes rttr) {
+		iBoard board=sqlSession.getMapper(iBoard.class);	
+		board.deleteBoard(board_id);
+		rttr.addFlashAttribute("result","delete");
+		return "redirect:/board_list";
+	}
+	
+	// 게시판 수정
+	@RequestMapping("/board_update")
+	public String BoardUpdate(Model m, int board_id) {
+		iBoard board=sqlSession.getMapper(iBoard.class);	
+		m.addAttribute("b",board.getBoard(board_id));
 		
-		// 게시판 글 작성
-		@RequestMapping(value = "/board_insert", method = RequestMethod.GET)
-		public String BoardInsert() {
-			// 작성자 = member table userid -> session 값 받아오기(기본값으로 들어가게)
-			return "board_insert";
-		}
-		@RequestMapping(value = "/board_insert", method = RequestMethod.POST)
-		public String BoardInsert(HttpServletRequest hsr) {
-			// 작성자 = member table userid -> session 값 받아오기(기본값으로 들어가게)
-			
-			// test : input으로 값 넣었을 때 들어가게
-			String title=hsr.getParameter("title");
-			String content=hsr.getParameter("content");
-			String writer=hsr.getParameter("writer");
-			String vdate=hsr.getParameter("vdate");
-			int spot_code=Integer.parseInt(hsr.getParameter("spot"));
-			int menu_code=Integer.parseInt(hsr.getParameter("menu"));
-			
-			System.out.println("title : "+title);
-			System.out.println("content : "+content);
-			System.out.println("writer : "+writer);
-			System.out.println("spot_code : "+spot_code);
-			System.out.println("vdate : "+vdate);
-			System.out.println("menu_code : "+menu_code);
-			
-			iBoard b=sqlSession.getMapper(iBoard.class);
-			b.insertBoard(title,content,writer,vdate,spot_code,menu_code);
-			
-//			rttr.addFlashAttribute("result","ok");
-			return "redirect:/board_insert";
-		}
+		return "board_update";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/board_update", method = RequestMethod.POST)
+	public String BoardUpdate(HttpServletRequest hsr) {
+		int board_id=Integer.parseInt(hsr.getParameter("board_id"));
+		String title=hsr.getParameter("title");
+		String content=hsr.getParameter("content");
 		
-		@RequestMapping(value = "/dateList", method = RequestMethod.GET)
-		public String Date() {
-			// where 예약 날짜
-			return "";
-		}
+		System.out.println("["+board_id+"]");
+		System.out.println("["+title+"]");
+		System.out.println("["+content+"]");
 		
-		@RequestMapping(value = "/spotList", method = RequestMethod.GET)
-		public String Spot() {
-			// where 예약 날짜
-			// booking table -> spot
-			return "";
+		String str="";
+		iBoard board=sqlSession.getMapper(iBoard.class);
+		try {
+			board.updateBoard(board_id,title,content);
+			str="ok";
+		} catch(Exception e) {
+			str="fail";
 		}
+		return str;
+	}
+	
+	// 게시판 글 작성
+	@RequestMapping(value = "/board_insert", method = RequestMethod.GET)
+	public String BoardInsert() {
+		// 작성자 = member table userid -> session 값 받아오기(기본값으로 들어가게)
+		return "board_insert";
+	}
+	@ResponseBody
+	@RequestMapping(value = "/board_insert", method = RequestMethod.POST)
+	public String BoardInsert(HttpServletRequest hsr) {
+		// 작성자 = member table userid -> session 값 받아오기(기본값으로 들어가게)
+			
+		// test : input으로 값 넣었을 때 들어가게
+		String title=hsr.getParameter("title");
+		String content=hsr.getParameter("content");
+		String writer=hsr.getParameter("writer");
+		String vdate=hsr.getParameter("vdate");
+		int spot_code=Integer.parseInt(hsr.getParameter("spot"));
+		int menu_code=Integer.parseInt(hsr.getParameter("menu"));
+			
+		System.out.println("title : "+title);
+		System.out.println("content : "+content);
+		System.out.println("writer : "+writer);
+		System.out.println("spot_code : "+spot_code);
+		System.out.println("vdate : "+vdate);
+		System.out.println("menu_code : "+menu_code);
+			
+		String str="";
+		iBoard board=sqlSession.getMapper(iBoard.class);
+		try {
+			board.insertBoard(title,content,writer,vdate,spot_code,menu_code);
+			str="ok";
+		} catch(Exception e) {
+			str="fail";
+		}
+		return str;
+	}
 		
-		@ResponseBody
-		@RequestMapping(value = "/menuList", produces="application/json;charset=utf-8")
-		public String Menu() {		
-			// where 예약 날짜
-			// booking table -> menu
+	@RequestMapping(value = "/dateList", method = RequestMethod.GET)
+	public String Date() {
+		// where 예약 날짜
+		return "";
+	}
+		
+	@RequestMapping(value = "/spotList", method = RequestMethod.GET)
+	public String Spot() {
+		// where 예약 날짜
+		// booking table -> spot
+		return "";
+	}
+		
+	@ResponseBody
+	@RequestMapping(value = "/menuList", produces="application/json;charset=utf-8")
+	public String Menu() {		
+		// where 예약 날짜
+		// booking table -> menu
 			
-			// test : menu table에서 불러오기
-			iBoard menu=sqlSession.getMapper(iBoard.class);
-			ArrayList<Board> m=menu.menuList();
+		// test : menu table에서 불러오기
+		iBoard menu=sqlSession.getMapper(iBoard.class);
+		ArrayList<Board> m=menu.menuList();
 			
-			JSONArray ja=new JSONArray();
-			for(int i=0;i<m.size();i++) {
-				JSONObject jo=new JSONObject();
-				jo.put("menu_code", m.get(i).getMenu_code());
-				jo.put("menu_name", m.get(i).getMenu_name());
-				ja.add(jo);
-			}
-			return ja.toString();
+		JSONArray ja=new JSONArray();
+		for(int i=0;i<m.size();i++) {
+			JSONObject jo=new JSONObject();
+			jo.put("menu_code", m.get(i).getMenu_code());
+			jo.put("menu_name", m.get(i).getMenu_name());
+			ja.add(jo);
 		}
+		return ja.toString();
+	}
 }

@@ -25,4 +25,14 @@
 		where a.menu_code=b.menu_code
 		and board_id=#{board_id}
 	</select>
+	
+	 <update id="updateBoard">
+    	update board
+		set title=#{param2},content=#{param3},updated=current_date
+		where board_id=#{param1}
+    </update>
+    
+	<delete id="deleteBoard">
+		delete from board where board_id=#{board_id}
+	</delete>
 </mapper>
