@@ -1,31 +1,3 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@bsc6260 
-korin112
-/
-humakase
-Public
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-humakase/Outback/src/main/webapp/WEB-INF/views/spot.jsp
-
-User 0304
-Latest commit 71ee5ab 9 minutes ago
- History
- 0 contributors
-119 lines (119 sloc)  46.4 KB
-   
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
