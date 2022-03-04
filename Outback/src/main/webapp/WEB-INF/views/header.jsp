@@ -7,7 +7,7 @@
 <header>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 	  <div class="container">
-	    <a class="navbar-brand mb-md-0" href="/outback/" style="font-weight:bolder; font-size:35px;">LOGO</a>
+	    <a class="navbar-brand mb-md-0" href="/outback/home" style="font-weight:bolder; font-size:35px;">LOGO</a>
 	    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	      <span class="navbar-toggler-icon"></span>
 	    </button>
@@ -21,10 +21,10 @@
 	            메뉴소개
 	          </a>
 	          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-	            <li><a class="dropdown-item" href="">Steak</a></li>
-	            <li><a class="dropdown-item" href="">Pasta</a></li>
-	            <li><a class="dropdown-item" href="">Side-menu</a></li>
-	            <li><a class="dropdown-item" href="">Drink</a></li>
+	            <li><a class="dropdown-item" href="http://localhost:8080/outback/steak">Steak</a></li>
+	            <li><a class="dropdown-item" href="http://localhost:8080/outback/pasta">Pasta</a></li>
+	            <li><a class="dropdown-item" href="http://localhost:8080/outback/sidemenu">Side-menu</a></li>
+	            <li><a class="dropdown-item" href="http://localhost:8080/outback/drink">Drink</a></li>
 	          </ul>
 	        </li>
 	        <li class="nav-item">

@@ -1,5 +1,7 @@
 package com.human.outback;
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,5 +21,12 @@ public class BookController {
 	      
 		return "book";
 	}
-	
+	@RequestMapping("/cart")
+	public String cart(Model model) {
+		iBook ibook = sqlSession.getMapper(iBook.class);
+		ArrayList<Cart> cart = ibook.getCart();
+		model.addAttribute("getCart", cart);
+		
+		return "cart";
+	}
 }
