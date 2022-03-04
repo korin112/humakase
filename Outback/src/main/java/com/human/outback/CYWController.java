@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.human.outback.Menu;
+import com.human.outback.Menutype;
 import com.human.outback.iMenu;
-import com.human.outback.MenuList;
+import com.human.outback.iType;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -62,55 +64,96 @@ public class CYWController {
 		return "drink";
 	}
 	
-	@RequestMapping(value = "/management", method = RequestMethod.GET)
-	public String management(HttpServletRequest hsr, Model m) {
-		
-		return "/management";
+	@RequestMapping("/typeadd") 
+	public String doTypeAdd() {
+		return "addType";
 	}
 	
-	@RequestMapping("/deleteMenu")
-	public String doDeleteMenu(HttpServletRequest hsr) {
-		int menu_code=Integer.parseInt(hsr.getParameter("menu_code"));
+	@RequestMapping("/addType") 
+	public String doAddType(HttpServletRequest hsr) {
+		int mtype_code=Integer.parseInt(hsr.getParameter("mtype_code"));
+		String mtype_name=hsr.getParameter("mtype_name");
 		
-		iMenu menu=sqlSession.getMapper(iMenu.class);
-		menu.deleteMenu(menu_code);
-		return "redirect:/management";
-		}
+		iType type=sqlSession.getMapper(iType.class);
+		type.addType(mtype_code,mtype_name);
+		return "addType";
+	}
 	
-	//�߰�,������Ʈ
-	@RequestMapping("/addMenu")
-	public String addMenu(HttpServletRequest hsr) {
-		String StrCode=hsr.getParameter("menu_code");
+	@RequestMapping("/menu")
+	public String doMenuList(Model m) {
+		iMenu menu=sqlSession.getMapper(iMenu.class);
+		ArrayList<Menu> alMenu=menu.getMenu();
+		System.out.println("size["+alMenu.size()+"]");
+		m.addAttribute("alMenu",alMenu);
+		return "menu";
+	}
+	
+	@RequestMapping("/menuadd") 
+	public String doMenuAdd(Model model) {
+
+		return "addMenu";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/menulist", produces = "apllication/json;charset=utf-8")
+	   public String getMenuList() {
+	      iMenu menu = sqlSession.getMapper(iMenu.class);
+	      ArrayList<Menu> alMenu=menu.getMenu();
+	      
+	      JSONArray ja=new JSONArray();
+	      for(int i=0; i < alMenu.size(); i++) {
+	         JSONObject jo=new JSONObject();
+	         jo.put("menu_code", alMenu.get(i).getMenu_code());
+	         jo.put("menu_type", alMenu.get(i).getMenu_type());
+	         jo.put("menu_name", alMenu.get(i).getMenu_name());
+	         jo.put("menu_price", alMenu.get(i).getMenu_price());
+	         ja.add(jo);
+	      }
+	      return ja.toString();
+	   }
+	
+	@ResponseBody
+	@RequestMapping(value="/typelist", produces = "apllication/json;charset=utf-8")
+	   public String getTypeList() {
+	      iMenu menu = sqlSession.getMapper(iMenu.class);
+	      ArrayList<Menutype> typeList=menu.getMenutype();
+	      
+	      JSONArray ja=new JSONArray();
+	      for(int i=0; i < typeList.size(); i++) {
+	         JSONObject jo=new JSONObject();
+	         jo.put("mtype_code", typeList.get(i).getMtype_code());
+	         jo.put("mtype_name", typeList.get(i).getMtype_name());
+	         ja.add(jo);
+	      }
+	      return ja.toString();
+	   }
+	
+	@RequestMapping("/addMenu") // submit 버튼이 눌렸을 때
+	public String doAddMenu(HttpServletRequest hsr) {
+		String strMenu_code=hsr.getParameter("menu_code");
 		int menu_type=Integer.parseInt(hsr.getParameter("menu_type"));
 		String menu_name=hsr.getParameter("menu_name");
 		int menu_price=Integer.parseInt(hsr.getParameter("menu_price"));
 		
 		iMenu menu=sqlSession.getMapper(iMenu.class);
-		if(StrCode.equals("")) { //insert
-		menu.addMenu(menu_type, menu_name, menu_price);
-		}else {
-			int menu_code=Integer.parseInt(StrCode);
-			menu.updateMenu(menu_code, menu_type, menu_name, menu_price);
+		if(strMenu_code.equals("")) { // insert
+			menu.insertMenu(menu_type,menu_name,menu_price);
+		} else { // update
+			int menu_code=Integer.parseInt(strMenu_code);
+			menu.updateMenu(menu_code,menu_type,menu_name,menu_price);
 		}
-		return "redirect:/management";
+		return "redirect:/menuadd";
+	}
+	@RequestMapping("deleteMenu")
+	public String doDeleteMenu(HttpServletRequest hsr) {
+		int menu_code=Integer.parseInt(hsr.getParameter("menu_code"));
+		
+		iMenu menu = sqlSession.getMapper(iMenu.class);
+		menu.deleteMenu(menu_code);
+		return "redirect:/menuadd";
 	}
 	
-	@ResponseBody
-	@RequestMapping(value="/MenuList",method=RequestMethod.GET,
-            produces="application/json;charset=utf-8")
-	public String menulist() {
-		iMenu jc=sqlSession.getMapper(iMenu.class);
-		ArrayList<MenuList> Menu=jc.getMenu();
-		JSONArray ja=new JSONArray();
-		for(int i=0;i<Menu.size();i++) {
-			JSONObject jo=new JSONObject();
-			jo.put("menu_code", Menu.get(i).getMenu_code());
-			jo.put("menu_type", Menu.get(i).getMenu_type());
-			jo.put("menu_name", Menu.get(i).getMenu_name());
-			jo.put("menu_price", Menu.get(i).getMenu_price());
-			ja.add(jo);
-		}
-		return ja.toString();
-		}
+	
+
 	
 }
