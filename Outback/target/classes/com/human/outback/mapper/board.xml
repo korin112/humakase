@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.human.outback.iBoard">
+	<select id="menuList" resultType="com.human.outback.Board">
+		select menu_code, menu_name from menu
+	</select>
+	
+	<insert id="insertBoard">
+		insert into board(title,content,writer,vdate,spot_code,menu_code) 
+		values(#{param1},#{param2},#{param3},#{param4},#{param5},#{param6})
+	</insert>
+	
+	<!-- board list -->
+	<select id="boardList" resultType="com.human.outback.Board">
+		select a.board_id,a.spot_code,b.menu_name,a.title,a.writer,a.created
+		from board a, menu b
+		where a.menu_code=b.menu_code
+	</select>
+	
+	<select id="getBoard" resultType="com.human.outback.Board">
+		select a.board_id,a.title,a.spot_code,b.menu_name,a.content,a.writer,a.updated
+		from board a, menu b
+		where a.menu_code=b.menu_code
+		and board_id=#{board_id}
+	</select>
+</mapper>
