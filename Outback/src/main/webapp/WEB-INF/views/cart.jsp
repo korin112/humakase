@@ -26,7 +26,6 @@
 <body>
 	<%@include file = "header.jsp" %>
 	<div class="container O_container">
-		<form action="/outback/book" method="POST">
 			<table class="cart">
 				<thead><tr><th><input type="checkbox" name="checkAll"></th><th>상품명</th><th>판매가</th><th>수량</th><th>합계</th></tr></thead>
 				<tbody>
@@ -47,13 +46,17 @@
 				</tfoot>
 			</table>
 			<div class="ct_btn_wrap">
-				<input type="submit" value="예약하기">
+				<input type="button" class="submitCart" value="예약하기">
 			</div>
+		<form action="/outback/book" method="POST" class="bookForm">
 		</form>
 	</div>
 	<%@include file ="footer.jsp" %>
 	<script>
 		$(document).ready(function(){
+			// 체크박스 전체 선택
+			$('input[type=checkbox]').prop('checked','true');
+			
 			let cnt_total = null;
 			for(i = 1; i <= $('.cart > tbody > tr').length; i++){
 				let cnt_text = $('.cart > tbody > tr:nth-child('+ i + ') > td:last-child').text().split(',');
@@ -125,13 +128,25 @@
 				success:function(txt) {
 					console.log(txt);
 					if(txt=="ok") {
-						alert('삭제 완료.');
+						alert('삭제 되었습니다.');
 						document.location='/outback/cart';
 					} else {
 						alert('다시 삭제해주세요.');
 					}
 				}
 			});
+		})
+		.on('click', '.submitCart', function(){
+			let book_list = '';
+			$('.cart tbody tr').each(function(){
+				let cart_code = $('td:first-child input[type=checkbox]:checked').val();
+				console.log('cart_code: '+cart_code);
+			});
+			if(!$('.bookForm').empty()){
+				
+			} else {
+				alert('하나 이상의 메뉴를 선택해주세요.');
+			}
 		})
 		;
 	</script>
