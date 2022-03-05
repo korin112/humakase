@@ -170,7 +170,7 @@
 					let cart_code = $('td input[type=checkbox]:checked', this).val();
 					console.log('cart_code: '+cart_code);
 					if(cart_code != null){
-						let book_list = '<input name="booktest'+ i +'" type="hidden" value="' + cart_code + '">';
+						let book_list = '<input name="cart['+ i +'].cart_code" type="hidden" value="' + cart_code + '">';
 						i++;
 						console.log(book_list);
 						book_list_contents += book_list;
@@ -188,7 +188,7 @@
 			$('.cart tbody tr').each(function(index){
 				let cart_code = $('td input[type=checkbox]', this).val();
 				console.log('cart_code: '+cart_code);
-				let book_list = '<input name="booktest'+ index +'" type="hidden" value="' + cart_code + '">';
+				let book_list = '<input name="cart['+ index +'].cart_code" type="hidden" value="' + cart_code + '">';
 				book_list_contents += book_list;
 			});
 			console.log(book_list_contents);

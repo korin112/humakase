@@ -12,7 +12,13 @@
 <delete id="deleteCart">
 	delete from cart where cart_code = #{param1}
 </delete>
-<select id="getBooklist" resultType="com.human.outback.Cart">
-	select cart_code, menu_name, menu_cnt, menu_price, menu_total from cart where userid = 'yoon07' and cart_code = #{param1} order by cart_code desc
+<select id="getBooklist" resultType="com.human.outback.Cart" parameterType="java.util.List">
+	select cart_code, menu_name, menu_cnt, menu_price, menu_total from cart
+	where userid = 'yoon07' 
+	and cart_code in
+	<foreach collection="list" item="item" open="(" close=")" separator=",">
+		#{item.cart_code}
+	</foreach>
+	order by cart_code desc
 </select>
 </mapper>
