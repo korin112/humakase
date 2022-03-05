@@ -157,7 +157,7 @@
 						alert('삭제 되었습니다.');
 						document.location='/outback/cart';
 					} else {
-						alert('다시 삭제해주세요.');
+						alert('다시 시도해주세요.');
 					}
 				}
 			});
