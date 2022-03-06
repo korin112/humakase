@@ -46,4 +46,15 @@ public class Cart {
 		this.menu_total = menu_total;
 	}
 	
+//	@Override
+//	public String toString() {
+//		return "Cart [cart_code=" + cart_code + ", menu_name=" + menu_name + ", menu_cnt=" + menu_cnt
+//				+ ", menu_price=" + menu_price + ", menu_total=" + menu_total + "]";
+//	}
+	
+	@Override
+	public String toString() {
+		return Integer.toString(cart_code);
+	}
+	
 }
