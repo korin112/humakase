@@ -134,28 +134,46 @@ public class MController {
 	@RequestMapping(value = "/getDig",produces="application/json;charset=utf-8")
 	public String getDig(HttpServletRequest hsr) {
 		iLogin log = sqlSession.getMapper(iLogin.class);
-		ArrayList<Member3> m = log.getDig();
+		ArrayList<MemberType> m = log.digList();
 		JSONArray ja = new JSONArray();
 		for(int i=0; i < m.size(); i++) {
 			JSONObject jo = new JSONObject();
-			jo.put("userid",m.get(i).getUserid());
-			jo.put("m_user_type",m.get(i).getUser_type());
+			jo.put("_type_code2",m.get(i).getType_code());
+			jo.put("_type_name2",m.get(i).getType_name());
 			ja.add(jo);
 		}
 		return ja.toString();
 	}
 	@ResponseBody
-	@RequestMapping(value = "/dlgEdit", produces="application/json;charset=utf-8")
+	@RequestMapping(value = "/digEdit", produces="application/json;charset=utf-8")
 	public String dlgEdit(HttpServletRequest hsr) {
 		iLogin edit = sqlSession.getMapper(iLogin.class);
-		ArrayList<Member3> m = edit.getEdit();
+		ArrayList<MemberType> m = edit.digList();
 		
 		JSONArray ja = new JSONArray();
+
 		for(int i=0; i < m.size(); i++) {
 			JSONObject jo = new JSONObject();
-			jo.put("m_user_type",m.get(i).getUser_type());
+			jo.put("userid",m.get(i).getUserid());
+			jo.put("_type_code2",m.get(i).getType_code());
+			jo.put("_type_name2",m.get(i).getType_name());
 			ja.add(jo);
 		}
 		return ja.toString();
+	}
+	@ResponseBody
+	@RequestMapping(value = "/updateLogin", produces="application/json;charset=utf-8")
+	public String updateLogin(HttpServletRequest hsr) {
+		String retval="";
+		String userid=hsr.getParameter("userid");
+		String code=hsr.getParameter("user_type");
+		try {
+			iLogin log = sqlSession.getMapper(iLogin.class);
+			log.updateLogin(userid,code);
+			retval="ok";
+		} catch(Exception e) {
+			retval="fail";
+		}
+		return retval;
 	}
 }

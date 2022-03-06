@@ -18,9 +18,17 @@
 <update id="upLogin">
 	update member set login_time=(now()) where userid=#{param1}
 </update>
-<select id="getDig" resultType="com.human.outback.Member3">
-	select userid, user_type
-	from member
-	order by user_type
+<select id="digList" resultType="com.human.outback.MemberType">
+	select type_code, type_name
+	from memberType
+	order by type_code
 </select>
+<select id="getMembers" resultType="com.human.outback.MemberType">
+	select a.userid,b.type_code,b.type_name
+	from member as a join memberType as b 
+	on a.user_type=b.type_code
+</select>
+<update id="updateLogin">
+	update member set user_type=#{param2} where userid=${param1}
+</update>
 </mapper>
