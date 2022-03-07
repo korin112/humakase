@@ -21,7 +21,7 @@
     <tr>
         <td align=right>비밀번호 확인</td>
         <td><input type=password id=passcode1 name=passcode1 size=20></td>
-    </tr>
+    </tr> 
     <tr>
         <td align=right>실명</td>
         <td><input type=text id=name name=name size=20></td>
@@ -104,7 +104,7 @@ $(document)
 		if(txt=='fail'){
 			alert('아이디가 중복됩니다');
 		}else if(txt=='ok'){	
-			alert('사용가능한 아이디입니다.');
+			alert('사용가능한 adsfasdf아이디입니다.');
 		}
 	},'text');
 })
