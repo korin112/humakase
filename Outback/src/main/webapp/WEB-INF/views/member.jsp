@@ -84,6 +84,7 @@ $(document)
 	});
 
 })
+//dialog select 선택옵션
 .on('click','#selInfo option',function(){
 	let txt=$(this).text();
 	let ar=txt.split(' ');
@@ -91,6 +92,7 @@ $(document)
 	$('#_type_name').val($.trim(ar[1]));
 	return false;
 })
+//dialog 수정
 .on('click','#btnDone',function(){
 	if($('#_userid').val() == ''){
 		alert("아이디를 입력하세요.");
@@ -106,17 +108,48 @@ $(document)
 	}
 	
 	let oParam={userid:$('#_userid').val(),user_type:$('#_type_code').val()};
-	$.ajax({url:"/outback/updateLogin",
+	$.ajax({url:"/outback/updateMember",
 			data:oParam,
 			method:'POST',
-			dataType:'json',
+			dataType:'text',
 			success:function(txt){
+				if(txt == "ok"){
 					$('#tblMember').empty();
 					member();
 					alert("수정완료");
+				} else {
+					alert("수정실패");
+				}
 			}
 	})
-});
+	$('#dlgEdit').dialog('close');
+})
+//선택삭제
+.on('click','#btnDel',function(){
+	if($('input[name=box]:checked').length == 0) {
+		alert('체크 후 삭제버튼을 누르십시오.');
+		return false;
+	}
+	let select='';
+	$('input[name=box]:checked').each(function(){
+		select+=$(this).val()+',';
+	});
+	if(!confirm('삭제 하시겠습니까?')) return false;
+	$.ajax({url:'/outback/delMember',
+			data:{box:select},
+			method:'POST',
+			dataType:'text',
+			success:function(txt){
+				console.log(txt);
+				if(txt == "ok") {
+					alert("삭제 완료");
+					document.location='/outback/member';
+				} else {
+					alert("삭제 실패");
+				}
+			}
+		});
+})
 
 function member(){
 	$.ajax({url:"/outback/memberList",
@@ -125,14 +158,14 @@ function member(){
 			dataType:"json",
 			success:function(txt){
 				let head='<thead><tr><th></th><th>아이디</th><th>패스워드</th><th>이름</th><th>모바일</th><th>성별</th><th>'
-				+'등급</th><th>로그인시간</th><th><input type=button id=btnDel value=선택삭제></th></tr></thead>';
+				+'등급</th><th>로그인시간</th><th>로그아웃시간</th><th><input type=button id=btnDel value=선택삭제></th></tr></thead>';
 				$('#tblMember').append(head);
 				
 				for(i=0; i < txt.length; i++){
 					let box='<tr><td><input type=checkbox name=box value="'+txt[i]['userid']+'"></td>'
 					let str='<td>'+txt[i]['userid']+'</td><td>'+txt[i]['passcode']+'</td><td>'+txt[i]['name']+
 					'</td><td>'+txt[i]['mobile']+'</td><td>'+txt[i]['gender']+'</td><td>'+txt[i]['user_type']+
-					'</td><td>'+txt[i]['login_time']+'</td>';
+					'</td><td>'+txt[i]['login_time']+'</td><td>'+txt[i]['logout_time']+'</td>';
 					let btn='<td align=center><input type=button id=btnEdit value="수정" data-userid='+txt[i]['userid']+'></td></tr>';
 					$('#tblMember').append(box+str+btn);
 				}
