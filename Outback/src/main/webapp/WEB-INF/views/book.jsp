@@ -7,79 +7,92 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>- Book -</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <link rel="stylesheet" href="${path}/resources/css/style.css">
 <style>
-    *{margin:0; padding:0;}
-    ul, li{list-style:none;}
-    li{display:inline-block;}
-    .fixed::after{content:''; clear:both; display:block;}
-    .book-list ul {}
-    .book-list li:first-child{width:150px;}
-    .book-list li{width:450px;}
-    article{display:inline-block;text-align:center;}
-    .book-list, .order-list{font-size:1rem;}
-    table{width:100%;}
-.book-list article, .order-list article {width:100%; box-sizing:border-box;border:1px solid #ddd; padding:40px; display:inline-block; vertical-align:top; height:650px;}
-.book-list article:first-child{margin-right:6px;}
-.book-list input{font-size:1rem; border:none; text-align:right;}
-.book-list input[type=button]{margin:10px 0; cursor:pointer; width:100%; text-align:center; padding:10px 0;}
-.book-list input[type=submit]{margin-top:10px;cursor:pointer; width:100%; text-align:center; padding:10px 0;}
-.book-list input[type=date]{padding:0; margin:0;}
-.book-list ul{width:100%;}
-.book-list ul li{float:left; text-align:right; border-bottom:1px solid #ccc; height:50px; line-height:50px; width:70%;}
-.book-list ul li:first-child{width:30%; font-weight:500; text-align:left;}
-.book-list .option{position:relative; background:#fff; cursor:pointer; padding-right:25px; box-sizing:border-box;}
-.book-list .option::before{content:''; display:block; transform:rotate(45deg) translateY(-100%);
-	position:absolute; right:10px; top:50%;
-	border:4px solid #666; border-top-color:transparent; border-left-color:transparent;}
-.book-list .option ul{position:absolute; right:0; top:100%; border:1px solid #ccc; box-sizing:border-box; background:#fff; width:160px; box-shadow:0px 0px 10px 1px rgb(0 0 0 / 10%);}
-.book-list .option ul li{font-weight:300; text-align:right;height:auto; padding:5px 20px 5px 0; box-sizing:border-box; background:#fff; width:100%; line-height:1.2; white-space:nowrap; cursor:pointer;}
-.book-list .option ul li:last-child{border-bottom:0;}
-#getRoomList{width:100%; border-collapse:collapse;}
-#getRoomList th{border:1px solid #ccc; padding:6px 0;}
-#getRoomList tbody tr{cursor:pointer;}
-#getRoomList tbody tr:hover{background:#f2f2f2;}
-#getRoomList tbody tr td{text-align:center; padding:5px; box-sizing:border-box;}
-    
+	*{margin:0; padding:0;}
+	ul, li{list-style:none;}
+	.fixed::after{content:''; clear:both; display:block;}
+	
+	.O_container .order-list, .O_container .book-list{border-top:2px solid #ccc;}
+	.O_container .book-list{border-bottom:2px solid #ccc;}
+	.book_tap{border-bottom:2px solid #ccc; position:relative; padding:1rem 2.125rem; font-weight:700; font-size:1.125rem;}
+	.taptt_arrow{width:5%; height:100%; position:absolute; right:0; top:0; background:#f2f2f2;}
+	.bi-chevron-down, .bi-chevron-up{position:absolute; left:50%; top:50%; transform:translate(-50%, -50%);}
+	.cart{width:100%;border-top:none; text-align:center;}
+	.cart td, .cart th{padding:0.85rem;}
+	.cart thead tr{border-bottom:1px solid #ccc;}
+	.cart tbody tr{border-bottom:1px solid #eee;}
+	.cart tbody tr:last-child{border-bottom:0;}
+	.cart td{border-right:1px solid #eee;}
+	.cart td:last-child{border-right:0;}
+	.book-list{overflow:hidden;}
+	.book-list li{display:inline-block;}
+	.book-list article{display:block; margin:2.125rem 1.25rem; width:Calc((100% - 1.25rem*3)/2); height:100%; float:left;}
+	.book-list article:last-child{margin-left:0; border:1px solid #ccc;}
+	.book-list article > ul{padding:0 2.125rem; margin:1.25rem;}
+	.book-list article > ul > li:first-child{width:30%;}
+	
 </style>
 </head>
 <body>
 	<%@include file ="header.jsp" %>
 	<div class="container O_container">
 		<section class="order-list">
-			<article>
-				<table class="cart">
-					<thead><tr><th>상품명</th><th>판매가</th><th>수량</th><th>합계</th></tr></thead>
-					<tbody>
-						<c:forEach items="${getCartlist}" var="getCartlist">
-							<tr data-ctCode="${getCartlist.cart_code}">
-								<td>${getCartlist.menu_name}</td>
-								<td data-ctPrice="${getCartlist.menu_price}"><fmt:formatNumber value="${getCartlist.menu_price}" type="number"/></td>
-								<td>${getCartlist.menu_cnt}</td>
-								<td><fmt:formatNumber value="${getCartlist.menu_total}" type="number"/></td>
-							</tr>
-						</c:forEach>
-					</tbody>
-					<tfoot>
-						<tr>
-							<td colspan="2">총 결제금액</td>
-							<td colspan="2" class="cnt_total"></td>
+			<div class="book_tap">
+				주문 목록 확인
+				<div class="taptt_arrow">
+					<div class="arrow arrow_hide">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+			  				<path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+						</svg>
+					</div>
+					<div class="arrow arrow_show" style="display:none;">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-up" viewBox="0 0 16 16">
+	  						<path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
+						</svg>
+					</div>
+				</div>
+			</div>
+			<table class="cart">
+				<thead><tr><th>상품명</th><th>판매가</th><th>수량</th><th>합계</th></tr></thead>
+				<tbody>
+					<c:forEach items="${getCartlist}" var="getCartlist">
+						<tr data-ctCode="${getCartlist.cart_code}">
+							<td>${getCartlist.menu_name}</td>
+							<td data-ctPrice="${getCartlist.menu_price}"><fmt:formatNumber value="${getCartlist.menu_price}" type="number"/></td>
+							<td>${getCartlist.menu_cnt}</td>
+							<td><fmt:formatNumber value="${getCartlist.menu_total}" type="number"/></td>
 						</tr>
-					</tfoot>
-				</table>
-			</article>
+					</c:forEach>
+				</tbody>
+			</table>
 		</section>
-		<section class="book-list">
+		<section class="book-list fixed">
+			<div class="book_tap">
+				예약 정보 작성
+				<div class="taptt_arrow">
+					<div class="arrow arrow_hide">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+			  				<path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+						</svg>
+					</div>
+					<div class="arrow arrow_show" style="display:none;">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-up" viewBox="0 0 16 16">
+	  						<path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
+						</svg>
+					</div>
+				</div>
+			</div>
 			<article>
 				<ul class="fixed">
 					<li>예약지점</li>
-					<li class="option">
-						<p>지점을 선택하세요.</p>
-						<ul style="display:none;">
-						<c:forEach items="${roomtypeList}" var="roomtypeList">
-							<li data-value="${roomtypeList.type_code}">${roomtypeList.type_name}</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle link-dark" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">지점을 선택하세요.</a>
+						<ul class="dropdown-menu">
+						<c:forEach items="${spot}" var="spot">
+							<li class="dropdown-item" data-value="${spot.spot_code}">${spot.spot_name}</li>
 						</c:forEach>
 						</ul>
 					</li>
@@ -91,38 +104,20 @@
                 <ul class="fixed">
 					<li>예약시간</li>
                     <li>
-                        <ul style="display:none;">
-                            <li>오전 9시 ~ 오전 10시</li>
-                            <li>오전 10시 ~ 오전 10시</li>
-                            <li>오전 11시 ~ 오전 10시</li>
-                            <li>오전 12시 ~ 오전 10시</li>
-                            <li>오전 13시 ~ 오전 10시</li>
-                            <li>오전 14시 ~ 오전 10시</li>
-                            <li>오전 15시 ~ 오전 10시</li>
-                            <li>오전 16시 ~ 오전 10시</li>
-                            <li>오전 17시 ~ 오전 10시</li>
-                        </ul>
+						<ul style="display:none;">
+							<c:forEach items="${vtime}" var="vtime">
+								<li data-value="${vtime.time_code}">${vtime.time_name}</li>
+							</c:forEach>
+						</ul>
                     </li>
 				</ul>
 				<ul class="fixed">
 					<li>방문인원</li>
 					<li><input type="number" id="howmany" min="1" value="1">명</li>
 				</ul>
-				<ul class="fixed">
-				<li>주문목록</li>
-				<li>
-					<ul style="display: none;">
-						<c:forEach items="${roomtypeList}" var="roomtypeList">
-							<li>메뉴이름</li>
-							<li data-value="${roomtypeList.type_code}">가격${roomtypeList.type_name}</li>
-							<li>수량</li>
-						</c:forEach>
-					</ul>
-				</li>
-			</ul>
-			<ul>
-                    <li>예약자명</li>
-                    <li><input type="text" class="get_booker" name="booker" value="${userSession.name}" readonly></li>
+				<ul>
+					<li>예약자명</li>
+					<li><input type="text" class="get_booker" name="booker" value="${userSession.name}" readonly></li>
                 </ul>
                 <ul>
                     <li>연락처</li>
@@ -132,44 +127,14 @@
                     <li>요청사항</li>
                     <li><textarea>글자수제한두기</textarea></li>
                 </ul>
-                <ul>
-                    <li>총 주문 금액</li>
-                    <li>2500원</li>
-                </ul>
-                <div><button>form안에 넣고 전송할수도</button></div>
 			</article>
-			<!-- <article>
-				<form action="/project/insertBook" method="POST">
-					<ul>
-						<li>예약지점</li>
-						<li><input type="text" class="get_roomtype" name="roomtype" placeholder="자동입력란" readonly></li>
-					</ul>
-					<ul>
-						<li>방문일</li>
-						<li><input type="text" class="get_in_date" name="in_date" placeholder="자동입력란" readonly></li>
-					</ul>
-	
-					<ul>
-						<li>방문인원</li>
-						<li><input type="number" class="get_howmany" name="howmany" placeholder="자동입력란" readonly>명</li>
-					</ul>
-					<ul>
-						<li>예약자명</li>
-						<li><input type="text" class="get_booker" name="booker" value="${userSession.name}" readonly></li>
-					</ul>
-					<ul>
-						<li>연락처</li>
-						<li><input type="text" class="get_mobile" name="mobile" value="${userSession.mobile}"></li>
-					</ul>
-					<ul>
-						<li>비용</li>
-						<li><input type="text" class="get_howmuch" name="howmuch" placeholder="자동입력란" readonly>원</li>
-					</ul>
-					<div>
-						<input type="submit" value="예약">
-					</div>
-				</form>
-			</article> -->
+			<article>
+				<ul>
+					<li>총 주문 금액</li>
+					<li>2500원</li>
+				</ul>
+				<div><button>form안에 넣고 전송할수도</button></div>
+			</article>
 		</section>
 	</div>
 	<%@include file ="footer.jsp" %>
