@@ -27,7 +27,7 @@
 		</div>
 		<div>
 			<label>지점</label>
-			<input name="spot" readonly="readonly" value="${b.spot_code}">
+			<input name="spot" readonly="readonly" value="${b.spot_name}">
 		</div>
 		<div>
 			<label>메뉴</label>
@@ -49,22 +49,26 @@
 			<button id="listBtn">목록페이지</button>
 			<c:if test="${userid==b.writer}">
 				<button id="updateBtn">수정</button>
+				<button id="deleteBtn">삭제</button>
 			</c:if>
-			<button id="deleteBtn">삭제</button>
+			<button id="cmtBtn">댓글</button>
 		</div>
 	</div>
 	<%@include file ="footer.jsp" %>
 	<script>
 		$(document)
 		.on('click',"#listBtn",function() {
-			document.location="/hotel/board_list";
+			document.location="/outback/board_list";
 		})
 		.on('click','#updateBtn',function() {
-			document.location="/hotel/board_update?board_id="+$('#board_id').val();
+			document.location="/outback/board_update?board_id="+$('#board_id').val();
 		})
 		.on('click','#deleteBtn',function() {
 			if(!confirm("삭제하시겠습니까?")) return false;
-			document.location="/hotel/board_delete?board_id="+$('#board_id').val();
+			document.location="/outback/board_delete?board_id="+$('#board_id').val();
+		})
+		.on('click','#cmtBtn',function() {
+			document.location="/outback/reBoard?board_id="+$('#board_id').val();
 		})
 	</script>
 </body>

@@ -47,4 +47,11 @@
 	<delete id="deleteBoard">
 		delete from board where board_id=#{board_id}
 	</delete>
+	
+	<!-- 댓글 -->
+	<select id="reBoard" resultType="com.human.outback.ReBoard">
+		select writer,content,re_date
+		from re_board
+		where board_id=#{board_id}
+	</select>
 </mapper>

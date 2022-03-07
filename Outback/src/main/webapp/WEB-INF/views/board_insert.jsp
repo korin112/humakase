@@ -52,7 +52,7 @@
 	<script>
 		$(document)
 		.ready(function() {
-			$.ajax({url:'/hotel/spotList',
+			$.ajax({url:'/outback/spotList',
 				data:{},
 				method:'GET',
 				datatype:'json',
@@ -66,7 +66,7 @@
 				}
 			});
 			
-			$.ajax({url:'/hotel/menuList',
+			$.ajax({url:'/outback/menuList',
 					data:{},
 					method:'GET',
 					datatype:'json',
@@ -85,14 +85,14 @@
 			let oParam = {title:$('#title').val(), writer:$('#writer').val(),
 						  vdate:$('#vdate').val(), spot:$('#spot').val(),
 						  menu:$('#menu').val(), content:$('#content').val()};
-			$.ajax({url:'/hotel/board_insert',
+			$.ajax({url:'/outback/board_insert',
 				data:oParam,
 				method:'POST',
 				datatype:'json',
 				success:function(txt) {
 					if(txt=="ok") {
 						alert('작성 완료했습니다.');
-						document.location='/hotel/board_list';
+						document.location='/outback/board_list';
 					} else {
 						alert('다시 작성해주세요.');
 					}
@@ -102,7 +102,7 @@
 		
 		.on('click','#cancel',function() {
 			if(!confirm("취소하시면 작성한 모든 내용이 사라집니다. 취소하시겠습니까?")) return false;
-			document.location="/hotel/board_list";
+			document.location="/outback/board_list";
 		})
 	</script>
 </body>

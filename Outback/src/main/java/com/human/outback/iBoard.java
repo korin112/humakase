@@ -14,4 +14,7 @@ public interface iBoard {
 	Board getBoard(int board_id);
 	void updateBoard(int board_id, String title, String content);
 	void deleteBoard(int board_id);
+	
+	// 댓글
+	ArrayList<ReBoard> reBoard(int board_id);
 }

@@ -82,7 +82,7 @@
 			}
 		})
 		.on('click','#insert',function() {
-			document.location="/hotel/board_insert";
+			document.location="/outback/board_insert";
 		})
 		.on('click','#getBoard',function() {
 			var tr=$(this);
@@ -91,14 +91,14 @@
 			
 			console.log(board_id);
 			
-			document.location="/hotel/getBoard?board_id="+board_id;
+			document.location="/outback/getBoard?board_id="+board_id;
 		})
 		
 		// 페이지 이동
 		.on('click','#pageInfo a',function(e) {
 			e.preventDefault();
 			$('#move').find("input[name='pageNum']").val($(this).attr("href"));
-			$('#move').attr("action", "/hotel/board_list");
+			$('#move').attr("action", "/outback/board_list");
 			$('#move').submit();
 		})
 	</script>

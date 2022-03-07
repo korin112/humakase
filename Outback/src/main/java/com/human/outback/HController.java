@@ -30,7 +30,7 @@ public class HController {
 		m.addAttribute("b_list",board.boardList(skip,page.getAmount()));
 		
 		int total = board.getTotal();
-		System.out.println(total);
+		//System.out.println(total);
         PageMaker p = new PageMaker(page, total);
         m.addAttribute("p",p);
         
@@ -169,5 +169,15 @@ public class HController {
 			ja.add(jo);
 		}
 		return ja.toString();
+	}
+	
+	// 댓글
+	@RequestMapping(value="/reBoard")
+	public String reBoard(Model m, HttpServletRequest hsr) {
+		int board_id=Integer.parseInt(hsr.getParameter("board_id"));
+		
+		iBoard re=sqlSession.getMapper(iBoard.class);
+		m.addAttribute("re",re.reBoard(board_id));
+		return "re_board";
 	}
 }

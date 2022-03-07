@@ -25,7 +25,7 @@
 		</div>
 		<div>
 			<label>지점</label>
-			<input name="spot" readonly="readonly" value="${b.spot_code}">
+			<input name="spot" readonly="readonly" value="${b.spot_name}">
 		</div>
 		<div>
 			<label>메뉴</label>
@@ -53,10 +53,10 @@
 		$(document)
 		.on('click','#cancel',function() {
 			if(!confirm("취소하시면 이전 화면으로 돌아갑니다. 취소하시겠습니까?")) return false;
-			document.location="/hotel/getBoard?board_id="+$('#board_id').val();
+			document.location="/outback/getBoard?board_id="+$('#board_id').val();
 		})
 		.on('click','#update',function() {
-			$.ajax({url:'/hotel/board_update',
+			$.ajax({url:'/outback/board_update',
 					data:{board_id:$('#board_id').val(),
 						  title:$('#title').val(),
 						  content:$('#content').val()},
