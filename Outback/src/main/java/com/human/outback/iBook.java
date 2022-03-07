@@ -3,12 +3,13 @@ package com.human.outback;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 public interface iBook {
-	ArrayList<Cart> getCart();
+	ArrayList<Cart> getCart(String userid);
 	void updateCart(int cart_code, int menu_cnt);
 	void deleteCart(String cart_code);
-	ArrayList<Cart> getBooklist(List<Cart> arCart);
-//	public List<Cart> getBooklist(List<Cart> cart);
-//	public List<CartList> getBooklist(List<Cart> cart);
-//	Cart getBooklist(Cart cart);
+	ArrayList<Cart> getBooklist(@Param("userid")String userid, @Param("list")List<Cart> arCart);
+	Member getUserSession(String userid);
+	ArrayList<Spot> getSpot();
 }

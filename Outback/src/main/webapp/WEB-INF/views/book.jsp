@@ -7,13 +7,12 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>- Book -</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <link rel="stylesheet" href="${path}/resources/css/style.css">
 <style>
 	*{margin:0; padding:0;}
 	ul, li{list-style:none;}
-	li{display:inline-block;}
 	.fixed::after{content:''; clear:both; display:block;}
 	
 	.O_container .order-list, .O_container .book-list{border-top:2px solid #ccc;}
@@ -29,9 +28,11 @@
 	.cart td{border-right:1px solid #eee;}
 	.cart td:last-child{border-right:0;}
 	.book-list{overflow:hidden;}
+	.book-list li{display:inline-block;}
 	.book-list article{display:block; margin:2.125rem 1.25rem; width:Calc((100% - 1.25rem*3)/2); height:100%; float:left;}
 	.book-list article:last-child{margin-left:0; border:1px solid #ccc;}
-	.book-list ul{padding:0 2.125rem; margin-bottom:0;}
+	.book-list article > ul{padding:0 2.125rem; margin:1.25rem;}
+	.book-list article > ul > li:first-child{width:30%;}
 	
 </style>
 </head>
@@ -87,11 +88,11 @@
 			<article>
 				<ul class="fixed">
 					<li>예약지점</li>
-					<li class="option">
-						<p>지점을 선택하세요.</p>
-						<ul style="display:none;">
-						<c:forEach items="${roomtypeList}" var="roomtypeList">
-							<li data-value="${roomtypeList.type_code}">${roomtypeList.type_name}</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle link-dark" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">지점을 선택하세요.</a>
+						<ul class="dropdown-menu">
+						<c:forEach items="${spot}" var="spot">
+							<li class="dropdown-item" data-value="${spot.spot_code}">${spot.spot_name}</li>
 						</c:forEach>
 						</ul>
 					</li>
@@ -114,9 +115,9 @@
 					<li>방문인원</li>
 					<li><input type="number" id="howmany" min="1" value="1">명</li>
 				</ul>
-			<ul>
-                    <li>예약자명</li>
-                    <li><input type="text" class="get_booker" name="booker" value="${userSession.name}" readonly></li>
+				<ul>
+					<li>예약자명</li>
+					<li><input type="text" class="get_booker" name="booker" value="${userSession.name}" readonly></li>
                 </ul>
                 <ul>
                     <li>연락처</li>
