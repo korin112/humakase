@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="true" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +12,8 @@
 <form method="POST" action="/outback/login_check" id=frmLogin>
 <table align=center valign=middle>
 <h3 align=center>로그인을 진행해주세요</h3>
-<tr><td>아이디</td><td><input type=text name=userid id=userid></td></tr>
+<tr><td>아이디</td><td><input type=text name=userid id=userid>
+					 <input type=hidden name=user id=user value="${fail_user}"></td></tr>
 <tr><td>비밀번호</td><td><input type=password name=passcode id=passcode></td></tr>
 <tr><td colspan=2 align=center><input type=submit value="로그인">&nbsp;
 				<input type=button value="취소" name= cancel id=cancel>&nbsp;
@@ -18,6 +21,11 @@
 </td></tr>
 </table>
 </form>
+<c:if test="${fail_user=='fail'}">
+	<script type="text/javascript">
+		alert("로그인에 실패했습니다.");
+	</script>
+</c:if>
 </body>
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <script>
@@ -34,7 +42,7 @@ $(document)
 })
 //취소 시 홈화면으로 이동
 .on('click','#cancel',function(){
-	document.location="/outback/";
+	document.location="/outback/home";
 	return false;
 })
 //회원가입.jsp로 이동

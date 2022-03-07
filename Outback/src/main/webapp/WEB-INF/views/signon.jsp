@@ -112,7 +112,7 @@ $(document)
 
 //취소시 홈
 .on('click','#btnCancel',function(){
-	document.location="/outback/login";
+	document.location="/outback/home";
 	return false;
 })
 //클릭시 비우기
