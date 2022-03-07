@@ -31,8 +31,7 @@
 	    <div>
 	        <label>지점</label>
 	        <%-- booking table spot code, spot name --%>
-<!-- 	        <select name="spot"></select> -->
-			<input type=text name="spot" id="spot">
+	        <select id="spot" name="spot"></select>
 	    </div>
 	    <div>
 	        <label>메뉴</label>
@@ -53,6 +52,20 @@
 	<script>
 		$(document)
 		.ready(function() {
+			$.ajax({url:'/hotel/spotList',
+				data:{},
+				method:'GET',
+				datatype:'json',
+				success:function(txt) {
+					console.log(txt);
+					for(i=0;i<txt.length;i++) {
+						let str='<option value='+txt[i]['spot_code']+'>'
+									+txt[i]['spot_name']+'</option>';
+						$('#spot').append(str);
+					}
+				}
+			});
+			
 			$.ajax({url:'/hotel/menuList',
 					data:{},
 					method:'GET',
@@ -78,7 +91,7 @@
 				datatype:'json',
 				success:function(txt) {
 					if(txt=="ok") {
-						alert('작성 완료.');
+						alert('작성 완료했습니다.');
 						document.location='/hotel/board_list';
 					} else {
 						alert('다시 작성해주세요.');
@@ -88,6 +101,7 @@
 		})
 		
 		.on('click','#cancel',function() {
+			if(!confirm("취소하시면 작성한 모든 내용이 사라집니다. 취소하시겠습니까?")) return false;
 			document.location="/hotel/board_list";
 		})
 	</script>

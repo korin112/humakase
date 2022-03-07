@@ -20,6 +20,10 @@
 			<input id="title" name="title" value="${b.title}">
 		</div>
 		<div>
+			<label>방문일</label>
+				<input name="updateDate" readonly="readonly" value='<fmt:formatDate pattern="yyyy/MM/dd" value="${b.vdate}"/>'>
+		</div>
+		<div>
 			<label>지점</label>
 			<input name="spot" readonly="readonly" value="${b.spot_code}">
 		</div>
@@ -28,7 +32,7 @@
 			<input name="menu" readonly="readonly" value="${b.menu_name}">
 		</div>
 		<div>
-			<label>내용</label><br><br>
+			<label>내용</label><br>
 			<textarea rows="3" id="content" name="content">${b.content}</textarea>
 		</div>
 		<div>
@@ -48,6 +52,7 @@
 	<script>
 		$(document)
 		.on('click','#cancel',function() {
+			if(!confirm("취소하시면 이전 화면으로 돌아갑니다. 취소하시겠습니까?")) return false;
 			document.location="/hotel/getBoard?board_id="+$('#board_id').val();
 		})
 		.on('click','#update',function() {
@@ -61,7 +66,7 @@
 						console.log($('#board_id').val()+","+$('#title').val()+","+$('#content').val());
 						console.log(txt);
 						if(txt=="ok") {
-							alert('수정 완료.');
+							alert('수정 완료했습니다.');
 							document.location='/hotel/board_list';
 						} else {
 							alert('다시 수정해주세요.');

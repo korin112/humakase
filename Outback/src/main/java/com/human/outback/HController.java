@@ -3,6 +3,7 @@ package com.human.outback;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +24,25 @@ public class HController {
 	
 	// 게시판 목록
 	@RequestMapping(value = "/board_list")
-	public String BoardList(Model m) {
-		iBoard board=sqlSession.getMapper(iBoard.class);	
-		m.addAttribute("b_list",board.boardList());
+	public String BoardList(Model m, Page page) {
+		iBoard board=sqlSession.getMapper(iBoard.class);
+		int skip=(page.getPageNum()-1)*page.getAmount();
+		m.addAttribute("b_list",board.boardList(skip,page.getAmount()));
+		
+		int total = board.getTotal();
+		System.out.println(total);
+        PageMaker p = new PageMaker(page, total);
+        m.addAttribute("p",p);
+        
 		return "board_list";
 	}
 		
 	// 게시판 조회
 	@RequestMapping("/getBoard")
-	public String Board(Model m, int board_id) {
+	public String Board(HttpSession session, Model m, int board_id) {
+		String userid=(String)session.getAttribute("userid");
+		m.addAttribute("userid",userid);
+		
 		iBoard board=sqlSession.getMapper(iBoard.class);	
 		m.addAttribute("b",board.getBoard(board_id));
 		return "board";
@@ -119,12 +130,25 @@ public class HController {
 		// where 예약 날짜
 		return "";
 	}
-		
-	@RequestMapping(value = "/spotList", method = RequestMethod.GET)
+	
+	@ResponseBody
+	@RequestMapping(value = "/spotList",  produces="application/json;charset=utf-8")
 	public String Spot() {
 		// where 예약 날짜
 		// booking table -> spot
-		return "";
+		
+		// test : spot table에서 불러오기
+		iBoard spot=sqlSession.getMapper(iBoard.class);
+		ArrayList<Board> s=spot.spotList();
+			
+		JSONArray ja=new JSONArray();
+		for(int i=0;i<s.size();i++) {
+			JSONObject jo=new JSONObject();
+			jo.put("spot_code", s.get(i).getSpot_code());
+			jo.put("spot_name", s.get(i).getSpot_name());
+			ja.add(jo);
+		}
+		return ja.toString();
 	}
 		
 	@ResponseBody

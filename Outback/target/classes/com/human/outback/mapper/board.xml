@@ -3,6 +3,10 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
 <mapper namespace="com.human.outback.iBoard">
+	<select id="spotList" resultType="com.human.outback.Board">
+		select spot_code, spot_name from spot
+	</select>
+	
 	<select id="menuList" resultType="com.human.outback.Board">
 		select menu_code, menu_name from menu
 	</select>
@@ -14,15 +18,23 @@
 	
 	<!-- board list -->
 	<select id="boardList" resultType="com.human.outback.Board">
-		select a.board_id,a.spot_code,b.menu_name,a.title,a.writer,a.created
-		from board a, menu b
+    	select a.board_id,a.title,c.spot_name,b.menu_name,a.content,a.writer,a.created
+		from board a, menu b, spot c
 		where a.menu_code=b.menu_code
+		and a.spot_code=c.spot_code
+		limit #{param1},#{param2}
 	</select>
 	
+	<select id="getTotal" resultType="int">
+        select count(*) from board
+    </select>
+    
+    <!-- 내용 보기 -->
 	<select id="getBoard" resultType="com.human.outback.Board">
-		select a.board_id,a.title,a.spot_code,b.menu_name,a.content,a.writer,a.updated
-		from board a, menu b
+		select a.board_id,a.vdate,a.title,c.spot_name,b.menu_name,a.content,a.writer,a.updated
+		from board a, menu b, spot c
 		where a.menu_code=b.menu_code
+		and a.spot_code=c.spot_code
 		and board_id=#{board_id}
 	</select>
 	
