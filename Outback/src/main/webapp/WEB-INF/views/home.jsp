@@ -4,7 +4,7 @@
     pageEncoding="UTF-8"%>
 <html>
 <head>
-	
+<title>Home</title>	
 </head>
 <jsp:include page="header.jsp" />
 <body>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html lang="ko">
@@ -18,9 +19,9 @@
     .book-list li:first-child{width:150px;}
     .book-list li{width:450px;}
     article{display:inline-block;text-align:center;}
-    .book-list, .order-list{font-size:1rem; display:inline-block;}
-    .order-list{margin-right:calc(100% - (601px*2))}
-.book-list article, .order-list article {width:595px; box-sizing:border-box;border:1px solid #ddd; padding:40px; display:inline-block; vertical-align:top; height:650px;}
+    .book-list, .order-list{font-size:1rem;}
+    table{width:100%;}
+.book-list article, .order-list article {width:100%; box-sizing:border-box;border:1px solid #ddd; padding:40px; display:inline-block; vertical-align:top; height:650px;}
 .book-list article:first-child{margin-right:6px;}
 .book-list input{font-size:1rem; border:none; text-align:right;}
 .book-list input[type=button]{margin:10px 0; cursor:pointer; width:100%; text-align:center; padding:10px 0;}
@@ -49,7 +50,25 @@
 	<div class="container O_container">
 		<section class="order-list">
 			<article>
-				
+				<table class="cart">
+					<thead><tr><th>상품명</th><th>판매가</th><th>수량</th><th>합계</th></tr></thead>
+					<tbody>
+						<c:forEach items="${getCartlist}" var="getCartlist">
+							<tr data-ctCode="${getCartlist.cart_code}">
+								<td>${getCartlist.menu_name}</td>
+								<td data-ctPrice="${getCartlist.menu_price}"><fmt:formatNumber value="${getCartlist.menu_price}" type="number"/></td>
+								<td>${getCartlist.menu_cnt}</td>
+								<td><fmt:formatNumber value="${getCartlist.menu_total}" type="number"/></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="2">총 결제금액</td>
+							<td colspan="2" class="cnt_total"></td>
+						</tr>
+					</tfoot>
+				</table>
 			</article>
 		</section>
 		<section class="book-list">

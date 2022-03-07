@@ -4,6 +4,21 @@
 	
 <mapper namespace="com.human.outback.iBook">
 <select id="getCart" resultType="com.human.outback.Cart">
-	select cart_code, menu_name, menu_cnt, menu_price, menu_total from cart where userid = 'yoon07'
+	select cart_code, menu_name, menu_cnt, menu_price, menu_total from cart where userid = 'yoon07' order by cart_code desc
+</select>
+<update id="updateCart">
+	update cart set menu_cnt = #{param2}, menu_total = menu_price * #{param2} where cart_code = #{param1}
+</update>
+<delete id="deleteCart">
+	delete from cart where cart_code = #{param1}
+</delete>
+<select id="getBooklist" resultType="com.human.outback.Cart" parameterType="java.util.List">
+	select cart_code, menu_name, menu_cnt, menu_price, menu_total from cart
+	where userid = 'yoon07' 
+	and cart_code in
+	<foreach collection="list" item="item" open="(" close=")" separator=",">
+		#{item.cart_code}
+	</foreach>
+	order by cart_code desc
 </select>
 </mapper>
