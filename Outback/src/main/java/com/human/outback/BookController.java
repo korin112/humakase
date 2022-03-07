@@ -37,7 +37,9 @@ public class BookController {
 		Member userSession = ibook.getUserSession(userid);
 		model.addAttribute("userSession",userSession);
 		ArrayList<Spot> getSpot = ibook.getSpot();
+		ArrayList<Vtime> getVtime = ibook.getVtime();
 		model.addAttribute("spot", getSpot);
+		model.addAttribute("vtime", getVtime);
 		
 		return "book";
 	}

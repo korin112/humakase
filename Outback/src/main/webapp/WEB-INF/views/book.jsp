@@ -32,6 +32,7 @@
 	.book-list article{display:block; margin:2.125rem 1.25rem; width:Calc((100% - 1.25rem*3)/2); height:100%; float:left;}
 	.book-list article:last-child{margin-left:0; border:1px solid #ccc;}
 	.book-list article > ul{padding:0 2.125rem; margin:1.25rem;}
+	.book-list article > ul > li{width:69%;}
 	.book-list article > ul > li:first-child{width:30%;}
 	
 </style>
@@ -88,8 +89,10 @@
 			<article>
 				<ul class="fixed">
 					<li>예약지점</li>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle link-dark" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">지점을 선택하세요.</a>
+					<li class="dropdown option">
+						<a href="#" class="dropdown-toggle link-dark" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							지점을 선택하세요
+						</a>
 						<ul class="dropdown-menu">
 						<c:forEach items="${spot}" var="spot">
 							<li class="dropdown-item" data-value="${spot.spot_code}">${spot.spot_name}</li>
@@ -101,15 +104,18 @@
 					<li>방문일</li>
                     <li><input type="date" id="in_date"></li>
 				</ul>
-                <ul class="fixed">
+				<ul class="fixed">
 					<li>예약시간</li>
-                    <li>
-						<ul style="display:none;">
-							<c:forEach items="${vtime}" var="vtime">
-								<li data-value="${vtime.time_code}">${vtime.time_name}</li>
-							</c:forEach>
+					<li class="dropdown option">
+						<a href="#" class="dropdown-toggle link-dark" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							방문하실 시간을 선택해주세요.
+						</a>
+						<ul class="dropdown-menu">
+						<c:forEach items="${vtime}" var="vtime">
+							<li class="dropdown-item" data-value="${vtime.time_code}">${vtime.time_name}</li>
+						</c:forEach>
 						</ul>
-                    </li>
+					</li>
 				</ul>
 				<ul class="fixed">
 					<li>방문인원</li>
@@ -136,6 +142,7 @@
 				<div><button>form안에 넣고 전송할수도</button></div>
 			</article>
 		</section>
+		
 	</div>
 	<%@include file ="footer.jsp" %>
 	<script>
@@ -164,20 +171,20 @@
 		}
 		
 		$(document)
-		.on('click', '.option', function(){
-			$('.option > ul').slideToggle();
-			return false;
-		})
-		.on('click',function(e){ //문서 body를 클릭했을때
-				if(e.target.className =="option"){
-					return false;
-				}
-				$('.option > ul').slideUp();
-		})
-		.on('click', '.option > ul > li', function(){
-			$('.option > p').text($(this).text()); 
-			$('.option > p').attr('data-value',$(this).attr('data-value'));
-		})
+// 		.on('click', '.option', function(){
+// 			$('.option > ul').slideToggle();
+// 			return false;
+// 		})
+// 		.on('click',function(e){ //문서 body를 클릭했을때
+// 				if(e.target.className =="option"){
+// 					return false;
+// 				}
+// 				$('.option > ul').slideUp();
+// 		})
+// 		.on('click', '.option > ul > li', function(){
+// 			$('.option > p').text($(this).text()); 
+// 			$('.option > p').attr('data-value',$(this).attr('data-value'));
+// 		})
 		.on('click', '#btnView', function(){
 			if($('.option p').attr('data-value') == null){
 				alert('객실 종류를 선택해주세요.');

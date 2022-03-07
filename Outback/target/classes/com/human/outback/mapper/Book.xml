@@ -27,4 +27,7 @@
 <select id="getSpot" resultType="com.human.outback.Spot">
 	select spot_code, spot_name, spot_max from spot
 </select>
+<select id="getVtime" resultType="com.human.outback.Vtime">
+	select time_code, time_name from vtime
+</select>
 </mapper>

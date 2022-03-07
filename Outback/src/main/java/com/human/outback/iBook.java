@@ -12,4 +12,5 @@ public interface iBook {
 	ArrayList<Cart> getBooklist(@Param("userid")String userid, @Param("list")List<Cart> arCart);
 	Member getUserSession(String userid);
 	ArrayList<Spot> getSpot();
+	ArrayList<Vtime> getVtime();
 }
