@@ -20,10 +20,10 @@
 	          <a class="nav-link" aria-current="page" href="">지점위치</a>
 	        </li>
 	         <li class="nav-item dropdown">
-	          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+	          <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 	            메뉴소개
 	          </a>
-	          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+	          <ul class="dropdown-menu  dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
 	            <li><a class="dropdown-item" href="http://localhost:8080/outback/steak">Steak</a></li>
 	            <li><a class="dropdown-item" href="http://localhost:8080/outback/pasta">Pasta</a></li>
 	            <li><a class="dropdown-item" href="http://localhost:8080/outback/sidemenu">Side-menu</a></li>
@@ -33,9 +33,9 @@
 	        <li class="nav-item">
 	          <a class="nav-link" href="">리뷰게시판</a>
 	        </li>
-	        <li class="nav-item">
-	          <a class="nav-link" href="">예약하기</a>
-	        </li>
+			<li class="nav-item">
+				<a class="nav-link" href="/outback/cart">예약하기</a>
+			</li>
 	        <c:if test="${userid==null}">
 	        <li class="nav-item">
 	          <a class="nav-link" href="/outback/login">로그인</a>

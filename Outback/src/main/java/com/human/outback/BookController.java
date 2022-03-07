@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 
+
 @Controller
 public class BookController {
 	
@@ -23,62 +25,30 @@ public class BookController {
 
 	@RequestMapping(value="/book", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
 	public String bookPageGET(HttpServletRequest hsr, CartList cartlist, Model model) {
- 
-//		System.out.println("memberId : " + memberId);
+		HttpSession session = hsr.getSession();
+		String userid = (String) session.getAttribute("userid");
 		iBook ibook = sqlSession.getMapper(iBook.class);
-		System.out.println("controller : " + cartlist.getCart());
-		System.out.println("뭐나오지? : " + cartlist);
+//		System.out.println("controller : " + cartlist.getCart());
+//		System.out.println("뭐나오지? : " + cartlist);
 		List<Cart> arCart = cartlist.getCart();
-		System.out.println(arCart);
-		ArrayList<Cart> getCartlist = ibook.getBooklist(arCart);
+//		System.out.println(arCart);
+		ArrayList<Cart> getCartlist = ibook.getBooklist(userid, arCart);
 		model.addAttribute("getCartlist", getCartlist);
-//		for(int i = 0; i < arCart.size(); i++) {
-//			System.out.println(arCart.get(i));
-//			
-//			ArrayList<Cart> getCartlist = ibook.getBooklist(arCart.get(i));
-//			System.out.println("테스트" + getCartlist);
-//			model.addAttribute("getCartlist", getCartlist);
-//		}
-			
-			
-//		iBook ibook = sqlSession.getMapper(iBook.class);
-//		List<Cart> cart = ibook.getBooklist(List<Cart> cart);
-//		public List<Cart> getBooklist(List<Cart> cart);
-//		public List<OrderPageItemDTO> getGoodsInfo(List<OrderPageItemDTO> orders)
-//		List<Cart> getCart = new ArrayList<Cart>();
-//		System.out.println(getCart);
-//		for(Cart ct : cart) {
-//			OrderPageItemDTO goodsInfo = orderMapper.getGoodsInfo(ord.getBookId());
-//			goodsInfo.setBookCount(ord.getBookCount());	
-//			goodsInfo.initSaleTotal();
-//			getCart.add(goodsInfo);
-//		}		
-//		
-//		return result;
-			
-//			return "/order";
-//		}
-
+		Member userSession = ibook.getUserSession(userid);
+		model.addAttribute("userSession",userSession);
+		ArrayList<Spot> getSpot = ibook.getSpot();
+		model.addAttribute("spot", getSpot);
+		
 		return "book";
 	}
 	
-//	@RequestMapping(value="/book", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
-//	public String book(HttpServletRequest hsr, Model model) {
-//		iBook ibook = sqlSession.getMapper(iBook.class);
-//		ArrayList<Cart> cart = ibook.getCart();
-//		String booktest = "booktest" + "0";
-//		int cart_code = Integer.parseInt(hsr.getParameter(booktest));
-//		ArrayList<Cart> cart2 = ibook.getBooklist(cart_code);
-//		model.addAttribute("cart2", cart2);
-//		System.out.println(model);
-//		System.out.println(cart_code);
-//		
-//		return "book";
-//	}
 	@RequestMapping("/cart")
-	public String cart(Model model) {
+	public String cart(HttpServletRequest hsr, Model model) {
+		HttpSession session = hsr.getSession();
+		String userid = (String) session.getAttribute("userid");
+		
 		iBook ibook = sqlSession.getMapper(iBook.class);
-		ArrayList<Cart> cart = ibook.getCart();
+		ArrayList<Cart> cart = ibook.getCart(userid);
 		model.addAttribute("getCart", cart);
 		
 		return "cart";
