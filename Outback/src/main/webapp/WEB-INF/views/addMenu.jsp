@@ -1,18 +1,14 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@include file="header.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
 <style type="text/css">
-h1{text-align:center;
-   font-color:white;
-   font-size: 30px;
-   font-family: Segoe Print;}
+
 </style>
-<h1>메뉴 관리</h1>
-<hr>
+
 <meta charset="UTF-8">
 <title>메뉴 관리</title>
 </head>
