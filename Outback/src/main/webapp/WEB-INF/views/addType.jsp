@@ -6,53 +6,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<link rel="stylesheet" href="${path}/resources/css/style.css">
-<style type="text/css">
-.menu{width:100%;}
-.menu tfoot{font-weight:500;}
-.menu thead tr, .cart tfoot tr{border-top:2px solid #ccc; border-bottom: 2px solid #ccc;}
-.menu thead tr th, .cart tbody tr td, .cart tfoot tr td{padding:1.25rem 0; text-align:center;}
-.menu thead tr th:first-child{width:10%;}
-.menu tbody tr td > div {position:relative; display:inline-block; vertical-align:top;}
-/* .menu tbody input[type=number]{width:50px; position:relative;}
-.menu tbody input[type=button]{display:inline-block; position:absolute; left:0; top:0;} */
-.ct_btn_wrap {text-align:right; margin-top:1.25rem;}
-</style>
 <meta charset="UTF-8">
 <title>메뉴 타입 관리</title>
 </head>
 <body>
 <%@include file="header.jsp"%>
-<div class="container O_container">
-	<table class="menu">
-	<thead><tr><th>메뉴타입 관리</th></tr> </thead>
-	<tbody>
-		<tr>
-			<td><select id=getType style='width: 300px;' size=15>
-
-			</select></td>
-			<td>
-				<form id=frmType action="/outback/addType">
-					<table>
-						<tr>
-							<td align=right>코드 :</td>
-							<td><input placeholder="목록중 하나를 선택해주세요." type=text id=mtype_code name=mtype_code></td>
-						</tr>
-						<tr>
-							<td align=right>코드명 :</td>
-							<td><input placeholder="타입 이름을 입력해주세요." type=text name=mtype_name></td>
-						</tr>
-						<tr>
-							<td colspan=2 align=center><input type=submit value='추가'>
-								<input type=button id=btnDelete name=btnDelete value=삭제>
-								<input type=reset value=비우기></td>
-						</tr>
-					</table>
-				</form>
-				</tbody>
-	</table>
+	<form id=frmType action="/outback/addType">
+	<div style="width:470px; position:relative; margin:auto; margin-top:40px;">
+		<h1 style="text-align:center; font-weight:bold; font-size:40px; letter-spacing:6px;">메뉴타입 관리</h1>
+      	<h2 style="text-align:center; font-weight:bold; color:#ccc; margin-bottom:30px; font-size:22px; letter-spacing:4px;">Menu Type Control</h2>
+	<div class="input-group mb-3">
+     	<span class="input-group-text" id="inputGroup-sizing-default" style="width:120px;">Mtype_Code</span>
+     	<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+           id=mtype_code name=mtype_code readonly placeholder='타입코드를 선택해주세요'>
+   </div>
+   <div class="input-group mb-3">
+     <span class="input-group-text" id="inputGroup-sizing-default" style="width:120px;">Mtype_Name</span>
+     <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+           id=mtype_name name=mtype_name placeholder='타명을 입력해주세요'>
+   </div>
+   <div style="float:right; margin-bottom:15px;">
+               <input type="submit" class="btn btn-secondary" value="Add">
+               <button type="button" class="btn btn-secondary" id=btnDelete >Delete</button>
+               <button type="reset" class="btn btn-secondary" >Reset</button>
+      </div>
+      <div class="selectfont">   
+      <select class="form-select" multiple aria-label="multiple select example" id=getType  size=15
+            style="margin-bottom:15px; padding:5px 5px 5px 5px;">
+      </select>
+      </div>
 	</div>
+	</form>
 	<%@include file ="footer.jsp" %>
 </body>
 <script src="http://code.jquery.com/jquery-3.5.0.js"></script>

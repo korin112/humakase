@@ -6,66 +6,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<link rel="stylesheet" href="${path}/resources/css/style.css">
-<style type="text/css">
-.menu{width:100%;}
-.menu tfoot{font-weight:500;}
-.menu thead tr, .cart tfoot tr{border-top:2px solid #ccc; border-bottom: 2px solid #ccc;}
-.menu thead tr th, .cart tbody tr td, .cart tfoot tr td{padding:1.25rem 0; text-align:center;}
-.menu thead tr th:first-child{width:10%;}
-.menu tbody tr td > div {position:relative; display:inline-block; vertical-align:top;}
-/* .menu tbody input[type=number]{width:50px; position:relative;}
-.menu tbody input[type=button]{display:inline-block; position:absolute; left:0; top:0;} */
-.ct_btn_wrap {text-align:right; margin-top:1.25rem;}
-
-</style>
-
 <meta charset="UTF-8">
 <title>메뉴 관리</title>
 </head>
 <body>
 	<%@include file="header.jsp"%>
-	<div class="container O_container">
-		<table class="menu">
-		<thead><tr><th>메뉴 관리</th></tr> </thead>
-		<tbody>
-			<tr>
-				<td><select id=getMenu style='width: 300px;' size=15>
-
-				</select></td>
-				<td>
-					<form id=frmMenu action="/outback/addMenu">
-						<table>
-							<tr>
-								<td align=right>코드 :</td>
-								<td><input placeholder="목록중 하나를 선택해주세요." type=text id=menu_code name=menu_code></td>
-							</tr>
-							<tr>
-								<td align=right>메뉴 타입 :</td>
-								<td><select id=menu_type name=menu_type>
-								</select></td>
-							</tr>
-							<tr>
-								<td align=right>메뉴명 :</td>
-								<td><input placeholder="메뉴명을 입력해주세요." type=text name=menu_name></td>
-							</tr>
-							<tr>
-								<td align=right>가격 :</td>
-								<td><input placeholder="가격을 입력해주세요." type=number name=menu_price></td>
-							</tr>
-							<tr>
-								<td colspan=2 align=center><input type=submit value='추가'>
-									<input type=button id=btnDelete name=btnDelete value='삭제'>
-									<input type=reset value='비우기'></td>
-							</tr>
-						</table>
-					</form>
-				</td>
-			</tr>
-			</tbody>
-	</table>
+	<form id=frmMenu action="/outback/addMenu">
+	<div style="width:470px; position:relative; margin:auto; margin-top:40px;">
+		<h1 style="text-align:center; font-weight:bold; font-size:40px; letter-spacing:6px;">메뉴 관리</h1>
+      	<h2 style="text-align:center; font-weight:bold; color:#ccc; margin-bottom:30px; font-size:22px; letter-spacing:4px;">Menu Control</h2>
+	<div class="input-group mb-3">
+     	<span class="input-group-text" id="inputGroup-sizing-default" style="width:120px;">Menu_Code</span>
+     	<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+           id=menu_code name=menu_code readonly placeholder='메뉴를 선택 해주세요'>
+   </div>
+   <select class="form-select" aria-label="Default select example" id=menu_type name=menu_type size=1 style="margin-bottom:15px; padding:5px 5px 5px 12px;">
+      </select>
+   <div class="input-group mb-3">
+     <span class="input-group-text" id="inputGroup-sizing-default" style="width:120px;">MenuName</span>
+     <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+           id=menu_name name=menu_name placeholder='메뉴명을 입력해주세요'>
+   </div>
+   <div class="input-group mb-3">
+     <span class="input-group-text" id="inputGroup-sizing-default" style="width:120px;">Price</span>
+     <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+           id=menu_price name=menu_price placeholder='가격을 입력해주세요'>
+   </div>
+   <div style="float:right; margin-bottom:15px;">
+               <input type="submit" class="btn btn-secondary" value="Add">
+               <button type="button" class="btn btn-secondary" id=btnDelete >Delete</button>
+               <button type="reset" class="btn btn-secondary" >Reset</button>
+      </div>
+      <div class="selectfont">   
+      <select class="form-select" multiple aria-label="multiple select example" id=getMenu  size=15
+            style="margin-bottom:15px; padding:5px 5px 5px 5px;">
+      </select>
+      </div>
 	</div>
+	</form>
 	<%@include file="footer.jsp"%>
 </body>
 <script src="http://code.jquery.com/jquery-3.5.0.js"></script>
