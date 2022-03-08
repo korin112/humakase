@@ -28,12 +28,12 @@
 	.cart td{border-right:1px solid #eee;}
 	.cart td:last-child{border-right:0;}
 	.book-list{overflow:hidden;}
-	.book-list article{display:block; margin:2.125rem 1.25rem; width:Calc((100% - 1.25rem*3)/2); height:100%; float:left;}
-	.book-list article:last-child{margin-left:0; border:1px solid #ccc;}
+	.book-list article{display:block; margin:2.125rem 1.25rem; width:Calc(60% - 1.25rem); height:100%; float:left;}
+	.book-list article:last-child{margin-left:0; border:1px solid #ccc; width:Calc(40% - 1.25rem * 2);}
 	.book-list article > ul{padding:0 2.125rem; margin:1.25rem;}
 	.book-list article > ul > li{width:69%; display:inline-block;}
 	.book-list article > ul > li:first-child{width:30%;}
-	
+	.option .dropdown-toggle::after{margin-left:1.255rem}
 </style>
 </head>
 <body>
@@ -180,10 +180,11 @@
 // 				}
 // 				$('.option > ul').slideUp();
 // 		})
-// 		.on('click', '.option > ul > li', function(){
-// 			$('.option > p').text($(this).text()); 
-// 			$('.option > p').attr('data-value',$(this).attr('data-value'));
-// 		})
+		.on('click', '.option > ul > li', function(){
+			$(this).parent('ul').prev().text($(this).text());
+			console.log($(this).parent('ul').prev().text());
+			$('.option > a').attr('data-value',$(this).attr('data-value'));
+		})
 		.on('click', '#btnView', function(){
 			if($('.option p').attr('data-value') == null){
 				alert('객실 종류를 선택해주세요.');
