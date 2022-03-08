@@ -14,5 +14,5 @@ public interface iLogin {
 	void updateLogout(String userid);
 	void updateLogin(String userid);
 	void delMember(String userid);
-	void pwCheck(String passcode);
+	void pwCheck(String userid,String passcode);
 }
