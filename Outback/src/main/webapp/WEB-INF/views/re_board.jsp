@@ -54,7 +54,7 @@
 					alert('댓글 작성 완료했습니다.');
 					document.location='/outback/re_board?board_id='+$('#board_id').val();
 				} else {
-					alert('다시 작성해주세요.');
+					alert('dd다시 작성해주세요.');
 				}
 			}
 		});
