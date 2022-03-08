@@ -34,7 +34,7 @@
                <button type="reset" class="btn btn-secondary" >Reset</button>
       </div>
       <div class="selectfont">   
-      <select class="form-select" multiple aria-label="multiple select example" id=getType  size=15
+      <select class="form-select" multiple aria-label="multiple select example" id=getType  size=10
             style="margin-bottom:15px; padding:5px 5px 5px 5px;">
       </select>
       </div>
