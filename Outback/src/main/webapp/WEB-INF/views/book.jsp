@@ -28,11 +28,10 @@
 	.cart td{border-right:1px solid #eee;}
 	.cart td:last-child{border-right:0;}
 	.book-list{overflow:hidden;}
-	.book-list li{display:inline-block;}
 	.book-list article{display:block; margin:2.125rem 1.25rem; width:Calc((100% - 1.25rem*3)/2); height:100%; float:left;}
 	.book-list article:last-child{margin-left:0; border:1px solid #ccc;}
 	.book-list article > ul{padding:0 2.125rem; margin:1.25rem;}
-	.book-list article > ul > li{width:69%;}
+	.book-list article > ul > li{width:69%; display:inline-block;}
 	.book-list article > ul > li:first-child{width:30%;}
 	
 </style>
