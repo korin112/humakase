@@ -6,6 +6,10 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<link rel="stylesheet" href="${path}/resources/css/style.css">
+<meta charset="UTF-8">
 <title>Home</title>	
 </head>
 	
@@ -51,15 +55,11 @@
 <body>
 
 	<jsp:include page="header.jsp" />
-
-	<br>
-	<br>
-	<br>
 		<section>
 			<div class="section video" id="Videos">
 				<div class="MyFrame">
 					<iframe 
-							src="http://file2.instiz.net/data/cached_img/upload/2015022214/e9d50c1fe1a4b6c41b4aaa77c01f4fd1.gif" id="MyVideo" width="100%" height="100%" 
+							src="" id="MyVideo" width="100%" height="100%" 
 							frameborder="0" allowfullscreen="">
 					</iframe>
 				</div>

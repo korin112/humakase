@@ -1,11 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <title>Drink</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<link rel="stylesheet" href="${path}/resources/css/style.css">
 <style>
 * {
 	margin: 0;
@@ -26,13 +30,10 @@ li {
 	display: block;
 }
 
-.O_container {
-	width: 1320px;
-	margin: 0 auto;
-}
 
 .menu_wrap {
 	width: 100%;
+	overflow: hidden;
 }
 
 .menu_box {
@@ -58,6 +59,10 @@ li {
 </head>
 <body>
 	<%@include file="header.jsp"%>
+	<div style="width:470px; position:relative; margin:auto; margin-top:40px;">
+		<h1 style="text-align:center; font-weight:bold; font-size:40px; letter-spacing:6px;">드링크</h1>
+      	<h2 style="text-align:center; font-weight:bold; color:#ccc; margin-bottom:30px; font-size:22px; letter-spacing:4px;">Drink</h2>
+      </div> 
 	<div class="container O_container">
 		<ul class="menu_wrap">
 			<li class="menu_box">

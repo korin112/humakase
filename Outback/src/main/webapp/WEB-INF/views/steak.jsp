@@ -1,12 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@include file="header.jsp"%>
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <title>Steak</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<link rel="stylesheet" href="${path}/resources/css/style.css">
 <style>
 
 * {
@@ -28,13 +31,11 @@ li {
 	display: block;
 }
 
-.container {
-	width: 1320px;
-	margin: 0 auto;
-}
+
 
 .menu_wrap {
 	width: 100%;
+	overflow: hidden;
 }
 
 .menu_box {
@@ -59,11 +60,16 @@ li {
 </style>
 </head>
 <body>
-	<div class="container">
+	<%@include file="header.jsp"%>
+	<div style="width:470px; position:relative; margin:auto; margin-top:40px;">
+		<h1 style="text-align:center; font-weight:bold; font-size:40px; letter-spacing:6px;">스테이크</h1>
+      	<h2 style="text-align:center; font-weight:bold; color:#ccc; margin-bottom:30px; font-size:22px; letter-spacing:4px;">Steak</h2>
+      </div> 
+	<div class="container O_container">
 		<ul class="menu_wrap">
 			<li class="menu_box">
 				<div>
-					<img style="width: 350px; height: 250px;"
+					<img style="width: 355px; height: 250px;"
 						src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2007/1/2/0/valentines_steak.jpg.rend.hgtvcom.826.620.suffix/1557859049553.jpg"
 						alt="My Image">
 				</div>
@@ -74,7 +80,7 @@ li {
 			</li>
 			<li class="menu_box">
 				<div>
-					<img style="width: 350px; height: 250px;"
+					<img style="width: 355px; height: 250px;"
 						src="https://img.insight.co.kr/static/2019/12/09/700/e842mx2j26ba019u846t.jpg"
 						alt="My Image">
 				</div>
@@ -85,7 +91,7 @@ li {
 			</li>
 			<li class="menu_box">
 				<div>
-					<img style="width: 350px; height: 250px;"
+					<img style="width: 355px; height: 250px;"
 						src="https://i.pinimg.com/736x/c6/be/c2/c6bec2c1209f96a678fe17b7cdc88d3b.jpg"
 						alt="My Image">
 				</div>
@@ -95,6 +101,6 @@ li {
 			</li>
 		</ul>
 	</div>
-	
+	<%@include file="footer.jsp"%>
 </body>
 </html>
