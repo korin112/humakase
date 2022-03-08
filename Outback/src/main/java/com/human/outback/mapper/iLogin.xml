@@ -43,6 +43,6 @@
 	delete from member where userid=#{param1}
 </delete>
 <delete id="pwCheck">
-	delete from member where passcode=#{passcode}
+	delete from member where userid=#{param1} and passcode=#{param2}
 </delete>
 </mapper>
