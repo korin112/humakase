@@ -67,7 +67,7 @@
 						console.log(txt);
 						if(txt=="ok") {
 							alert('수정 완료했습니다.');
-							document.location='/hotel/board_list';
+							document.location='/outback/board_list';
 						} else {
 							alert('다시 수정해주세요.');
 						}
