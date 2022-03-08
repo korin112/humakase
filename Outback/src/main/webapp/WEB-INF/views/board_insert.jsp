@@ -13,7 +13,6 @@
 <body>
 	<%@include file ="header.jsp" %>
 	<div class="container O_container">
-	<form action="/hotel/board_insert" method="post">
 	    <div>
 	        <label>제목</label>
 	        <input name="title" id="title">
@@ -32,8 +31,7 @@
 	    <div>
 	        <label>지점</label>
 	        <%-- booking table spot code, spot name --%>
-<!-- 	        <select name="spot"></select> -->
-			<input type=text name="spot" id="spot">
+	        <select id="spot" name="spot"></select>
 	    </div>
 	    <div>
 	        <label>메뉴</label>
@@ -45,14 +43,30 @@
 	        <textarea rows="5" id="content" name="content"></textarea>
 	    </div>
 	    <br>
-	    <button id="done">완료</button>
-	</form>
+	    <div>
+		    <button id="done">완료</button>
+		    <button id="cancel">취소</button>
+	    </div>
 	</div>
 	<%@include file ="footer.jsp" %>
 	<script>
 		$(document)
 		.ready(function() {
-			$.ajax({url:'/hotel/menuList',
+			$.ajax({url:'/outback/spotList',
+				data:{},
+				method:'GET',
+				datatype:'json',
+				success:function(txt) {
+					console.log(txt);
+					for(i=0;i<txt.length;i++) {
+						let str='<option value='+txt[i]['spot_code']+'>'
+									+txt[i]['spot_name']+'</option>';
+						$('#spot').append(str);
+					}
+				}
+			});
+			
+			$.ajax({url:'/outback/menuList',
 					data:{},
 					method:'GET',
 					datatype:'json',
@@ -67,13 +81,29 @@
 			});
 		})
 		
-		.on('click','#done',function() {
-			console.log($('#title').val());
-			console.log($('#writer').val());
-			console.log($('#vdate').val());
-			console.log($('#spot').val());
-			console.log($('#menu').val());
-			console.log($('#content').val());
+		.on('click','#done',function() {			
+			let oParam = {title:$('#title').val(), writer:$('#writer').val(),
+						  vdate:$('#vdate').val(), spot:$('#spot').val(),
+						  menu:$('#menu').val(), content:$('#content').val()};
+			$.ajax({url:'/outback/board_insert',
+				data:oParam,
+				method:'POST',
+				datatype:'json',
+				success:function(txt) {
+					if(txt=="ok") {
+						alert('작성 완료했습니다.');
+						document.location='/outback/board_list';
+					} else {
+						alert('다시 작성해주세요.');
+					}
+				}
+			});
+		})
+		
+		.on('click','#cancel',function() {
+			if(!confirm("취소하시면 작성한 모든 내용이 사라집니다. 취소하시겠습니까?")) return false;
+			document.location="/outback/board_list";
 		})
 	</script>
 </body>
+</html>

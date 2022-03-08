@@ -3,6 +3,7 @@ package com.human.outback;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.human.outback.Member;
 
@@ -24,14 +26,30 @@ public class MController {
 	private SqlSession sqlSession;
 	//로그인
 	@RequestMapping("/login")	
-	public String login() {
+	public String login(HttpSession session,Model model,RedirectAttributes rttr) {
+		if(session.getAttribute("userid") != null) {
+			System.out.println("로그아웃 후 로그인이 가능합니다.");
+			rttr.addFlashAttribute("result","already_login");
+			return "redirect:/home";
+		} else {
 		return "login";
+		}
 	}
-	
 	//회원가입
 	@RequestMapping("/signon")
 	public String signon() {
 		return "signon";
+	}
+	//로그아웃
+	@RequestMapping("/logout")
+	public String logout(HttpServletRequest hsr) {
+		HttpSession session = hsr.getSession();
+		iLogin member = sqlSession.getMapper(iLogin.class);
+		
+		String userid = (String)session.getAttribute("userid");
+		member.updateLogout(userid);
+		session.invalidate();
+		return "redirect:/home";
 	}
 	//로그인아이디 체크
 	@ResponseBody
@@ -84,27 +102,35 @@ public class MController {
 		return retval;
 	}
 	//로그인 시간 체크
-	@RequestMapping("/login_check")
+	@RequestMapping(value="/login_check", method = RequestMethod.POST)
 	public String login_check(HttpServletRequest hsr,Model model) {
-		String userid=hsr.getParameter("userid");
-		String passcode=hsr.getParameter("passcode");
-		iLogin login=sqlSession.getMapper(iLogin.class);
-		ArrayList<Member> m = login.getLogin();
-		String retval="";
+		HttpSession session = hsr.getSession();
+		
+		String str="";
+		String userid = hsr.getParameter("userid");
+		String passcode = hsr.getParameter("passcode");
+		
+		iLogin login = sqlSession.getMapper(iLogin.class);
+		ArrayList<Member> m=login.getLogin();
 		for(int i=0; i < m.size(); i++) {
-			if(m.get(i).getUserid().equals(userid) && m.get(i).getPasscode().equals(passcode)) {
-				retval="ok";
+			if(m.get(i).getPasscode().equals(passcode) && m.get(i).getUserid().equals(userid)) {
+				if(m.get(i).getUser_type().equals("관리자")) {
+					session.setAttribute("_type_name2","관리자");
+				}
+				str="ok";
 				break;
+			} else {
+				str="fail";
 			}
-			retval="fail";
-			model.addAttribute("retval",retval);
 		}
-		if(retval.equals("fail")) {
+		if(str.equals("ok")) {
+			login.upLogin(userid);
+			session.setAttribute("userid",userid);
+			return "redirect:/home";
+		} else {
+			model.addAttribute("fail_user",str);
 			return "login";
 		}
-		login.upLogin(userid);
-		model.addAttribute("userid",userid);
-		return "home";
 	}
 	//마이페이지 관리
 	@RequestMapping("/member")
@@ -126,6 +152,7 @@ public class MController {
 			jo.put("gender",m.get(i).getGender());
 			jo.put("user_type",m.get(i).getUser_type());
 			jo.put("login_time",m.get(i).getLogin_time());
+			jo.put("logout_time",m.get(i).getLogout_time());
 			ja.add(jo);
 		}
 		return ja.toString();
@@ -134,28 +161,129 @@ public class MController {
 	@RequestMapping(value = "/getDig",produces="application/json;charset=utf-8")
 	public String getDig(HttpServletRequest hsr) {
 		iLogin log = sqlSession.getMapper(iLogin.class);
-		ArrayList<Member3> m = log.getDig();
+		ArrayList<MemberType> m = log.digList();
 		JSONArray ja = new JSONArray();
 		for(int i=0; i < m.size(); i++) {
 			JSONObject jo = new JSONObject();
-			jo.put("userid",m.get(i).getUserid());
-			jo.put("m_user_type",m.get(i).getUser_type());
+			jo.put("_type_code2",m.get(i).getType_code());
+			jo.put("_type_name2",m.get(i).getType_name());
 			ja.add(jo);
 		}
 		return ja.toString();
 	}
 	@ResponseBody
-	@RequestMapping(value = "/dlgEdit", produces="application/json;charset=utf-8")
+	@RequestMapping(value = "/digEdit", produces="application/json;charset=utf-8")
 	public String dlgEdit(HttpServletRequest hsr) {
 		iLogin edit = sqlSession.getMapper(iLogin.class);
-		ArrayList<Member3> m = edit.getEdit();
+		ArrayList<MemberType> m = edit.digList();
 		
 		JSONArray ja = new JSONArray();
+
 		for(int i=0; i < m.size(); i++) {
 			JSONObject jo = new JSONObject();
-			jo.put("m_user_type",m.get(i).getUser_type());
+			jo.put("userid",m.get(i).getUserid());
+			jo.put("_type_code2",m.get(i).getType_code());
+			jo.put("_type_name2",m.get(i).getType_name());
 			ja.add(jo);
 		}
 		return ja.toString();
+	}
+	@ResponseBody
+	@RequestMapping(value = "/updateMember", method=RequestMethod.POST, produces="application/json;charset=utf-8")
+	public String updateLogin(HttpServletRequest hsr) {
+		String retval="";
+		System.out.println("["+hsr.getParameter("userid")+"]");
+		System.out.println("["+hsr.getParameter("user_type")+"]");
+		String userid=hsr.getParameter("userid");
+		String code=hsr.getParameter("user_type");
+		try {
+			iLogin log = sqlSession.getMapper(iLogin.class);
+			log.updateMember(userid,code);
+			retval="ok";
+		} catch(Exception e) {
+			retval="fail";
+		}
+		return retval;
+	}
+	@ResponseBody
+	@RequestMapping(value = "/delMember", method=RequestMethod.POST, produces="application/json;charset=utf-8")
+	public String delMember(HttpServletRequest hsr) {
+		System.out.println("["+hsr.getParameter("box")+"]");
+		String select=hsr.getParameter("box");
+		String[] user=select.split(",");
+		
+		String str="";
+		try {
+			iLogin mem=sqlSession.getMapper(iLogin.class);
+			
+			for(int i=0; i < user.length; i++) {
+				mem.delMember(user[i]);
+			}
+			str="ok";
+		} catch(Exception e) {
+			str="fail";
+		}
+		return str;
+	}
+	@RequestMapping("/mypage")
+	public String mypage() {
+		return "mypage";
+	}
+	@ResponseBody
+	@RequestMapping(value = "/infomation", method=RequestMethod.GET,produces="application/json;charset=utf-8")
+	public String infomation() {
+		iLogin login=sqlSession.getMapper(iLogin.class);
+		ArrayList<Member> m = login.infomation();
+		JSONArray ja = new JSONArray();
+		for(int i=0; i < m.size(); i++) {
+			JSONObject jo = new JSONObject();
+			jo.put("userid",m.get(i).getUserid());
+			jo.put("passcode",m.get(i).getPasscode());
+			jo.put("name",m.get(i).getName());
+			jo.put("mobile",m.get(i).getMobile());
+			ja.add(jo);
+		}
+		return ja.toString();
+	}
+//	@ResponseBody
+//	@RequestMapping(value="/pwCheck" , method=RequestMethod.POST)
+//	public String pwCheck(HttpServletRequest hsr,Model model) {
+//		String memberPw = memberService.pwCheck(memberVO.getMemberId());
+//		
+//		if(memberVO == null || !BCrypt.checkpw(memberVO.getMemberPw(), memberPw)) {
+//			return 0;
+//		}
+//		
+//		return 1;
+//	}
+//	@ResponseBody
+//	@RequestMapping(value = "/pwCheck", method=RequestMethod.POST)
+//	public String pwCheck(HttpServletRequest hsr,RedirectAttributes rttr) {
+//		HttpSession session = hsr.getSession();
+//		
+//		String passcode = hsr.getParameter("passcode");
+//		
+//		iLogin login = sqlSession.getMapper(iLogin.class);
+//		login.pwCheck(passcode);
+//		if(!(sessionPass.equals(passcode)))
+//		session.invalidate();
+//		return "redirect:/home";
+//	}
+	
+	@RequestMapping(value="/pwCheck",method = RequestMethod.POST)
+	public String pwCheck(HttpServletRequest hsr) {
+		HttpSession session = hsr.getSession();
+		
+		String passcode=hsr.getParameter("passcode");
+		System.out.println(hsr.getParameter("passcode"));
+		
+		iLogin pw=sqlSession.getMapper(iLogin.class);
+		pw.pwCheck(passcode);
+		
+		if(!passcode.equals(passcode)) return "mypage";
+		if(passcode.equals(passcode)) {
+			session.invalidate();			
+		} return "redirect:/home";
+			
 	}
 }
