@@ -1,25 +1,37 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <title> - 관리자 페이지 - </title>
-</head>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<link rel="stylesheet" href="${path}/resources/css/style.css">
 <style>
 table {
 	border-collapse:collapse;
+	margin:0 auto;
+	border:1px solid #ddd;
+	
 }
-tr,td,th{
+
+#tblMember th, #tblMember td {
 	box-sizing:border-box;
 	border:1px solid #ddd;
+	padding:0.85rem;
 }
 </style>
 <body>
-<div>
-<table id=tblMember></table>
+<%@include file ="header.jsp" %>
+<div class="container O_container">
+<table id=tblMember>
+</table>
+<input style='position:absolute; left:1066px;' type=button id=btnCancel name=btnCancel value=돌아가기>
 </div><br>
-<div id=dlgEdit style='display:none;'>
+<div id=dlgEdit style='display:none; position:absolute'>
 <table>
 	<tr>
 		<td><select id=selInfo size=10 style='width:250px'></select></td>
@@ -34,6 +46,7 @@ tr,td,th{
 	</tr>
 </table>
 </div>
+<%-- <%@include file ="footer.jsp" %> --%>
 </body>
 <script src="https:/code.jquery.com/jquery-3.5.0.js"></script>
 <script src='https://code.jquery.com/ui/1.13.0/jquery-ui.js'></script>
@@ -62,7 +75,7 @@ $(document)
 		});
 	$('#dlgEdit').dialog({
 		modal:true,
-		width:500,
+		width:200,
 		open:function(){
 			$('#selInfo').empty();
 			$.ajax({url:'/outback/getDig',
@@ -90,6 +103,10 @@ $(document)
 	let ar=txt.split(' ');
 	$('#_type_code').val($.trim(ar[0]));
 	$('#_type_name').val($.trim(ar[1]));
+	return false;
+})
+.on('click','#btnCancel',function(){
+	document.location='/outback/home';
 	return false;
 })
 //dialog 수정
@@ -150,6 +167,10 @@ $(document)
 			}
 		});
 })
+.on('click','#btnCancel',function(){
+	document.location='/outback/home';
+	return false;
+})
 
 function member(){
 	$.ajax({url:"/outback/memberList",
@@ -157,7 +178,7 @@ function member(){
 			data:{},
 			dataType:"json",
 			success:function(txt){
-				let head='<thead><tr><th></th><th>아이디</th><th>패스워드</th><th>이름</th><th>모바일</th><th>성별</th><th>'
+				let head='<thead><tr><th>No.</th><th>아이디</th><th>패스워드</th><th>이름</th><th>모바일</th><th>성별</th><th>'
 				+'등급</th><th>로그인시간</th><th>로그아웃시간</th><th><input type=button id=btnDel value=선택삭제></th></tr></thead>';
 				$('#tblMember').append(head);
 				

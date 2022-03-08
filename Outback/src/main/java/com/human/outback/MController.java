@@ -271,19 +271,35 @@ public class MController {
 //	}
 	
 	@RequestMapping(value="/pwCheck",method = RequestMethod.POST)
-	public String pwCheck(HttpServletRequest hsr) {
+	public String pwCheck(HttpServletRequest hsr,Model model) {
 		HttpSession session = hsr.getSession();
 		
+		String str="";
+		String userid=hsr.getParameter("userid");
 		String passcode=hsr.getParameter("passcode");
-		System.out.println(hsr.getParameter("passcode"));
 		
 		iLogin pw=sqlSession.getMapper(iLogin.class);
-		pw.pwCheck(passcode);
+		ArrayList<Member> a=pw.getLogin();
 		
-		if(!passcode.equals(passcode)) return "mypage";
-		if(passcode.equals(passcode)) {
-			session.invalidate();			
-		} return "redirect:/home";
-			
+		for(int i=0; i < a.size(); i++) {
+			if(a.get(i).getPasscode().equals(passcode) && a.get(i).getUserid().equals(userid)) {
+				session.setAttribute("userid", userid);
+				str="ok";
+				break;
+			} 
+			else {
+				str="fail";
+			}
+		}
+		if(str.equals("ok")) {
+			session.setAttribute("userid",userid);
+			session.setAttribute("passcode",passcode);
+			pw.pwCheck(userid,passcode);
+			session.invalidate();
+			return "home";
+		} else {
+			model.addAttribute("fail_user",str);
+			return "home";
+		}
 	}
 }
