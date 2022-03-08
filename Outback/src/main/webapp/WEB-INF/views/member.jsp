@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title> - 마이 페이지 - </title>
+<title> - 관리자 페이지 - </title>
 </head>
 <style>
 table {

@@ -11,10 +11,6 @@
 <select id="confirm_check" resultType="com.human.outback.Member2">
 	select userid from member
 </select>
-<!-- <select id="logChk" resultType="int"> -->
-<!-- 	select count(*) from member -->
-<!-- 	where userid = #{param1} and passcode = #{param2} -->
-<!-- </select> -->
 <insert id="addLogin">
 	insert into member(userid,passcode,name,mobile,gender,user_type,login_time,logout_time)
 	values(#{param1},#{param2},#{param3},#{param4},#{param5},0,'','')
@@ -25,6 +21,11 @@
 <update id="updateLogout">
 	update member set logout_time=(now()) where userid=#{param1}
 </update>
+<select id="infomation" resultType="com.human.outback.Member">
+	select userid,passcode,name,mobile
+	from member
+	order by name
+</select>
 <select id="digList" resultType="com.human.outback.MemberType">
 	select type_code, type_name
 	from memberType
@@ -40,5 +41,8 @@
 </update>
 <delete id="delMember">
 	delete from member where userid=#{param1}
+</delete>
+<delete id="pwCheck">
+	delete from member where passcode=#{passcode}
 </delete>
 </mapper>
