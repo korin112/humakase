@@ -132,26 +132,6 @@ public class MController {
 			return "login";
 		}
 	}
-//		String userid=hsr.getParameter("userid");
-//		String passcode=hsr.getParameter("passcode");
-//		iLogin login=sqlSession.getMapper(iLogin.class);
-//		ArrayList<Member> m = login.getLogin();
-//		String retval="";
-//		for(int i=0; i < m.size(); i++) {
-//			if(m.get(i).getUserid().equals(userid) && m.get(i).getPasscode().equals(passcode)) {
-//				retval="ok";
-//				break;
-//			}
-//			retval="fail";
-//			model.addAttribute("retval",retval);
-//		}
-//		if(retval.equals("fail")) {
-//			return "login";
-//		}
-//		login.upLogin(userid);
-//		model.addAttribute("userid",userid);
-//		return "home";
-//	}
 	//마이페이지 관리
 	@RequestMapping("/member")
 	public String member() {
@@ -244,5 +224,66 @@ public class MController {
 			str="fail";
 		}
 		return str;
+	}
+	@RequestMapping("/mypage")
+	public String mypage() {
+		return "mypage";
+	}
+	@ResponseBody
+	@RequestMapping(value = "/infomation", method=RequestMethod.GET,produces="application/json;charset=utf-8")
+	public String infomation() {
+		iLogin login=sqlSession.getMapper(iLogin.class);
+		ArrayList<Member> m = login.infomation();
+		JSONArray ja = new JSONArray();
+		for(int i=0; i < m.size(); i++) {
+			JSONObject jo = new JSONObject();
+			jo.put("userid",m.get(i).getUserid());
+			jo.put("passcode",m.get(i).getPasscode());
+			jo.put("name",m.get(i).getName());
+			jo.put("mobile",m.get(i).getMobile());
+			ja.add(jo);
+		}
+		return ja.toString();
+	}
+//	@ResponseBody
+//	@RequestMapping(value="/pwCheck" , method=RequestMethod.POST)
+//	public String pwCheck(HttpServletRequest hsr,Model model) {
+//		String memberPw = memberService.pwCheck(memberVO.getMemberId());
+//		
+//		if(memberVO == null || !BCrypt.checkpw(memberVO.getMemberPw(), memberPw)) {
+//			return 0;
+//		}
+//		
+//		return 1;
+//	}
+//	@ResponseBody
+//	@RequestMapping(value = "/pwCheck", method=RequestMethod.POST)
+//	public String pwCheck(HttpServletRequest hsr,RedirectAttributes rttr) {
+//		HttpSession session = hsr.getSession();
+//		
+//		String passcode = hsr.getParameter("passcode");
+//		
+//		iLogin login = sqlSession.getMapper(iLogin.class);
+//		login.pwCheck(passcode);
+//		if(!(sessionPass.equals(passcode)))
+//		session.invalidate();
+//		return "redirect:/home";
+//	}
+	
+	@RequestMapping(value="/pwCheck",method = RequestMethod.POST)
+	public String pwCheck(HttpServletRequest hsr) {
+		HttpSession session = hsr.getSession();
+		
+		String passcode=hsr.getParameter("passcode");
+		System.out.println(hsr.getParameter("passcode"));
+		
+		iLogin pw=sqlSession.getMapper(iLogin.class);
+		pw.pwCheck(passcode);
+		
+		if(!passcode.equals(passcode)) return "mypage";
+		if(passcode.equals(passcode)) {
+			session.invalidate();			
+		} return "redirect:/home";
+			
 	}
 }
