@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+        <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="true" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +19,7 @@ tr,td,th{
 </style>
 <body>
 <form action="/outback/pwCheck" method="POST" id="deleteForm" name="deleteForm">
-<%--                        <input type="hidden" id="userId" name="userId" value="${userid}"> --%>
+                       <input type="hidden" id="userid" name="userid" value="${userid}" readonly>
     <div class="col-sm-8 col-sm-offset-2">
         <div class="panel panel-default panel-margin-10">
             <div class="panel-body panel-body-content text-center">
@@ -33,6 +35,11 @@ tr,td,th{
         </div>
     </div>
     </form>
+    <c:if test="${fail_user=='fail'}">
+	<script type="text/javascript">
+		alert("로그인에 실패했습니다.");
+	</script>
+</c:if>
 <!-- <table id=tbl> -->
 <!-- <div> -->
 <!-- 	<section> -->
@@ -83,8 +90,10 @@ $(document)
 			url : "/outback/pwCheck",
 			type : "POST",
 			dataType : "text",
-			data : {passcode:$('#passcode').val()},
+			data : {userid:$('#userid').val(),passcode:$('#passcode').val()},
 			success: function(){
+				alert("그동안 이용해 주셔서 감사합니다.");
+				document.location='/outback/home';
 			}
 		})
 });

@@ -104,7 +104,7 @@ $(document)
 		if(txt=='fail'){
 			alert('아이디가 중복됩니다');
 		}else if(txt=='ok'){	
-			alert('사용가능한 adsfasdf아이디입니다.');
+			alert('사용가능한 아이디입니다.');
 		}
 	},'text');
 })
