@@ -31,7 +31,7 @@
 	          </ul>
 	        </li>
 	        <li class="nav-item">
-	          <a class="nav-link" href="">리뷰게시판</a>
+	          <a class="nav-link" href="/outback/board_list">리뷰게시판</a>
 	        </li>
 			<li class="nav-item">
 				<a class="nav-link" href="/outback/cart">예약하기</a>

@@ -97,7 +97,7 @@
 						alert('다시 작성해주세요.');
 					}
 				}
-		});
+			});
 		})
 		
 		.on('click','#cancel',function() {

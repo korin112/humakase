@@ -68,7 +68,7 @@
 			document.location="/outback/board_delete?board_id="+$('#board_id').val();
 		})
 		.on('click','#cmtBtn',function() {
-			document.location="/outback/reBoard?board_id="+$('#board_id').val();
+			document.location="/outback/re_board?board_id="+$('#board_id').val();
 		})
 	</script>
 </body>
