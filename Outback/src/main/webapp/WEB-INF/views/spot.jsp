@@ -115,5 +115,5 @@
 <script>
 </script>
 </body>
-<jsp:include page="header.jsp" />
+<jsp:include page="footer.jsp" />
 </html>
