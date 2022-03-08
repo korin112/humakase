@@ -8,6 +8,7 @@
 <title>Steak</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <style>
+
 * {
 	margin: 0;
 	padding: 0;
@@ -67,7 +68,7 @@ li {
 						alt="My Image">
 				</div>
 				<h3>T-bone</h3>
-				<h3>25,000 Won</h3>
+				<h4>25,000 Won</h4>
 				<p>소의 안심과 등심사이, T자형 뼈 가운데 T자형 뼈의 좌우로 안심 / 등심이 나뉘어지며 스테이크 부위로는
 					고급에 속하는 부위이고, 최고의 육질과 육즙을 선사하는 스테이크 입니다.</p>
 			</li>
@@ -78,7 +79,7 @@ li {
 						alt="My Image">
 				</div>
 				<h3>Tomahawk</h3>
-				<h3>31,000 Won</h3>
+				<h4>31,000 Won</h4>
 				<p>Tomahawk는 육류 중에서 손잡이처럼 길다란 갈비뼈를 감싸는 갈비살이 등심에 붙어있는 형태로 정형된 고기를
 					구운 스테이크 입니다.</p>
 			</li>
@@ -89,7 +90,7 @@ li {
 						alt="My Image">
 				</div>
 				<h3>Black-Label</h3>
-				<h3>35,000 Won</h3>
+				<h4>35,000 Won</h4>
 				<p>두툼하고 육즙이 가득한 채끝 등심을 이용 블랙라벨 스테이크 입니다.</p>
 			</li>
 		</ul>

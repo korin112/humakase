@@ -71,7 +71,7 @@ li {
 						alt="My Image">
 				</div>
 				<h3>Toowoomba pasta</h3>
-				<h3>24,000 Won</h3>
+				<h4>24,000 Won</h4>
 				<p>그라나 파다노 치즈와 새우, 양송이를 함께 볶아 깊고 진한 크림소스 파스타 입니다.</p>
 			</li>
 			<li class="menu_box">
@@ -81,7 +81,7 @@ li {
 						alt="My Image">
 				</div>
 				<h3>Toowoomba steak pasta</h3>
-				<h3>27,500 Won</h3>
+				<h4>27,500 Won</h4>
 				<p>부드러운 스테이크와 최고의 투움바 소스로 맛을 낸 최고의 파스타 입니다.</p>
 			</li>
 			<li class="menu_box">
@@ -91,7 +91,7 @@ li {
 						alt="My Image">
 				</div>
 				<h3>Spicy toowoomba pasta</h3>
-				<h3>24,500 Won</h3>
+				<h4>24,500 Won</h4>
 				<p>최고의 투움바 소스에 매운 맛과 풍미를 더한 파스타 입니다.</p>
 			</li>
 			<li class="menu_box">
@@ -101,7 +101,7 @@ li {
 						alt="My Image">
 				</div>
 				<h3>Spicy seafood aglio olio</h3>
-				<h3>26,500 Won</h3>
+				<h4>26,500 Won</h4>
 				<p>관자, 새우, 오징어를 갈릭 올리브 오일에 함께 볶아낸 오일 파스타입니다.</p>
 			</li>
 			<li class="menu_box">
@@ -111,7 +111,7 @@ li {
 						alt="My Image">
 				</div>
 				<h3>Shrimp arrabbiata</h3>
-				<h3>28,000 Won</h3>
+				<h4>28,000 Won</h4>
 				<p>갈릭 오일에 볶은 새우를 더하고 매콤하게 즐길수 있는 정통 이탈리안 토마토 파스</p>
 			</li>
 		</ul>
