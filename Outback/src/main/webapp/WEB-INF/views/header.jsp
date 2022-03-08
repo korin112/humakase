@@ -17,7 +17,7 @@
 		</form>
 	      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 	        <li class="nav-item">
-	          <a class="nav-link" aria-current="page" href="">지점위치</a>
+	          <a class="nav-link" aria-current="page" href="/outback/spot">지점위치</a>
 	        </li>
 	         <li class="nav-item dropdown">
 	          <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -31,7 +31,7 @@
 	          </ul>
 	        </li>
 	        <li class="nav-item">
-	          <a class="nav-link" href="">리뷰게시판</a>
+	          <a class="nav-link" href="/outback/board_list">리뷰게시판</a>
 	        </li>
 			<li class="nav-item">
 				<a class="nav-link" href="/outback/cart">예약하기</a>
