@@ -1,12 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@include file="header.jsp"%>
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <title>Drink</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<link rel="stylesheet" href="${path}/resources/css/style.css">
 <style>
 * {
 	margin: 0;
@@ -27,13 +30,10 @@ li {
 	display: block;
 }
 
-.container {
-	width: 1320px;
-	margin: 0 auto;
-}
 
 .menu_wrap {
 	width: 100%;
+	overflow: hidden;
 }
 
 .menu_box {
@@ -58,7 +58,12 @@ li {
 </style>
 </head>
 <body>
-	<div class="container">
+	<%@include file="header.jsp"%>
+	<div style="width:470px; position:relative; margin:auto; margin-top:40px;">
+		<h1 style="text-align:center; font-weight:bold; font-size:40px; letter-spacing:6px;">드링크</h1>
+      	<h2 style="text-align:center; font-weight:bold; color:#ccc; margin-bottom:30px; font-size:22px; letter-spacing:4px;">Drink</h2>
+      </div> 
+	<div class="container O_container">
 		<ul class="menu_wrap">
 			<li class="menu_box">
 				<div>
@@ -67,7 +72,7 @@ li {
 						alt="My Image">
 				</div>
 				<h3>Ade</h3>
-				<h3>7,500 Won</h3>
+				<h4>7,500 Won</h4>
 				<p>상큼한 레몬의 시원한 음료와 함께 어우러져 달콤한 맛을 내는 음료입니다.</p>
 			</li>
 			<li class="menu_box">
@@ -77,7 +82,7 @@ li {
 						alt="My Image">
 				</div>
 				<h3>Mojito</h3>
-				<h3>9,000 Won</h3>
+				<h4>9,000 Won</h4>
 				<p>시원한 모히또와 달콤한 음료수의 만남으로 상쾌한 느낌이 나는 음료입니다.</p>
 			</li>
 			<li class="menu_box">
@@ -87,7 +92,7 @@ li {
 						alt="My Image">
 				</div>
 				<h3>Soft drink</h3>
-				<h3>4,500 Won</h3>
+				<h4>4,500 Won</h4>
 				<p>상쾌한 탄산과 청량감으로 식사를 마무리 해주는 음료입니다.</p>
 			</li>
 			<li class="menu_box">
@@ -97,7 +102,7 @@ li {
 						alt="My Image">
 				</div>
 				<h3>Coffee</h3>
-				<h3>5,000 Won</h3>
+				<h4>5,000 Won</h4>
 				<p>진한 원두향과 따듯한 온기로 몸과 마음을 따뜻하게 보내게 해주는 음료입니다.</p>
 			</li>
 			<li class="menu_box">
@@ -107,10 +112,11 @@ li {
 						alt="My Image">
 				</div>
 				<h3>Beer</h3>
-				<h3>5,500 Won</h3>
+				<h4>5,500 Won</h4>
 				<p>은은한 보리향과 톡 튀는 탄산으로 깔끔한 뒷맛이 예술인 음료입니다.</p>
 			</li>
 		</ul>
 	</div>
+	<%@include file ="footer.jsp" %>
 </body>
 </html>

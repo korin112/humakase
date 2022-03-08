@@ -4,8 +4,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
+<meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<link rel="stylesheet" href="${path}/resources/css/style.css">
 <meta charset="UTF-8">
 <title>메뉴 관리</title>
 </head>
