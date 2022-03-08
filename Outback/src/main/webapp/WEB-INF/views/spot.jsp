@@ -28,6 +28,7 @@
 					<div class="text-block-25">영업시간</div>
 					<p class="paragraph-33">매일⎜11:00~19:00<br />
 					</p>
+					<input type=button class=rez name=rez value="예약하기" onClick="location.href='/outback/cart'">
 				</div>
 				<div class="w-col w-col-6">
 					<div style="position:absolute; top:170px; left:700px;">
@@ -52,6 +53,7 @@
 					<div class="text-block-25">영업시간</div>
 					<p class="paragraph-33">매일⎜11:00~19:00<br />
 					</p>
+					<input type=button class=rez name=rez value="예약하기" onClick="location.href='/outback/cart'">
 				</div>
 				<div class="w-col w-col-6">
 					<div style="position:absolute;top:500px; left:700px;">
@@ -76,6 +78,7 @@
 					<div class="text-block-25">영업시간</div>
 					<p class="paragraph-33">매일⎜11:00~19:00<br />
 					</p>
+					<input type=button class=rez name=rez value="예약하기" onClick="location.href='/outback/cart'">
 				</div>
 				<div class="w-col w-col-6">
 					<div style="position:absolute; top:830px; left:700px;">
@@ -100,6 +103,7 @@
 					<div class="text-block-25">영업시간</div>
 					<p class="paragraph-33">매일⎜11:00~19:00<br />
 					</p>
+					<input type=button class=rez name=rez value="예약하기" onClick="location.href='/outback/cart'">
 				</div>
 				<div class="w-col w-col-6">
 					<div style="position:absolute; top:1160px; left:700px;">
@@ -115,5 +119,5 @@
 <script>
 </script>
 </body>
-<jsp:include page="header.jsp" />
+<jsp:include page="footer.jsp" />
 </html>
