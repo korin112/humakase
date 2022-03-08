@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title> - 관리자 페이지 - </title>
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script> -->
 <link rel="stylesheet" href="${path}/resources/css/style.css">
 <style>
 table {
@@ -22,6 +22,14 @@ table {
 	box-sizing:border-box;
 	border:1px solid #ddd;
 	padding:0.85rem;
+}
+#dlgEdit td{
+	box-sizing:border-box;
+	border:1px solid black;
+	padding:0.85rem;
+}
+#dlgEdit input {
+	border-collapse:collapse;
 }
 </style>
 <body>
@@ -74,8 +82,8 @@ $(document)
 			}
 		});
 	$('#dlgEdit').dialog({
-		modal:true,
-		width:200,
+		modal:false,
+		width:600,
 		open:function(){
 			$('#selInfo').empty();
 			$.ajax({url:'/outback/getDig',
