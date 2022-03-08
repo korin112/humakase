@@ -172,12 +172,39 @@ public class HController {
 	}
 	
 	// 댓글
-	@RequestMapping(value="/reBoard")
-	public String reBoard(Model m, HttpServletRequest hsr) {
-		int board_id=Integer.parseInt(hsr.getParameter("board_id"));
+	@RequestMapping(value="/re_board")
+	public String reBoard(int board_id, Model m, HttpServletRequest hsr, HttpSession session) {
+		iBoard re=sqlSession.getMapper(iBoard.class);	
+		m.addAttribute("b",re.getBoard(board_id));
 		
-		iBoard re=sqlSession.getMapper(iBoard.class);
+		// member userid, usertype 받아오기
+		String userid=(String)session.getAttribute("userid");
+		m.addAttribute("m",re.getSession(userid));
+		
 		m.addAttribute("re",re.reBoard(board_id));
 		return "re_board";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/re_insert", method = RequestMethod.POST)
+	public String reInsert(HttpServletRequest hsr, Model m) {
+		int board_id=Integer.parseInt(hsr.getParameter("board_id"));
+		String writer=hsr.getParameter("writer");
+		String content=hsr.getParameter("content");
+				
+		System.out.println("board_id : "+board_id);
+		System.out.println("writer : "+writer);
+		System.out.println("content : "+content);
+			
+		
+		String str="";
+		iBoard re=sqlSession.getMapper(iBoard.class);
+		try {
+			re.reInsert(board_id,board_id,writer,content);
+			str="ok";
+		} catch(Exception e) {
+			str="fail";
+		}
+		return str;
 	}
 }

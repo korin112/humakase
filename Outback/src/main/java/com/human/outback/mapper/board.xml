@@ -54,4 +54,13 @@
 		from re_board
 		where board_id=#{board_id}
 	</select>
+	
+	<insert id="reInsert">
+		insert into re_board(board_id,grp,grps,grpd,writer,content)
+		values(#{param1},#{param2},0,0,#{param3},#{param4})
+	</insert>
+	
+	<select id="getSession" resultType="com.human.outback.Member">
+		select userid,user_type from member where userid=#{param1}
+	</select>
 </mapper>
