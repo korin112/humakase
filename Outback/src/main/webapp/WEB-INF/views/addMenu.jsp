@@ -18,11 +18,7 @@
 /* .menu tbody input[type=number]{width:50px; position:relative;}
 .menu tbody input[type=button]{display:inline-block; position:absolute; left:0; top:0;} */
 .ct_btn_wrap {text-align:right; margin-top:1.25rem;}
-input {
-  width:200px;
-  height:50px;
-  font-size:15px;
-}
+
 </style>
 
 <meta charset="UTF-8">
