@@ -276,7 +276,7 @@
 			
 			let howmany = $('#howmany > a').attr('data-max');
 			console.log(howmany);
-			let input_howmany = '<input name="howmany" type="hidden" value="' + vtime +'">';
+			let input_howmany = '<input name="howmany" type="hidden" value="' + howmany +'">';
 			console.log(input_howmany);
 			
 			let m_qty = $('.cnt_num').text();
