@@ -1,15 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%> 
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <link rel="stylesheet" href="${path}/resources/css/style.css">
-<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>메뉴 관리</title>
 </head>
 <body>
@@ -34,6 +33,11 @@
      <span class="input-group-text" id="inputGroup-sizing-default" style="width:120px;">Price</span>
      <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
            id=menu_price name=menu_price placeholder='가격을 입력해주세요'>
+   </div>
+   <div class="input-group mb-3">
+     <span class="input-group-text" id="inputGroup-sizing-default" style="width:120px;">Comment</span>
+     <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+           id=comment name=comment placeholder='설명을 입력해주세요'>
    </div>
    <div style="float:right; margin-bottom:15px;">
                <input type="submit" class="btn btn-secondary" value="Add">
@@ -63,7 +67,8 @@
 							let str = '<option value='+txt[i]['menu_code']+'>'
 									+ txt[i]['menu_type'] + ', '
 									+ txt[i]['menu_name'] + ','
-									+ txt[i]['menu_price'] + '</option>';
+									+ txt[i]['menu_price'] + ','
+									+ txt[i]['comment']+'</option>';
 							console.log(str);
 							$('#getMenu').append(str);
 						}
@@ -89,7 +94,8 @@
 			function() {
 				if ($('input[name=menu_name]').val() == ''
 						|| $('input[name=menu_type]').val() == ''
-						|| $('input[name=menu_price]').val() == '') {
+						|| $('input[name=menu_price]').val() == ''
+						|| $('input[name=comment]').val() == '') {
 					alert('모든 값이 입력 되어야 합니다.');
 					return false;
 				}
@@ -108,6 +114,7 @@
 		/* let menu_type=$('input[name=menu_type]').val($.trim(ar[0])); */
 		$('input[name=menu_name]').val($.trim(ar[1]));
 		$('input[name=menu_price]').val($.trim(ar[2]));
+		$('input[name=comment]').val($.trim(ar[3]));
 
 		let menu_type = $.trim(ar[0]);
 

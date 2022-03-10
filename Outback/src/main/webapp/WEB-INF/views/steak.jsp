@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
+<%@ page session="true"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -104,6 +105,13 @@ li {
 				<p>두툼하고 육즙이 가득한 채끝 등심을 이용 블랙라벨 스테이크 입니다.</p>
 			</li>
 		</ul>
+		<c:forEach items="${getMenu}" var="getMenu">
+		<tr>
+		<td>${getmenu.menu_name}</td>
+		<td>${getmenu.menu_price}</td>
+		<td>${getmenu.comment}</td>
+		</tr>
+		</c:forEach>
 		<div class="menu-notice">
 					<h4>NOTICE</h4>
 					<p class="txt">
