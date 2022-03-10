@@ -40,7 +40,6 @@ li {
 	float: left;
 	width: 33%;
 	height : 480px;
-	border: 1px solid #ccc;
 	box-sizing: border-box;
 }
 
@@ -55,13 +54,19 @@ li {
 .menu_box:nth-child(3n+2) {
 	margin: 0 0.33%;
 }
+.menu-notice{
+	padding : 40px;
+	border : 1px solid #ccc;
+}
 </style>
 </head>
 <body>
 	<%@include file ="header.jsp" %>
-	<div style="width:470px; position:relative; margin:auto; margin-top:40px;">
-		<h1 style="text-align:center; font-weight:bold; font-size:40px; letter-spacing:6px;">파스타</h1>
-      	<h2 style="text-align:center; font-weight:bold; color:#ccc; margin-bottom:30px; font-size:22px; letter-spacing:4px;">Pasta</h2>
+	<div style="text-align:left; width:1200px; position:relative;  margin-top:40px; margin-left:100px;">
+	
+		<h1 style=" font-weight:bold; font-size:40px; letter-spacing:6px;">파스타</h1>
+      	<h2 style=" font-weight:bold; color:#ccc; margin-bottom:30px; font-size:22px; letter-spacing:4px;">Pasta</h2>
+      <hr>
       </div> 
 	<div class="container O_container">
 		<ul class="menu_wrap">
@@ -116,6 +121,14 @@ li {
 				<p>갈릭 오일에 볶은 새우를 더하고 매콤하게 즐길수 있는 정통 이탈리안 토마토 파스타 입니다.</p>
 			</li>
 		</ul>
+		<div class="menu-notice">
+					<h4>NOTICE</h4>
+					<p class="txt">- 식자재 수급이 원활하지 않아, 감자튀김이 제공되는 일부 메뉴에 한하여 다른 메뉴로 대체 제공되고 있습니다. 양해부탁드립니다.
+<br>- 모든 메뉴 가격은 부가세가 포함된 금액입니다. 
+<br>- 매장 사정에 따라 일부 매장의 메뉴는 홈페이지 메뉴와 상이할 수 있습니다.
+<br>- 메뉴별 자세한 원산지 정보는 매장 내 "아웃백 대표 원산지 표시판" 참고 부탁드립니다.
+<br>- 시즌에 따라 블랙라벨 스테이크의 가니시는 변경될 수 있습니다.</p>
+				</div>
 	</div>
 	<%@include file="footer.jsp"%>
 </body>
