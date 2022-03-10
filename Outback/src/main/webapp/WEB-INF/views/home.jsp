@@ -13,13 +13,13 @@
 <title>Home</title>	
 </head>
 <jsp:include page="header.jsp" />
-<h1><a href="/outback/home" style="color:#ccc; font-weight:bold; font-size:31px;">HUMAKASE</a></h1>
+<h1 style="margin-top:40px;"><a href="/outback/home" style="color:black; font-weight:bold; font-size:40px; letter-spacing:8px; ">HUMAKASE</a></h1>
 <div class="page-title">
-<h2 style="font-weight:bold; font-size:29.5px; margin-top:15px; letter-spacing:8px; margin-left:10px;">휴마카세</h2>
-<h3 style="font-weight:bold; letter-spacing:17px; color:#ccc; font-size:10px; margin-left:13px; margin-top:15px;">RESTAURANT</h3>
+<h2 style="font-weight:bold; font-size:29.5px; margin-top:15px; letter-spacing:8px; margin-left:10px;"></h2>
+<h3 style="font-weight:bold; letter-spacing:13px; color:#ccc; font-size:20px; margin-left:13px; margin-top:15px;">RESTAURANT</h3>
 </div> 
 <body style="text-align:center;">
-      <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" style="margin-top:100px; margin-bottom:45px;">
+      <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" style="margin-top:60px; margin-bottom:100px; margin-right:60px; margin-left:60px;">
   <div class="carousel-indicators">
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>

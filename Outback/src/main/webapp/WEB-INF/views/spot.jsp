@@ -131,23 +131,67 @@
 <div id='map' style="width: 100%; height:500px;"></div>
 <br>
 <br>
+<script src="https:/code.jquery.com/jquery-3.5.0.js"></script>
 <script>
-var mapOptions = {
-		center : new naver.maps.LatLng(37.3595704, 127.105399),
-		zoom : 10
+$(function() {
+	initMap();
+});
+
+function initMap() { 
+	var areaArr = new Array();  // 지역을 담는 배열 ( 지역명/위도경도 )
+	areaArr.push(
+			/*지역구 이름*/			/*위도*/					/*경도*/				
+		 {location : '강남 지점' , lat : '37.507381518682855' , lng : '127.02373997111954'},
+		 {location : '천안 지점' , lat : '36.79866773109683' , lng : '127.10147486157648'},
+		 {location : '수원 지점' , lat : '37.26748351966785' , lng : '126.99957866394776'},
+		 {location : '일산 지점' , lat : '37.67402968961624' , lng : '126.78716478065104'},
+	);
+	
+	let markers = new Array(); // 마커 정보를 담는 배열
+	let infoWindows = new Array(); // 정보창을 담는 배열
+	
+	var map = new naver.maps.Map('map', {
+        center: new naver.maps.LatLng(37.507381518682855, 127.02373997111954), //지도 시작 지점
+        zoom: 10
+    });
+	
+	for (var i = 0; i < areaArr.length; i++) {
+		// 지역을 담은 배열의 길이만큼 for문으로 마커와 정보창을 채워주자 !
+
+		var marker = new naver.maps.Marker({
+			map: map,
+	        title: areaArr[i].location, // 지역구 이름 
+	        position: new naver.maps.LatLng(areaArr[i].lat , areaArr[i].lng) // 지역구의 위도 경도 넣기 
+	    });
+	    
+	    /* 정보창 */
+		 var infoWindow = new naver.maps.InfoWindow({
+		     content: '<div style="width:200px;text-align:center;padding:10px;"><b>' + areaArr[i].location + '</b><br> - 네이버 지도 - </div>'
+		 }); // 클릭했을 때 띄워줄 정보 HTML 작성
+	    
+		 markers.push(marker); // 생성한 마커를 배열에 담는다.
+		 infoWindows.push(infoWindow); // 생성한 정보창을 배열에 담는다.
+	}	
 }
 
-var map = new naver.maps.Map('map', mapOptions);
+function getClickHandler(seq) {
+	
+    return function(e) {  // 마커를 클릭하는 부분
+        var marker = markers[seq], // 클릭한 마커의 시퀀스로 찾는다.
+            infoWindow = infoWindows[seq]; // 클릭한 마커의 시퀀스로 찾는다
 
-var markerOptions = {
-		position : new naver.maps.LatLng(37.507373, 127.023665),
-//					   new naver.maps.LatLng(36.79865914003147, 127.10137830204872),
-//					   new naver.maps.LatLng(37.26744936688898, 126.99964303696629),
-//					   new naver.maps.LatLng(37.67402119773536, 126.78714332297817),
-		map : map
-};
+        if (infoWindow.getMap()) {
+            infoWindow.close();
+        } else {
+            infoWindow.open(map, marker); // 표출
+        }
+	}
 
-var marker = new naver.maps.Marker(markerOptions);
+	for (var i=0, ii=markers.length; i<ii; i++) {
+	console.log(markers[i] , getClickHandler(i));
+	naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i)); // 클릭한 마커 핸들러
+	}
+}
 </script>
 </body>
 <jsp:include page="footer.jsp" />
