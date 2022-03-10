@@ -22,6 +22,7 @@
 		from board a, menu b, spot c
 		where a.menu_code=b.menu_code
 		and a.spot_code=c.spot_code
+		order by a.created desc
 		limit #{param1},#{param2}
 	</select>
 	
@@ -50,7 +51,7 @@
 	
 	<!-- 댓글 -->
 	<select id="reBoard" resultType="com.human.outback.ReBoard">
-		select writer,content,re_date
+		select re_id,writer,content,date_format(re_date, '%Y-%m-%d %H:%i:%s') as re_date
 		from re_board
 		where board_id=#{board_id}
 	</select>
@@ -59,6 +60,14 @@
 		insert into re_board(board_id,grp,grps,grpd,writer,content)
 		values(#{param1},#{param2},0,0,#{param3},#{param4})
 	</insert>
+	
+	<delete id="reDelete">
+		delete from re_board where re_id=#{re_id};
+	</delete>
+	
+	<update id="reUpdate">
+		update re_board set content=#{param2} where re_id=#{param1}
+	</update>
 	
 	<select id="getSession" resultType="com.human.outback.Member">
 		select userid,user_type from member where userid=#{param1}

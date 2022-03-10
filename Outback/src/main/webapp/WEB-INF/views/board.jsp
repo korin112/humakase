@@ -47,27 +47,22 @@
 		</div>
 		<div>
 			<button id="listBtn">목록페이지</button>
-			<c:if test="${m.userid==b.writer}">
-				<button id="updateBtn">수정</button>
-				<button id="deleteBtn">삭제</button>
-			</c:if>
+			<c:choose>
+				<c:when test="${m.userid==b.writer}">
+					<button id="updateBtn">수정</button>
+					<button id="deleteBtn">삭제</button>
+				</c:when>
+				<c:when test="${m.user_type==1}">
+					<button id="deleteBtn">삭제</button>
+				</c:when>
+			</c:choose>
 			<button id="cmtBtn">댓글</button>
 		</div>
-<%-- 		<div class="box"><%@include file = "re_board.jsp" %></div> --%>
 
-		<div>
-			<table>
-			<!-- board_id에 해당하는 게시글에 관한 댓글만 출력 -->
-				<c:forEach items="${reBoard}" var="re">
-					<tr id="getBoard">
-						<td><c:out value="${re.writer}"/></td>
-						<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${re.re_date}"/></td>
-			        </tr>
-			        <tr><td colspan=2><c:out value="${re.content}"/></td></tr>
-				</c:forEach>
-			</table>
-			</div>
-			<!-- 대댓글달기, 수정, 삭제 -->
+		<div id="reBoard" style="display:none;">
+			<!-- board_id에 해당하는 게시글에 관한 댓글 출력 -->
+			<table id="getReBoard"></table>
+	
 			<c:if test="${m.userid==b.writer || m.user_type==1}">
 				<div>
 					<input type="text" id="userid" name="userid" value="${m.userid}" style="border: 0px;">
@@ -76,9 +71,10 @@
 					<textarea id="cmt" name="cmt" placeholder="댓글을 입력해주세요" style="width:220px; height:80px;resize:none"></textarea>
 				</div>
 				<div>
-					<button id="cmtBtn">댓글달기</button>
+					<button id="reInsert">댓글달기</button>
 				</div>
 			</c:if>
+		</div>
 	</div>
 	<%@include file ="footer.jsp" %>
 	<script>
@@ -94,9 +90,114 @@
 			document.location="/outback/board_delete?board_id="+$('#board_id').val();
 		})
 		.on('click','#cmtBtn',function() {
-// 			document.location="/outback/re_board?board_id="+$('#board_id').val();
-// 			 $('.box').addClass('on');
+			if($('#reBoard').css('display')=='none') {
+				$('#reBoard').css('display','block');
+				getReBoard();
+			} else {
+				$('#reBoard').css('display','none');
+			}
+			return false;
 		})
+		.on('click','#reInsert',function() {
+			$.ajax({url:'/outback/re_insert',
+				data:{board_id:$('#board_id').val(), 
+					  writer:$('#userid').val(),
+				  	  content:$('#cmt').val()},
+				method:'POST',
+				datatype:'json',
+				success:function(txt) {
+					if(txt=="ok") {
+						alert('댓글 작성 완료했습니다.');
+						getReBoard();
+						$('#cmt').val('');
+					} else {
+						alert('댓글 작성에 실패했습니다. 다시 작성해주세요.');
+					}
+				}
+			});
+		})
+		.on('click','#delBtn',function() {
+			console.log($(this).val());
+			
+			$.ajax({url:'/outback/re_delete',
+				data:{re_id:$(this).val()},
+				method:'POST',
+				datatype:'json',
+				success:function(txt) {
+					if(txt=="ok") {
+						alert('댓글 삭제 완료했습니다.');
+						getReBoard();
+					} else {
+						alert('댓글 삭제 실패했습니다. 다시 삭제해주세요.');
+					}
+				}
+			});
+		})
+		.on('click','#upBtn',function() {
+			let text="<tr><td colspan=2><textarea id='cmtUpdate' name='cmtUpdate' placeholder='수정할 내용을 입력해주세요' style='width:220px; height:80px;resize:none;'></textarea></td></tr>";
+			var tr=$(this).parent().parent();
+			tr.next().after(text);
+			
+			let btn="<td><button id='cancel'>취소</button></td>";
+			var td=tr.children();
+			td.eq(td.length-1).after(btn);
+			
+			$(this).attr('id','upDateBtn');
+		})
+		.on('click','#cancel',function() {
+			var tr=$(this).parent().parent();
+			var reset=tr.next().next().remove();
+			
+			$('#cancel').remove();
+			$('#upDateBtn').attr('id','upBtn');
+		})
+		.on('click','#upDateBtn',function() {
+			if($('#cmtUpdate').val()=="") {
+				alert("수정할 내용을 입력해주세요.");
+				return false;
+			}
+			
+			$.ajax({url:'/outback/re_update',
+				data:{re_id:$(this).val(),
+					  content:$('#cmtUpdate').val()},
+				method:'POST',
+				datatype:'json',
+				success:function(txt) {
+					if(txt=="ok") {
+						alert('댓글 수정 완료했습니다.');
+						getReBoard();
+					} else {
+						alert('댓글 수정 실패했습니다. 다시 수정해주세요.');
+					}
+				}
+			});
+		})
+		function getReBoard() {
+			$('#getReBoard').empty();
+			$.ajax({url:'/outback/reList',
+				data:{board_id:$('#board_id').val()},
+				method:'GET',
+				datatype:'json',
+				success:function(txt) {
+					console.log(txt);
+					for(i=0;i<txt.length;i++) {
+						let str1="<tr><td>"+txt[i]['writer']+"</td><td>"
+								+txt[i]['re_date']+"</td>";
+						let btnD="<td><button id='delBtn' value='"+txt[i]['re_id']+"'>삭제</button></td>";
+						let btnU="<td><button id='upBtn' value='"+txt[i]['re_id']+"'>수정</button></td>";
+						let str2="</tr><tr><td colspan=2>"+txt[i]['content']+"</td></tr>";
+						
+						if(${m.userid==b.writer}) {
+							$('#getReBoard').append(str1+btnD+btnU+str2);
+						} else if(${m.user_type==1}) {
+							$('#getReBoard').append(str1+btnD+str2);
+						} else {
+							$('#getReBoard').append(str1+str2);
+						}
+					}
+				}	
+			});
+		}
 	</script>
 </body>
 </html>

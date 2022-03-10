@@ -18,6 +18,8 @@ public interface iBoard {
 	// 댓글
 	ArrayList<ReBoard> reBoard(int board_id);
 	void reInsert(int board_id, int grp, String writer, String content);
+	void reDelete(int re_id);
+	void reUpdate(int re_id, String content);
 	
 	// session member
 	Member getSession(String userid);
