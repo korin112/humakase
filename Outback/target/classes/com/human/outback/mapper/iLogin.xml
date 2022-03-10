@@ -6,7 +6,7 @@
 <select id="getLogin" resultType="com.human.outback.Member">
 	select userid, passcode, name, mobile, gender,user_type,login_time,logout_time
 	from member
-	order by name
+	order by userid
 </select>
 <select id="confirm_check" resultType="com.human.outback.Member2">
 	select userid from member
@@ -24,7 +24,7 @@
 <select id="infomation" resultType="com.human.outback.Member">
 	select userid,passcode,name,mobile
 	from member
-	order by name
+	order by userid
 </select>
 <select id="digList" resultType="com.human.outback.MemberType">
 	select type_code, type_name
@@ -35,6 +35,7 @@
 	select a.userid,b.type_code,b.type_name
 	from member as a join memberType as b 
 	on a.user_type=b.type_code
+	order by a.userid
 </select>
 <update id="updateMember">
 	update member set user_type=#{param2} where userid=#{param1}

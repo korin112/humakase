@@ -9,12 +9,15 @@
 <meta charset="UTF-8">
 <title> - 관리자 페이지 - </title>
 <!-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script> -->
+</head>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="${path}/resources/css/style.css">
 <style>
 table {
 	border-collapse:collapse;
 	margin:0 auto;
 	border:1px solid #ddd;
+	align:center;
 	
 }
 
@@ -22,6 +25,7 @@ table {
 	box-sizing:border-box;
 	border:1px solid #ddd;
 	padding:0.85rem;
+	align:center;
 }
 #dlgEdit td{
 	box-sizing:border-box;
@@ -31,15 +35,23 @@ table {
 #dlgEdit input {
 	border-collapse:collapse;
 }
+#btnCancel {
+	position:absolute;
+	left:690px;
+	top:680px;
+	padding: 0.5rem 3rem;
+	
+}
+
 </style>
 <body>
 <%@include file ="header.jsp" %>
 <div class="container O_container">
 <table id=tblMember>
 </table>
-<input style='position:absolute; left:1066px;' type=button id=btnCancel name=btnCancel value=돌아가기>
+<input type=button id=btnCancel name=btnCancel value=돌아가기>
 </div><br>
-<div id=dlgEdit style='display:none; position:absolute'>
+<div id=dlgEdit style='display:none;'>
 <table>
 	<tr>
 		<td><select id=selInfo size=10 style='width:250px'></select></td>
@@ -54,7 +66,7 @@ table {
 	</tr>
 </table>
 </div>
-<%-- <%@include file ="footer.jsp" %> --%>
+<%@include file ="footer.jsp" %>
 </body>
 <script src="https:/code.jquery.com/jquery-3.5.0.js"></script>
 <script src='https://code.jquery.com/ui/1.13.0/jquery-ui.js'></script>
@@ -62,27 +74,10 @@ table {
 $(document)
 .ready(function(){
 	member();
-})
-//수정버튼 클릭시 다이얼로그 실행
-.on('click','#btnEdit',function(){
-	$('#_userid').val($(this).attr('data-userid'));
-	$.ajax({url:'/outback/digEdit',
-			data:{},
-			method:'GET',
-			dataType:'json',
-			success:function(txt){
-				let user="";
-				for(i=0; i < txt.length; i++){
-					user=txt[i]['_type_code2'];
-					if($('#_type_code').val() == user){
- 						$('#_type_code').val(txt[i]['_type_code2']);
-						$('#_type_name').val(txt[i]['_type_name2']);
-					}
-				}
-			}
-		});
 	$('#dlgEdit').dialog({
-		modal:false,
+		title:'등급 수정',
+		autoOpen:false,
+		modal:true,
 		width:600,
 		open:function(){
 			$('#selInfo').empty();
@@ -103,7 +98,26 @@ $(document)
 			$('#_type_code,#_type_name').val('');
 		}
 	});
-
+})
+//수정버튼 클릭시 다이얼로그 실행
+.on('click','#btnEdit',function(){
+	$('#_userid').val($(this).attr('data-userid'));
+	$.ajax({url:'/outback/digEdit',
+			data:{},
+			method:'GET',
+			dataType:'json',
+			success:function(txt){
+				let user="";
+				for(i=0; i < txt.length; i++){
+					user=txt[i]['_type_code2'];
+					if($('#_type_code').val() == user){
+ 						$('#_type_code').val(txt[i]['_type_code2']);
+						$('#_type_name').val(txt[i]['_type_name2']);
+					}
+				}
+			}
+		});
+	$('#dlgEdit').dialog("open");
 })
 //dialog select 선택옵션
 .on('click','#selInfo option',function(){
