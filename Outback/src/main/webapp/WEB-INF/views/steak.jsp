@@ -65,14 +65,15 @@ li {
 <body>
 	<%@include file="header.jsp"%>
 	<div style="text-align:left; width:1200px; position:relative;  margin-top:40px; margin-left:100px;">
-		<h1 style="text-align:center; font-weight:bold; font-size:40px; letter-spacing:6px;">스테이크</h1>
-      	<h2 style="text-align:center; font-weight:bold; color:#ccc; margin-bottom:30px; font-size:22px; letter-spacing:4px;">Steak</h2>
+		<h1 style="font-weight:bold; font-size:40px; letter-spacing:6px;">스테이크</h1>
+      	<h2 style="font-weight:bold; color:#ccc; margin-bottom:30px; font-size:22px; letter-spacing:4px;">Steak</h2>
+      	<hr>
       </div> 
 	<div class="container O_container">
 		<ul class="menu_wrap">
 			<li class="menu_box">
 				<div>
-					<img style="width: 355px; height: 250px;"
+					<img style="width: 350px; height: 250px;"
 						src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2007/1/2/0/valentines_steak.jpg.rend.hgtvcom.826.620.suffix/1557859049553.jpg"
 						alt="My Image">
 				</div>
@@ -83,7 +84,7 @@ li {
 			</li>
 			<li class="menu_box">
 				<div>
-					<img style="width: 355px; height: 250px;"
+					<img style="width: 350px; height: 250px;"
 						src="https://img.insight.co.kr/static/2019/12/09/700/e842mx2j26ba019u846t.jpg"
 						alt="My Image">
 				</div>
@@ -94,7 +95,7 @@ li {
 			</li>
 			<li class="menu_box">
 				<div>
-					<img style="width: 355px; height: 250px;"
+					<img style="width: 350px; height: 250px;"
 						src="https://i.pinimg.com/736x/c6/be/c2/c6bec2c1209f96a678fe17b7cdc88d3b.jpg"
 						alt="My Image">
 				</div>
@@ -105,10 +106,10 @@ li {
 		</ul>
 		<div class="menu-notice">
 					<h4>NOTICE</h4>
-					<p class="txt">- 식자재 수급이 원활하지 않아, 감자튀김이 제공되는 일부 메뉴에 한하여 다른 메뉴로 대체 제공되고 있습니다. 양해부탁드립니다.
-<br>- 모든 메뉴 가격은 부가세가 포함된 금액입니다. 
+					<p class="txt">
+	- 모든 메뉴 가격은 부가세가 포함된 금액입니다. 
 <br>- 매장 사정에 따라 일부 매장의 메뉴는 홈페이지 메뉴와 상이할 수 있습니다.
-<br>- 메뉴별 자세한 원산지 정보는 매장 내 "아웃백 대표 원산지 표시판" 참고 부탁드립니다.
+<br>- 최상의 품질로 스테이크를 제공하기 위해 한정수량으로 판매하며, 포장 불가합니다. 
 <br>- 시즌에 따라 블랙라벨 스테이크의 가니시는 변경될 수 있습니다.</p>
 				</div>
 	</div>
