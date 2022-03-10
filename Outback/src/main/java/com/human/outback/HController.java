@@ -24,15 +24,17 @@ public class HController {
 	
 	// 게시판 목록
 	@RequestMapping(value = "/board_list")
-	public String BoardList(Model m, Page page) {
+	public String BoardList(Model m, Page page, HttpSession session) {
 		iBoard board=sqlSession.getMapper(iBoard.class);
 		int skip=(page.getPageNum()-1)*page.getAmount();
 		m.addAttribute("b_list",board.boardList(skip,page.getAmount()));
 		
 		int total = board.getTotal();
-		//System.out.println(total);
         PageMaker p = new PageMaker(page, total);
         m.addAttribute("p",p);
+        
+        String userid=(String)session.getAttribute("userid");
+		m.addAttribute("m",board.getSession(userid));
         
 		return "board_list";
 	}

@@ -49,8 +49,9 @@
 		        </tr>
 			</c:forEach>
 		</table>
-		<button id="insert">글쓰기</button>
-		
+		<c:if test="${userid!=null}">
+			<button id="insert">글쓰기</button>
+		</c:if>	
 		<div>
 			<ul id="pageInfo" class="pageInfo">
 				<c:if test="${p.prev}">
