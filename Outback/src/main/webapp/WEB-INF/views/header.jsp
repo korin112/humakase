@@ -14,7 +14,7 @@
 	    <div id="navbarSupportedContent">
 	    <form name="frm" action="/outback/logout" method="POST">
 			<input type="hidden" name="userid" value="${userid}">
-		</form>
+		</form> 
 	      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 	        <li class="nav-item">
 	          <a class="nav-link" aria-current="page" href="/outback/spot">지점위치</a>
