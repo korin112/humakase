@@ -4,7 +4,8 @@
 	
 <mapper namespace="com.human.outback.iBook">
 <select id="getCart" resultType="com.human.outback.Cart">
-	select cart_code, menu_name, menu_cnt, menu_price, menu_total from cart where userid = #{param1} order by cart_code desc
+	select cart_code, menu_name, menu_cnt, menu_price, menu_total from cart where userid = #{param1}
+	order by cart_code desc
 </select>
 <update id="updateCart">
 	update cart set menu_cnt = #{param2}, menu_total = menu_price * #{param2} where cart_code = #{param1}
@@ -27,4 +28,40 @@
 <select id="getSpot" resultType="com.human.outback.Spot">
 	select spot_code, spot_name, spot_max from spot
 </select>
+<select id="getVtime" resultType="com.human.outback.Vtime">
+	select t1.spot_code, t1.spot_name, ifnull(t2.vdate, #{param2}) as vdate,
+		t1.time_code, t1.time_name, t1.spot_max,
+		ifnull((t1.spot_max - t2.sumhowmany), t1.spot_max) as remain
+	from view_spot_vtime t1 left join view_alreadybook t2
+	on t1.spot_code = t2.spot_code and t1.time_code = t2.time_code
+	where t1.spot_code = #{param1} and (vdate is null or vdate = #{param2}) 
+	order by vdate, t1.time_code
+</select>
+<insert id="insertBook">
+	insert into booking(spot_code, booker, howmany, m_qty, total, vdate, vtime, msg)
+	values (#{param1}, #{param2}, #{param3}, #{param4}, #{param5}, #{param6}, #{param7}, #{param8})
+</insert>
+<insert id="insertBookDetail" parameterType="java.util.List">
+	insert into booking_detail (book_id, menu_code, menu_name, m_qty, price, total) values 
+	<foreach collection="list" item="item" separator=",">
+	(
+		(select max(book_id) from booking where booker = #{param1}),
+		(select menu_code from cart where userid = #{param1} and cart_code = #{item.cart_code}),
+		(select menu_name from cart where userid = #{param1} and cart_code = #{item.cart_code}),
+		(select menu_cnt from cart where userid = #{param1} and cart_code = #{item.cart_code}),
+		(select menu_price from cart where userid = #{param1} and cart_code = #{item.cart_code}),
+		(select menu_total from cart where userid = #{param1} and cart_code = #{item.cart_code})
+	)
+	</foreach>
+</insert>
+<delete id="deleteBookCart" parameterType="java.util.List">
+	delete from cart
+	<where>
+		<foreach collection="list" item="item" separator="or">
+			cart_code = #{item.cart_code}
+		</foreach>
+	</where>
+
+</delete>
+
 </mapper>
