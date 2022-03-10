@@ -7,7 +7,7 @@
 <header>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 	  <div class="container">
-	    <a class="navbar-brand mb-md-0" href="/outback/home" style="font-weight:bolder; font-size:35px;">LOGO</a>
+	    <a class="navbar-brand mb-md-0" href="/outback/home" style="font-weight:bolder; font-size:35px;">HUMAKASE</a>
 	    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	      <span class="navbar-toggler-icon"></span>
 	    </button>
@@ -46,16 +46,18 @@
 	        </c:if>
 	       <c:if test="${userid!=null}">
 				<c:if test="${userid =='admin'}">
+					<li class="nav-item"><a class="nav-link" href="/outback/menuadd">메뉴관리</a></li>
+					<li class="nav-item"><a class="nav-link" href="/outback/typeadd">메뉴타입관리</a></li>
 					<li class="nav-item"><a class="nav-link" href="/outback/member">[관리자페이지]</a></li>
 					<li class="nav-item"><a class="nav-link" href="/outback/menuadd">[메뉴관리]</a></li>
 					<li class="nav-item"><a class="nav-link" href="/outback/typeadd">[메뉴타입 관리]</a></li>
 					<li class="nav-item"><a class="nav-link" href="#" onclick="if(confirm('로그아웃하시겠습니까?')){javascript:document.frm.submit();return false;}">로그아웃</a></li>
-					<li>${userid}</li>	
+					<li class="nav-link" style="color:#ccc;">${userid}</li>	
 				</c:if>
 				<c:if test="${userid !='admin'}">
 					<li class="nav-item"><a class="nav-link" href="/outback/mypage">[마이페이지]</a></li>
 					<li class="nav-item"><a class="nav-link" href="#" onclick="if(confirm('로그아웃하시겠습니까?')){javascript:document.frm.submit();return false;}">로그아웃</a></li>
-					<li>${userid}</li>
+					<li class="nav-link" style="color:#ccc;">${userid}</li>
 				</c:if>
 			</c:if>		
 	      </ul>
