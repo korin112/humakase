@@ -40,7 +40,6 @@ li {
 	float: left;
 	width: 33%;
 	height : 480px;
-	border: 1px solid #ccc;
 	box-sizing: border-box;
 }
 
@@ -55,13 +54,18 @@ li {
 .menu_box:nth-child(3n+2) {
 	margin: 0 0.33%;
 }
+.menu-notice{
+	padding : 40px;
+	border : 1px solid #ccc;
+}
 </style>
 </head>
 <body>
 	<%@include file="header.jsp"%>
-	<div style="width:470px; position:relative; margin:auto; margin-top:40px;">
-		<h1 style="text-align:center; font-weight:bold; font-size:40px; letter-spacing:6px;">드링크</h1>
-      	<h2 style="text-align:center; font-weight:bold; color:#ccc; margin-bottom:30px; font-size:22px; letter-spacing:4px;">Drink</h2>
+	<div style="text-align:left; width:1200px; position:relative;  margin-top:40px; margin-left:100px;">
+		<h1 style="font-weight:bold; font-size:40px; letter-spacing:6px;">드링크</h1>
+      	<h2 style="font-weight:bold; color:#ccc; margin-bottom:30px; font-size:22px; letter-spacing:4px;">Drink</h2>
+      	<hr>
       </div> 
 	<div class="container O_container">
 		<ul class="menu_wrap">
@@ -116,6 +120,12 @@ li {
 				<p>은은한 보리향과 톡 튀는 탄산으로 깔끔한 뒷맛이 예술인 음료입니다.</p>
 			</li>
 		</ul>
+		<div class="menu-notice">
+					<h4>NOTICE</h4>
+					<p class="txt">
+	- 모든 메뉴 가격은 부가세가 포함된 금액입니다. 
+<br>- 매장 사정에 따라 일부 매장의 메뉴는 홈페이지 메뉴와 상이할 수 있습니다.</p>
+				</div>
 	</div>
 	<%@include file ="footer.jsp" %>
 </body>
