@@ -47,12 +47,38 @@
 		</div>
 		<div>
 			<button id="listBtn">목록페이지</button>
-			<c:if test="${userid==b.writer}">
+			<c:if test="${m.userid==b.writer}">
 				<button id="updateBtn">수정</button>
 				<button id="deleteBtn">삭제</button>
 			</c:if>
 			<button id="cmtBtn">댓글</button>
 		</div>
+<%-- 		<div class="box"><%@include file = "re_board.jsp" %></div> --%>
+
+		<div>
+			<table>
+			<!-- board_id에 해당하는 게시글에 관한 댓글만 출력 -->
+				<c:forEach items="${reBoard}" var="re">
+					<tr id="getBoard">
+						<td><c:out value="${re.writer}"/></td>
+						<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${re.re_date}"/></td>
+			        </tr>
+			        <tr><td colspan=2><c:out value="${re.content}"/></td></tr>
+				</c:forEach>
+			</table>
+			</div>
+			<!-- 대댓글달기, 수정, 삭제 -->
+			<c:if test="${m.userid==b.writer || m.user_type==1}">
+				<div>
+					<input type="text" id="userid" name="userid" value="${m.userid}" style="border: 0px;">
+				</div>
+				<div>
+					<textarea id="cmt" name="cmt" placeholder="댓글을 입력해주세요" style="width:220px; height:80px;resize:none"></textarea>
+				</div>
+				<div>
+					<button id="cmtBtn">댓글달기</button>
+				</div>
+			</c:if>
 	</div>
 	<%@include file ="footer.jsp" %>
 	<script>
@@ -68,7 +94,8 @@
 			document.location="/outback/board_delete?board_id="+$('#board_id').val();
 		})
 		.on('click','#cmtBtn',function() {
-			document.location="/outback/re_board?board_id="+$('#board_id').val();
+// 			document.location="/outback/re_board?board_id="+$('#board_id').val();
+// 			 $('.box').addClass('on');
 		})
 	</script>
 </body>
