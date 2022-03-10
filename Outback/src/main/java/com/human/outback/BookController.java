@@ -49,7 +49,7 @@ public class BookController {
 	}
 	
 	@RequestMapping(value="/InsertBook", method = RequestMethod.POST)
-	public String InsertBook(HttpServletRequest hsr) {
+	public String InsertBook(HttpServletRequest hsr, CartList cartlist) {
 		HttpSession session = hsr.getSession();
 		
 		int spot_code = Integer.parseInt(hsr.getParameter("spot_code"));
@@ -71,7 +71,7 @@ public class BookController {
 //		iBook ibook = sqlSession.getMapper(iBook.class);
 //		ibook.updateCart(cart_code, menu_cnt);
 		
-		return "home";
+		return "redirect:/home";
 	}
 	
 	@ResponseBody
