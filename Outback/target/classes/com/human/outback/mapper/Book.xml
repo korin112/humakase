@@ -40,4 +40,27 @@
 	insert into booking(spot_code, booker, howmany, m_qty, total, vdate, vtime, msg)
 	values (#{param1}, #{param2}, #{param3}, #{param4}, #{param5}, #{param6}, #{param7}, #{param8})
 </insert>
+<insert id="insertBookDetail" parameterType="java.util.List">
+	insert into booking_detail (book_id, menu_code, menu_name, m_qty, price, total) values 
+	<foreach collection="list" item="item" separator=",">
+	(
+		(select max(book_id) from booking where booker = #{param1}),
+		(select menu_code from cart where userid = #{param1} and cart_code = #{item.cart_code}),
+		(select menu_name from cart where userid = #{param1} and cart_code = #{item.cart_code}),
+		(select menu_cnt from cart where userid = #{param1} and cart_code = #{item.cart_code}),
+		(select menu_price from cart where userid = #{param1} and cart_code = #{item.cart_code}),
+		(select menu_total from cart where userid = #{param1} and cart_code = #{item.cart_code})
+	)
+	</foreach>
+</insert>
+<delete id="deleteBookCart" parameterType="java.util.List">
+	delete from cart
+	<where>
+		<foreach collection="list" item="item" separator="or">
+			cart_code = #{item.cart_code}
+		</foreach>
+	</where>
+
+</delete>
+
 </mapper>

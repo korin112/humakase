@@ -14,5 +14,6 @@ public interface iBook {
 	ArrayList<Spot> getSpot();
 	ArrayList<Vtime> getVtime(int spot_code, String vdate);
 	void insertBook(int spot_code, String booker, int howmany, int m_qty, int total, String vdate, int vtime, String msg);
-	
+	void insertBookDetail(@Param("param1")String booker, @Param("list")List<Cart> arCart);
+	void deleteBookCart(@Param("list")List<Cart> arCart);
 }

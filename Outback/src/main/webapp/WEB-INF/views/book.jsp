@@ -293,7 +293,7 @@
 			let input_total = '<input name="total" type="hidden" value="' + cnt_total +'">';
 			console.log(input_total);
 			$(".insert_bookForm .displaynone").append(input_spot_code, input_vtime, input_howmany, input_m_qty, input_total);
-
+			
 			
 			$('.insert_bookForm').submit();
 		})

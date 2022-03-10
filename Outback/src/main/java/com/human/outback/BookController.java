@@ -51,7 +51,8 @@ public class BookController {
 	@RequestMapping(value="/InsertBook", method = RequestMethod.POST)
 	public String InsertBook(HttpServletRequest hsr, CartList cartlist) {
 		HttpSession session = hsr.getSession();
-		
+		List<Cart> arCart = cartlist.getCart();
+		System.out.println(arCart);
 		int spot_code = Integer.parseInt(hsr.getParameter("spot_code"));
 		String booker = (String) session.getAttribute("userid");
 		int howmany = Integer.parseInt(hsr.getParameter("howmany"));
@@ -60,17 +61,12 @@ public class BookController {
 		String vdate = hsr.getParameter("vdate");
 		int vtime = Integer.parseInt(hsr.getParameter("vtime"));
 		String msg = hsr.getParameter("msg");
-		
 		System.out.println(spot_code +", "+ booker +", "+ howmany+", "+m_qty+", "+total+", "+vdate+", "+vtime+", "+msg);
 		
 		iBook ibook = sqlSession.getMapper(iBook.class);
 		ibook.insertBook(spot_code, booker, howmany, m_qty, total, vdate, vtime, msg);
-//		int cart_code = Integer.parseInt(hsr.getParameter("cart_code"));
-//		int menu_cnt = Integer.parseInt(hsr.getParameter("menu_cnt"));
-//		
-//		iBook ibook = sqlSession.getMapper(iBook.class);
-//		ibook.updateCart(cart_code, menu_cnt);
-		
+		ibook.insertBookDetail(booker, arCart);
+		ibook.deleteBookCart(arCart);
 		return "redirect:/home";
 	}
 	
