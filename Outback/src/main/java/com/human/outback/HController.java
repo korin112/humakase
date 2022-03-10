@@ -43,29 +43,34 @@ public class HController {
 		iBoard board=sqlSession.getMapper(iBoard.class);	
 		m.addAttribute("b",board.getBoard(board_id));
 		
-		// 댓글
 		String userid=(String)session.getAttribute("userid");
 		m.addAttribute("m",board.getSession(userid));
-		m.addAttribute("reBoard",board.reBoard(board_id));
 		
-		System.out.println(board.getSession(userid));
-		System.out.println(board.reBoard(board_id));
 		return "board";
 	}
-	// 댓글
-	/*
-	 * @RequestMapping(value="/re_board") public String reBoard(int board_id, Model
-	 * m, HttpServletRequest hsr, HttpSession session) { iBoard
-	 * re=sqlSession.getMapper(iBoard.class);
-	 * m.addAttribute("b",re.getBoard(board_id));
-	 * 
-	 * // member userid, usertype 받아오기 String
-	 * userid=(String)session.getAttribute("userid");
-	 * m.addAttribute("m",re.getSession(userid));
-	 * 
-	 * m.addAttribute("re",re.reBoard(board_id)); return "re_board"; }
-	 */
 	
+	// 댓글
+	@ResponseBody
+	@RequestMapping(value = "/reList", produces="application/json;charset=utf-8")
+	public String reBoard(int board_id) {		
+		iBoard reBoard=sqlSession.getMapper(iBoard.class);
+		System.out.println("board_id : "+board_id);
+		ArrayList<ReBoard> re=reBoard.reBoard(board_id);
+		
+		JSONArray ja=new JSONArray();
+		for(int i=0;i<re.size();i++) {
+			JSONObject jo=new JSONObject();
+			jo.put("re_id", re.get(i).getRe_id());
+			jo.put("writer", re.get(i).getWriter());
+			jo.put("content", re.get(i).getContent());
+			jo.put("re_date", re.get(i).getRe_date());
+			ja.add(jo);
+		}
+		//System.out.println(ja.toString());
+		return ja.toString();
+	}
+	
+	// 댓글 작성	
 	@ResponseBody
 	@RequestMapping(value="/re_insert", method = RequestMethod.POST)
 	public String reInsert(HttpServletRequest hsr, Model m) {
@@ -73,11 +78,10 @@ public class HController {
 		String writer=hsr.getParameter("writer");
 		String content=hsr.getParameter("content");
 				
-		System.out.println("board_id : "+board_id);
-		System.out.println("writer : "+writer);
-		System.out.println("content : "+content);
+		//System.out.println("board_id : "+board_id);
+		//System.out.println("writer : "+writer);
+		//System.out.println("content : "+content);
 			
-		
 		String str="";
 		iBoard re=sqlSession.getMapper(iBoard.class);
 		try {
@@ -88,6 +92,44 @@ public class HController {
 		}
 		return str;
 	}
+	
+	// 댓글 삭제
+	@ResponseBody
+	@RequestMapping(value="/re_delete", method = RequestMethod.POST)
+	public String reDelete(HttpServletRequest hsr) {		
+		int re_id=Integer.parseInt(hsr.getParameter("re_id"));
+
+		//System.out.println("re_id : "+re_id);
+		
+		String str="";
+		iBoard re=sqlSession.getMapper(iBoard.class);
+		try {
+			re.reDelete(re_id);
+			str="ok";
+		} catch(Exception e) {
+			str="fail";
+		}
+		return str;
+	}
+	
+	// 댓글 수정
+	@ResponseBody
+	@RequestMapping(value="/re_update", method = RequestMethod.POST)
+	public String reUpdate(HttpServletRequest hsr) {		
+		int re_id=Integer.parseInt(hsr.getParameter("re_id"));
+		String content=hsr.getParameter("content");
+		
+		String str="";
+		iBoard re=sqlSession.getMapper(iBoard.class);
+		try {
+			re.reUpdate(re_id,content);
+			str="ok";
+		} catch(Exception e) {
+			str="fail";
+		}
+		return str;
+	}
+	
 	// 게시판 삭제
 	@RequestMapping("/board_delete")
 	public String BoardDelete(int board_id, RedirectAttributes rttr) {

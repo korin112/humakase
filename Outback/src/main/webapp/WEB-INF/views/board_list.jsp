@@ -89,7 +89,7 @@
 			var td=tr.children();
 			var board_id=td.eq(0).text();
 			
-			console.log(board_id);
+			//console.log(board_id);
 			
 			document.location="/outback/getBoard?board_id="+board_id;
 		})
