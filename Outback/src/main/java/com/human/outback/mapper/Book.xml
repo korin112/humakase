@@ -28,6 +28,16 @@
 	select spot_code, spot_name, spot_max from spot
 </select>
 <select id="getVtime" resultType="com.human.outback.Vtime">
-	select time_code, time_name from vtime
+	select t1.spot_code, t1.spot_name, ifnull(t2.vdate, #{param2}) as vdate,
+		t1.time_code, t1.time_name, t1.spot_max,
+		ifnull((t1.spot_max - t2.sumhowmany), t1.spot_max) as remain
+	from view_spot_vtime t1 left join view_alreadybook t2
+	on t1.spot_code = t2.spot_code and t1.time_code = t2.time_code
+	where t1.spot_code = #{param1} and (vdate is null or vdate = #{param2}) 
+	order by vdate, t1.time_code
 </select>
+<insert id="insertBook">
+	insert into booking(spot_code, booker, howmany, m_qty, total, vdate, vtime, msg)
+	values (#{param1}, #{param2}, #{param3}, #{param4}, #{param5}, #{param6}, #{param7}, #{param8})
+</insert>
 </mapper>

@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 
 
 
@@ -37,11 +40,56 @@ public class BookController {
 		Member userSession = ibook.getUserSession(userid);
 		model.addAttribute("userSession",userSession);
 		ArrayList<Spot> getSpot = ibook.getSpot();
-		ArrayList<Vtime> getVtime = ibook.getVtime();
+		
+//		ArrayList<Vtime> getVtime = ibook.getVtime(spot_code);
 		model.addAttribute("spot", getSpot);
-		model.addAttribute("vtime", getVtime);
+//		model.addAttribute("vtime", getVtime);
 		
 		return "book";
+	}
+	
+	@RequestMapping(value="/InsertBook", method = RequestMethod.POST)
+	public String InsertBook(HttpServletRequest hsr) {
+		HttpSession session = hsr.getSession();
+		
+		int spot_code = Integer.parseInt(hsr.getParameter("spot_code"));
+		String booker = (String) session.getAttribute("userid");
+		int howmany = Integer.parseInt(hsr.getParameter("howmany"));
+		int m_qty = Integer.parseInt(hsr.getParameter("m_qty"));
+		int total = Integer.parseInt(hsr.getParameter("total"));
+		String vdate = hsr.getParameter("vdate");
+		int vtime = Integer.parseInt(hsr.getParameter("vtime"));
+		String msg = hsr.getParameter("msg");
+		
+		System.out.println(spot_code +", "+ booker +", "+ howmany+", "+m_qty+", "+total+", "+vdate+", "+vtime+", "+msg);
+		
+		iBook ibook = sqlSession.getMapper(iBook.class);
+		ibook.insertBook(spot_code, booker, howmany, m_qty, total, vdate, vtime, msg);
+//		int cart_code = Integer.parseInt(hsr.getParameter("cart_code"));
+//		int menu_cnt = Integer.parseInt(hsr.getParameter("menu_cnt"));
+//		
+//		iBook ibook = sqlSession.getMapper(iBook.class);
+//		ibook.updateCart(cart_code, menu_cnt);
+		
+		return "home";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/getVtime", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+	public String getVtime(HttpServletRequest hsr) {
+		int spot_code = Integer.parseInt(hsr.getParameter("spot_code"));
+		String vdate = hsr.getParameter("vdate");
+		iBook ibook = sqlSession.getMapper(iBook.class);
+		ArrayList<Vtime> getVtime = ibook.getVtime(spot_code, vdate);
+		JSONArray ja = new JSONArray();
+		for(int i = 0; i < getVtime.size(); i++) {
+			JSONObject jo = new JSONObject();
+			jo.put("time_code", getVtime.get(i).getTime_code());
+			jo.put("time_name", getVtime.get(i).getTime_name());
+			jo.put("remain", getVtime.get(i).getRemain());
+			ja.add(jo);
+		}
+		return ja.toString();
 	}
 	
 	@RequestMapping("/cart")
