@@ -42,7 +42,6 @@ li {
 	float: left;
 	width: 33%;
 	height : 480px;
-	border: 1px solid #ccc;
 	box-sizing: border-box;
 }
 
@@ -57,19 +56,24 @@ li {
 .menu_box:nth-child(3n+2) {
 	margin: 0 0.33%;
 }
+.menu-notice{
+	padding : 40px;
+	border : 1px solid #ccc;
+}
 </style>
 </head>
 <body>
 	<%@include file="header.jsp"%>
-	<div style="width:470px; position:relative; margin:auto; margin-top:40px;">
-		<h1 style="text-align:center; font-weight:bold; font-size:40px; letter-spacing:6px;">스테이크</h1>
-      	<h2 style="text-align:center; font-weight:bold; color:#ccc; margin-bottom:30px; font-size:22px; letter-spacing:4px;">Steak</h2>
+	<div style="text-align:left; width:1200px; position:relative;  margin-top:40px; margin-left:100px;">
+		<h1 style="font-weight:bold; font-size:40px; letter-spacing:6px;">스테이크</h1>
+      	<h2 style="font-weight:bold; color:#ccc; margin-bottom:30px; font-size:22px; letter-spacing:4px;">Steak</h2>
+      	<hr>
       </div> 
 	<div class="container O_container">
 		<ul class="menu_wrap">
 			<li class="menu_box">
 				<div>
-					<img style="width: 355px; height: 250px;"
+					<img style="width: 350px; height: 250px;"
 						src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2007/1/2/0/valentines_steak.jpg.rend.hgtvcom.826.620.suffix/1557859049553.jpg"
 						alt="My Image">
 				</div>
@@ -80,7 +84,7 @@ li {
 			</li>
 			<li class="menu_box">
 				<div>
-					<img style="width: 355px; height: 250px;"
+					<img style="width: 350px; height: 250px;"
 						src="https://img.insight.co.kr/static/2019/12/09/700/e842mx2j26ba019u846t.jpg"
 						alt="My Image">
 				</div>
@@ -91,7 +95,7 @@ li {
 			</li>
 			<li class="menu_box">
 				<div>
-					<img style="width: 355px; height: 250px;"
+					<img style="width: 350px; height: 250px;"
 						src="https://i.pinimg.com/736x/c6/be/c2/c6bec2c1209f96a678fe17b7cdc88d3b.jpg"
 						alt="My Image">
 				</div>
@@ -100,6 +104,14 @@ li {
 				<p>두툼하고 육즙이 가득한 채끝 등심을 이용 블랙라벨 스테이크 입니다.</p>
 			</li>
 		</ul>
+		<div class="menu-notice">
+					<h4>NOTICE</h4>
+					<p class="txt">
+	- 모든 메뉴 가격은 부가세가 포함된 금액입니다. 
+<br>- 매장 사정에 따라 일부 매장의 메뉴는 홈페이지 메뉴와 상이할 수 있습니다.
+<br>- 최상의 품질로 스테이크를 제공하기 위해 한정수량으로 판매하며, 포장 불가합니다. 
+<br>- 시즌에 따라 블랙라벨 스테이크의 가니시는 변경될 수 있습니다.</p>
+				</div>
 	</div>
 	<%@include file="footer.jsp"%>
 </body>
