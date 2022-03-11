@@ -254,48 +254,62 @@
 			$(this).closest('.option').children('a').attr('data-max',$(this).text());
 		})
 		.on('click', '.submitBook', function(){
-			let book_list_contents = '';
-			$('.cart tbody tr').each(function(index){
-				let cart_code = $(this).attr('data-ctcode');
-				console.log('cart_code: '+cart_code);
-				let book_list = '<input name="cart['+ index +'].cart_code" type="hidden" value="' + cart_code + '">';
-				book_list_contents += book_list;
-			});
-			$(".insert_bookForm .displaynone").append(book_list_contents);
-			console.log(book_list_contents);
-			
-			let spot_code = $('#spotlist > a').attr('data-value');
-			console.log(spot_code);
-			let input_spot_code = '<input name="spot_code" type="hidden" value="' + spot_code +'">';
-			console.log(input_spot_code);
-			
-			let vtime = $('#vtimelist > a').attr('data-value');
-			console.log(vtime);
-			let input_vtime = '<input name="vtime" type="hidden" value="' + vtime +'">';
-			console.log(input_vtime);
-			
-			let howmany = $('#howmany > a').attr('data-max');
-			console.log(howmany);
-			let input_howmany = '<input name="howmany" type="hidden" value="' + howmany +'">';
-			console.log(input_howmany);
-			
-			let m_qty = $('.cnt_num').text();
-			console.log(m_qty);
-			let input_m_qty = '<input name="m_qty" type="hidden" value="' + m_qty +'">';
-			console.log(input_m_qty);
-			
-			let cnt_total = '';
-			let cnt = $('.cnt_total').text().split(',');
-			for(i = 0; i < cnt.length; i++){
-				cnt_total += cnt[i];
-			}
-			console.log(cnt_total);
-			let input_total = '<input name="total" type="hidden" value="' + cnt_total +'">';
-			console.log(input_total);
-			$(".insert_bookForm .displaynone").append(input_spot_code, input_vtime, input_howmany, input_m_qty, input_total);
-			
-			
+			if($('#spotlist > a').attr('data-value') == null){
+				alert('예약지점을 선택해주세요.');
+			} else if($('#vdate').val() == null){
+				alert('방문하실 날짜를 선택해주세요.');
+			} else if($('#vtimelist > a').attr('data-value') == null){
+				alert('방문하실 시간을 선택해주세요.');
+			} else if($('#howmany > a').attr('data-max') == null){
+				alert('방문인원을 선택해주세요.');
+			} else if($('.get_booker').val() == null){
+				alert('예약자명을 입력해주세요.');
+			} else if($('.get_mobile').val() == null){
+				alert('연락처를 입력해주세요.');
+			} else {
+				let book_list_contents = '';
+				$('.cart tbody tr').each(function(index){
+					let cart_code = $(this).attr('data-ctcode');
+					console.log('cart_code: '+cart_code);
+					let book_list = '<input name="cart['+ index +'].cart_code" type="hidden" value="' + cart_code + '">';
+					book_list_contents += book_list;
+				});
+				$(".insert_bookForm .displaynone").append(book_list_contents);
+				console.log(book_list_contents);
+				
+				let spot_code = $('#spotlist > a').attr('data-value');
+				console.log(spot_code);
+				let input_spot_code = '<input name="spot_code" type="hidden" value="' + spot_code +'">';
+				console.log(input_spot_code);
+				
+				let vtime = $('#vtimelist > a').attr('data-value');
+				console.log(vtime);
+				let input_vtime = '<input name="vtime" type="hidden" value="' + vtime +'">';
+				console.log(input_vtime);
+				
+				let howmany = $('#howmany > a').attr('data-max');
+				console.log(howmany);
+				let input_howmany = '<input name="howmany" type="hidden" value="' + howmany +'">';
+				console.log(input_howmany);
+				
+				let m_qty = $('.cnt_num').text();
+				console.log(m_qty);
+				let input_m_qty = '<input name="m_qty" type="hidden" value="' + m_qty +'">';
+				console.log(input_m_qty);
+				
+				let cnt_total = '';
+				let cnt = $('.cnt_total').text().split(',');
+				for(i = 0; i < cnt.length; i++){
+					cnt_total += cnt[i];
+				}
+				console.log(cnt_total);
+				let input_total = '<input name="total" type="hidden" value="' + cnt_total +'">';
+				console.log(input_total);
+				$(".insert_bookForm .displaynone").append(input_spot_code, input_vtime, input_howmany, input_m_qty, input_total);
+				
+				
 			$('.insert_bookForm').submit();
+			}
 		})
 		;
 		function getVtime(){
@@ -313,15 +327,21 @@
 				},
 				success : function(data) {
 					for(i = 0; i < data.length; i++){
-						let str = '<li class="dropdown-item" data-value="' + data[i]['time_code'] + '">'
+						let str_remain = null;
+						if(data[i]['remain'] == 0){
+							str_remain = '<li class="dropdown-item disabled" data-value="';
+						} else {
+							str_remain = '<li class="dropdown-item" data-value="';
+						}
+						let str = data[i]['time_code'] + '">'
 						+ '<span class="option_span" data-max="'+ data[i]['remain']
 						+ '">[최대 '+ data[i]['remain'] + '명 예약가능] </span>' + data[i]['time_name']
 						+ '</li>';
-						$('#vtimelist > ul').append(str);
+						$('#vtimelist > ul').append(str_remain + str);
 					}
 				},
 				error : function(){
-					console.log("다시 시도해주세요.");
+					alert("다시 시도해주세요.");
 				}
 				
 			});

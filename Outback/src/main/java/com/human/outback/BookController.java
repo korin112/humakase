@@ -2,6 +2,7 @@ package com.human.outback;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -10,6 +11,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,7 +27,25 @@ public class BookController {
 	
 	@Autowired
 	private SqlSession sqlSession;
-
+	
+	
+	@RequestMapping("/submenu/{mtype_name}")
+	public String submenu(@PathVariable("mtype_name") String mtype_name, Model model) {
+		iBook ibook = sqlSession.getMapper(iBook.class);
+		ArrayList<Allmenu> getMenutype = ibook.getMenutype();
+		for(int i = 0; i < getMenutype.size(); i++) {
+			if(mtype_name.equals(getMenutype.get(i).getMtype_name().toLowerCase())) {
+				int menu_type = getMenutype.get(i).getMenu_code();
+				ArrayList<Allmenu> getAllmenu = ibook.getAllmenu(menu_type);
+				model.addAttribute("menu", getAllmenu);
+				model.addAttribute("menucode", getMenutype.get(i).getMenu_code());
+				model.addAttribute("menuname", getMenutype.get(i).getMtype_name());
+				return "submenu";
+			}
+		}
+		return "redirect:/home";
+	}
+	
 	@RequestMapping(value="/book", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
 	public String bookPageGET(HttpServletRequest hsr, CartList cartlist, Model model) {
 		HttpSession session = hsr.getSession();
