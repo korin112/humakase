@@ -36,7 +36,6 @@ table {
 	border-collapse:collapse;
 }
 #btnCancel {
-	position:absolute;
 	left:690px;
 	top:680px;
 	padding: 0.5rem 3rem;
