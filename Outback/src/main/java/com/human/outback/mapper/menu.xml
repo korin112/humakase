@@ -4,13 +4,13 @@
 
 <mapper namespace="com.human.outback.iMenu">
 <select id="getMenu" resultType="com.human.outback.Menu">
-	select a.menu_code, a.menu_type, a.menu_name, a.menu_price, a.comment, b.mtype_name
+	select a.menu_code, a.menu_type, a.img, a.menu_name, a.menu_price, a.comment, b.mtype_name
 		from menu a, menutype b
 		where a.menu_type=b.mtype_code
 	order by menu_code
 </select>
 <insert id="insertMenu">
-	insert into menu(menu_type,menu_name,menu_price,comment) values(#{param1},#{param2},#{param3},#{param4})
+	insert into menu(menu_type,img,menu_name,menu_price,comment) values(#{param1},#{param2},#{param3},#{param4},#{param5})
 </insert>
 <delete id="deleteMenu">
 	delete from menu where menu_code=#{param1}
@@ -19,7 +19,7 @@
 	select mtype_code,mtype_name from menutype order by mtype_code
 </select>
 <update id="updateMenu">
-	update menu set menu_type=#{param2}, menu_name=#{param3}, menu_price=#{param4}, comment=#{param5} where menu_code=#{param1}
+	update menu set menu_type=#{param2}, img=#{param3} menu_name=#{param4}, menu_price=#{param5}, comment=#{param6} where menu_code=#{param1}
 </update>
 
 </mapper>
