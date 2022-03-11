@@ -1,48 +1,61 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" session="true" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title> - 회원가입 - </title>
+<link rel="stylesheet" href="${path}/resources/css/style.css">
 </head>
+<style>
+ul li {
+	list-style:none;
+}
+</style>
 <body>
-<table align=center valign=middle>
-<h3 align=center>회원정보를 입력해주세요</h3>
-    <tr>
-        <td align=right>아이디</td>
-        <td><input type=text id=userid name=userid size=20>
-        	<input type=button value=중복확인 id=btnCheck></td>
-    </tr>
-    <tr>
-        <td align=right> 비밀번호</td>
-        <td><input type=password id=passcode name=passcode size=20></td>
-    </tr>
-    <tr>
-        <td align=right>비밀번호 확인</td>
-        <td><input type=password id=passcode1 name=passcode1 size=20></td>
-    </tr> 
-    <tr>
-        <td align=right>실명</td>
-        <td><input type=text id=name name=name size=20></td>
-    </tr>
-    <tr>
-        <td align=right>모바일번호</td>
-        <td><input type=text id=mobile name=mobile size=20></td>
-    </tr>
-    <tr>
-        <td align=right>성별</td>
-        <td><input type=radio id=male name=gender value=남성>남성<br>
-            <input type=radio id=female name=gender value=여성>여성</td>
-    </tr>
-    <tr>
-		<td colspan=2 align=center>
-        <input type=submit id=btnDone value='가입완료'>&nbsp;
-		<input type=button id=btnCancel value='취소' id='btnCancel'>&nbsp;
-        <input type=reset id=btnReset value='비우기'>
-		</td>
-    </tr>
-    </table>
+<%@include file ="header.jsp" %>
+<h3 align=center>회원정보를입력해주세요</h3>
+	<div>
+		<ul class=b>
+			<li><label for="userid">아이디</label></li>
+			<li><input type="text" id="userid">
+				<input type=button value=중복확인 id=btnCheck></li>
+		</ul>
+		<ul class=b>
+			<li><label for="passcode">비밀번호</label></li>
+			<li><input type="password" id="passcode"></li>
+		</ul>
+		<ul class=b>
+			<li><label for="pw_check">비밀번호 확인</label></li>
+			<li><input type="password" id="pw_check"></li>
+		</ul>
+		<ul>
+			<li class=a><label for="name">이름</label></li>
+			<li class=b><input type="text" id="name"></li>
+		</ul>
+		<ul class=b>
+			<li><label for="mobile">전화번호</label></li>
+			<li><input type="number" id="mobile"></li>
+		</ul>
+		<ul class=b>
+			<li><label for="gender">성별</label></li>
+			<li>
+				<input type="radio" id="gender" name="gender" value="남성">
+				<label for="gender">남성</label>
+				<input type="radio" id="gender" name="gender" value="여성">
+				<label for="gender">여성</label>
+			</li>
+		</ul>
+	</div>
+	<br>
+	<div class=b>
+		<input type="submit" id=btnDone value="완료">
+		<input type="reset" id=btnReset value="비우기">
+		<input type="button" id=btnCancel value="취소">
+	</div>
+<%@include file ="footer.jsp" %>
 </body>
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <script>
