@@ -108,8 +108,10 @@
 		.on('click','input[name=checkAll]',function(){
 			if($('input[name=checkAll]').is(':checked')){
 				$('input[name=check]').prop('checked',true);
+				$('.cnt_checkTotal').text($('.cnt_total').text());
 			} else {
 				$('input[name=check]').prop('checked',false);
+				$('.cnt_checkTotal').text(0);
 			}
 		})
 		.on('click', 'input[name=check]',function(){
@@ -121,20 +123,24 @@
 				$('input[name=checkAll]').prop('checked',true);
 			}
 			// 체크박스 선택시 선택 결제금액 변경
+			if($('input[name=check]:checked').length != 0){
+				let cnt_checkTotal = null;
+				$('.cart > tbody > tr > td:first-child > input[name=check]:checked').each(function(){
+					console.log($(this).val());
+					change_checkTotal_str = $(this).parent('td').siblings('td:last-child').text().split(',');
+					change_checkTotal = '';
+					for(i = 0; i < change_checkTotal_str.length; i++){
+						change_checkTotal += change_checkTotal_str[i];
+					}
+					console.log(change_checkTotal);
+					cnt_checkTotal += parseInt(change_checkTotal);
+				});
+				console.log(cnt_checkTotal);
+				$('.cnt_checkTotal').text(cnt_checkTotal.toLocaleString() + ' 원');
+			} else {
+				$('.cnt_checkTotal').text(0);
+			}
 
-			let cnt_checkTotal = null;
-			$('.cart > tbody > tr > td:first-child > input[name=check]:checked').each(function(){
-				console.log($(this).val());
-				change_checkTotal_str = $(this).parent('td').siblings('td:last-child').text().split(',');
-				change_checkTotal = '';
-				for(i = 0; i < change_checkTotal_str.length; i++){
-					change_checkTotal += change_checkTotal_str[i];
-				}
-				console.log(change_checkTotal);
-				cnt_checkTotal += parseInt(change_checkTotal);
-			});
-			console.log(cnt_checkTotal);
-			$('.cnt_checkTotal').text(cnt_checkTotal.toLocaleString() + ' 원');
 		})
 		.on('click','#btnDelete',function() {
 			if($('input[name=check]:checked').length==0) {
