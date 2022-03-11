@@ -61,7 +61,13 @@
 			cart_code = #{item.cart_code}
 		</foreach>
 	</where>
-
 </delete>
-
+<select id="getAllmenu" resultType="com.human.outback.Allmenu">
+	select a.menu_type, b.mtype_name, a.menu_code,a.menu_name, a.menu_price,
+		   a.comment, a.img from menu a, menutype b
+	 where a.menu_type = b.mtype_code and a.menu_type = #{param1}
+</select>
+<select id="getMenutype" resultType="com.human.outback.Allmenu">
+	select mtype_code as menu_code, mtype_name from menutype
+</select>
 </mapper>
