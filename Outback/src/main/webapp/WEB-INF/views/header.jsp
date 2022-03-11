@@ -24,10 +24,10 @@
 	            메뉴소개
 	          </a>
 	          <ul class="dropdown-menu  dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-	            <li><a class="dropdown-item" href="/outback/steak">Steak</a></li>
-	            <li><a class="dropdown-item" href="/outback/pasta">Pasta</a></li>
-	            <li><a class="dropdown-item" href="/outback/sidemenu">Side-menu</a></li>
-	            <li><a class="dropdown-item" href="/outback/drink">Drink</a></li>
+	            <li><a class="dropdown-item" href="/outback/submenu/steak">Steak</a></li>
+	            <li><a class="dropdown-item" href="/outback/submenu/pasta">Pasta</a></li>
+	            <li><a class="dropdown-item" href="/outback/submenu/sidemenu">Side-menu</a></li>
+	            <li><a class="dropdown-item" href="/outback/submenu/drink">Drink</a></li>
 	          </ul>
 	        </li>
 	        <li class="nav-item">
