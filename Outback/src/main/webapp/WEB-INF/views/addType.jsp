@@ -15,7 +15,7 @@
 <body>
 <%@include file="header.jsp"%>
 	<form id=frmType action="/outback/addType">
-	<div style="width:470px; position:relative; margin:auto; margin-top:40px;">
+	<div style="width:470px; position:relative; margin:auto; margin-top:40px; margin-bottom:100px;">
 		<h1 style="text-align:center; font-weight:bold; font-size:40px; letter-spacing:6px;">메뉴타입 관리</h1>
       	<h2 style="text-align:center; font-weight:bold; color:#ccc; margin-bottom:30px; font-size:22px; letter-spacing:4px;">Menu Type Control</h2>
 	<div class="input-group mb-3">
