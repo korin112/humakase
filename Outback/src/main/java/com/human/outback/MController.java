@@ -245,31 +245,6 @@ public class MController {
 		}
 		return ja.toString();
 	}
-//	@ResponseBody
-//	@RequestMapping(value="/pwCheck" , method=RequestMethod.POST)
-//	public String pwCheck(HttpServletRequest hsr,Model model) {
-//		String memberPw = memberService.pwCheck(memberVO.getMemberId());
-//		
-//		if(memberVO == null || !BCrypt.checkpw(memberVO.getMemberPw(), memberPw)) {
-//			return 0;
-//		}
-//		
-//		return 1;
-//	}
-//	@ResponseBody
-//	@RequestMapping(value = "/pwCheck", method=RequestMethod.POST)
-//	public String pwCheck(HttpServletRequest hsr,RedirectAttributes rttr) {
-//		HttpSession session = hsr.getSession();
-//		
-//		String passcode = hsr.getParameter("passcode");
-//		
-//		iLogin login = sqlSession.getMapper(iLogin.class);
-//		login.pwCheck(passcode);
-//		if(!(sessionPass.equals(passcode)))
-//		session.invalidate();
-//		return "redirect:/home";
-//	}
-	
 	@RequestMapping(value="/pwCheck",method = RequestMethod.POST)
 	public String pwCheck(HttpServletRequest hsr,Model model) {
 		HttpSession session = hsr.getSession();
@@ -296,6 +271,43 @@ public class MController {
 			session.setAttribute("passcode",passcode);
 			pw.pwCheck(userid,passcode);
 			session.invalidate();
+			return "home";
+		} else {
+			model.addAttribute("fail_user",str);
+			return "home";
+		}
+	}
+	@RequestMapping(value = "/passEdit")
+	public String passEdit() {
+		return "passEdit";
+	}
+	@RequestMapping(value="/pwEdit",method = RequestMethod.POST)
+	public String pwEdit(HttpServletRequest hsr, Model model) {
+		HttpSession session = hsr.getSession();
+		
+		String str="";
+		String userid=hsr.getParameter("userid");
+		String passcode=hsr.getParameter("passcode");
+		System.out.println(userid);
+		System.out.println(passcode);
+		iLogin pw = sqlSession.getMapper(iLogin.class);
+		ArrayList<Member> m = pw.getLogin();
+		
+		for(int i=0; i < m.size(); i++) {
+			if(m.get(i).getUserid().equals(userid) && m.get(i).getPasscode().equals(passcode)) {
+				session.setAttribute("userid",userid);
+				session.setAttribute("passcode", passcode);
+				str="ok";
+				break;
+			}
+			else {
+				str="fail";
+			}
+		}
+		if(str.equals("ok")) {
+			session.setAttribute("userid",userid);
+			session.setAttribute("pass",passcode);
+			pw.pwEdit(userid, passcode);
 			return "home";
 		} else {
 			model.addAttribute("fail_user",str);
