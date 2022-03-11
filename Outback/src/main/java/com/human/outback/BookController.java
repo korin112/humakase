@@ -39,7 +39,7 @@ public class BookController {
 				ArrayList<Allmenu> getAllmenu = ibook.getAllmenu(menu_type);
 				model.addAttribute("menu", getAllmenu);
 				model.addAttribute("menucode", getMenutype.get(i).getMenu_code());
-				model.addAttribute("menuname", getMenutype.get(i).getMtype_name());
+				model.addAttribute("menuname", getMenutype.get(i).getMtype_name().toUpperCase());
 				return "submenu";
 			}
 		}
