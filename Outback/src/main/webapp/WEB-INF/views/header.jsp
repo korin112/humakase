@@ -36,28 +36,40 @@
 			<li class="nav-item">
 				<a class="nav-link" href="/outback/cart">예약하기</a>
 			</li>
-	        <c:if test="${userid==null}">
-	        <li class="nav-item">
-	          <a class="nav-link" href="/outback/login">로그인</a>
-	        </li>
-	        <li class="nav-item">
-	          <a class="nav-link" href="/outback/signon">회원가입</a>
-	        </li>
-	        </c:if>
-	       <c:if test="${userid!=null}">
-				<c:if test="${userid =='admin'}">
-					<li class="nav-item"><a class="nav-link" href="/outback/menuadd">메뉴관리</a></li>
-					<li class="nav-item"><a class="nav-link" href="/outback/typeadd">메뉴타입관리</a></li>
-					<li class="nav-item"><a class="nav-link" href="/outback/member">[관리자페이지]</a></li>
-					<li class="nav-item"><a class="nav-link" href="#" onclick="if(confirm('로그아웃하시겠습니까?')){javascript:document.frm.submit();return false;}">로그아웃</a></li>
-					<li class="nav-link" style="color:#ccc;">${userid}</li>	
-				</c:if>
-				<c:if test="${userid !='admin'}">
-					<li class="nav-item"><a class="nav-link" href="/outback/mypage">[마이페이지]</a></li>
-					<li class="nav-item"><a class="nav-link" href="#" onclick="if(confirm('로그아웃하시겠습니까?')){javascript:document.frm.submit();return false;}">로그아웃</a></li>
-					<li class="nav-link" style="color:#ccc;">${userid}</li>
-				</c:if>
-			</c:if>		
+		        <c:if test="${userid==null}">
+			        <li class="nav-item">
+			          <a class="nav-link" href="/outback/login">로그인</a>
+			        </li>
+			        <li class="nav-item">
+			          <a class="nav-link" href="/outback/signon">회원가입</a>
+			        </li>
+		        </c:if>
+	       		<c:if test="${userid!=null}">
+					<c:if test="${userid =='admin'}">
+						<li class="nav-item">
+							<a class="nav-link" href="/outback/menuadd">메뉴관리</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/outback/typeadd">메뉴타입관리</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/outback/member">[관리자페이지]</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#" onclick="if(confirm('로그아웃하시겠습니까?')){javascript:document.frm.submit();return false;}">로그아웃</a>
+						</li>
+						<li class="nav-link" style="color:#ccc;">${userid}</li>	
+					</c:if>
+					<c:if test="${userid !='admin'}">
+						<li class="nav-item">
+							<a class="nav-link" href="/outback/mypage">[마이페이지]</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#" onclick="if(confirm('로그아웃하시겠습니까?')){javascript:document.frm.submit();return false;}">로그아웃</a>
+						</li>
+						<li class="nav-link" style="color:#ccc;">${userid}</li>
+					</c:if>
+				</c:if>		
 	      </ul>
 	    </div>
 	  </div>

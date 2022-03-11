@@ -26,11 +26,8 @@
 }
 </style>
 
-<!-- <h1 style="margin-top:40px;"><a href="/outback/home" style="color:black; font-weight:bold; font-size:40px; letter-spacing:8px; ">HUMAKASE</a></h1>
-<div class="page-title">
-<h2 style="font-weight:bold; font-size:29.5px; margin-top:15px; letter-spacing:8px; margin-left:10px;"></h2>
-<h3 style="font-weight:bold; letter-spacing:13px; color:#ccc; font-size:20px; margin-left:13px; margin-top:15px;">RESTAURANT</h3>
-</div>  -->
+
+
 <body>
 <%@include file ="header.jsp" %>
 <div class="main_container">
