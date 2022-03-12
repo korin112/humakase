@@ -54,6 +54,12 @@
 </head>
 <body>
 	<%@include file ="header.jsp" %>
+	<div class="submenu_title_wrap">
+		<div class="container submenu_title">
+			<h1>RESERVATION</h1>
+			<p>La Campanella - RESERVATION</p>
+		</div>
+	</div>
 	<div class="container O_container">
 		<section class="order-list">
 			<div class="book_tap">
@@ -74,14 +80,28 @@
 			<table class="cart">
 				<thead><tr><th>상품명</th><th>판매가</th><th>수량</th><th>합계</th></tr></thead>
 				<tbody>
-					<c:forEach items="${getCartlist}" var="getCartlist">
-						<tr data-ctCode="${getCartlist.cart_code}">
-							<td>${getCartlist.menu_name}</td>
-							<td data-ctPrice="${getCartlist.menu_price}"><fmt:formatNumber value="${getCartlist.menu_price}" type="number"/></td>
-							<td>${getCartlist.menu_cnt}</td>
-							<td><fmt:formatNumber value="${getCartlist.menu_total}" type="number"/></td>
-						</tr>
-					</c:forEach>
+					<c:set var="getCartlist" value="${getCartlist}" />
+					<c:set var="getMenu" value="${getMenu}" />
+					<c:choose>
+						<c:when test="${!empty getCartlist}">
+							<c:forEach items="${getCartlist}" var="getCartlist">
+								<tr data-ctCode="${getCartlist.cart_code}">
+									<td>${getCartlist.menu_name}</td>
+									<td data-ctPrice="${getCartlist.menu_price}"><fmt:formatNumber value="${getCartlist.menu_price}" type="number"/></td>
+									<td>${getCartlist.menu_cnt}</td>
+									<td><fmt:formatNumber value="${getCartlist.menu_total}" type="number"/></td>
+								</tr>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<tr data-mcode="${getMenu.menu_code}">
+								<td>${getMenu.menu_name}</td>
+								<td data-ctPrice="${getMenu.menu_price}"><fmt:formatNumber value="${getMenu.menu_price}" type="number"/></td>
+								<td>1</td>
+								<td><fmt:formatNumber value="${getMenu.menu_price}" type="number"/></td>
+							</tr>
+						</c:otherwise>
+					</c:choose>
 				</tbody>
 			</table>
 		</section>
@@ -268,47 +288,41 @@
 				alert('연락처를 입력해주세요.');
 			} else {
 				let book_list_contents = '';
-				$('.cart tbody tr').each(function(index){
-					let cart_code = $(this).attr('data-ctcode');
-					console.log('cart_code: '+cart_code);
-					let book_list = '<input name="cart['+ index +'].cart_code" type="hidden" value="' + cart_code + '">';
-					book_list_contents += book_list;
-				});
+				if($('.cart tbody tr').attr('data-ctcode') != null){
+					$('.cart tbody tr').each(function(index){
+						let cart_code = $(this).attr('data-ctcode');
+						console.log('cart_code: '+cart_code);
+						let book_list = '<input name="cart['+ index +'].cart_code" type="hidden" value="' + cart_code + '">';
+						book_list_contents += book_list;
+					});
+				} else {
+					let menu_code = $('.cart tbody tr').attr('data-mcode');
+					book_list_contents = '<input name="menu_code" value="'+ menu_code +'">';
+					console.log('menu_code: '+menu_code);
+				}
 				$(".insert_bookForm .displaynone").append(book_list_contents);
-				console.log(book_list_contents);
 				
 				let spot_code = $('#spotlist > a').attr('data-value');
-				console.log(spot_code);
 				let input_spot_code = '<input name="spot_code" type="hidden" value="' + spot_code +'">';
-				console.log(input_spot_code);
 				
 				let vtime = $('#vtimelist > a').attr('data-value');
-				console.log(vtime);
 				let input_vtime = '<input name="vtime" type="hidden" value="' + vtime +'">';
-				console.log(input_vtime);
 				
 				let howmany = $('#howmany > a').attr('data-max');
-				console.log(howmany);
 				let input_howmany = '<input name="howmany" type="hidden" value="' + howmany +'">';
-				console.log(input_howmany);
 				
 				let m_qty = $('.cnt_num').text();
-				console.log(m_qty);
 				let input_m_qty = '<input name="m_qty" type="hidden" value="' + m_qty +'">';
-				console.log(input_m_qty);
 				
 				let cnt_total = '';
 				let cnt = $('.cnt_total').text().split(',');
 				for(i = 0; i < cnt.length; i++){
 					cnt_total += cnt[i];
 				}
-				console.log(cnt_total);
 				let input_total = '<input name="total" type="hidden" value="' + cnt_total +'">';
-				console.log(input_total);
 				$(".insert_bookForm .displaynone").append(input_spot_code, input_vtime, input_howmany, input_m_qty, input_total);
 				
-				
-			$('.insert_bookForm').submit();
+				$('.insert_bookForm').submit();
 			}
 		})
 		;

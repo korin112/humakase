@@ -25,6 +25,12 @@
 </head>
 <body>
 	<%@include file = "header.jsp" %>
+	<div class="submenu_title_wrap">
+		<div class="container submenu_title">
+			<h1>RESERVATION CART</h1>
+			<p>La Campanella - RESERVATION CART</p>
+		</div>
+	</div>
 	<div class="container O_container">
 			<table class="cart">
 				<thead><tr><th><input type="checkbox" name="checkAll"></th><th>상품명</th><th>판매가</th><th>수량</th><th>합계</th></tr></thead>

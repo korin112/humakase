@@ -2,7 +2,6 @@ package com.human.outback;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -39,7 +38,7 @@ public class BookController {
 				ArrayList<Allmenu> getAllmenu = ibook.getAllmenu(menu_type);
 				model.addAttribute("menu", getAllmenu);
 				model.addAttribute("menucode", getMenutype.get(i).getMenu_code());
-				model.addAttribute("menuname", getMenutype.get(i).getMtype_name().toUpperCase());
+				model.addAttribute("mtypename", getMenutype.get(i).getMtype_name().toUpperCase());
 				return "submenu";
 			}
 		}
@@ -85,17 +84,25 @@ public class BookController {
 		iBook ibook = sqlSession.getMapper(iBook.class);
 //		System.out.println("controller : " + cartlist.getCart());
 //		System.out.println("뭐나오지? : " + cartlist);
-		List<Cart> arCart = cartlist.getCart();
-//		System.out.println(arCart);
-		ArrayList<Cart> getCartlist = ibook.getBooklist(userid, arCart);
-		model.addAttribute("getCartlist", getCartlist);
+		String menu_code = hsr.getParameter("menu_code");
 		Member userSession = ibook.getUserSession(userid);
 		model.addAttribute("userSession",userSession);
 		ArrayList<Spot> getSpot = ibook.getSpot();
-		
-//		ArrayList<Vtime> getVtime = ibook.getVtime(spot_code);
 		model.addAttribute("spot", getSpot);
-//		model.addAttribute("vtime", getVtime);
+		if(menu_code == null) {
+			List<Cart> arCart = cartlist.getCart();
+			
+			ArrayList<Cart> getCartlist = ibook.getBooklist(userid, arCart);
+			model.addAttribute("getCartlist", getCartlist);
+			
+//			ArrayList<Vtime> getVtime = ibook.getVtime(spot_code);
+//			model.addAttribute("vtime", getVtime);
+		} else {
+			System.out.println(menu_code);
+			Allmenu getMenu = ibook.getMenu(menu_code);
+			model.addAttribute("getMenu", getMenu);
+		}
+
 		
 		return "book";
 	}
@@ -103,8 +110,8 @@ public class BookController {
 	@RequestMapping(value="/InsertBook", method = RequestMethod.POST)
 	public String InsertBook(HttpServletRequest hsr, CartList cartlist) {
 		HttpSession session = hsr.getSession();
-		List<Cart> arCart = cartlist.getCart();
-		System.out.println(arCart);
+		List<Cart> cart = cartlist.getCart();
+		iBook ibook = sqlSession.getMapper(iBook.class);
 		int spot_code = Integer.parseInt(hsr.getParameter("spot_code"));
 		String booker = (String) session.getAttribute("userid");
 		int howmany = Integer.parseInt(hsr.getParameter("howmany"));
@@ -113,12 +120,16 @@ public class BookController {
 		String vdate = hsr.getParameter("vdate");
 		int vtime = Integer.parseInt(hsr.getParameter("vtime"));
 		String msg = hsr.getParameter("msg");
-		System.out.println(spot_code +", "+ booker +", "+ howmany+", "+m_qty+", "+total+", "+vdate+", "+vtime+", "+msg);
-		
-		iBook ibook = sqlSession.getMapper(iBook.class);
 		ibook.insertBook(spot_code, booker, howmany, m_qty, total, vdate, vtime, msg);
-		ibook.insertBookDetail(booker, arCart);
-		ibook.deleteBookCart(arCart);
+		System.out.println(spot_code +", "+ booker +", "+ howmany+", "+m_qty+", "+total+", "+vdate+", "+vtime+", "+msg);
+		if(cart == null) {
+			System.out.println("null check");
+			int menu_code = Integer.parseInt(hsr.getParameter("menu_code"));
+			ibook.insertBookDetail2(booker, menu_code);
+		} else {
+			ibook.insertBookDetail(booker, cart);
+			ibook.deleteBookCart(cart);
+		}
 		return "redirect:/home";
 	}
 	
@@ -144,12 +155,15 @@ public class BookController {
 	public String cart(HttpServletRequest hsr, Model model) {
 		HttpSession session = hsr.getSession();
 		String userid = (String) session.getAttribute("userid");
-		
-		iBook ibook = sqlSession.getMapper(iBook.class);
-		ArrayList<Cart> cart = ibook.getCart(userid);
-		model.addAttribute("getCart", cart);
-		
-		return "cart";
+		if(userid != null) {
+			iBook ibook = sqlSession.getMapper(iBook.class);
+			ArrayList<Cart> cart = ibook.getCart(userid);
+			model.addAttribute("getCart", cart);
+			return "cart";
+		} else {
+			return "redirect:/home";
+		}
+
 	}
 	
 	@ResponseBody
