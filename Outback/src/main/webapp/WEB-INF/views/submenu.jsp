@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>${menuname}</title>
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <link rel="stylesheet" href="${path}/resources/css/style.css">
 </head>
 <body>
@@ -16,7 +16,7 @@
 	<div class="submenu_title_wrap">
 		<div class="container submenu_title">
 			<h1><c:out value="${menuname}" /></h1>
-			<p>La campanella - <c:out value="${menuname}" /></p>
+			<p>La Campanella - <c:out value="${menuname}" /></p>
 		</div>
 	</div>
 	<div class="container O_container">
@@ -28,13 +28,13 @@
 						<div class="menu_info">
 							<p>${menu.comment}</p>
 							<div>
-								<a href="#" class="text-white">메뉴담기</a>
-								<a href="#" class="text-white">예약하기</a>
+								<button type="button" class="text-white addCart">메뉴담기</button>
+								<button type="button" class="text-white goBook">예약하기</button>
 							</div>
 						</div>
 					</div>
 					<h4 class="menu_name">${menu.menu_name}</h4>
-					<p class="menu_price">
+					<p class="menu_price" data-value="${menu.menu_price}">
 						<span class="fs-3"><fmt:formatNumber value="${menu.menu_price}" type="number"/></span>원
 					</p>
 				</li>
@@ -60,6 +60,35 @@
 			$('.menu_box').mouseout(function(){
 				$('.menu_info',this).css('top','100%');
 			});
+		})
+		.on('click', '.addCart', function(){
+			let userid = "${userid}";
+			if(userid == ""){
+				alert("로그인 후 이용 가능합니다.");
+			} else {
+				$.ajax({
+					url:'/outback/insertCart',
+					data:{
+						menu_code:$(this).closest('.menu_box').attr('data-value'),
+						menu_name:$(this).closest('.menu_imgbox').siblings('.menu_name').text(),
+						menu_price:$(this).closest('.menu_imgbox').siblings('.menu_price').attr('data-value')
+					},
+					dataType:'text',
+					method:'POST',
+					success:function(txt) {
+						if(txt=="addCart") {
+							alert('장바구니에 추가 되었습니다.');
+						} else if(txt=="updateCart"){
+							alert('이미 추가 되었습니다. + 1')
+						} else {
+							alert('다시 시도해주세요.');
+						}
+					},
+					error:function(){
+						alert("[error] 다시 시도해주세요.");
+					}
+				});
+			}
 		})
 		;
 	</script>

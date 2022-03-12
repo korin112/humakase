@@ -70,4 +70,13 @@
 <select id="getMenutype" resultType="com.human.outback.Allmenu">
 	select mtype_code as menu_code, mtype_name from menutype
 </select>
+<select id="checkCart" resultType="com.human.outback.Cart">
+	select * from cart 
+	where userid = #{param1} and menu_code = #{param2}
+</select>
+<insert id="insertCart">
+	insert into cart(userid, menu_code, menu_name, menu_cnt, menu_price, menu_total, ct_time) 
+	values (#{param1}, #{param2}, #{param3}, 1, #{param4}, #{param4}, date_format(now(), '%Y-%m-%d'))
+</insert>
+
 </mapper>
