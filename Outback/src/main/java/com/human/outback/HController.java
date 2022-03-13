@@ -68,7 +68,6 @@ public class HController {
 			jo.put("re_date", re.get(i).getRe_date());
 			ja.add(jo);
 		}
-		//System.out.println(ja.toString());
 		return ja.toString();
 	}
 	
@@ -174,16 +173,19 @@ public class HController {
 	
 	// 게시판 글 작성
 	@RequestMapping(value = "/board_insert", method = RequestMethod.GET)
-	public String BoardInsert() {
-		// 작성자 = member table userid -> session 값 받아오기(기본값으로 들어가게)
+	public String BoardInsert(HttpSession session, Model m) {
+		String userid=(String)session.getAttribute("userid");
+		m.addAttribute("userid",userid);
+		
+		iBoard date=sqlSession.getMapper(iBoard.class);
+		m.addAttribute("date",date.dateList(userid));
+		
 		return "board_insert";
 	}
+	
 	@ResponseBody
 	@RequestMapping(value = "/board_insert", method = RequestMethod.POST)
 	public String BoardInsert(HttpServletRequest hsr) {
-		// 작성자 = member table userid -> session 값 받아오기(기본값으로 들어가게)
-			
-		// test : input으로 값 넣었을 때 들어가게
 		String title=hsr.getParameter("title");
 		String content=hsr.getParameter("content");
 		String writer=hsr.getParameter("writer");
@@ -208,23 +210,16 @@ public class HController {
 		}
 		return str;
 	}
-		
-	@RequestMapping(value = "/dateList", method = RequestMethod.GET)
-	public String Date() {
-		// where 예약 날짜
-		return "";
-	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/spotList",  produces="application/json;charset=utf-8")
-	public String Spot() {
-		// where 예약 날짜
-		// booking table -> spot
+	public String Spot(HttpServletRequest hsr) {
+		String booker=hsr.getParameter("booker");
+		String vdate=hsr.getParameter("vdate");
+		int book_id=Integer.parseInt(hsr.getParameter("book_id"));
 		
-		// test : spot table에서 불러오기
 		iBoard spot=sqlSession.getMapper(iBoard.class);
-		ArrayList<Board> s=spot.spotList();
-			
+		ArrayList<Board> s=spot.spotList(booker,vdate,book_id);
 		JSONArray ja=new JSONArray();
 		for(int i=0;i<s.size();i++) {
 			JSONObject jo=new JSONObject();
@@ -237,13 +232,13 @@ public class HController {
 		
 	@ResponseBody
 	@RequestMapping(value = "/menuList", produces="application/json;charset=utf-8")
-	public String Menu() {		
-		// where 예약 날짜
-		// booking table -> menu
-			
-		// test : menu table에서 불러오기
+	public String Menu(HttpServletRequest hsr) {		
+		String booker=hsr.getParameter("booker");
+		String vdate=hsr.getParameter("vdate");
+		int book_id=Integer.parseInt(hsr.getParameter("book_id"));
+		
 		iBoard menu=sqlSession.getMapper(iBoard.class);
-		ArrayList<Board> m=menu.menuList();
+		ArrayList<Board> m=menu.menuList(booker,vdate,book_id);
 			
 		JSONArray ja=new JSONArray();
 		for(int i=0;i<m.size();i++) {

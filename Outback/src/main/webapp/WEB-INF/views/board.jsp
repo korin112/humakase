@@ -23,7 +23,7 @@
 		</div>
 		<div>
 			<label>방문일</label>
-			<input name="updateDate" readonly="readonly" value='<fmt:formatDate pattern="yyyy/MM/dd" value="${b.vdate}"/>'>
+			<input name="updateDate" readonly="readonly" value="${b.vdate}">
 		</div>
 		<div>
 			<label>지점</label>

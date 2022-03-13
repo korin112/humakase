@@ -3,8 +3,11 @@ package com.human.outback;
 import java.util.ArrayList;
 
 public interface iBoard {
-	ArrayList<Board> spotList();
-	ArrayList<Board> menuList();
+	ArrayList<Board> dateList(String booker);
+	ArrayList<Board> getId(String booker, String vdate);
+	ArrayList<Board> spotList(String booker, String vdate, int book_id);
+	ArrayList<Board> menuList(String booker, String vdate, int book_id);
+	
 	void insertBoard(String title,String content,String writer,String vdate,int spot_code,int menu_code);
 
 	// board list

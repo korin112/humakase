@@ -3,12 +3,27 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
 <mapper namespace="com.human.outback.iBoard">
+	<select id="dateList" resultType="com.human.outback.Board">
+		select book_id,vdate from booking where booker=#{param1}
+		order by vdate desc
+	</select>
+	
+	<select id="getId" resultType="com.human.outback.Board">
+		select book_id from booking where booker=#{param1} and vdate=#{param2}
+	</select>
+	
 	<select id="spotList" resultType="com.human.outback.Board">
-		select spot_code, spot_name from spot
+		select a.spot_code, b.spot_name
+		from booking a, spot b
+		where a.spot_code=b.spot_code
+		and a.booker=#{param1} and a.vdate=#{param2} and a.book_id=#{param3}
 	</select>
 	
 	<select id="menuList" resultType="com.human.outback.Board">
-		select menu_code, menu_name from menu
+		select distinct b.menu_code, b.menu_name
+		from booking a, booking_detail b
+		where a.book_id=b.book_id
+		and a.booker=#{param1} and a.vdate=#{param2} and b.book_id=#{param3}
 	</select>
 	
 	<insert id="insertBoard">

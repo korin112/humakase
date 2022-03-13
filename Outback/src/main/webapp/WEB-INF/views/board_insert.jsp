@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%> 
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -19,23 +20,22 @@
 	    </div>
 	    <div>
 	        <label>작성자</label>
-	        <%-- 작성자(member table userid) session --%>
-	        <input type=text name="writer" id="writer">
+	        <input type=text name="writer" id="writer" value="${userid}">
 	    </div>
 	    <div>
 	        <label>날짜</label>
-	        <%-- booking table vdate --%>
-<!-- 	        <select name="vdate"></select> -->
-			<input type=text name="vdate" id="vdate">
+	     	<select name="vdate" id="vdate">
+	     		<c:forEach items="${date}" var="d">
+					<option value='${d.book_id},${d.vdate}'>${d.vdate}</option>
+				</c:forEach>
+			</select>	
 	    </div>
 	    <div>
 	        <label>지점</label>
-	        <%-- booking table spot code, spot name --%>
 	        <select id="spot" name="spot"></select>
 	    </div>
 	    <div>
 	        <label>메뉴</label>
-	        <%-- booking table menu code, menu name --%>
 	        <select id="menu" name="menu"></select>
 	    </div>
 	    <div>
@@ -52,38 +52,25 @@
 	<script>
 		$(document)
 		.ready(function() {
-			$.ajax({url:'/outback/spotList',
-				data:{},
-				method:'GET',
-				datatype:'json',
-				success:function(txt) {
-					console.log(txt);
-					for(i=0;i<txt.length;i++) {
-						let str='<option value='+txt[i]['spot_code']+'>'
-									+txt[i]['spot_name']+'</option>';
-						$('#spot').append(str);
-					}
-				}
-			});
+			let option='spot';
+			optionList(option);
 			
-			$.ajax({url:'/outback/menuList',
-					data:{},
-					method:'GET',
-					datatype:'json',
-					success:function(txt) {
-						console.log(txt);
-						for(i=0;i<txt.length;i++) {
-							let str='<option value='+txt[i]['menu_code']+'>'
-										+txt[i]['menu_name']+'</option>';
-							$('#menu').append(str);
-						}
-					}
-			});
+			option='menu';
+			optionList(option);
 		})
-		
-		.on('click','#done',function() {			
+		.on('click','#vdate',function() {
+			let option='spot';
+			optionList(option);
+			
+			option='menu';
+			optionList(option);
+		})
+		.on('click','#done',function() {
+			let vdate=$('#vdate').val();
+			let ar=vdate.split(',');
+			
 			let oParam = {title:$('#title').val(), writer:$('#writer').val(),
-						  vdate:$('#vdate').val(), spot:$('#spot').val(),
+						  vdate:ar[1], spot:$('#spot').val(),
 						  menu:$('#menu').val(), content:$('#content').val()};
 			$.ajax({url:'/outback/board_insert',
 				data:oParam,
@@ -104,6 +91,28 @@
 			if(!confirm("취소하시면 작성한 모든 내용이 사라집니다. 취소하시겠습니까?")) return false;
 			document.location="/outback/board_list";
 		})
+		
+		function optionList(option) {
+			let vdate=$('#vdate').val();
+			let ar=vdate.split(',');
+			
+			$('#'+option).empty();
+			$.ajax({url:'/outback/'+option+'List',
+				data:{booker:$('#writer').val(),
+					  vdate:ar[1],
+					  book_id:ar[0]},
+				method:'GET',
+				datatype:'json',
+				success:function(txt) {
+					console.log(txt);
+					for(i=0;i<txt.length;i++) {
+						let str='<option value='+txt[i][option+'_code']+'>'
+									+txt[i][option+'_name']+'</option>';
+						$('#'+option).append(str);
+					}
+				}
+			});
+		}
 	</script>
 </body>
 </html>
