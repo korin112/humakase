@@ -18,4 +18,6 @@ public interface iBook {
 	void deleteBookCart(@Param("list")List<Cart> arCart);
 	ArrayList<Allmenu> getAllmenu(int menu_type);
 	ArrayList<Allmenu> getMenutype();
+	void insertCart(String userid, int menu_code, String menu_name, int menu_price);
+	Cart checkCart(String userid, int menu_code);
 }
