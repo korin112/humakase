@@ -69,9 +69,15 @@ $(document)
 			type : "POST",
 			dataType : "text",
 			data : {userid:$('#userid').val(),passcode:$('#passcode').val()},
-			success: function(){
-				alert("그동안 이용해 주셔서 감사합니다.");
-				document.location='/outback/home';
+			success: function(data){
+				if(data == 0){
+					alert("test");
+					return false;
+				} else {
+					alert("그동안 이용해 주셔서 감사합니다.");
+					document.location='/outback/home';
+					
+				}
 			}
 		})
 })

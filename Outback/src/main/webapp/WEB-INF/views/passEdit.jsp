@@ -16,19 +16,13 @@
 	<ul>
 		<li>
 			<label for=userid>아이디</label>
-			<input type=text id=userid name=userid value="${userid}" readonly>
-		</li>
-	</ul>
-	<ul>
-		<li>
-			<label for=pass>기존 비밀번호</label>
-			<input type=text id=pass name=pass value="${passcode}" readonly>
+			<input type=hidden id=userid name=userid readonly>
 		</li>
 	</ul>
 	<ul>
 		<li>
 			<label for=passcode>비밀번호변경</label>
-			<input type=text id=passcode name=passcode> 
+			<input type=text id=passcode name=passcode value="${passcode}"> 
 		</li>
 	</ul>
 	<ul>
@@ -47,7 +41,7 @@
 </form>
 <c:if test="${fail_user=='fail'}">
 	<script type="text/javascript">
-		alert("로그인에 실패했습니다.");
+		alert("변경에 실패했습니다.");
 	</script>
 </c:if>
 </body>
@@ -72,9 +66,10 @@ $(document)
 	$.ajax({url:"/outback/pwEdit",
 			type:"POST",
 			dataType:"text",
-			data:{userid:$('#userid').val(),passcode:$('#passcode').val()},
+			data:{userid:$('#userid').val()},
 			success:function(){
 				alert("test");
+				document.location='/outback/home';
 			}
 	})
 })
