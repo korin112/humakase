@@ -54,6 +54,17 @@
 	)
 	</foreach>
 </insert>
+<insert id="insertBookDetail2">
+	insert into booking_detail (book_id, menu_code, menu_name, m_qty, price, total) values 
+	(
+		(select max(book_id) from booking where booker = #{param1}),
+		#{param2},
+		(select menu_name from menu where menu_code = #{param2}),
+		1,
+		(select menu_price from menu where menu_code = #{param2}),
+		(select menu_price from menu where menu_code = #{param2})
+	)
+</insert>
 <delete id="deleteBookCart" parameterType="java.util.List">
 	delete from cart
 	<where>
@@ -78,5 +89,7 @@
 	insert into cart(userid, menu_code, menu_name, menu_cnt, menu_price, menu_total, ct_time) 
 	values (#{param1}, #{param2}, #{param3}, 1, #{param4}, #{param4}, date_format(now(), '%Y-%m-%d'))
 </insert>
-
+<select id="getMenu" resultType="com.human.outback.Allmenu">
+	select menu_code, menu_type, menu_name, menu_price from menu where menu_code = #{param1}
+</select>
 </mapper>
