@@ -7,16 +7,19 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>${menuname}</title>
+<title>${mtypename}</title>
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <link rel="stylesheet" href="${path}/resources/css/style.css">
+<style>
+.displaynone{display:none;}
+</style>
 </head>
 <body>
 	<%@include file="header.jsp"%>
 	<div class="submenu_title_wrap">
 		<div class="container submenu_title">
-			<h1><c:out value="${menuname}" /></h1>
-			<p>La Campanella - <c:out value="${menuname}" /></p>
+			<h1><c:out value="${mtypename}" /></h1>
+			<p>La Campanella - <c:out value="${mtypename}" /></p>
 		</div>
 	</div>
 	<div class="container O_container">
@@ -28,8 +31,15 @@
 						<div class="menu_info">
 							<p>${menu.comment}</p>
 							<div>
-								<button type="button" class="text-white addCart">메뉴담기</button>
-								<button type="button" class="text-white goBook">예약하기</button>
+								<c:choose>
+									<c:when test="${mtypename=='STEAK' or mtypename eq 'PASTA'}">
+										<button type="button" class="text-white addCart">메뉴담기</button>
+										<button type="button" class="text-white goBook">예약하기</button>
+									</c:when>
+									<c:otherwise>
+										<button type="button" class="text-white addCart">메뉴담기</button>
+									</c:otherwise>
+								</c:choose>
 							</div>
 						</div>
 					</div>
@@ -49,6 +59,7 @@
 				<li>시즌에 따라 블랙라벨 스테이크의 가니시는 변경될 수 있습니다.</li>
 			</ul>
 		</div>
+		<div class="displaynone"></div>
 	</div>
 	<%@include file="footer.jsp"%>
 	<script>
@@ -89,6 +100,13 @@
 					}
 				});
 			}
+		})
+		.on('click', '.goBook', function(){
+			let menu_code = $(this).closest('.menu_box').attr('data-value');
+			let input_menu_code = '<input name="menu_code" type="hidden" value="' + menu_code + '">';
+			let bookForm = '<form action="/outback/book" method="POST" class="bookForm">' + input_menu_code + '</form>';
+			$(".displaynone").append(bookForm);
+			$('.bookForm').submit();
 		})
 		;
 	</script>
