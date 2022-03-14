@@ -32,7 +32,7 @@
 	<hr>
 	<ul class="nav nav-pills flex-column mb-auto">
 		<li>
-			<a href="#" class="nav-link active" aria-current="page">
+			<a href="#" class="nav-link text-white">
 				<svg class="bi me-2" width="24" height="24"><use xlink:href="#grid"></use></svg>
 				<span class="adm_nav_tt">메뉴관리</span>
 			</a>

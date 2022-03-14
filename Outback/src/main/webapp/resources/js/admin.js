@@ -1,5 +1,4 @@
 $(function() {
-
 	let url = window.location.pathname;
 	console.log(url);
 //	let str_idAttr = url.split('/');
@@ -9,10 +8,16 @@ $(function() {
 //	}
 //	console.log(idAttr);
 	$('.adm_header .nav li').each(function() {
-		console.log($('.nav-link').attr('href'));
-		if($(this, '.nav-link').attr('href') == url) {
-//			$(this).removeClass('active');
-			$(this,'.nav-link').addClass('active');
+		console.log($(this).children('a').attr('href'));
+		if($(this).children('a').attr('href') == url) {
+			$('.adm_header .nav li a').removeClass('active');
+			$('.adm_header .nav li a').attr('aria-current','');
+			$(this).children('a').addClass('active');
+			$(this).children('a').attr('aria-current','page');
 		}
-	});
+	})
+
+
 });
+
+
