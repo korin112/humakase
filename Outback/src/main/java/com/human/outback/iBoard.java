@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public interface iBoard {
 	ArrayList<Board> dateList(String booker);
-	ArrayList<Board> getId(String booker, String vdate);
-	ArrayList<Board> spotList(String booker, String vdate, int book_id);
-	ArrayList<Board> menuList(String booker, String vdate, int book_id);
+	ArrayList<Board> spotList(String booker, String vdate);
+	ArrayList<Board> menuList(String booker, int spot_code, int book_id);
 	
-	void insertBoard(String title,String content,String writer,String vdate,int spot_code,int menu_code);
+	void insertBoard(String title,String content,String writer,String vdate,int spot_code);
+	void insertBoardMenu(int menu_code);
 
 	// board list
 	ArrayList<Board> boardList(int skip, int amount);

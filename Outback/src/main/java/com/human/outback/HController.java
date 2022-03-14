@@ -190,20 +190,27 @@ public class HController {
 		String content=hsr.getParameter("content");
 		String writer=hsr.getParameter("writer");
 		String vdate=hsr.getParameter("vdate");
+		
+		String m_code=hsr.getParameter("menu_code");
+		String[] ar=m_code.split(",");
+		
 		int spot_code=Integer.parseInt(hsr.getParameter("spot"));
-		int menu_code=Integer.parseInt(hsr.getParameter("menu"));
 			
 		System.out.println("title : "+title);
 		System.out.println("content : "+content);
 		System.out.println("writer : "+writer);
 		System.out.println("spot_code : "+spot_code);
 		System.out.println("vdate : "+vdate);
-		System.out.println("menu_code : "+menu_code);
 			
 		String str="";
 		iBoard board=sqlSession.getMapper(iBoard.class);
 		try {
-			board.insertBoard(title,content,writer,vdate,spot_code,menu_code);
+			board.insertBoard(title,content,writer,vdate,spot_code);
+			for(int i=0;i<ar.length;i++) {
+				int menu_code=Integer.parseInt(ar[i]);
+				System.out.println("menu_code : "+menu_code);
+				board.insertBoardMenu(menu_code);
+			}
 			str="ok";
 		} catch(Exception e) {
 			str="fail";
@@ -216,13 +223,13 @@ public class HController {
 	public String Spot(HttpServletRequest hsr) {
 		String booker=hsr.getParameter("booker");
 		String vdate=hsr.getParameter("vdate");
-		int book_id=Integer.parseInt(hsr.getParameter("book_id"));
 		
 		iBoard spot=sqlSession.getMapper(iBoard.class);
-		ArrayList<Board> s=spot.spotList(booker,vdate,book_id);
+		ArrayList<Board> s=spot.spotList(booker,vdate);
 		JSONArray ja=new JSONArray();
 		for(int i=0;i<s.size();i++) {
 			JSONObject jo=new JSONObject();
+			jo.put("book_id", s.get(i).getBook_id());
 			jo.put("spot_code", s.get(i).getSpot_code());
 			jo.put("spot_name", s.get(i).getSpot_name());
 			ja.add(jo);
@@ -234,11 +241,11 @@ public class HController {
 	@RequestMapping(value = "/menuList", produces="application/json;charset=utf-8")
 	public String Menu(HttpServletRequest hsr) {		
 		String booker=hsr.getParameter("booker");
-		String vdate=hsr.getParameter("vdate");
+		int spot_code=Integer.parseInt(hsr.getParameter("spot_code"));
 		int book_id=Integer.parseInt(hsr.getParameter("book_id"));
 		
 		iBoard menu=sqlSession.getMapper(iBoard.class);
-		ArrayList<Board> m=menu.menuList(booker,vdate,book_id);
+		ArrayList<Board> m=menu.menuList(booker,spot_code,book_id);
 			
 		JSONArray ja=new JSONArray();
 		for(int i=0;i<m.size();i++) {

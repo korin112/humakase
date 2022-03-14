@@ -10,68 +10,145 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <link rel="stylesheet" href="${path}/resources/css/style.css">
+<style>
+	*{margin:0; padding:0;}
+	ul, li{list-style:none;}
+	.fixed::after{content:''; clear:both; display:block;}
+	.option .dropdown-toggle::after{margin-left:1.255rem;}
+	.dropdown-menu{max-height:200px; overflow-y:auto; overflow-x:hidden;}
+	.dropdown-item{cursor:pointer;}
+	.book-list{overflow:hidden;}
+	.book-list article{display:block; margin:3.5rem 1.25rem; width:Calc(55% - 1.25rem); height:100%; float:left;}
+	.booking_info_box > ul{display:table; width:100%; margin:0; padding:0; border-bottom:1px solid #ddd;}
+	.booking_info_box > ul:first-child{border-top:1px solid #ddd;}	
+	.booking_info_box > ul > li{width:70%; display:table-cell; padding:1.25rem 0 1.25rem 2.125rem;}
+	.booking_info_box > ul > li:first-child{width:30%; vertical-align:middle; background:#f9f9f9;}
+	.booking_info_box input{border:none;}
+	.booking_info_box li #title{width:100%; resize:none; border:1px solid #ddd; padding:0.5rem; height:45px;}
+	.booking_info_box li #content{width:100%; resize:none; border:1px solid #ddd; padding:0.5rem; height:300px;}
+</style>
 </head>
 <body>
 	<%@include file ="header.jsp" %>
 	<div class="container O_container">
-	    <div>
-	        <label>제목</label>
-	        <input name="title" id="title">
-	    </div>
-	    <div>
-	        <label>작성자</label>
-	        <input type=text name="writer" id="writer" value="${userid}">
-	    </div>
-	    <div>
-	        <label>날짜</label>
-	     	<select name="vdate" id="vdate">
-	     		<c:forEach items="${date}" var="d">
-					<option value='${d.book_id},${d.vdate}'>${d.vdate}</option>
-				</c:forEach>
-			</select>	
-	    </div>
-	    <div>
-	        <label>지점</label>
-	        <select id="spot" name="spot"></select>
-	    </div>
-	    <div>
-	        <label>메뉴</label>
-	        <select id="menu" name="menu"></select>
-	    </div>
-	    <div>
-	        <label>내용</label>
-	        <textarea rows="5" id="content" name="content"></textarea>
-	    </div>
-	    <br>
-	    <div>
-		    <button id="done">완료</button>
-		    <button id="cancel">취소</button>
-	    </div>
+	<section class="book-list fixed">
+		<article class="booking_info_box">
+			<ul>
+				<li>제목</li>
+				<li><textarea id="title" name="title" maxlength="30" placeholder="최대 30자까지 가능합니다."></textarea></li>
+			</ul>
+	   		<ul class="fixed">
+				<li>작성자</li>
+				<li><input type="text" name="writer" id="writer" value="${userid}"></li>
+			</ul>
+			<ul class="fixed">
+				<li>날짜</li>
+				<li id="vdate" class="dropdown option">
+					<a href="#" class="dropdown-toggle link-dark" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						날짜를 선택하세요.
+					</a>
+					<ul class="dropdown-menu">
+						<c:forEach items="${date}" var="d">
+							<li class="dropdown-item" data-value="${d.vdate}">${d.vdate}</li>
+						</c:forEach>
+					</ul>
+				</li>
+			</ul>
+			
+			<ul class="fixed">
+				<li>지점</li>
+				<li id="spot" class="dropdown option" >
+					<a href="#" class="dropdown-toggle link-dark" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						지점을 선택해주세요.
+					</a>
+					<ul class="dropdown-menu"></ul>
+				</li>
+			</ul>
+			
+			<ul class="fixed">
+				<li>메뉴</li>
+				<li id="menu"></li>
+			</ul>
+
+	   		<ul>
+				<li>내용</li>
+				<li><textarea id="content" name="content" maxlength="500" placeholder="최대 500자까지 가능합니다."></textarea></li>
+			</ul>
+	   		<div>
+			    <button id="done">완료</button>
+			    <button id="cancel">취소</button>
+	    	</div>
+		</article>
+	</section>
 	</div>
 	<%@include file ="footer.jsp" %>
 	<script>
 		$(document)
-		.ready(function() {
-			let option='spot';
-			optionList(option);
+		.on('click','#vdate ul li',function() {
+			//console.log("vdate : "+$(this).attr('data-value'));
 			
-			option='menu';
-			optionList(option);
+			let vdate=$(this).attr('data-value');
+			$('#vdate a').text(vdate);
+			
+			$('#spot a').text('지점을 선택해주세요.');
+			$('#spot a').attr('data-value',null);
+			$('#spot ul').empty();
+			$.ajax({url:'/outback/spotList',
+				data:{booker:$('#writer').val(), vdate:vdate},
+				method:'GET',
+				datatype:'json',
+				success:function(txt) {
+					//console.log(txt);
+					for(i=0;i<txt.length;i++) {
+						let str="<li class='dropdown-item' data-value='"+txt[i]['book_id']+','
+								+txt[i]['spot_code']+"'>"+txt[i]['spot_name']+"</li>"
+						$('#spot ul').append(str);
+					}
+				}
+			});	
 		})
-		.on('click','#vdate',function() {
-			let option='spot';
-			optionList(option);
+		.on('click','#spot ul li',function() {
+			//console.log("spot : "+$(this).attr('data-value'));
+			let spot=$(this).attr('data-value');
+			$('#spot > a').text($(this).text());
+			let ar=spot.split(',');
 			
-			option='menu';
-			optionList(option);
+			$('#menu').empty();
+			$.ajax({url:'/outback/menuList',
+				data:{booker:$('#writer').val(),
+					  spot_code:ar[1],
+					  book_id:ar[0]},
+				method:'GET',
+				datatype:'json',
+				success:function(txt) {
+					//console.log(txt);
+					for(i=0;i<txt.length;i++) {
+						let str="<li class='dropdown-item' data-value='"+txt[i]['menu_code']+"'>"
+								+txt[i]['menu_name']+"</li>"
+// 						let str="<input type='text' id='menu_code' data-value='"+txt[i]['menu_code']
+// 								+"' value='"+txt[i]['menu_name']+"'>";
+						$('#menu').append(str);
+					}
+				}
+			});
 		})
 		.on('click','#done',function() {
-			let vdate=$('#vdate').val();
-			let ar=vdate.split(',');
+			console.log("spot : "+$('#spot ul li').attr('data-value'));
+			console.log("vdate : "+$('#vdate ul li').attr('data-value'));			
 			
+			let spot=$('#spot ul li').attr('data-value');
+			let ar=spot.split(',');
+			
+			let m_code='';
+			for(i=0;i<$('#menu li').length;i++) {
+				m_code+=","+$('#menu li:eq('+i+')').attr('data-value');
+			}
+			let menu_code=m_code.replace(',','');
+			console.log(menu_code);
+	
 			let oParam = {title:$('#title').val(), writer:$('#writer').val(),
-						  vdate:ar[1], spot:$('#spot').val(),
-						  menu:$('#menu').val(), content:$('#content').val()};
+						  vdate:$('#vdate ul li').attr('data-value'), spot:ar[1],
+						  menu_code:menu_code, content:$('#content').val()};
 			$.ajax({url:'/outback/board_insert',
 				data:oParam,
 				method:'POST',
@@ -93,8 +170,8 @@
 		})
 		
 		function optionList(option) {
-			let vdate=$('#vdate').val();
-			let ar=vdate.split(',');
+// 			let vdate=$('#vdate').val();
+// 			let ar=vdate.split(',');
 			
 			$('#'+option).empty();
 			$.ajax({url:'/outback/'+option+'List',
