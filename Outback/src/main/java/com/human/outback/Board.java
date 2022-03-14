@@ -9,15 +9,17 @@ public class Board {
 	private String writer;
 	private Date created;
 	private Date updated;
-	private Date vdate;
+	private String vdate;
 	private int spot_code;
 	private int menu_code;
 	
 	private String spot_name;
 	private String menu_name;
 	
-	public Board(int board_id, String title, String content, String writer, Date created, Date updated, Date vdate,
-			int spot_code, int menu_code, String spot_name, String menu_name) {
+	private int book_id;
+	
+	public Board(int board_id, String title, String content, String writer, Date created, Date updated, String vdate,
+			int spot_code, int menu_code, String spot_name, String menu_name, int book_id) {
 		this.board_id = board_id;
 		this.title = title;
 		this.content = content;
@@ -29,6 +31,7 @@ public class Board {
 		this.menu_code = menu_code;
 		this.spot_name = spot_name;
 		this.menu_name = menu_name;
+		this.book_id = book_id;
 	}
 	public Board() {}
 	public int getBoard_id() {
@@ -67,10 +70,10 @@ public class Board {
 	public void setUpdated(Date updated) {
 		this.updated = updated;
 	}
-	public Date getVdate() {
+	public String getVdate() {
 		return vdate;
 	}
-	public void setVdate(Date vdate) {
+	public void setVdate(String vdate) {
 		this.vdate = vdate;
 	}
 	public int getSpot_code() {
@@ -97,4 +100,11 @@ public class Board {
 	public void setMenu_name(String menu_name) {
 		this.menu_name = menu_name;
 	}
+	public int getBook_id() {
+		return book_id;
+	}
+	public void setBook_id(int book_id) {
+		this.book_id = book_id;
+	}
+	
 }

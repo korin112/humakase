@@ -28,11 +28,11 @@ ul li {
 			<li><input type="password" id="passcode"></li>
 		</ul>
 		<ul class=b>
-			<li><label for="pw_check">비밀번호 확인</label></li>
-			<li><input type="password" id="pw_check"></li>
+			<li><label for="passcode1">비밀번호 확인</label></li>
+			<li><input type="password" id="passcode1"></li>
 		</ul>
 		<ul>
-			<li class=a><label for="name">이름</label></li>
+			<li class=a><label for="name">실명</label></li>
 			<li class=b><input type="text" id="name"></li>
 		</ul>
 		<ul class=b>

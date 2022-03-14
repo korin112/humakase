@@ -289,14 +289,14 @@ public class MController {
 		String userid=hsr.getParameter("userid");
 		String passcode=hsr.getParameter("passcode");
 		System.out.println(userid);
-		System.out.println(passcode);
+//		System.out.println(passcode);
 		iLogin pw = sqlSession.getMapper(iLogin.class);
 		ArrayList<Member> m = pw.getLogin();
 		
 		for(int i=0; i < m.size(); i++) {
-			if(m.get(i).getUserid().equals(userid) && m.get(i).getPasscode().equals(passcode)) {
-				session.setAttribute("userid",userid);
-				session.setAttribute("passcode", passcode);
+			if(m.get(i).getUserid().equals(userid)) {
+				session.setAttribute("passcode",passcode);
+//				session.setAttribute("passcode",passcode);
 				str="ok";
 				break;
 			}
@@ -305,9 +305,8 @@ public class MController {
 			}
 		}
 		if(str.equals("ok")) {
-			session.setAttribute("userid",userid);
-			session.setAttribute("pass",passcode);
-			pw.pwEdit(userid, passcode);
+			session.setAttribute("passcode",passcode);
+			pw.pwEdit(userid);
 			return "home";
 		} else {
 			model.addAttribute("fail_user",str);

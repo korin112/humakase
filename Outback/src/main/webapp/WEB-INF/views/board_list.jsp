@@ -32,7 +32,6 @@
 				<tr>
 					<th>번호</th>
 					<th>지점</th>
-					<th>메뉴</th>
 					<th>제목</th>
 					<th>작성자</th>
 					<th>작성일</th>
@@ -42,15 +41,16 @@
 				<tr id="getBoard">
 					<td><c:out value="${b.board_id}"/></td>
 					<td><c:out value="${b.spot_name}"/></td>
-		            <td><c:out value="${b.menu_name}"/></td>
+<%-- 		            <td><c:out value="${b.menu_name}"/></td> --%>
 		            <td><c:out value="${b.title}"/></td>
 		            <td><c:out value="${b.writer}"/></td>
 		            <td><fmt:formatDate pattern="yy/MM/dd" value="${b.created}"/></td>
 		        </tr>
 			</c:forEach>
 		</table>
-		<button id="insert">글쓰기</button>
-		
+		<c:if test="${userid!=null}">
+			<button id="insert">글쓰기</button>
+		</c:if>	
 		<div>
 			<ul id="pageInfo" class="pageInfo">
 				<c:if test="${p.prev}">
