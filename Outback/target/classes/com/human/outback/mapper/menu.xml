@@ -21,5 +21,7 @@
 <update id="updateMenu">
 	update menu set menu_type=#{param2}, img=#{param3}, menu_name=#{param4}, menu_price=#{param5}, comment=#{param6} where menu_code=#{param1}
 </update>
-
+<select id="getImg" resultType="com.human.outback.Menu">
+select img,comment from menu where menu_code=#{param1} 
+</select>
 </mapper>
