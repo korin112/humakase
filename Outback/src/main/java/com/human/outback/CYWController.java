@@ -84,14 +84,7 @@ public class CYWController {
 		return "addMenu";
 	}
 
-	@RequestMapping("/test") 
-	public String doTest(Model model) {
-		iMenu menu=sqlSession.getMapper(iMenu.class);
-		ArrayList<Menu> alMenu=menu.getMenu();
-		System.out.println("size["+alMenu.size()+"]");
-		model.addAttribute("alMenu",alMenu);
-		return "test";
-	}
+	
 	
 	@ResponseBody
 	@RequestMapping(value="/menulist", method = RequestMethod.POST  ,produces = "apllication/json;charset=utf-8")
@@ -129,7 +122,7 @@ public class CYWController {
 	      return ja.toString();
 	   }
 	
-	@RequestMapping(value ="/addMenu", method = RequestMethod.POST  ,produces = "apllication/json;charset=utf-8")
+	@RequestMapping(value ="/addMenu", method = RequestMethod.GET  ,produces = "apllication/json;charset=utf-8")
 	public String doAddMenu(HttpServletRequest hsr) {
 		String strMenu_code=hsr.getParameter("menu_code");
 		int menu_type=Integer.parseInt(hsr.getParameter("menu_type"));

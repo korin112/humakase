@@ -3,12 +3,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
-<%@ page session="true"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>Steak</title>
+<title>${menuname}</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <link rel="stylesheet" href="${path}/resources/css/style.css">
 <style>
@@ -61,65 +60,45 @@ li {
 	padding : 40px;
 	border : 1px solid #ccc;
 }
+
 </style>
 </head>
 <body>
 	<%@include file="header.jsp"%>
-	<div style="text-align:left; width:1200px; position:relative;  margin-top:40px; margin-left:100px;">
-		<h1 style="font-weight:bold; font-size:40px; letter-spacing:6px;">스테이크</h1>
-      	<h2 style="font-weight:bold; color:#ccc; margin-bottom:30px; font-size:22px; letter-spacing:4px;">Steak</h2>
-      	<hr>
-      </div> 
 	<div class="container O_container">
+		<div
+			style="text-align: left; width: 1200px; position: relative; margin-top: 40px; margin-left: 100px;">
+			<h1 style="font-weight: bold; font-size: 40px; letter-spacing: 6px;">
+				<c:out value="${menuname}" />
+			</h1>
+			<h2
+				style="font-weight: bold; color: #ccc; margin-bottom: 30px; font-size: 22px; letter-spacing: 4px;">
+				<c:out value="${menuname}" />
+			</h2>
+			<hr>
+		</div>
 		<ul class="menu_wrap">
-			<li class="menu_box">
-				<div>
-					<img style="width: 350px; height: 250px;"
-						src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2007/1/2/0/valentines_steak.jpg.rend.hgtvcom.826.620.suffix/1557859049553.jpg"
-						alt="My Image">
-				</div>
-				<h3>T-bone</h3>
-				<h4>25,000 Won</h4>
-				<p>소의 안심과 등심사이, T자형 뼈 가운데 T자형 뼈의 좌우로 안심 / 등심이 나뉘어지며 스테이크 부위로는
-					고급에 속하는 부위이고, 최고의 육질과 육즙을 선사하는 스테이크 입니다.</p>
-			</li>
-			<li class="menu_box">
-				<div>
-					<img style="width: 350px; height: 250px;"
-						src="https://img.insight.co.kr/static/2019/12/09/700/e842mx2j26ba019u846t.jpg"
-						alt="My Image">
-				</div>
-				<h3>Tomahawk</h3>
-				<h4>31,000 Won</h4>
-				<p>Tomahawk는 육류 중에서 손잡이처럼 길다란 갈비뼈를 감싸는 갈비살이 등심에 붙어있는 형태로 정형된 고기를
-					구운 스테이크 입니다.</p>
-			</li>
-			<li class="menu_box">
-				<div>
-					<img style="width: 350px; height: 250px;"
-						src="https://i.pinimg.com/736x/c6/be/c2/c6bec2c1209f96a678fe17b7cdc88d3b.jpg"
-						alt="My Image">
-				</div>
-				<h3>Black-Label</h3>
-				<h4>35,000 Won</h4>
-				<p>두툼하고 육즙이 가득한 채끝 등심을 이용 블랙라벨 스테이크 입니다.</p>
-			</li>
+			<c:forEach items="${menu}" var="menu">
+				<li class="menu_box" data-value="${menu.menu_code}">
+					<div>
+						<img src="${menu.img}" alt="${menu.img}">
+					</div>
+					<h3>${menu.menu_name}</h3>
+					<h4>${menu.menu_price}</h4>
+					<p>${menu.comment}</p>
+				</li>
+			</c:forEach>
 		</ul>
-		<c:forEach items="${getMenu}" var="getMenu">
-		<tr>
-		<td>${getmenu.menu_name}</td>
-		<td>${getmenu.menu_price}</td>
-		<td>${getmenu.comment}</td>
-		</tr>
-		</c:forEach>
 		<div class="menu-notice">
-					<h4>NOTICE</h4>
-					<p class="txt">
-	- 모든 메뉴 가격은 부가세가 포함된 금액입니다. 
-<br>- 매장 사정에 따라 일부 매장의 메뉴는 홈페이지 메뉴와 상이할 수 있습니다.
-<br>- 최상의 품질로 스테이크를 제공하기 위해 한정수량으로 판매하며, 포장 불가합니다. 
-<br>- 시즌에 따라 블랙라벨 스테이크의 가니시는 변경될 수 있습니다.</p>
-				</div>
+			<h4>NOTICE</h4>
+			<p class="txt">
+				- 모든 메뉴 가격은 부가세가 포함된 금액입니다. 
+				<br>- 매장 사정에 따라 일부 매장의 메뉴는 홈페이지 메뉴와
+				상이할 수 있습니다.
+				<br>- 최상의 품질로 스테이크를 제공하기 위해 한정수량으로 판매하며, 포장 불가합니다.
+				<br>- 시즌에 따라 블랙라벨 스테이크의 가니시는 변경될 수 있습니다.
+			</p>
+		</div>
 	</div>
 	<%@include file="footer.jsp"%>
 </body>

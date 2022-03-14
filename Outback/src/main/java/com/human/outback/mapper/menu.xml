@@ -19,7 +19,7 @@
 	select mtype_code,mtype_name from menutype order by mtype_code
 </select>
 <update id="updateMenu">
-	update menu set menu_type=#{param2}, img=#{param3} menu_name=#{param4}, menu_price=#{param5}, comment=#{param6} where menu_code=#{param1}
+	update menu set menu_type=#{param2}, img=#{param3}, menu_name=#{param4}, menu_price=#{param5}, comment=#{param6} where menu_code=#{param1}
 </update>
 
 </mapper>
