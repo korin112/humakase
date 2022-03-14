@@ -15,9 +15,11 @@ public interface iBook {
 	ArrayList<Vtime> getVtime(int spot_code, String vdate);
 	void insertBook(int spot_code, String booker, int howmany, int m_qty, int total, String vdate, int vtime, String msg);
 	void insertBookDetail(@Param("param1")String booker, @Param("list")List<Cart> arCart);
+	void insertBookDetail2(String booker, int menu_code);
 	void deleteBookCart(@Param("list")List<Cart> arCart);
 	ArrayList<Allmenu> getAllmenu(int menu_type);
 	ArrayList<Allmenu> getMenutype();
 	void insertCart(String userid, int menu_code, String menu_name, int menu_price);
 	Cart checkCart(String userid, int menu_code);
+	Allmenu getMenu(String menu_code);
 }
