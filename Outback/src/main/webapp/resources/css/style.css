@@ -9,7 +9,6 @@ li{list-style:none;}
 
 
 /* header.jsp header 영역 */
-
 .h_logo{font-family: 'Gelasio','Noto Sans KR', sans-serif; font-size:2.125rem !important;}
 
 /* submenu.jsp submenu 영역 */
@@ -53,3 +52,7 @@ footer .sitemap ul li a:hover{color:rgba(255,255,255,0.8);}
 footer .sitemap ul li:nth-child(4) a::after{content:''; width:0;}
 .f_logo{font-family: 'Gelasio','Noto Sans KR', sans-serif; text-align:center; opacity:0.5; width:29%; display:inline-block;}
 .f_info{padding:2rem 0; color:#fff; opacity:0.25; width:70%; display:inline-block; vertical-align:middle;}
+
+/* admin_header 영역 */
+.adm_logo{font-family: 'Gelasio','Noto Sans KR', sans-serif; font-size:1.75rem !important;}
+.adm_header .nav-pills .nav-link.active, .nav-pills .show>.nav-link{background:#c93535;}
