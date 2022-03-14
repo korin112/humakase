@@ -54,5 +54,9 @@ footer .sitemap ul li:nth-child(4) a::after{content:''; width:0;}
 .f_info{padding:2rem 0; color:#fff; opacity:0.25; width:70%; display:inline-block; vertical-align:middle;}
 
 /* admin_header 영역 */
-.adm_logo{font-family: 'Gelasio','Noto Sans KR', sans-serif; font-size:1.75rem !important;}
+.adm_main{height:100vh !important;}
+.adm_logo{font-family: 'Gelasio','Noto Sans KR', sans-serif; font-size:1.75rem !important; margin-left:auto;}
 .adm_header .nav-pills .nav-link.active, .nav-pills .show>.nav-link{background:#c93535;}
+.adm_nav_tt{vertical-align:top;}
+.adm_go_home{width:100%; margin-bottom:1.25rem;}
+.adm_user{text-align:center; margin-bottom:1.25rem;}
