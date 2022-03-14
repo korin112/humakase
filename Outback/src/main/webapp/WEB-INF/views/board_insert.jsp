@@ -33,9 +33,9 @@
 	<div class="container O_container">
 	<section class="book-list fixed">
 		<article class="booking_info_box">
-			<ul>
+			<ul class="fixed">
 				<li>제목</li>
-				<li><textarea id="title" name="title" maxlength="30" placeholder="최대 30자까지 가능합니다."></textarea></li>
+				<li><input type="text" id="title" name="title" maxlength="30" placeholder="최대 30자까지 가능합니다."></li>
 			</ul>
 	   		<ul class="fixed">
 				<li>작성자</li>
@@ -90,9 +90,11 @@
 			let vdate=$(this).attr('data-value');
 			$('#vdate a').text(vdate);
 			
+			
 			$('#spot a').text('지점을 선택해주세요.');
 			$('#spot a').attr('data-value',null);
 			$('#spot ul').empty();
+			
 			$.ajax({url:'/outback/spotList',
 				data:{booker:$('#writer').val(), vdate:vdate},
 				method:'GET',
@@ -125,16 +127,14 @@
 					for(i=0;i<txt.length;i++) {
 						let str="<li class='dropdown-item' data-value='"+txt[i]['menu_code']+"'>"
 								+txt[i]['menu_name']+"</li>"
-// 						let str="<input type='text' id='menu_code' data-value='"+txt[i]['menu_code']
-// 								+"' value='"+txt[i]['menu_name']+"'>";
 						$('#menu').append(str);
 					}
 				}
 			});
 		})
 		.on('click','#done',function() {
-			console.log("spot : "+$('#spot ul li').attr('data-value'));
-			console.log("vdate : "+$('#vdate ul li').attr('data-value'));			
+			console.log("spot : "+$('#spot ul li').attr('data-value'));		
+			console.log("vdate : "+$('#vdate a').text());			
 			
 			let spot=$('#spot ul li').attr('data-value');
 			let ar=spot.split(',');
@@ -147,7 +147,7 @@
 			console.log(menu_code);
 	
 			let oParam = {title:$('#title').val(), writer:$('#writer').val(),
-						  vdate:$('#vdate ul li').attr('data-value'), spot:ar[1],
+						  vdate:$('#vdate a').text(), spot:ar[1],
 						  menu_code:menu_code, content:$('#content').val()};
 			$.ajax({url:'/outback/board_insert',
 				data:oParam,

@@ -27,11 +27,9 @@
 		values(#{param1},#{param2},#{param3},#{param4},#{param5}) 
 	</insert>
 
-	<insert id="insertBoardMenu">
-		<selectKey resultType="int" keyProperty="board_id" order="BEFORE">
-        	select board_id from board order by board_id desc limit 0,1;
-    	</selectKey>   
-    	insert into board_menu(board_id,menu_code) values(#{board_id},#{menu_code})
+	<insert id="insertBoardMenu"> 
+		insert into board_menu(board_id,menu_code)
+		values((select board_id from board order by board_id desc limit 0,1),#{menu_code})
 	</insert>
 
 	<!-- board list -->
@@ -49,13 +47,18 @@
     
     <!-- 내용 보기 -->
 	<select id="getBoard" resultType="com.human.outback.Board">
-		select a.board_id,a.vdate,a.title,c.spot_name,b.menu_name,a.content,a.writer,a.updated
-		from board a, menu b, spot c
-		where a.menu_code=b.menu_code
-		and a.spot_code=c.spot_code
-		and board_id=#{board_id}
+		select a.board_id,a.vdate,a.title,b.spot_name,a.content,a.writer,a.updated
+		from board a, spot b
+		where a.spot_code=b.spot_code
+		and a.board_id=#{board_id}
 	</select>
 	
+	<select id="getMenuBoard" resultType="com.human.outback.Board">
+		select c.menu_name from board a, board_menu b, menu c
+		where a.board_id=b.board_id
+		and b.menu_code=c.menu_code
+		and b.board_id=#{board_id}
+	</select>
 	 <update id="updateBoard">
     	update board
 		set title=#{param2},content=#{param3},updated=current_date
@@ -67,6 +70,10 @@
 	</delete>
 	
 	<!-- 댓글 -->
+	<select id="reTotal" resultType="int">
+       select count(re_id) from re_board where board_id=#{board_id}
+    </select>
+	
 	<select id="reBoard" resultType="com.human.outback.ReBoard">
 		select re_id,writer,content,date_format(re_date, '%Y-%m-%d %H:%i:%s') as re_date
 		from re_board

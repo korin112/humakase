@@ -15,10 +15,12 @@ public interface iBoard {
 	public int getTotal();
 	
 	Board getBoard(int board_id);
+	ArrayList<Board> getMenuBoard(int board_id);
 	void updateBoard(int board_id, String title, String content);
 	void deleteBoard(int board_id);
 	
 	// 댓글
+	public int reTotal(int board_id);
 	ArrayList<ReBoard> reBoard(int board_id);
 	void reInsert(int board_id, int grp, String writer, String content);
 	void reDelete(int re_id);
