@@ -3,17 +3,21 @@ package com.human.outback;
 public class Menu {
 	private int menu_code;
 	private int menu_type;
+	private String img;
 	private String menu_name;
 	private int menu_price;
+	private String comment;
 	public Menu() {
 		super();
 	}
-	public Menu(int menu_code, int menu_type, String menu_name, int menu_price) {
+	public Menu(int menu_code, int menu_type, String img, String menu_name, int menu_price, String comment) {
 		super();
 		this.menu_code = menu_code;
 		this.menu_type = menu_type;
+		this.img = img;
 		this.menu_name = menu_name;
 		this.menu_price = menu_price;
+		this.comment = comment;
 	}
 	public int getMenu_code() {
 		return menu_code;
@@ -27,6 +31,12 @@ public class Menu {
 	public void setMenu_type(int menu_type) {
 		this.menu_type = menu_type;
 	}
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
 	public String getMenu_name() {
 		return menu_name;
 	}
@@ -38,6 +48,12 @@ public class Menu {
 	}
 	public void setMenu_price(int menu_price) {
 		this.menu_price = menu_price;
+	}
+	public String getComment() {
+		return comment;
+	}
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 	
 }
