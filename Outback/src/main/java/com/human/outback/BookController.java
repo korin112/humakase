@@ -2,7 +2,6 @@ package com.human.outback;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -39,11 +38,43 @@ public class BookController {
 				ArrayList<Allmenu> getAllmenu = ibook.getAllmenu(menu_type);
 				model.addAttribute("menu", getAllmenu);
 				model.addAttribute("menucode", getMenutype.get(i).getMenu_code());
-				model.addAttribute("menuname", getMenutype.get(i).getMtype_name());
+				model.addAttribute("mtypename", getMenutype.get(i).getMtype_name().toUpperCase());
 				return "submenu";
 			}
 		}
 		return "redirect:/home";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/insertCart", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+	public String insertCart(HttpServletRequest hsr, Model model) {
+		HttpSession session = hsr.getSession();
+		String userid = (String) session.getAttribute("userid");
+		model.addAttribute("userid", userid);
+		int menu_code = Integer.parseInt(hsr.getParameter("menu_code"));
+		String menu_name = hsr.getParameter("menu_name");
+		int menu_price = Integer.parseInt(hsr.getParameter("menu_price"));
+		System.out.println(userid + "," + menu_code + "," + menu_name + "," + menu_price);
+		String str="";
+		iBook ibook = sqlSession.getMapper(iBook.class);
+		
+		Cart checkCart = ibook.checkCart(userid, menu_code);
+		System.out.println("checkCart"+ checkCart);
+		if(checkCart != null) {
+			int cart_code = checkCart.getCart_code();
+			int menu_cnt = checkCart.getMenu_cnt() + 1;
+			ibook.updateCart(cart_code, menu_cnt);
+			str = "updateCart";
+		} else {
+			try {
+				ibook.insertCart(userid, menu_code, menu_name, menu_price);
+				str="addCart";
+			} catch(Exception e) {
+				str="fail";
+			}
+		}
+		System.out.println(str);
+		return str;
 	}
 	
 	@RequestMapping(value="/book", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
@@ -51,19 +82,21 @@ public class BookController {
 		HttpSession session = hsr.getSession();
 		String userid = (String) session.getAttribute("userid");
 		iBook ibook = sqlSession.getMapper(iBook.class);
-//		System.out.println("controller : " + cartlist.getCart());
-//		System.out.println("뭐나오지? : " + cartlist);
-		List<Cart> arCart = cartlist.getCart();
-//		System.out.println(arCart);
-		ArrayList<Cart> getCartlist = ibook.getBooklist(userid, arCart);
-		model.addAttribute("getCartlist", getCartlist);
+		String menu_code = hsr.getParameter("menu_code");
 		Member userSession = ibook.getUserSession(userid);
 		model.addAttribute("userSession",userSession);
 		ArrayList<Spot> getSpot = ibook.getSpot();
-		
-//		ArrayList<Vtime> getVtime = ibook.getVtime(spot_code);
 		model.addAttribute("spot", getSpot);
-//		model.addAttribute("vtime", getVtime);
+		if(menu_code == null) {
+			List<Cart> arCart = cartlist.getCart();
+			
+			ArrayList<Cart> getCartlist = ibook.getBooklist(userid, arCart);
+			model.addAttribute("getCartlist", getCartlist);
+		} else {
+			System.out.println(menu_code);
+			Allmenu getMenu = ibook.getMenu(menu_code);
+			model.addAttribute("getMenu", getMenu);
+		}
 		
 		return "book";
 	}
@@ -71,8 +104,8 @@ public class BookController {
 	@RequestMapping(value="/InsertBook", method = RequestMethod.POST)
 	public String InsertBook(HttpServletRequest hsr, CartList cartlist) {
 		HttpSession session = hsr.getSession();
-		List<Cart> arCart = cartlist.getCart();
-		System.out.println(arCart);
+		List<Cart> cart = cartlist.getCart();
+		iBook ibook = sqlSession.getMapper(iBook.class);
 		int spot_code = Integer.parseInt(hsr.getParameter("spot_code"));
 		String booker = (String) session.getAttribute("userid");
 		int howmany = Integer.parseInt(hsr.getParameter("howmany"));
@@ -81,12 +114,16 @@ public class BookController {
 		String vdate = hsr.getParameter("vdate");
 		int vtime = Integer.parseInt(hsr.getParameter("vtime"));
 		String msg = hsr.getParameter("msg");
-		System.out.println(spot_code +", "+ booker +", "+ howmany+", "+m_qty+", "+total+", "+vdate+", "+vtime+", "+msg);
-		
-		iBook ibook = sqlSession.getMapper(iBook.class);
 		ibook.insertBook(spot_code, booker, howmany, m_qty, total, vdate, vtime, msg);
-		ibook.insertBookDetail(booker, arCart);
-		ibook.deleteBookCart(arCart);
+		System.out.println(spot_code +", "+ booker +", "+ howmany+", "+m_qty+", "+total+", "+vdate+", "+vtime+", "+msg);
+		if(cart == null) {
+			System.out.println("null check");
+			int menu_code = Integer.parseInt(hsr.getParameter("menu_code"));
+			ibook.insertBookDetail2(booker, menu_code);
+		} else {
+			ibook.insertBookDetail(booker, cart);
+			ibook.deleteBookCart(cart);
+		}
 		return "redirect:/home";
 	}
 	
@@ -112,12 +149,14 @@ public class BookController {
 	public String cart(HttpServletRequest hsr, Model model) {
 		HttpSession session = hsr.getSession();
 		String userid = (String) session.getAttribute("userid");
-		
-		iBook ibook = sqlSession.getMapper(iBook.class);
-		ArrayList<Cart> cart = ibook.getCart(userid);
-		model.addAttribute("getCart", cart);
-		
-		return "cart";
+		if(userid != null) {
+			iBook ibook = sqlSession.getMapper(iBook.class);
+			ArrayList<Cart> cart = ibook.getCart(userid);
+			model.addAttribute("getCart", cart);
+			return "cart";
+		} else {
+			return "redirect:/home";
+		}
 	}
 	
 	@ResponseBody
@@ -133,7 +172,7 @@ public class BookController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/deleteCart", method = RequestMethod.POST)
+	@RequestMapping(value = "/deleteCart", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
 	public String deleteCart(HttpServletRequest hsr) {
 		String check = hsr.getParameter("check");
 		System.out.println(check);
