@@ -82,8 +82,6 @@ public class BookController {
 		HttpSession session = hsr.getSession();
 		String userid = (String) session.getAttribute("userid");
 		iBook ibook = sqlSession.getMapper(iBook.class);
-//		System.out.println("controller : " + cartlist.getCart());
-//		System.out.println("뭐나오지? : " + cartlist);
 		String menu_code = hsr.getParameter("menu_code");
 		Member userSession = ibook.getUserSession(userid);
 		model.addAttribute("userSession",userSession);
@@ -94,15 +92,11 @@ public class BookController {
 			
 			ArrayList<Cart> getCartlist = ibook.getBooklist(userid, arCart);
 			model.addAttribute("getCartlist", getCartlist);
-			
-//			ArrayList<Vtime> getVtime = ibook.getVtime(spot_code);
-//			model.addAttribute("vtime", getVtime);
 		} else {
 			System.out.println(menu_code);
 			Allmenu getMenu = ibook.getMenu(menu_code);
 			model.addAttribute("getMenu", getMenu);
 		}
-
 		
 		return "book";
 	}
@@ -163,7 +157,6 @@ public class BookController {
 		} else {
 			return "redirect:/home";
 		}
-
 	}
 	
 	@ResponseBody

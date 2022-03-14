@@ -173,7 +173,7 @@
 					</ul>
 					<ul>
 						<li>요청사항</li>
-						<li><textarea name="msg" maxlength="255" placeholder="최대 255자까지 작성 가능합니다."></textarea></li>
+						<li><textarea name="msg" maxlength="255" spellcheck="false" placeholder="최대 255자까지 작성 가능합니다."></textarea></li>
 					</ul>
 				</article>
 				<article class="total_payment_box">
