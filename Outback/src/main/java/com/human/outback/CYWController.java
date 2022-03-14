@@ -79,8 +79,12 @@ public class CYWController {
 	}
 	
 	@RequestMapping("/menuadd") 
-	public String doMenuAdd(Model model) {
-
+	public String doMenuAdd(Model m) {
+		iMenu menu = sqlSession.getMapper(iMenu.class);
+	    ArrayList<Menu> alMenu=menu.getMenu();
+	    m.addAttribute("alMenu",alMenu);
+	    ArrayList<Menutype> alType=menu.getMenutype();
+	    m.addAttribute("alType",alType);
 		return "addMenu";
 	}
 
@@ -88,39 +92,36 @@ public class CYWController {
 	
 	@ResponseBody
 	@RequestMapping(value="/menulist", method = RequestMethod.POST  ,produces = "apllication/json;charset=utf-8")
-	   public String getMenuList() {
+	   public String getMenuList(HttpServletRequest hsr) {
 	      iMenu menu = sqlSession.getMapper(iMenu.class);
-	      ArrayList<Menu> alMenu=menu.getMenu();
-	      
+	      int menu_code=Integer.parseInt(hsr.getParameter("img"));
+	      ArrayList<Menu> alMenu=menu.getImg(menu_code);
+	      System.out.println(alMenu.size());
 	      JSONArray ja=new JSONArray();
 	      for(int i=0; i < alMenu.size(); i++) {
 	         JSONObject jo=new JSONObject();
-	         jo.put("menu_code", alMenu.get(i).getMenu_code());
-	         jo.put("menu_type", alMenu.get(i).getMenu_type());
 	         jo.put("img", alMenu.get(i).getImg());
-	         jo.put("menu_name", alMenu.get(i).getMenu_name());
-	         jo.put("menu_price", alMenu.get(i).getMenu_price());
 	         jo.put("comment", alMenu.get(i).getComment());
 	         ja.add(jo);
 	      }
 	      return ja.toString();
 	   }
 	
-	@ResponseBody
-	@RequestMapping(value="/typelist",method = RequestMethod.POST  ,produces = "apllication/json;charset=utf-8")
-	   public String getTypeList() {
-	      iMenu menu = sqlSession.getMapper(iMenu.class);
-	      ArrayList<Menutype> alType=menu.getMenutype();
-	      
-	      JSONArray ja=new JSONArray();
-	      for(int i=0; i < alType.size(); i++) {
-	         JSONObject jo=new JSONObject();
-	         jo.put("mtype_code", alType.get(i).getMtype_code());
-	         jo.put("mtype_name", alType.get(i).getMtype_name());
-	         ja.add(jo);
-	      }
-	      return ja.toString();
-	   }
+//	@ResponseBody
+//	@RequestMapping(value="/typelist",method = RequestMethod.POST  ,produces = "apllication/json;charset=utf-8")
+//	   public String getTypeList() {
+//	      iMenu menu = sqlSession.getMapper(iMenu.class);
+//	      ArrayList<Menutype> alType=menu.getMenutype();
+//	      
+//	      JSONArray ja=new JSONArray();
+//	      for(int i=0; i < alType.size(); i++) {
+//	         JSONObject jo=new JSONObject();
+//	         jo.put("mtype_code", alType.get(i).getMtype_code());
+//	         jo.put("mtype_name", alType.get(i).getMtype_name());
+//	         ja.add(jo);
+//	      }
+//	      return ja.toString();
+//	   }
 	
 	@RequestMapping(value ="/addMenu", method = RequestMethod.GET  ,produces = "apllication/json;charset=utf-8")
 	public String doAddMenu(HttpServletRequest hsr) {
