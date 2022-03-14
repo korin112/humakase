@@ -66,26 +66,24 @@ input:focus, input:not(:placeholder-shown){
 	margin-left:660px;
 }
 </style>
-<body>
+<body align=center>
 <%@include file ="header.jsp" %>
-<header>
-	<h2 style='margin-left:730px; margin-top:100px;'>Login</h2>
-</header>
+<h2 style='text-align:center;'>Login</h2>
 <form method="POST" action="/outback/login_check" id=frmLogin>
 	<div class="input-box">
 		<input type=text name=userid id=userid placeholder="아이디">
 		<input type=hidden name=user id=user value="${fail_user}">
 		<label for="username">아이디</label>
-	</div>
-	
+	</div>	
 	<div class="input-box">
-		<input id=passcode name=passcode placeholder="비밀번호">
+		<input type=password id=passcode name=passcode placeholder="비밀번호">
 		<label for=passcode>비밀번호</label>
 	</div>
 	<div class="input-button">
 	<input type=submit value=로그인>
 	<input type=button name=cancel id=cancel value=취소>
 	<input type=button name=signon id=signon value=회원가입>
+	
 	</div>
 </form>
 <c:if test="${fail_user=='fail'}">
