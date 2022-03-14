@@ -75,7 +75,12 @@
 				}
 				cnt_total += parseInt(cnt);
 			}
-			$('.cnt_total').text(cnt_total.toLocaleString() + ' 원');
+			if(cnt_total != null){
+				$('.cnt_total').text(cnt_total.toLocaleString() + ' 원');
+			} else {
+				$('.cnt_total').text(0);
+			}
+				
 			// 선택한 결제금액 기본 값
 			$('.cnt_checkTotal').text($('.cnt_total').text());
 		})
@@ -156,7 +161,7 @@
 				url:'/outback/deleteCart',
 				data:{check:check},
 				method:'POST',
-				datatype:'json',
+				dataType:'text',
 				success:function(txt) {
 					console.log(txt);
 					if(txt=="ok") {

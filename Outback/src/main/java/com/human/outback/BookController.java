@@ -39,11 +39,43 @@ public class BookController {
 				ArrayList<Allmenu> getAllmenu = ibook.getAllmenu(menu_type);
 				model.addAttribute("menu", getAllmenu);
 				model.addAttribute("menucode", getMenutype.get(i).getMenu_code());
-				model.addAttribute("menuname", getMenutype.get(i).getMtype_name());
+				model.addAttribute("menuname", getMenutype.get(i).getMtype_name().toUpperCase());
 				return "submenu";
 			}
 		}
 		return "redirect:/home";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/insertCart", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+	public String insertCart(HttpServletRequest hsr, Model model) {
+		HttpSession session = hsr.getSession();
+		String userid = (String) session.getAttribute("userid");
+		model.addAttribute("userid", userid);
+		int menu_code = Integer.parseInt(hsr.getParameter("menu_code"));
+		String menu_name = hsr.getParameter("menu_name");
+		int menu_price = Integer.parseInt(hsr.getParameter("menu_price"));
+		System.out.println(userid + "," + menu_code + "," + menu_name + "," + menu_price);
+		String str="";
+		iBook ibook = sqlSession.getMapper(iBook.class);
+		
+		Cart checkCart = ibook.checkCart(userid, menu_code);
+		System.out.println("checkCart"+ checkCart);
+		if(checkCart != null) {
+			int cart_code = checkCart.getCart_code();
+			int menu_cnt = checkCart.getMenu_cnt() + 1;
+			ibook.updateCart(cart_code, menu_cnt);
+			str = "updateCart";
+		} else {
+			try {
+				ibook.insertCart(userid, menu_code, menu_name, menu_price);
+				str="addCart";
+			} catch(Exception e) {
+				str="fail";
+			}
+		}
+		System.out.println(str);
+		return str;
 	}
 	
 	@RequestMapping(value="/book", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
@@ -133,7 +165,7 @@ public class BookController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/deleteCart", method = RequestMethod.POST)
+	@RequestMapping(value = "/deleteCart", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
 	public String deleteCart(HttpServletRequest hsr) {
 		String check = hsr.getParameter("check");
 		System.out.println(check);
