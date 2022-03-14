@@ -16,13 +16,13 @@
 	<ul>
 		<li>
 			<label for=userid>아이디</label>
-			<input type=text id=userid name=userid value="${userid}" readonly>
+			<input type=hidden id=userid name=userid readonly>
 		</li>
 	</ul>
 	<ul>
 		<li>
 			<label for=passcode>비밀번호변경</label>
-			<input type=text id=passcode name=passcode> 
+			<input type=text id=passcode name=passcode value="${passcode}"> 
 		</li>
 	</ul>
 	<ul>
@@ -66,7 +66,7 @@ $(document)
 	$.ajax({url:"/outback/pwEdit",
 			type:"POST",
 			dataType:"text",
-			data:{userid:$('#userid').val(),passcode:$('#passcode').val()},
+			data:{userid:$('#userid').val()},
 			success:function(){
 				alert("test");
 				document.location='/outback/home';
