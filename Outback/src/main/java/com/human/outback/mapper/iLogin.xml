@@ -46,4 +46,7 @@
 <delete id="pwCheck">
 	delete from member where userid=#{param1} and passcode=#{param2}
 </delete>
+<update id="pwEdit">
+	update member set passcode=#{param2} where userid=#{param1}
+</update>
 </mapper>

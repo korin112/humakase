@@ -2,22 +2,25 @@
     pageEncoding="UTF-8"%>
         <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="true" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>  - 마이 페이지 -  </title>
 </head>
+<link rel="stylesheet" href="${path}/resources/css/style.css">
 <style>
-table {
-	border-collapse:collapse;
-}
-tr,td,th{
-	box-sizing:border-box;
-	border:1px solid #ddd;
+#btnDel.btn,#btnCancel.btn {
+    background-color: #8aa1a1;
+    border:none;
+    color:white;
+    border-radius: 5px;
 }
 </style>
 <body>
+<%@include file ="header.jsp" %>
 <form action="/outback/pwCheck" method="POST" id="deleteForm" name="deleteForm">
                        <input type="hidden" id="userid" name="userid" value="${userid}" readonly>
     <div class="col-sm-8 col-sm-offset-2">
@@ -30,7 +33,8 @@ tr,td,th{
                 <div class="form-group">
                     <input type="password" id="passcode1" name="passcode1"  class="form-control form-control-inline text-center" placeholder="비밀번호 확인" />
                 </div>
-                <button type="button" id="btnDel" name="btnDel" class="btn btn-primary">회원탈퇴</button> <a href="/outback/home" class="btn btn-default">취소</a>
+                <button type="button" id="btnDel" name="btnDel" class=btn>회원탈퇴</button>
+                <button type="button" id="btnCancel" name="btnCancel" class=btn>취소</button>
             </div>
         </div>
     </div>
@@ -40,33 +44,7 @@ tr,td,th{
 		alert("로그인에 실패했습니다.");
 	</script>
 </c:if>
-<!-- <table id=tbl> -->
-<!-- <div> -->
-<!-- 	<section> -->
-<!-- 		<article> -->
-<!-- 			<ul> -->
-<!-- 				<li>아이디</li> -->
-<!-- 				<li><input type=text name=userid id=userid></li> -->
-<!-- 			</ul> -->
-<!-- 			<ul> -->
-<!-- 				<li>비밀번호</li> -->
-<!-- 				<li><input type=text name=passcode id=passcode></li> -->
-<!-- 			</ul> -->
-<!-- 			<ul> -->
-<!-- 				<li>이름</li> -->
-<!-- 				<li><input type=text name=name id=name></li> -->
-<!-- 			</ul> -->
-<!-- 			<ul> -->
-<!-- 				<li>모바일번호</li> -->
-<!-- 				<li><input type=text name=mobile id=mobile></li> -->
-<!-- 			</ul> -->
-<!-- 			<ul> -->
-<!-- 				<li><input type=button nama=btn id=btn value=정보수정 data-userid=${userid}></li> -->
-<!-- 			</ul> -->
-<!-- 		</article> -->
-<!-- 	</section> -->
-<!-- </div> -->
-<!-- </table> -->
+<%@include file ="footer.jsp" %>
 </body>
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <script type="text/javascript">
@@ -91,51 +69,23 @@ $(document)
 			type : "POST",
 			dataType : "text",
 			data : {userid:$('#userid').val(),passcode:$('#passcode').val()},
-			success: function(){
-				alert("그동안 이용해 주셔서 감사합니다.");
-				document.location='/outback/home';
+			success: function(data){
+				if(data == 0){
+					alert("test");
+					return false;
+				} else {
+					alert("그동안 이용해 주셔서 감사합니다.");
+					document.location='/outback/home';
+					
+				}
 			}
 		})
-});
+})
+.on('click','#btnCancel',function(){
+	document.location="/outback/home";
+	return false;
+})
+;
 
-// $(document)
-// .ready(function(){
-// 	member();
-// })
-// function member(){
-// 	$.ajax({url:'/outback/infomation',
-// 			data:{},
-// 			dataType:'json',
-// 			method:'GET',
-// 			success:function(txt){
-// 				let userid = txt[0]['userid'];
-// 				let passcode = txt[0]['passcode'];
-// 				let name = txt[0]['name'];
-// 				let mobile = txt[0]['mobile'];
-				
-// 				$('#userid').val(userid);
-// 				$('#passcode').val(passcode);
-// 				$('#name').val(name);
-// 				$('#mobile').val(mobile);
-				
-// 			}})
-// 	$.ajax({url:'/outback/infomation',
-// 			method:'GET',
-// 			data:{},
-// 			dataType:'json',
-// 			success:function(txt){
-// 				let table='<thead><tr><th></th><th>아이디</th><th>패스워드</th><th>이름</th><th>모바일번호</th>'+
-// 				'<th><input type=button id=btn name=btn value=회원탈퇴>'+'</th></tr></thead>';
-// 					$('#tbl').append(table);
-				
-// 				for(i=0; i < txt.length; i++){
-// 					let check='<tr><td><input type=checkbox name=check value="'+txt[i]['userid']+'"></td>'
-// 					let box='<td>'+txt[i]['userid']+'</td><td>'+txt[i]['passcode']+'</td><td>'+txt[i]['name']+'</td><td>'+txt[i]['mobile']+'</td>';
-// 					let btn='<td align=center><input type=button id=edit name=edit value=회원수정 data-userid='+txt[i]['userid']+'></td></tr>';
-// 					$('#tbl').append(check+box+btn);
-// 				}
-// 			}
-// 		});
-// };
 </script>
 </html>

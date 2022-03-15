@@ -141,12 +141,6 @@ $(document)
 	let markers;
 	let infoWindows;
 	initMap();
-	
-	$('#dlg').dialog({
-		title:'지점',
-		autoOpen:false,
-		modal:true
-	});
 });
 
 function initMap() { 
@@ -161,6 +155,7 @@ function initMap() {
 	
 	markers = new Array(); // 마커 정보를 담는 배열
 	infoWindows = new Array(); // 정보창을 담는 배열
+	var infoWindow;	// 마커 클릭시 띄울 창
 	
 	var map = new naver.maps.Map('map', {
         center: new naver.maps.LatLng(37.507381518682855, 127.02373997111954), //지도 시작 지점
@@ -177,24 +172,44 @@ function initMap() {
 	    });
 	    
 	    /* 정보창 */
-		 var infoWindow = new naver.maps.InfoWindow({
-		     content: '<div style="width:200px;text-align:center;padding:10px;"><b>' + areaArr[i].location + '</b></div>'
-		 }); // 클릭했을 때 띄워줄 정보 HTML 작성
+	    if (i == 0) {
+	    	infoWindow = new naver.maps.InfoWindow({
+			     content: '<div style="width:200px;text-align:center;padding:10px;"><b>' + areaArr[i].location + 
+			     '</b></div>' + '<div>주소 : 서울특별시 강남구 논현동 강남대로 502 서희빌딩 2층 </div>' +
+			     '<div>예약 및 이용 문의 : 031-915-2361</div>' + '<div>영업시간 : 매일⎜11:00~19:00 </div>'
+			 });
+	    } else if (i == 1) {
+	    	infoWindow = new naver.maps.InfoWindow({
+			     content: '<div style="width:200px;text-align:center;padding:10px;"><b>' + areaArr[i].location + 
+			     '</b></div>' + '<div>주소 : 충남 천안시 서북구 공원로 196 3층 </div>' +
+			     '<div>예약 및 이용 문의 : 041-534-0561</div>' + '<div>영업시간 : 매일⎜11:00~19:00 </div>'
+			 });
+	    } else if (i == 2) {
+	    	infoWindow = new naver.maps.InfoWindow({
+			     content: '<div style="width:200px;text-align:center;padding:10px;"><b>' + areaArr[i].location + 
+			     '</b></div>' + '<div>주소 : 경기도 수원시 팔달구 매산동 덕영대로 924 6층 </div>' +
+			     '<div>예약 및 이용 문의 : 050-71305-4791</div>' + '<div>영업시간 : 매일⎜11:00~19:00 </div>'
+			 });
+	    } else if (i == 3) {
+	    	infoWindow = new naver.maps.InfoWindow({
+			     content: '<div style="width:200px;text-align:center;padding:10px;"><b>' + areaArr[i].location + 
+			     '</b></div>' + '<div>주소 : 경기도 고양시 일산동구 중산동 이마트풍산점 3층 </div>' +
+			     '<div>예약 및 이용 문의 : 031-915-2361</div>' + '<div>영업시간 : 매일⎜11:00~19:00 </div>'
+			 });
+	    }
 	    
-		 
-		 
 		 markers.push(marker); // 생성한 마커를 배열에 담는다.
-		 alert(markers);
 		 infoWindows.push(infoWindow); // 생성한 정보창을 배열에 담는다.
 		 
-		 //naver.maps.Event.addListener(markers[i], 'click',  getClickHandler(i));
-		  naver.maps.Event.addListener(markers[i], 'click',  function(e) {
-			 if(infoWindow.getMap()) {
-				 infoWindow.close();
-			 } else {
-				 infoWindow.open(map, marker);
-			 }
-		 }); 
+//		 naver.maps.Event.addListener(markers[i], 'click',  getClickHandler(i));
+		 naver.maps.Event.addListener(markers[i], 'click',  function(e) {
+//			 if(infoWindow.getMap()) {
+//				 infoWindow.close();
+//			 } else {
+//				 infoWindow.open(map, marker);
+//			 }
+			alert(markers[i]);
+		 });
 	}	
 }
 
@@ -204,10 +219,6 @@ function getClickHandler(seq) {
     	
         marker = markers[seq];
         infoWindow = infoWindows[seq];
-        
-		alert(marker);
-		$('#dlg').dialog("open");
-		
     }
 }
 

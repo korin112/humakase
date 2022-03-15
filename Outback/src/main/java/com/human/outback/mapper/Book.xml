@@ -4,7 +4,8 @@
 	
 <mapper namespace="com.human.outback.iBook">
 <select id="getCart" resultType="com.human.outback.Cart">
-	select cart_code, menu_name, menu_cnt, menu_price, menu_total from cart where userid = #{param1} order by cart_code desc
+	select cart_code, menu_name, menu_cnt, menu_price, menu_total from cart where userid = #{param1}
+	order by cart_code desc
 </select>
 <update id="updateCart">
 	update cart set menu_cnt = #{param2}, menu_total = menu_price * #{param2} where cart_code = #{param1}
@@ -26,5 +27,69 @@
 </select>
 <select id="getSpot" resultType="com.human.outback.Spot">
 	select spot_code, spot_name, spot_max from spot
+</select>
+<select id="getVtime" resultType="com.human.outback.Vtime">
+	select t1.spot_code, t1.spot_name, ifnull(t2.vdate, #{param2}) as vdate,
+		t1.time_code, t1.time_name, t1.spot_max,
+		ifnull((t1.spot_max - t2.sumhowmany), t1.spot_max) as remain
+	from view_spot_vtime t1 left join (select * from view_alreadybook where vdate = #{param2}) t2
+	on t1.spot_code = t2.spot_code and t1.time_code = t2.time_code
+	where t1.spot_code = #{param1} and (vdate is null or vdate = #{param2}) 
+	order by vdate, t1.time_code
+</select>
+<insert id="insertBook">
+	insert into booking(spot_code, booker, howmany, m_qty, total, vdate, vtime, msg)
+	values (#{param1}, #{param2}, #{param3}, #{param4}, #{param5}, #{param6}, #{param7}, #{param8})
+</insert>
+<insert id="insertBookDetail" parameterType="java.util.List">
+	insert into booking_detail (book_id, menu_code, menu_name, m_qty, price, total) values 
+	<foreach collection="list" item="item" separator=",">
+	(
+		(select max(book_id) from booking where booker = #{param1}),
+		(select menu_code from cart where userid = #{param1} and cart_code = #{item.cart_code}),
+		(select menu_name from cart where userid = #{param1} and cart_code = #{item.cart_code}),
+		(select menu_cnt from cart where userid = #{param1} and cart_code = #{item.cart_code}),
+		(select menu_price from cart where userid = #{param1} and cart_code = #{item.cart_code}),
+		(select menu_total from cart where userid = #{param1} and cart_code = #{item.cart_code})
+	)
+	</foreach>
+</insert>
+<insert id="insertBookDetail2">
+	insert into booking_detail (book_id, menu_code, menu_name, m_qty, price, total) values 
+	(
+		(select max(book_id) from booking where booker = #{param1}),
+		#{param2},
+		(select menu_name from menu where menu_code = #{param2}),
+		1,
+		(select menu_price from menu where menu_code = #{param2}),
+		(select menu_price from menu where menu_code = #{param2})
+	)
+</insert>
+<delete id="deleteBookCart" parameterType="java.util.List">
+	delete from cart
+	<where>
+		<foreach collection="list" item="item" separator="or">
+			cart_code = #{item.cart_code}
+		</foreach>
+	</where>
+</delete>
+<select id="getAllmenu" resultType="com.human.outback.Allmenu">
+	select a.menu_type, b.mtype_name, a.menu_code,a.menu_name, a.menu_price,
+		   a.comment, a.img from menu a, menutype b
+	 where a.menu_type = b.mtype_code and a.menu_type = #{param1}
+</select>
+<select id="getMenutype" resultType="com.human.outback.Allmenu">
+	select mtype_code as menu_code, mtype_name from menutype
+</select>
+<select id="checkCart" resultType="com.human.outback.Cart">
+	select * from cart 
+	where userid = #{param1} and menu_code = #{param2}
+</select>
+<insert id="insertCart">
+	insert into cart(userid, menu_code, menu_name, menu_cnt, menu_price, menu_total, ct_time) 
+	values (#{param1}, #{param2}, #{param3}, 1, #{param4}, #{param4}, date_format(now(), '%Y-%m-%d'))
+</insert>
+<select id="getMenu" resultType="com.human.outback.Allmenu">
+	select menu_code, menu_type, menu_name, menu_price from menu where menu_code = #{param1}
 </select>
 </mapper>

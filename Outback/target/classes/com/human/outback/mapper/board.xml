@@ -3,25 +3,41 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
 <mapper namespace="com.human.outback.iBoard">
+	<select id="dateList" resultType="com.human.outback.Board">
+		select distinct vdate from booking where booker=#{param1}
+		order by vdate desc
+	</select>
+	
 	<select id="spotList" resultType="com.human.outback.Board">
-		select spot_code, spot_name from spot
+		select a.book_id, a.spot_code, b.spot_name
+		from booking a, spot b
+		where a.spot_code=b.spot_code
+		and a.booker=#{param1} and a.vdate=#{param2}
 	</select>
 	
 	<select id="menuList" resultType="com.human.outback.Board">
-		select menu_code, menu_name from menu
+		select distinct b.menu_code, b.menu_name
+		from booking a, booking_detail b
+		where a.book_id=b.book_id
+		and a.booker=#{param1} and a.spot_code=#{param2} and b.book_id=#{param3}
 	</select>
 	
 	<insert id="insertBoard">
-		insert into board(title,content,writer,vdate,spot_code,menu_code) 
-		values(#{param1},#{param2},#{param3},#{param4},#{param5},#{param6})
+		insert into board(title,content,writer,vdate,spot_code) 
+		values(#{param1},#{param2},#{param3},#{param4},#{param5}) 
 	</insert>
-	
+
+	<insert id="insertBoardMenu"> 
+		insert into board_menu(board_id,menu_code)
+		values((select board_id from board order by board_id desc limit 0,1),#{menu_code})
+	</insert>
+
 	<!-- board list -->
 	<select id="boardList" resultType="com.human.outback.Board">
-    	select a.board_id,a.title,c.spot_name,b.menu_name,a.content,a.writer,a.created
-		from board a, menu b, spot c
-		where a.menu_code=b.menu_code
-		and a.spot_code=c.spot_code
+    	select a.board_id,a.title,b.spot_name,a.content,a.writer,a.created
+		from board a, spot b
+		where a.spot_code=b.spot_code
+		order by a.created desc
 		limit #{param1},#{param2}
 	</select>
 	
@@ -31,13 +47,18 @@
     
     <!-- 내용 보기 -->
 	<select id="getBoard" resultType="com.human.outback.Board">
-		select a.board_id,a.vdate,a.title,c.spot_name,b.menu_name,a.content,a.writer,a.updated
-		from board a, menu b, spot c
-		where a.menu_code=b.menu_code
-		and a.spot_code=c.spot_code
-		and board_id=#{board_id}
+		select a.board_id,a.vdate,a.title,b.spot_name,a.content,a.writer,a.updated
+		from board a, spot b
+		where a.spot_code=b.spot_code
+		and a.board_id=#{board_id}
 	</select>
 	
+	<select id="getMenuBoard" resultType="com.human.outback.Board">
+		select c.menu_name from board a, board_menu b, menu c
+		where a.board_id=b.board_id
+		and b.menu_code=c.menu_code
+		and b.board_id=#{board_id}
+	</select>
 	 <update id="updateBoard">
     	update board
 		set title=#{param2},content=#{param3},updated=current_date
@@ -49,8 +70,12 @@
 	</delete>
 	
 	<!-- 댓글 -->
+	<select id="reTotal" resultType="int">
+       select count(re_id) from re_board where board_id=#{board_id}
+    </select>
+	
 	<select id="reBoard" resultType="com.human.outback.ReBoard">
-		select writer,content,re_date
+		select re_id,writer,content,date_format(re_date, '%Y-%m-%d %H:%i:%s') as re_date
 		from re_board
 		where board_id=#{board_id}
 	</select>
@@ -59,6 +84,14 @@
 		insert into re_board(board_id,grp,grps,grpd,writer,content)
 		values(#{param1},#{param2},0,0,#{param3},#{param4})
 	</insert>
+	
+	<delete id="reDelete">
+		delete from re_board where re_id=#{re_id};
+	</delete>
+	
+	<update id="reUpdate">
+		update re_board set content=#{param2} where re_id=#{param1}
+	</update>
 	
 	<select id="getSession" resultType="com.human.outback.Member">
 		select userid,user_type from member where userid=#{param1}

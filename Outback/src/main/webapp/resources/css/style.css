@@ -1,17 +1,48 @@
 @charset "UTF-8";
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gelasio:ital@1&family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');
 html{font-family:'Noto Sans KR', 'Malgun Gothic', sans-serif !important; color:--bs-body-color;}
 body{font-family:'Noto Sans KR', 'Malgun Gothic', sans-serif !important; color:--bs-body-color;}
 .fixed::after{content:''; clear:both;}
 a{text-decoration:none !important; color:--bs-body-color;}
-.O_container{margin:150px 0;}
+li{list-style:none;}
+.O_container{margin:100px 0 150px;}
 
 
 /* header.jsp header 영역 */
+.h_logo{font-family: 'Gelasio','Noto Sans KR', sans-serif; font-size:2.125rem !important;}
 
+/* submenu.jsp submenu 영역 */
+
+.submenu_title_wrap{width:100%; padding:5rem 0; background:#f2f2f2;}
+.submenu_title h1{font-family: 'Gelasio','Noto Sans KR', sans-serif; margin-bottom:2rem;}
+.submenu_title p{margin-bottom:0;}
+
+.menu_wrap{width: 100%; padding-left:0; overflow: hidden;}
+.menu_box {float: left; width:31%; height:480px; box-sizing: border-box; text-align:center; cursor:pointer;}
+.menu_box:hover img{transform:scale(1.1);}
+.menu_box:nth-child(3n+2) {margin: 0 2.33%;}
+.menu_imgbox{width:100%; height:65%; overflow:hidden; position:relative;}
+.menu_box img{width:100%; height:100%; object-fit:cover; object-position:center center; transition:0.3s;}
+.menu_name{font-weight:700; margin-top:1.25rem;}
+.menu_price{color:#c93535;}
+.menu_price .fs-3{font-weight:700;}
+.menu_info{position:absolute; left:0; right:0; top:100%; height:100%;
+	background:rgba(0,0,0,0.75); color:rgba(255,255,255,0.6); transition:0.3s;}
+.menu_info p{position:absolute; top:3.5rem; padding:0 3.5rem; line-height:1.6; text-align:left;}
+.menu_info div{position:absolute; left:50%; transform:translateX(-50%); bottom:3.5rem; width:100%;}
+.menu_info button{border:1px solid #fff; padding:0.25rem 1rem; margin:0 0.3rem; transition:0.3s; background:none;}
+.menu_info button:hover{background:#fff;}
+.menu_info button.text-white:hover{color:#212529 !important; font-weight:500;}
+.menu-notice{border:1px solid #ccc; padding:2.5rem 4rem;}
+.menu-notice h4 {margin-bottom:1.2rem;}
+.txt {padding-left:0;}
+.txt li{position:relative;}
+.txt li::before{content:'';display:inline-block; width:5px; height:5px;
+	background:#ccc; border-radius:100%; margin:auto 10px auto 0; vertical-align:middle;}
+	
 /* footer.jsp footer 영역 */
 
-footer .sitemap ul{text-align:center; border-bottom:1px solid rgba(255,255,255,0.1);}
+footer .sitemap ul{margin:0; text-align:center; border-bottom:1px solid rgba(255,255,255,0.1);}
 footer .sitemap ul li{display:inline-block; position:relative;}
 footer .sitemap ul li::after, footer .sitemap ul li:first-child::before{content:''; width:1px; position:absolute; top:50%; right:0; transform:translateY(-50%);
 	background:rgba(255,255,255,0.2); height:100%;}
@@ -19,5 +50,9 @@ footer .sitemap ul li:first-child::before{right:auto; left:0;}
 footer .sitemap ul li a{display:block; padding:1rem 2rem; font-size:1rem; color:rgba(255,255,255,0.5); transition:0.3s;}
 footer .sitemap ul li a:hover{color:rgba(255,255,255,0.8);}
 footer .sitemap ul li:nth-child(4) a::after{content:''; width:0;}
-.f_logo{text-align:center; opacity:0.5; width:29%; display:inline-block;}
-.f_info{padding:2rem 0; color:#fff; opacity:0.25; width:70%; display:inline-block;}
+.f_logo{font-family: 'Gelasio','Noto Sans KR', sans-serif; text-align:center; opacity:0.5; width:29%; display:inline-block;}
+.f_info{padding:2rem 0; color:#fff; opacity:0.25; width:70%; display:inline-block; vertical-align:middle;}
+
+/* admin_header 영역 */
+.adm_logo{font-family: 'Gelasio','Noto Sans KR', sans-serif; font-size:1.75rem !important;}
+.adm_header .nav-pills .nav-link.active, .nav-pills .show>.nav-link{background:#c93535;}

@@ -83,6 +83,8 @@ public class CYWController {
 
 		return "addMenu";
 	}
+
+	
 	
 	@ResponseBody
 	@RequestMapping(value="/menulist", method = RequestMethod.POST  ,produces = "apllication/json;charset=utf-8")
@@ -95,8 +97,10 @@ public class CYWController {
 	         JSONObject jo=new JSONObject();
 	         jo.put("menu_code", alMenu.get(i).getMenu_code());
 	         jo.put("menu_type", alMenu.get(i).getMenu_type());
+	         jo.put("img", alMenu.get(i).getImg());
 	         jo.put("menu_name", alMenu.get(i).getMenu_name());
 	         jo.put("menu_price", alMenu.get(i).getMenu_price());
+	         jo.put("comment", alMenu.get(i).getComment());
 	         ja.add(jo);
 	      }
 	      return ja.toString();
@@ -118,19 +122,21 @@ public class CYWController {
 	      return ja.toString();
 	   }
 	
-	@RequestMapping("/addMenu") // submit 버튼이 눌렸을 때
+	@RequestMapping(value ="/addMenu", method = RequestMethod.GET  ,produces = "apllication/json;charset=utf-8")
 	public String doAddMenu(HttpServletRequest hsr) {
 		String strMenu_code=hsr.getParameter("menu_code");
 		int menu_type=Integer.parseInt(hsr.getParameter("menu_type"));
+		String img=hsr.getParameter("img");
 		String menu_name=hsr.getParameter("menu_name");
 		int menu_price=Integer.parseInt(hsr.getParameter("menu_price"));
+		String comment=hsr.getParameter("comment");
 		
 		iMenu menu=sqlSession.getMapper(iMenu.class);
 		if(strMenu_code.equals("")) { // insert
-			menu.insertMenu(menu_type,menu_name,menu_price);
+			menu.insertMenu(menu_type,img,menu_name,menu_price,comment);
 		} else { // update
 			int menu_code=Integer.parseInt(strMenu_code);
-			menu.updateMenu(menu_code,menu_type,menu_name,menu_price);
+			menu.updateMenu(menu_code,menu_type,img,menu_name,menu_price,comment);
 		}
 		return "redirect:/menuadd";
 	}
