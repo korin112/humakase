@@ -4,8 +4,11 @@
     
 <mapper namespace="com.human.outback.iBoard">
 	<select id="dateList" resultType="com.human.outback.Board">
-		select distinct vdate from booking where booker=#{param1}
-		order by vdate desc
+		<![CDATA[
+			select distinct vdate from booking 
+			where booker=#{param1} and vdate < curdate()
+			order by vdate desc
+		]]>
 	</select>
 	
 	<select id="spotList" resultType="com.human.outback.Board">
@@ -95,5 +98,16 @@
 	
 	<select id="getSession" resultType="com.human.outback.Member">
 		select userid,user_type from member where userid=#{param1}
+	</select>
+	
+	<!-- 검색 -->
+	<select id="findKeyword" resultType="com.human.outback.Board">
+		select a.board_id, a.title, b.spot_name, a.writer, date_format(a.created, '%Y.%m.%d') as c_date
+		from board a, spot b, member c
+		where a.spot_code=b.spot_code
+		and a.writer=c.userid
+		and (title like concat('%', #{param1}, '%')
+		or userid like concat('%', #{param1}, '%')
+		or spot_name like concat('%',#{param1}, '%'))
 	</select>
 </mapper>

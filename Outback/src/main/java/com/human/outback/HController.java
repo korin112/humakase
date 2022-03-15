@@ -159,9 +159,9 @@ public class HController {
 		String title = hsr.getParameter("title");
 		String content = hsr.getParameter("content");
 
-		System.out.println("[" + board_id + "]");
-		System.out.println("[" + title + "]");
-		System.out.println("[" + content + "]");
+		//System.out.println("[" + board_id + "]");
+		//System.out.println("[" + title + "]");
+		//System.out.println("[" + content + "]");
 
 		String str = "";
 		iBoard board = sqlSession.getMapper(iBoard.class);
@@ -199,11 +199,11 @@ public class HController {
 
 		int spot_code = Integer.parseInt(hsr.getParameter("spot"));
 
-		System.out.println("title : " + title);
+		/* System.out.println("title : " + title);
 		System.out.println("content : " + content);
 		System.out.println("writer : " + writer);
 		System.out.println("spot_code : " + spot_code);
-		System.out.println("vdate : " + vdate);
+		System.out.println("vdate : " + vdate); */
 
 		String str = "";
 		iBoard board = sqlSession.getMapper(iBoard.class);
@@ -211,7 +211,7 @@ public class HController {
 			board.insertBoard(title, content, writer, vdate, spot_code);
 			for (int i = 0; i < ar.length; i++) {
 				int menu_code = Integer.parseInt(ar[i]);
-				System.out.println("menu_code : " + menu_code);
+				//System.out.println("menu_code : " + menu_code);
 				board.insertBoardMenu(menu_code);
 			}
 			str = "ok";
@@ -257,6 +257,29 @@ public class HController {
 			jo.put("menu_name", m.get(i).getMenu_name());
 			ja.add(jo);
 		}
+		return ja.toString();
+	}
+	
+	// 검색
+	@ResponseBody
+	@RequestMapping(value = "/keyword", produces = "application/json;charset=utf-8")
+	public String findKeyword(HttpServletRequest hsr) {
+		String keyword=hsr.getParameter("keyword");
+		
+		iBoard board = sqlSession.getMapper(iBoard.class);
+		ArrayList<Board> k = board.findKeyword(keyword);
+
+		JSONArray ja = new JSONArray();
+		for (int i = 0; i < k.size(); i++) {
+			JSONObject jo = new JSONObject();
+			jo.put("board_id", k.get(i).getBoard_id());
+			jo.put("title", k.get(i).getTitle());
+			jo.put("spot_name", k.get(i).getSpot_name());
+			jo.put("writer", k.get(i).getWriter());
+			jo.put("created", k.get(i).getC_date());
+			ja.add(jo);
+		}
+		System.out.println(ja.toString());
 		return ja.toString();
 	}
 }

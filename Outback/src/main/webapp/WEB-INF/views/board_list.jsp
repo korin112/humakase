@@ -27,7 +27,7 @@
 <body>
 	<%@include file ="header.jsp" %>
 	<div class="container O_container">
-		<table>
+		<table id="getBoard">
 			<thead>
 				<tr>
 					<th>번호</th>
@@ -38,16 +38,18 @@
 				</tr>
 			</thead>
 			<c:forEach items="${b_list}" var="b">
-				<tr id="getBoard">
-					<td><c:out value="${b.board_id}"/></td>
-					<td><c:out value="${b.spot_name}"/></td>
+				<tr id="board_tr">
+					<td>${b.board_id}</td>
+					<td>${b.spot_name}</td>
 <%-- 		            <td><c:out value="${b.menu_name}"/></td> --%>
-		            <td><c:out value="${b.title}"/></td>
-		            <td><c:out value="${b.writer}"/></td>
-		            <td><fmt:formatDate pattern="yy/MM/dd" value="${b.created}"/></td>
+		            <td>${b.title}</td>
+		            <td>${b.writer}</td>
+		            <td><fmt:formatDate pattern="yy.MM.dd" value="${b.created}"/></td>
 		        </tr>
 			</c:forEach>
 		</table>
+		<input type="text" id="keyword" name="keyword">
+		<button id="keyBtn">검색</button>
 		<c:if test="${userid!=null}">
 			<button id="insert">글쓰기</button>
 		</c:if>	
@@ -84,7 +86,7 @@
 		.on('click','#insert',function() {
 			document.location="/outback/board_insert";
 		})
-		.on('click','#getBoard',function() {
+		.on('click','#board_tr',function() {
 			var tr=$(this);
 			var td=tr.children();
 			var board_id=td.eq(0).text();
@@ -100,6 +102,31 @@
 			$('#move').find("input[name='pageNum']").val($(this).attr("href"));
 			$('#move').attr("action", "/outback/board_list");
 			$('#move').submit();
+		})
+		
+		// 검색
+		.on('click','#keyBtn',function() {
+			console.log($('#keyword').val());
+			$('#getBoard').empty();
+			$.ajax({url:'/outback/keyword',
+				data:{keyword:$('#keyword').val()},
+				method:'GET',
+				datatype:'text',
+				success:function(txt) {
+					console.log(txt);
+					let thead="<thead><tr><th>번호</th><th>지점</th><th>제목</th><th>작성자</th><th>작성일</th></tr></thead>";
+					$("#getBoard").append(thead);
+					for(i=0;i<txt.length;i++) {
+						let id="<tr id='board_tr'><td>"+txt[i]['board_id']+"</td>"
+						let title="<td>"+txt[i]['title']+"</td>"
+						let spot="<td>"+txt[i]['spot_name']+"</td>"
+						let writer="<td>"+txt[i]['writer']+"</td>"
+						let created="<td>"+txt[i]['created']+"</td></tr>"
+						
+						$("#getBoard").append(id+spot+title+writer+created);
+					}
+				}
+			})
 		})
 	</script>
 </body>
