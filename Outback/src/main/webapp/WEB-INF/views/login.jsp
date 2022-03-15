@@ -83,7 +83,6 @@ input:focus, input:not(:placeholder-shown){
 	<input type=submit value=로그인>
 	<input type=button name=cancel id=cancel value=취소>
 	<input type=button name=signon id=signon value=회원가입>
-	
 	</div>
 </form>
 <c:if test="${fail_user=='fail'}">
