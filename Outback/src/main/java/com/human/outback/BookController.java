@@ -27,12 +27,6 @@ public class BookController {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	
-	
-	@RequestMapping("/admin")
-	public String admin() {
-		return "admin";
-	}
 	@RequestMapping("/submenu/{mtype_name}")
 	public String submenu(@PathVariable("mtype_name") String mtype_name, Model model) {
 		iBook ibook = sqlSession.getMapper(iBook.class);
