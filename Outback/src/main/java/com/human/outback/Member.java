@@ -6,14 +6,14 @@ public class Member {
 	private String name;
 	private String mobile;
 	private String gender;
-	private String user_type;
+	private int user_type;
 	private String login_time;
 	private String logout_time;
 	
 	public Member() {
 	}
 
-	public Member(String userid, String passcode, String name, String mobile, String gender, String user_type,
+	public Member(String userid, String passcode, String name, String mobile, String gender, int user_type,
 			String login_time, String logout_time) {
 		this.userid = userid;
 		this.passcode = passcode;
@@ -45,7 +45,7 @@ public class Member {
 		return gender;
 	}
 
-	public String getUser_type() {
+	public int getUser_type() {
 		return user_type;
 	}
 
@@ -77,7 +77,7 @@ public class Member {
 		this.gender = gender;
 	}
 
-	public void setUser_type(String user_type) {
+	public void setUser_type(int user_type) {
 		this.user_type = user_type;
 	}
 
@@ -89,6 +89,7 @@ public class Member {
 		this.logout_time = logout_time;
 	}
 
+	
 	
 	
 }

@@ -41,7 +41,7 @@
     </form>
     <c:if test="${fail_user=='fail'}">
 	<script type="text/javascript">
-		alert("로그인에 실패했습니다.");
+		alert("변경에 실패했습니다.");
 	</script>
 </c:if>
 <%@include file ="footer.jsp" %>
@@ -60,26 +60,21 @@ $(document)
 			return false;
 		}
 		
-		if ($("#passcode").val() != $("#passcode1").val()) {
-			alert("비밀번호가 일치하지 않습니다.");
-			return false;
-			}
-		$.ajax({
-			url : "/outback/pwCheck",
-			type : "POST",
-			dataType : "text",
-			data : {userid:$('#userid').val(),passcode:$('#passcode').val()},
-			success: function(data){
-				if(data == 0){
-					alert("test");
-					return false;
-				} else {
-					alert("그동안 이용해 주셔서 감사합니다.");
-					document.location='/outback/home';
-					
+		if($('#passcode').val() == $('#passcode1').val()){
+			$.ajax({
+				url : "/outback/pwCheck",
+				type : "POST",
+				dataType : "text",
+				data : {userid:$('#userid').val(),passcode:$('#passcode').val()},
+				success: function(){
+						alert("그동안 이용해 주셔서 감사합니다.");
+						document.location='/outback/home';
 				}
-			}
-		})
+			})			
+		} else {
+			alert("비밀번호가 다릅니다.");
+			return false;
+		}
 })
 .on('click','#btnCancel',function(){
 	document.location="/outback/home";
