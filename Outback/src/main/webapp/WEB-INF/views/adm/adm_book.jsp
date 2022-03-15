@@ -32,16 +32,15 @@
 				<table class="adm_book_table">
 					<thead>
 						<tr>
-							<th></th><th>예약번호</th><th>지점이름</th>
-							<th>예약ID</th><th>예약자</th><th>방문인원</th>
-							<th>주문수량</th><th>주문총액</th><th>방문일</th>
-							<th>방문시간</th><th>요청사항</th>
+							<th><input type="checkbox" name="checkAll"></th><th>예약번호</th><th>지점이름</th>
+							<th>예약ID</th><th>예약자</th><th>방문인원</th><th>주문수량</th>
+							<th>주문총액</th><th>방문일</th><th>방문시간</th><th>요청사항</th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach items="${admBook}" var="admBook">
-							<tr data-bs-toggle="modal" data-bs-target="#admBookModal">
-								<td onclick="event.cancelBubble=true"><input type="checkbox"></td><td class="adm_book_id">${admBook.book_id}</td><td>${admBook.spot_name}</td>
+							<tr>
+								<td><input type="checkbox" name="check"></td><td class="adm_book_id">${admBook.book_id}</td><td>${admBook.spot_name}</td>
 								<td>${admBook.booker}</td><td>${admBook.name}</td><td>${admBook.howmany}</td>
 								<td>${admBook.m_qty}</td><td><fmt:formatNumber value="${admBook.total}" type="number"/> 원</td><td>${admBook.vdate}</td>
 								<td>${admBook.time_name}</td><td><p>${admBook.msg}</p></td>
@@ -80,7 +79,7 @@
 		</div>
 		<!-- Modal -->
 		<div class="modal" tabindex="-1" id="admBookModal">
-			<div class="modal-dialog modal-xl">
+			<div class="modal-dialog modal-xl modal-dialog-centered">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title">Modal title</h5>
@@ -111,7 +110,6 @@
 	</main>
 
 	<script>
-	
 		// 공통
 		function all_paging(page, range, rangeSize){
 			var url = "${pageContext.request.contextPath}/adm/adm_book";
@@ -135,11 +133,7 @@
 			all_paging(page, range, rangeSize);
 		}
 		
-		$(document)
-		.on('click','.adm_book_table tr', function(){
-			let adm_book_id = $(this).children('.adm_book_id').text();
-			$('#admBookModal .modal-title').text(adm_book_id);
-		});
+
 	</script>
 </body>
 </html>

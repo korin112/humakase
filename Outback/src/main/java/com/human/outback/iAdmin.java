@@ -10,5 +10,5 @@ public interface iAdmin {
 	// adm book
 	ArrayList<Book> getAdminBook(Pagination pagination);
 	public int getCntBooking();
-	ArrayList<BookingDetail> getAdmBookingDetail();
+	ArrayList<BookingDetail> getAdmBookingDetail(int book_id);
 }

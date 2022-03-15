@@ -10,9 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.human.outback.DTO.BookingDetail;
 import com.human.outback.DTO.Pagination;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 //import com.human.outback.DTO.Book;
 
@@ -48,7 +54,26 @@ public class AdminController {
 
 //		model.addAttribute("admBook", iAdmin.getAdminBook(skip, page.getAmount()));
 		
-		
 		return "adm/adm_book";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/getbookingdetail", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+	public String getbookingdetail(HttpServletRequest hsr) {
+		int book_id = Integer.parseInt(hsr.getParameter("book_id"));
+		iAdmin iAdmin = sqlSession.getMapper(iAdmin.class);
+		ArrayList<BookingDetail> adm_bd = iAdmin.getAdmBookingDetail(book_id);
+		JSONArray ja = new JSONArray();
+		for(int i = 0; i < adm_bd.size(); i++) {
+			JSONObject jo = new JSONObject();
+			jo.put("menu_code", adm_bd.get(i).getMenu_code());
+			jo.put("menu_name", adm_bd.get(i).getMenu_name());
+			jo.put("m_qty", adm_bd.get(i).getM_qty());
+			jo.put("price", adm_bd.get(i).getPrice());
+			jo.put("total", adm_bd.get(i).getTotal());
+			ja.add(jo);
+		}
+		System.out.println(ja);
+		return ja.toString();
 	}
 }
