@@ -68,7 +68,8 @@ input:focus, input:not(:placeholder-shown){
 </style>
 <body align=center>
 <%@include file ="header.jsp" %>
-<h2 style='text-align:center;'>Login</h2>
+<h1 style="text-align: center; font-weight: bold; font-size: 40px; letter-spacing: 6px;">로그인</h1>
+			<h2 style="text-align: center; font-weight: bold; color: #ccc; margin-bottom: 30px; font-size: 22px; letter-spacing: 4px;">Login</h2>
 <form method="POST" action="/outback/login_check" id=frmLogin>
 	<div class="input-box">
 		<input type=text name=userid id=userid placeholder="아이디">
@@ -90,7 +91,7 @@ input:focus, input:not(:placeholder-shown){
 		alert("로그인에 실패했습니다.");
 	</script>
 </c:if>
-<%@include file ="footer.jsp" %>
+<%-- <%@include file ="footer.jsp" %> --%>
 </body>
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <script>

@@ -19,27 +19,27 @@
 	top:20px;
 }
 .input-box > input {
+	list-style:none;
 	background:transparent;
 	border:none;
 	border-bottom:solid 1px #ccc;
 	padding:20px 0px 5px 0px;
 	font-size:14pt;
- 	width:20%;
+	margin:10px;
+
+/*  	width:20%; */
 }
 input::placeholder{
  	color:transparent;
  }
-input:focus + label, label{
+input:focus + label,label{
  	color:#8aa1a1;
  	font-size:10pt;
  	pointer-events:none;
- 	position: absolute;
+  	position: static;
  	left:0px;
  	top:0px;
- 	transition:all 0.2s ease;
- 	-webkit-transition:all 0.2s ease;
- 	-moz-transition:all 0.2s ease;
- 	-o-transition:all 0.2s ease;
+ 	align:center;
 }
 input[type=submit],input[type=button],input[type=reset]{
     background-color: #8aa1a1;
@@ -51,12 +51,16 @@ input[type=submit],input[type=button],input[type=reset]{
     font-size: 14pt;
 /*     margin-top:140px; */
 }
-#forgot{
-    text-align: right;
-    font-size:12pt;
-    color:rgb(164, 164, 164);
-    margin:10px 0px;
+input[type=radio]{
+	text-align:center;
+	margin-left:80px;
 }
+/* #forgot{ */
+/*     text-align: right; */
+/*     font-size:12pt; */
+/*     color:rgb(164, 164, 164); */
+/*     margin:10px 0px; */
+/* } */
 input:focus, input:not(:placeholder-shown){
  	border-bottom:solid 1px #8aa1a1;
  	outline:none;
@@ -68,7 +72,9 @@ input:focus, input:not(:placeholder-shown){
 </style>
 <body>
 <%@include file ="header.jsp" %>
-<h3 align=center>회원정보를입력해주세요</h3>
+<h1 style="text-align: center; font-weight: bold; font-size: 40px; letter-spacing: 6px;">회원가입</h1>
+			<h2 style="text-align: center; font-weight: bold; color: #ccc; margin-bottom: 30px; font-size: 22px; letter-spacing: 4px;">Sign Up</h2>
+<div>
 	<div class="input-box">
 			<label for="userid">아이디</label>
 			<input type="text" id="userid">
@@ -88,30 +94,21 @@ input:focus, input:not(:placeholder-shown){
 	</div>
 	<div class="input-box">
 			<label for="mobile">전화번호</label>
-			<input type="number" id="mobile">
+			<input type="text" id="mobile">
 	</div>
 	<div class="input-box">
-		<ul>
-			<li>
 			<label for="gender">성별</label>
-			</li>
-		</ul>
-		<ul>
-			<li>
-				<input type="radio" id="gender" name="gender" value="남성">
-				<label for="gender">남성</label>
-			</li>
-			<li>
-				<input type="radio" id="gender" name="gender" value="여성">
-				<label for="gender">여성</label>
-			</li>
-		</ul>
+			<input type="radio" id="gender" name="gender" value="남성">
+			<label for="gender">남성</label>	
+			<input type="radio" id="gender" name="gender" value="여성">
+			<label for="gender">여성</label>
 	</div>
 	<div class="input-button">
 		<input type="submit" id=btnDone value="완료">
 		<input type="reset" id=btnReset value="비우기">
 		<input type="button" id=btnCancel value="취소">
 	</div>
+</div>
 <%@include file ="footer.jsp" %>
 </body>
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
