@@ -13,7 +13,7 @@
 </select>
 <insert id="addLogin">
 	insert into member(userid,passcode,name,mobile,gender,user_type,login_time,logout_time)
-	values(#{param1},#{param2},#{param3},#{param4},#{param5},0,'','')
+	values(#{param1},#{param2},#{param3},#{param4},#{param5},'','','')
 </insert>
 <update id="upLogin">
 	update member set login_time=(now()) where userid=#{param1}
