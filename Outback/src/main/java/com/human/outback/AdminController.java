@@ -58,7 +58,7 @@ public class AdminController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/getbookingdetail", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+	@RequestMapping(value="/adm/getbookingdetail", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
 	public String getbookingdetail(HttpServletRequest hsr) {
 		int book_id = Integer.parseInt(hsr.getParameter("book_id"));
 		iAdmin iAdmin = sqlSession.getMapper(iAdmin.class);
@@ -75,5 +75,29 @@ public class AdminController {
 		}
 		System.out.println(ja);
 		return ja.toString();
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/adm/deleteAdmBook", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+	public String deleteAdmBook(HttpServletRequest hsr) {
+		String check = hsr.getParameter("check");
+		System.out.println(check);
+		String[] book_id = check.split(",");
+		
+		String str="";
+		try {
+			iAdmin iAdmin = sqlSession.getMapper(iAdmin.class);
+			
+			for(int i = 0; i < book_id.length; i++) {
+				System.out.println("[" + book_id[i] + "]");
+				System.out.println(i);
+				iAdmin.deleteAdmBook(book_id[i]);
+			}
+			str="ok";
+		} catch(Exception e) {
+			str="fail";
+		}
+		System.out.println(str);
+		return str;
 	}
 }

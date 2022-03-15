@@ -17,4 +17,7 @@
 <select id="getAdmBookingDetail" resultType="com.human.outback.DTO.BookingDetail">
 	select * from booking_detail where book_id = #{param1}
 </select>
+<delete id="deleteAdmBook">
+	delete from a, b using booking a left join booking_detail b on a.book_id = b.book_id where b.book_id = #{param1}
+</delete>
 </mapper>
