@@ -96,7 +96,7 @@ public class CYWController {
          iMenu menu = sqlSession.getMapper(iMenu.class);
          int menu_code=Integer.parseInt(hsr.getParameter("img"));
          ArrayList<Menu> alMenu=menu.getImg(menu_code);
-//         System.out.println(alMenu.size());
+         System.out.println(alMenu.size());
          JSONArray ja=new JSONArray();
          for(int i=0; i < alMenu.size(); i++) {
             JSONObject jo=new JSONObject();
@@ -133,6 +133,9 @@ public class CYWController {
       String comment=hsr.getParameter("comment");
       
       iMenu menu=sqlSession.getMapper(iMenu.class);
+      ArrayList<Menu> alMenu=menu.getMenu();
+      System.out.println(alMenu);
+      System.out.println("comment "+hsr.getParameter("comment"));
       if(strMenu_code.equals("")) { // insert
          menu.insertMenu(menu_type,img,menu_name,menu_price,comment);
       } else { // update
