@@ -14,4 +14,7 @@
 <select id="getCntBooking" resultType="int">
 	select count(*) as listCnt from booking
 </select>
+<select id="getAdmBookingDetail" resultType="com.human.outback.DTO.BookingDetail">
+	select * from booking_detail where book_id = #{param1}
+</select>
 </mapper>

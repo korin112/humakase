@@ -59,6 +59,7 @@ footer .sitemap ul li:nth-child(4) a::after{content:''; width:0;}
 
 
 /* admin 공통 영역 */
+.adm_container_wrap{width:100%;overflow-y:auto;}
 .adm_main{height:100vh !important;}
 .adm_container{padding:72px 0;}
 
@@ -71,8 +72,8 @@ footer .sitemap ul li:nth-child(4) a::after{content:''; width:0;}
 
 
 /* adm_book.jsp admj_book 영역 */
-.adm_book_table{width:100%; text-align:center;}
-.adm_book_table thead tr{width:100%; border-top:2px solid #ccc; border-bottom:2px solid #ccc; background:#f9f9f9;}
+.adm_book_table, .adm_bd_table{width:100%; text-align:center;}
+.adm_book_table thead tr, .adm_bd_table thead tr{width:100%; border-top:2px solid #ccc; border-bottom:2px solid #ccc; background:#f9f9f9;}
 .adm_book_table thead th{padding:1.25rem 0;}
 .adm_book_table thead th:first-child{width:3%;}
 .adm_book_table thead th:nth-child(2){width:9%;}
@@ -98,3 +99,6 @@ footer .sitemap ul li:nth-child(4) a::after{content:''; width:0;}
 .adm_paging .page-link{color:inherit;}
 .adm_paging .page-item.active .page-link{background:#c93535; border-color:#c93535;}
 
+/* adm booking detail modal */
+.adm_bd_table thead th{padding:0.75rem 0;}
+.book_msg p{border:1px solid #ccc; border-radius:5px; padding:1.25rem;}

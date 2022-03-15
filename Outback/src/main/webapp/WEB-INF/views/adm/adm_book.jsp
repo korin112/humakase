@@ -12,10 +12,11 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="${path}/resources/css/sidebars.css">
+<link rel="stylesheet" href="${path}/resources/css/modals.css">
 <link rel="stylesheet" href="${path}/resources/css/style.css">
 <script src="${path}/resources/js/admin.js"></script>
 <style>
-.adm_container_wrap{width:100%;overflow-y:auto;}
+
 </style>
 <meta charset="UTF-8">
 <title>관리자 페이지 - 예약관리</title>	
@@ -39,8 +40,8 @@
 					</thead>
 					<tbody>
 						<c:forEach items="${admBook}" var="admBook">
-							<tr>
-								<td onclick="event.cancelBubble=true"><input type="checkbox"></td><td>${admBook.book_id}</td><td>${admBook.spot_name}</td>
+							<tr data-bs-toggle="modal" data-bs-target="#admBookModal">
+								<td onclick="event.cancelBubble=true"><input type="checkbox"></td><td class="adm_book_id">${admBook.book_id}</td><td>${admBook.spot_name}</td>
 								<td>${admBook.booker}</td><td>${admBook.name}</td><td>${admBook.howmany}</td>
 								<td>${admBook.m_qty}</td><td><fmt:formatNumber value="${admBook.total}" type="number"/> 원</td><td>${admBook.vdate}</td>
 								<td>${admBook.time_name}</td><td><p>${admBook.msg}</p></td>
@@ -77,13 +78,44 @@
 				</div>
 			</div>
 		</div>
+		<!-- Modal -->
+		<div class="modal" tabindex="-1" id="admBookModal">
+			<div class="modal-dialog modal-xl">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Modal title</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<div class="bd_info">
+							<div class="book_msg">
+								<h4>고객요청사항</h4>
+								<p></p>
+							</div>
+						</div>
+						<table class="adm_bd_table">
+							<thead>
+								<tr><th>메뉴이름</th><th>수량</th><th>가격</th><th>총액</th></tr>
+							</thead>
+							<tbody>
+								<!-- ajax 호출 -->
+							</tbody>
+						</table>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	</main>
+
 	<script>
+	
 		// 공통
 		function all_paging(page, range, rangeSize){
 			var url = "${pageContext.request.contextPath}/adm/adm_book";
 			url = url + "?range=" + range + "&page=" + page;
-// 			url = url + "&range=" + range;
 			location.href = url;
 		}
 		//이전 버튼 이벤트
@@ -102,6 +134,12 @@
 			var range = parseInt(range) + 1;
 			all_paging(page, range, rangeSize);
 		}
+		
+		$(document)
+		.on('click','.adm_book_table tr', function(){
+			let adm_book_id = $(this).children('.adm_book_id').text();
+			$('#admBookModal .modal-title').text(adm_book_id);
+		});
 	</script>
 </body>
 </html>

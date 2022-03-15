@@ -47,7 +47,8 @@ public class AdminController {
 		model.addAttribute("admBook", iAdmin.getAdminBook(pagination));
 
 //		model.addAttribute("admBook", iAdmin.getAdminBook(skip, page.getAmount()));
-
+		
+		
 		return "adm/adm_book";
 	}
 }
