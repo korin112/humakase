@@ -12,6 +12,10 @@
 </head>
 <link rel="stylesheet" href="${path}/resources/css/style.css">
 <style>
+div {
+	margin:0 auto;
+	align:center;
+}
 #btnDel.btn,#btnCancel.btn {
     background-color: #8aa1a1;
     border:none;
@@ -26,7 +30,8 @@
     <div class="col-sm-8 col-sm-offset-2">
         <div class="panel panel-default panel-margin-10">
             <div class="panel-body panel-body-content text-center">
-                <p class="lead">회원탈퇴를 하려면 비밀번호를 입력해주세요.</p>
+                <h1 style="text-align: center; font-weight: bold; font-size: 40px; letter-spacing: 6px;">회원 탈퇴</h1>
+					<h2 style="text-align: center; font-weight: bold; color: #ccc; margin-bottom: 30px; font-size: 22px; letter-spacing: 4px;">Member Withdrawal</h2>
                 <div class="form-group">
                     <input type="password" id = "passcode" name="passcode" class="form-control form-control-inline text-center" placeholder="비밀번호" />
                 </div>
@@ -39,7 +44,7 @@
         </div>
     </div>
     </form>
-    <c:if test="${fail_user=='fail'}">
+<c:if test="${fail_user=='fail'}">
 	<script type="text/javascript">
 		alert("변경에 실패했습니다.");
 	</script>
