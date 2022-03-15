@@ -45,6 +45,8 @@ table {
 </style>
 <body>
 <%@include file ="header.jsp" %>
+<h1 style="text-align: center; font-weight: bold; font-size: 40px; letter-spacing: 6px;">멤버관리</h1>
+			<h2 style="text-align: center; font-weight: bold; color: #ccc; margin-bottom: 30px; font-size: 22px; letter-spacing: 4px;">Member Management</h2>
 <div class="container O_container">
 <table id=tblMember>
 </table>
