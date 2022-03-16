@@ -1,20 +1,3 @@
-$(function() {
-	let url = window.location.pathname;
-//	let str_idAttr = url.split('/');
-//	let idAttr = '';
-//	for(i = 0; i < str_idAttr.length; i++){
-//		console.log(str_idAttr[str_idAttr.length - 1]);
-//	}
-//	console.log(idAttr);
-	$('.adm_header .nav li').each(function() {
-		if($(this).children('a').attr('href') == url) {
-			$('.adm_header .nav li a').removeClass('active');
-			$('.adm_header .nav li a').attr('aria-current','');
-			$(this).children('a').addClass('active');
-			$(this).children('a').attr('aria-current','page');
-		}
-	})
-})
 // adm_book
 $(document)
 .ready(function() {
@@ -28,9 +11,7 @@ $(document)
 .on('click','.adm_book_table tbody tr', function(){
 	let adm_book_id = $(this).children('.adm_book_id').text();
 	let adm_book_msg = $(this).find('td:last-child p').text();
-	let adm_book_userid = $(this).children('td:nth-child(4)').attr('data-userid');
 	$('#admBookModal .modal-title').text("예약번호 " + adm_book_id);
-	$('#admBookModal .book_msg h4').text(adm_book_userid +"님의 요청사항");
 	$('#admBookModal .book_msg p').text(adm_book_msg);
 	if($('#admBookModal .book_msg p').text() == ''){
 		$('#admBookModal .book_msg p').text('요청사항이 없습니다.');

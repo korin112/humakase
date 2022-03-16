@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.human.outback.iMypage">
+
+<select id="getMybook" resultType="com.human.outback.DTO.Book">
+	<![CDATA[
+	select a.book_id, b.spot_name, a.howmany, a.m_qty, a.total, a.vdate, d.time_name, a.msg
+	from booking a, spot b, member c, vtime d
+	where a.spot_code = b.spot_code and a.booker = c.userid and a.vtime = d.time_code and a.booker = #{param1} and a.vdate >= now()
+	order by a.vdate desc, d.time_name desc, a.spot_code
+	limit #{pagination.startList},#{pagination.listSize}
+	]]>
+</select>
+<select id="getCntMyBooking" resultType="int">
+	<![CDATA[
+	select count(*) as listCnt from booking where booker = #{param1} and vdate >= now()
+	]]>
+</select>
+</mapper>

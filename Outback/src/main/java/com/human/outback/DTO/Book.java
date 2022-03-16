@@ -4,6 +4,7 @@ public class Book {
 	
 	private int book_id;
 	private String spot_name;
+	private String mobile;
 	private String booker;
 	private String name;
 	private int howmany;
@@ -14,10 +15,11 @@ public class Book {
 	private String msg;
 	public Book() {
 	}
-	public Book(int book_id, String spot_name, String booker, String name, int howmany, int m_qty, int total,
-			String vdate, String time_name, String msg) {
+	public Book(int book_id, String spot_name, String mobile, String booker, String name, int howmany, int m_qty,
+			int total, String vdate, String time_name, String msg) {
 		this.book_id = book_id;
 		this.spot_name = spot_name;
+		this.mobile = mobile;
 		this.booker = booker;
 		this.name = name;
 		this.howmany = howmany;
@@ -38,6 +40,12 @@ public class Book {
 	}
 	public void setSpot_name(String spot_name) {
 		this.spot_name = spot_name;
+	}
+	public String getMobile() {
+		return mobile;
+	}
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 	public String getBooker() {
 		return booker;
@@ -87,6 +95,7 @@ public class Book {
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
+
 	
 	
 }
