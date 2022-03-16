@@ -56,21 +56,14 @@ public class MController {
 	@RequestMapping(value="/confirm_check",method=RequestMethod.POST,
 			produces="application/json;charset=utf-8")
 	public String confirm_check(HttpServletRequest hsr) {
-		String retval="";
-		String userid=hsr.getParameter("userid");
 		iLogin login=sqlSession.getMapper(iLogin.class);
-		ArrayList<Member2> user = login.confirm_check();
+		Member user = login.confirm_check(hsr.getParameter("userid"));
 		
-		for(int i=0; i < user.size(); i++) {
-			if(user.get(i).userid.equals(userid)) {
-				System.out.println(user.get(i).userid);
-				retval="fail";
-				break;
-			} else {
-				retval="ok";
-			}
+		if (user != null) {
+			return "fail";
+		} else {
+			return "ok";
 		}
-		return retval;
 	}
 	//회원가입 체크
 	@ResponseBody
@@ -252,6 +245,7 @@ public class MController {
 		}
 		return ja.toString();
 	}
+	@ResponseBody
 	@RequestMapping(value="/pwCheck",method = RequestMethod.POST)
 	public String pwCheck(HttpServletRequest hsr,Model model) {
 		HttpSession session = hsr.getSession();
@@ -278,10 +272,10 @@ public class MController {
 			session.setAttribute("passcode",passcode);
 			pw.pwCheck(userid,passcode);
 			session.invalidate();
-			return "home";
+			return "ok";
 		} else {
-			model.addAttribute("fail_user",retval);
-			return "redirect:/mypage";
+//			model.addAttribute("fail_user",retval);
+			return "fail";
 		}
 	}
 	@RequestMapping(value = "/passEdit")
