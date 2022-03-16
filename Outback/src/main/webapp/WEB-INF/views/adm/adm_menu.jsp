@@ -20,7 +20,9 @@
 <body>
 	<main class="adm_main">
 		<%@include file ="admin_header.jsp" %>
-		<div class="container">
+		<div class="adm_container_wrap">
+			<div class="container adm_container">
+		
 			<form id=frmAdmMenu action="/outback/adm/adm_menu">
 		<div
 			style="width: 470px; position: relative; margin: auto; margin-top: 40px; margin-bottom: 100px;">
@@ -83,7 +85,9 @@
 				</select>
 			</div>
 		</div>
+		
 	</form>
+		</div>
 		</div>
 	</main>
 </body>
