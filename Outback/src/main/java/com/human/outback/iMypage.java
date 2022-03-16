@@ -9,7 +9,9 @@ import com.human.outback.DTO.Pagination;
 
 public interface iMypage {
 	//my reservation
-	ArrayList<Book> getMybook(@Param("param1")String booker, @Param("pagination")Pagination pagination);
-	public int getCntMyBooking(String booker);
+	public int getCntLaterMyBook(String userid);
+	public int getCntPrevMyBook(String userid);
+	ArrayList<Book> getMylaterbook(@Param("param1")String booker, @Param("pagination")Pagination laterPagination);
+	ArrayList<Book> getMyPrevbook(@Param("param1")String booker, @Param("pagination")Pagination prevPagination);
 	void deleteAdmBook(String book_id);
 }

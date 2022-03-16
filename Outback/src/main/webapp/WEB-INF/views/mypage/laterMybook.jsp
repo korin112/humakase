@@ -16,12 +16,12 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${mybook}" var="mybook">
+					<c:forEach items="${mylaterbook}" var="mylaterbook">
 						<tr>
-							<td><input type="checkbox" name="check"></td><td class="adm_book_id">${mybook.book_id}</td>
-							<td>${mybook.spot_name}</td><td>${mybook.howmany}</td><td>${mybook.m_qty}</td>
-							<td><fmt:formatNumber value="${mybook.total}" type="number"/> 원</td><td>${mybook.vdate}</td>
-							<td>${mybook.time_name}</td><td><p>${mybook.msg}</p></td>
+							<td><input type="checkbox" name="check"></td><td class="adm_book_id">${mylaterbook.book_id}</td>
+							<td>${mylaterbook.spot_name}</td><td>${mylaterbook.howmany}</td><td>${mylaterbook.m_qty}</td>
+							<td><fmt:formatNumber value="${mylaterbook.total}" type="number"/> 원</td><td>${mylaterbook.vdate}</td>
+							<td>${mylaterbook.time_name}</td><td><p>${mylaterbook.msg}</p></td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -42,23 +42,23 @@
 			<div class="adm_paging">
 				<nav aria-label="Page navigation">
 					<ul class="pagination">
-						<c:if test="${pagination.prev}">
+						<c:if test="${laterPagination.prev}">
 							<li class="page-item">
-								<a class="page-link" href="#" aria-label="Previous" onClick="fn_prev('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}')">
+								<a class="page-link" href="#" aria-label="Previous" onClick="fn_prev('${laterPagination.page}', '${laterPagination.range}', '${laterPagination.rangeSize}')">
 									<span aria-hidden="true">&laquo;</span>
 								</a>
 							</li>
 						</c:if>
-						<c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" var="idx">
-							<li class="page-item <c:out value="${pagination.page == idx ? 'active' : ''}"/> ">
-								<a class="page-link" href="#" onClick="fn_pagination('${idx}', '${pagination.range}', '${pagination.rangeSize}')">
+						<c:forEach begin="${laterPagination.startPage}" end="${laterPagination.endPage}" var="idx">
+							<li class="page-item <c:out value="${laterPagination.page == idx ? 'active' : ''}"/> ">
+								<a class="page-link" href="#" onClick="fn_pagination('${idx}', '${laterPagination.range}', '${laterPagination.rangeSize}')">
 									${idx}
 								</a>
 							</li>
 						</c:forEach>
-						<c:if test="${pagination.next}">
+						<c:if test="${laterPagination.next}">
 							<li class="page-item next">
-								<a class="page-link" href="#"  aria-label="Next" onClick="fn_next('${pagination.range}', '${pagination.range}', '${pagination.rangeSize}')">
+								<a class="page-link" href="#"  aria-label="Next" onClick="fn_next('${laterPagination.range}', '${laterPagination.range}', '${laterPagination.rangeSize}')">
 									<span aria-hidden="true">&raquo;</span>
 								</a>
 							</li>

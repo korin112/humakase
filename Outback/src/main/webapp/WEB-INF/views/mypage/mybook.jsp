@@ -44,7 +44,7 @@
 					<%@include file ="laterMybook.jsp" %>
 				</li>
 				<li id="prevMybook">
-<%-- 					<%@include file ="prevMybook.jsp" %> --%>
+					<%@include file ="prevMybook.jsp" %>
 				</li>
 			</ul>
 		</div>
@@ -53,7 +53,12 @@
 		<script>
 		// 공통
 		function all_paging(page, range, rangeSize){
-			var url = "${pageContext.request.contextPath}/mypage/mybook";
+			console.log();
+			if($('#laterMybook').show()==true){
+				var url = "${pageContext.request.contextPath}/mypage/mybook?where=later";
+			} else {
+				var url = "${pageContext.request.contextPath}/mypage/mybook?where=prev";
+			}
 			url = url + "?range=" + range + "&page=" + page;
 			location.href = url;
 		}
