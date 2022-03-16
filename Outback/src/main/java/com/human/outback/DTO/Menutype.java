@@ -1,4 +1,4 @@
-package com.human.outback;
+package com.human.outback.DTO;
 
 public class Menutype {
 	private int mtype_code;

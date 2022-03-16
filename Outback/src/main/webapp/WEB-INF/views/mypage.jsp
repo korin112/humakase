@@ -12,10 +12,6 @@
 </head>
 <link rel="stylesheet" href="${path}/resources/css/style.css">
 <style>
-div {
-	margin:0 auto;
-	align:center;
-}
 #btnDel.btn,#btnCancel.btn {
     background-color: #8aa1a1;
     border:none;
@@ -26,12 +22,14 @@ div {
 <body>
 <%@include file ="header.jsp" %>
 <form action="/outback/pwCheck" method="POST" id="deleteForm" name="deleteForm">
-                       <input type="hidden" id="userid" name="userid" value="${userid}" readonly>
-    <div class="col-sm-8 col-sm-offset-2">
+    <div class="container O_container">
         <div class="panel panel-default panel-margin-10">
             <div class="panel-body panel-body-content text-center">
                 <h1 style="text-align: center; font-weight: bold; font-size: 40px; letter-spacing: 6px;">회원 탈퇴</h1>
 					<h2 style="text-align: center; font-weight: bold; color: #ccc; margin-bottom: 30px; font-size: 22px; letter-spacing: 4px;">Member Withdrawal</h2>
+                <div class="form-group">
+                    <input type="text" id="userid" name="userid" value="${userid}"  class="form-control form-control-inline text-center" readonly/>
+				</div>
                 <div class="form-group">
                     <input type="password" id = "passcode" name="passcode" class="form-control form-control-inline text-center" placeholder="비밀번호" />
                 </div>
@@ -53,6 +51,7 @@ div {
 </body>
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <script type="text/javascript">
+let flag="";
 $(document)
 .on('click','#btnDel',function(){
 		if($("#passcode").val()==""){
@@ -71,14 +70,18 @@ $(document)
 				type : "POST",
 				dataType : "text",
 				data : {userid:$('#userid').val(),passcode:$('#passcode').val()},
-				success: function(){
+				success: function(txt){
+					if(txt == "fail"){
+						alert("비밀번호가 다릅니다.");
+						return false;
+					} else {
 						alert("그동안 이용해 주셔서 감사합니다.");
 						document.location='/outback/home';
+						flag="true";
+					}
+					return true;
 				}
 			})			
-		} else {
-			alert("비밀번호가 다릅니다.");
-			return false;
 		}
 })
 .on('click','#btnCancel',function(){
@@ -86,6 +89,5 @@ $(document)
 	return false;
 })
 ;
-
 </script>
 </html>

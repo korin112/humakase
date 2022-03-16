@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.human.outback.iMenu">
-<select id="getMenu" resultType="com.human.outback.Menu">
+<mapper namespace="com.human.outback.iAdmin">
+<select id="getMenu" resultType="com.human.outback.DTO.Menu">
 	select a.menu_code, a.menu_type, a.img, a.menu_name, a.menu_price, a.comment, b.mtype_name
 		from menu a, menutype b
 		where a.menu_type=b.mtype_code
@@ -15,13 +15,13 @@
 <delete id="deleteMenu">
 	delete from menu where menu_code=#{param1}
 </delete>
-<select id="getMenutype" resultType="com.human.outback.Menutype">
+<select id="getMenutype" resultType="com.human.outback.DTO.Menutype">
 	select mtype_code,mtype_name from menutype order by mtype_code
 </select>
 <update id="updateMenu">
 	update menu set menu_type=#{param2}, img=#{param3}, menu_name=#{param4}, menu_price=#{param5}, comment=#{param6} where menu_code=#{param1}
 </update>
-<select id="getImg" resultType="com.human.outback.Menu">
+<select id="getImg" resultType="com.human.outback.DTO.Menu">
 select img,comment from menu where menu_code=#{param1} 
 </select>
 </mapper>
