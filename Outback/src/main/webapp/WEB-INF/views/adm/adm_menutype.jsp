@@ -86,7 +86,7 @@
 						document.location = url;
 						return false;
 					})
-
+					
 			.on('submit', '#frmType', function() {
 				if ($('input[name=mtype_name]').val() == '') {
 					alert('모든 값이 입력 되어야 합니다.');
