@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.human.outback.iType">
+<mapper namespace="com.human.outback.iAdmin">
 
 <insert id="insertType">
 	insert into menutype(mtype_name) values(#{param1})
 </insert>
-<select id="getMenutype" resultType="com.human.outback.Menutype">
+<select id="getMenutype1" resultType="com.human.outback.DTO.Menutype">
    select mtype_code,mtype_name from menutype order by mtype_code
 </select>
 <delete id="deleteType">
