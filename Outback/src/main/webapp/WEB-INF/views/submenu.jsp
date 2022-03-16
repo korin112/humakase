@@ -102,11 +102,16 @@
 			}
 		})
 		.on('click', '.goBook', function(){
-			let menu_code = $(this).closest('.menu_box').attr('data-value');
-			let input_menu_code = '<input name="menu_code" type="hidden" value="' + menu_code + '">';
-			let bookForm = '<form action="/outback/book" method="POST" class="bookForm">' + input_menu_code + '</form>';
-			$(".displaynone").append(bookForm);
-			$('.bookForm').submit();
+			let userid = "${userid}";
+			if(userid == ""){
+				alert("로그인 후 이용 가능합니다.");
+			} else{
+				let menu_code = $(this).closest('.menu_box').attr('data-value');
+				let input_menu_code = '<input name="menu_code" type="hidden" value="' + menu_code + '">';
+				let bookForm = '<form action="/outback/book" method="POST" class="bookForm">' + input_menu_code + '</form>';
+				$(".displaynone").append(bookForm);
+				$('.bookForm').submit();
+			}
 		})
 		;
 	</script>
