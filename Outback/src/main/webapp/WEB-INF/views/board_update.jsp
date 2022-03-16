@@ -36,7 +36,7 @@
 		<input type="hidden" id="board_id" name="board_id" value="${b.board_id}">
 		<ul class="fixed">
 				<li>제목</li>
-				<li><input type="text" id="title" name="title" value="${b.title}" maxlength="30" placeholder="최대 30자까지 가능합니다."></li>
+				<li><input type="text" id="title" name="title" value="${b.title}" maxlength="30" placeholder="최대 30자까지 가능합니다." spellcheck=false></li>
 			</ul>
 			<ul class="fixed">
 				<li>방문일</li>
@@ -48,15 +48,13 @@
 			</ul>
 			<ul class="fixed">
 				<li>메뉴</li>
-				<li>
-					<c:forEach items="${menu_name}" var="m">
-						<ul><li class='dropdown-item' data-value="${m.menu_name}">${m.menu_name}</li></ul>
-					</c:forEach>
-				</li>
+				<c:forEach items="${menu_name}" var="m">
+					<ul><li data-value="${m.menu_name}">${m.menu_name}</li></ul>
+				</c:forEach>
 			</ul>
 			<ul class="fixed">
 				<li>내용</li>
-				<li><textarea id="content" name="content" maxlength="500" placeholder="최대 500자까지 가능합니다.">${b.content}</textarea></li>
+				<li><textarea id="content" name="content" maxlength="500" placeholder="최대 500자까지 가능합니다." spellcheck=false>${b.content}</textarea></li>
 			</ul>
 			<ul class="fixed">
 				<li>작성자</li>
