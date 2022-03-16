@@ -32,13 +32,13 @@
 	<hr>
 	<ul class="nav nav-pills flex-column mb-auto">
 		<li>
-			<a href="#" class="nav-link text-white">
+			<a href="/outback/adm/menuadd" class="nav-link text-white">
 				<svg class="bi me-2" width="24" height="24"><use xlink:href="#grid"></use></svg>
 				<span class="adm_nav_tt">메뉴관리</span>
 			</a>
 		</li>
 		<li>
-			<a href="#" class="nav-link text-white">
+			<a href="/outback/adm/typeadd" class="nav-link text-white">
 				<svg class="bi me-2" width="24" height="24"><use xlink:href="#bi-card-list"></use></svg>
 				<span class="adm_nav_tt">메뉴타입관리</span>
 			</a>
