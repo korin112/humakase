@@ -11,17 +11,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <link rel="stylesheet" href="${path}/resources/css/style.css">
 <style>
-	.pageInfo{
-		list-style : none;
-	    display: inline-block;
-	    margin: 50px 0 0 0;      
-	}
-	.pageInfo li{
-		float: left;
-	    margin-left: 18px;
-	    padding: 7px;
- 	    font-weight: 300; 
-  	}
+.adm_paging .page-link:hover{color:inherit;}
 </style>
 </head>
 <body>
@@ -48,30 +38,41 @@
 		        </tr>
 			</c:forEach>
 		</table>
-		<input type="text" id="keyword" name="keyword">
+		
+		<input type="text" id="keyword" name="keyword" value="${p.page.keyword}">
 		<button id="keyBtn">검색</button>
 		<c:if test="${userid!=null}">
 			<button id="insert">글쓰기</button>
 		</c:if>	
-		<div>
-			<ul id="pageInfo" class="pageInfo">
-				<c:if test="${p.prev}">
-					<li class="previous"><a href="${p.startPage-1}">◀</a></li>
-			    </c:if>
-			            
-			    <c:forEach var="num" begin="${p.startPage}" end="${p.endPage}">
-					<li class="pageInfo_btn ${p.page.pageNum==num}"><a href="${num}">${num}</a></li>
-				</c:forEach>
-			        	
-				<c:if test="${p.next}">
-			        <li class="next"><a href="${p.endPage+1}">▶</a></li>
-			    </c:if>  
-			</ul>
+		
+		<div class="adm_paging">
+			<nav>
+				<ul class="pagination" id="pageInfo">
+					<c:if test="${p.prev}">
+						<li class="page-item">
+							<a class="page-link" href="${p.startPage-1}">&laquo;</a>
+						</li>
+				    </c:if>
+				            
+				    <c:forEach var="num" begin="${p.startPage}" end="${p.endPage}">
+						<li class="page-item <c:out value="${p.page.pageNum==num ? 'active':''}"/>">
+							<a class="page-link" href="${num}">${num}</a>
+						</li>
+					</c:forEach>
+				        	
+					<c:if test="${p.next}">
+				        <li class="page-item">
+				        	<a class="page-link" id="page" href="${p.endPage+1}">&raquo;</a>
+				        </li>
+				    </c:if>  
+				</ul>
+			</nav>
 		</div>	
 		
 		<form id="move" method="get">
 			<input type="hidden" name="pageNum" value="${p.page.pageNum}">
 	        <input type="hidden" name="amount" value="${p.page.amount}">    
+	        <input type="hidden" name="keyword" value="${p.page.keyword}">    
 	    </form>    
 	</div>
 	<%@include file ="footer.jsp" %>
@@ -105,28 +106,12 @@
 		})
 		
 		// 검색
-		.on('click','#keyBtn',function() {
-			console.log($('#keyword').val());
-			$('#getBoard').empty();
-			$.ajax({url:'/outback/keyword',
-				data:{keyword:$('#keyword').val()},
-				method:'GET',
-				datatype:'text',
-				success:function(txt) {
-					console.log(txt);
-					let thead="<thead><tr><th>번호</th><th>지점</th><th>제목</th><th>작성자</th><th>작성일</th></tr></thead>";
-					$("#getBoard").append(thead);
-					for(i=0;i<txt.length;i++) {
-						let id="<tr id='board_tr'><td>"+txt[i]['board_id']+"</td>"
-						let title="<td>"+txt[i]['title']+"</td>"
-						let spot="<td>"+txt[i]['spot_name']+"</td>"
-						let writer="<td>"+txt[i]['writer']+"</td>"
-						let created="<td>"+txt[i]['created']+"</td></tr>"
-						
-						$("#getBoard").append(id+spot+title+writer+created);
-					}
-				}
-			})
+		.on('click','#keyBtn',function(e) {
+			 e.preventDefault();
+		     let val = $("input[name='keyword']").val();
+		     $('#move').find("input[name='keyword']").val(val);
+		     $('#move').find("input[name='pageNum']").val(1);
+		     $('#move').submit();
 		})
 	</script>
 </body>

@@ -4,6 +4,8 @@ public class Page {
 	private int pageNum;
 	private int amount;
 	
+	private String keyword;
+	
 	public Page() {
 		this(1,5);
 	}
@@ -23,4 +25,11 @@ public class Page {
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
+	public String getKeyword() {
+		return keyword;
+	}
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+	
 }

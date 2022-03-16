@@ -40,7 +40,7 @@
     	select a.board_id,a.title,b.spot_name,a.content,a.writer,a.created
 		from board a, spot b
 		where a.spot_code=b.spot_code
-		order by a.created desc
+		order by created desc, board_id desc
 		limit #{param1},#{param2}
 	</select>
 	
@@ -102,8 +102,19 @@
 	
 	<!-- 검색 -->
 	<select id="findKeyword" resultType="com.human.outback.Board">
-		select a.board_id, a.title, b.spot_name, a.writer, date_format(a.created, '%Y.%m.%d') as c_date
+		select a.board_id, a.title, b.spot_name, a.writer, a.created
 		from board a, spot b, member c
+		where a.spot_code=b.spot_code
+		and a.writer=c.userid
+		and (title like concat('%', #{param1}, '%')
+		or userid like concat('%', #{param1}, '%')
+		or spot_name like concat('%',#{param1}, '%'))
+		order by created desc, board_id desc
+		limit #{param2},#{param3}
+	</select>
+	
+	<select id="getKeyTotal" resultType="int">
+		select count(*) from board a, spot b, member c
 		where a.spot_code=b.spot_code
 		and a.writer=c.userid
 		and (title like concat('%', #{param1}, '%')

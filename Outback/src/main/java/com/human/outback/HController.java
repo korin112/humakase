@@ -24,21 +24,31 @@ public class HController {
 
 	// 게시판 목록
 	@RequestMapping(value = "/board_list")
-	public String BoardList(Model m, Page page, HttpSession session) {
+	public String BoardList(Model m, Page page, HttpSession session, HttpServletRequest hsr) {
 		iBoard board = sqlSession.getMapper(iBoard.class);
 		int skip = (page.getPageNum() - 1) * page.getAmount();
-		m.addAttribute("b_list", board.boardList(skip, page.getAmount()));
-
-		int total = board.getTotal();
-		PageMaker p = new PageMaker(page, total);
-		m.addAttribute("p", p);
-
+		
 		String userid = (String) session.getAttribute("userid");
 		m.addAttribute("m", board.getSession(userid));
+		
+		String keyword=hsr.getParameter("keyword");
+		if(keyword==null) {
+			m.addAttribute("b_list", board.boardList(skip, page.getAmount()));
 
+			int total = board.getTotal();
+			PageMaker p = new PageMaker(page, total);
+			m.addAttribute("p", p);
+		} else {
+			m.addAttribute("b_list", board.findKeyword(keyword, skip, page.getAmount()));
+
+			int total = board.getKeyTotal(keyword);
+			PageMaker p = new PageMaker(page,total);
+			m.addAttribute("p",p);
+		}
+		
 		return "board_list";
 	}
-
+	
 	// 게시판 조회
 	@RequestMapping("/getBoard")
 	public String Board(HttpSession session, Model m, int board_id) {
@@ -257,29 +267,6 @@ public class HController {
 			jo.put("menu_name", m.get(i).getMenu_name());
 			ja.add(jo);
 		}
-		return ja.toString();
-	}
-	
-	// 검색
-	@ResponseBody
-	@RequestMapping(value = "/keyword", produces = "application/json;charset=utf-8")
-	public String findKeyword(HttpServletRequest hsr) {
-		String keyword=hsr.getParameter("keyword");
-		
-		iBoard board = sqlSession.getMapper(iBoard.class);
-		ArrayList<Board> k = board.findKeyword(keyword);
-
-		JSONArray ja = new JSONArray();
-		for (int i = 0; i < k.size(); i++) {
-			JSONObject jo = new JSONObject();
-			jo.put("board_id", k.get(i).getBoard_id());
-			jo.put("title", k.get(i).getTitle());
-			jo.put("spot_name", k.get(i).getSpot_name());
-			jo.put("writer", k.get(i).getWriter());
-			jo.put("created", k.get(i).getC_date());
-			ja.add(jo);
-		}
-		System.out.println(ja.toString());
 		return ja.toString();
 	}
 }
