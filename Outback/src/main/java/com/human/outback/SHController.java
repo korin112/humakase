@@ -27,10 +27,6 @@ public class SHController {
 		return "covid_check";
 	}
 	
-	@RequestMapping("/sales")
-	public String sales() {
-		return "sales";
-	}
 	
 	@ResponseBody			
 	@RequestMapping(value="/covidcheck",produces="application/json;charset=utf-8",method=RequestMethod.GET)
