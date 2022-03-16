@@ -9,6 +9,9 @@ public interface iMenu {
 	void deleteMenu(int menu_code);
 	ArrayList<Menutype> getMenutype();
 	void updateMenu(int menu_code, int menu_type, String img,String menu_name, int menu_price,String comment);
+<<<<<<< HEAD
 
+=======
+>>>>>>> branch 'main' of https://github.com/korin112/humakase.git
 	ArrayList<Menu> getImg(int menu_code);
 }

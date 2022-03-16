@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" session="true" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
@@ -46,7 +46,7 @@
 			        </li>
 		        </c:if>
 	       		<c:if test="${userid!=null}">
-					<c:if test="${userid =='admin'}">
+					<c:if test="${user_type != 0}">
 						<li class="nav-item">
 							<a class="nav-link" href="/outback/menuadd">메뉴관리</a>
 						</li>
@@ -61,7 +61,7 @@
 						</li>
 						<li class="nav-link" style="color:#ccc;">${userid}</li>	
 					</c:if>
-					<c:if test="${userid !='admin'}">
+					<c:if test="${user_type == 0}">
 						<li class="nav-item">
 							<a class="nav-link" href="/outback/mypage">[마이페이지]</a>
 						</li>

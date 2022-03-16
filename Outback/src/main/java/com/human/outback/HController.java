@@ -24,21 +24,31 @@ public class HController {
 
 	// 게시판 목록
 	@RequestMapping(value = "/board_list")
-	public String BoardList(Model m, Page page, HttpSession session) {
+	public String BoardList(Model m, Page page, HttpSession session, HttpServletRequest hsr) {
 		iBoard board = sqlSession.getMapper(iBoard.class);
 		int skip = (page.getPageNum() - 1) * page.getAmount();
-		m.addAttribute("b_list", board.boardList(skip, page.getAmount()));
-
-		int total = board.getTotal();
-		PageMaker p = new PageMaker(page, total);
-		m.addAttribute("p", p);
-
+		
 		String userid = (String) session.getAttribute("userid");
 		m.addAttribute("m", board.getSession(userid));
+		
+		String keyword=hsr.getParameter("keyword");
+		if(keyword==null) {
+			m.addAttribute("b_list", board.boardList(skip, page.getAmount()));
 
+			int total = board.getTotal();
+			PageMaker p = new PageMaker(page, total);
+			m.addAttribute("p", p);
+		} else {
+			m.addAttribute("b_list", board.findKeyword(keyword, skip, page.getAmount()));
+
+			int total = board.getKeyTotal(keyword);
+			PageMaker p = new PageMaker(page,total);
+			m.addAttribute("p",p);
+		}
+		
 		return "board_list";
 	}
-
+	
 	// 게시판 조회
 	@RequestMapping("/getBoard")
 	public String Board(HttpSession session, Model m, int board_id) {
@@ -159,9 +169,9 @@ public class HController {
 		String title = hsr.getParameter("title");
 		String content = hsr.getParameter("content");
 
-		System.out.println("[" + board_id + "]");
-		System.out.println("[" + title + "]");
-		System.out.println("[" + content + "]");
+		//System.out.println("[" + board_id + "]");
+		//System.out.println("[" + title + "]");
+		//System.out.println("[" + content + "]");
 
 		String str = "";
 		iBoard board = sqlSession.getMapper(iBoard.class);
@@ -199,11 +209,11 @@ public class HController {
 
 		int spot_code = Integer.parseInt(hsr.getParameter("spot"));
 
-		System.out.println("title : " + title);
+		/* System.out.println("title : " + title);
 		System.out.println("content : " + content);
 		System.out.println("writer : " + writer);
 		System.out.println("spot_code : " + spot_code);
-		System.out.println("vdate : " + vdate);
+		System.out.println("vdate : " + vdate); */
 
 		String str = "";
 		iBoard board = sqlSession.getMapper(iBoard.class);
@@ -211,7 +221,7 @@ public class HController {
 			board.insertBoard(title, content, writer, vdate, spot_code);
 			for (int i = 0; i < ar.length; i++) {
 				int menu_code = Integer.parseInt(ar[i]);
-				System.out.println("menu_code : " + menu_code);
+				//System.out.println("menu_code : " + menu_code);
 				board.insertBoardMenu(menu_code);
 			}
 			str = "ok";

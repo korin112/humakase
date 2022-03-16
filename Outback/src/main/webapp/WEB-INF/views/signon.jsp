@@ -1,60 +1,114 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" session="true" %>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" name="viewport" content="width=device-width, height=device-height, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0">
 <title> - 회원가입 - </title>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="${path}/resources/css/style.css">
 </head>
 <style>
-ul li {
-	list-style:none;
+.input-box {
+	position:relative;
+	margin:10px 0;
+	left:630px;
+	top:20px;
 }
+.input-box > input {
+	list-style:none;
+	background:transparent;
+	border:none;
+	border-bottom:solid 1px #ccc;
+	padding:20px 0px 5px 0px;
+	font-size:14pt;
+	margin:10px;
+
+/*  	width:20%; */
+}
+input::placeholder{
+ 	color:transparent;
+ }
+input:focus + label,label{
+ 	color:#8aa1a1;
+ 	font-size:10pt;
+ 	pointer-events:none;
+  	position: static;
+ 	left:0px;
+ 	top:0px;
+ 	align:center;
+}
+input[type=submit],input[type=button],input[type=reset]{
+    background-color: #8aa1a1;
+    border:none;
+    color:white;
+    border-radius: 5px;
+    width:80px;
+    height:45px;
+    font-size: 14pt;
+/*     margin-top:140px; */
+}
+input[type=radio]{
+	text-align:center;
+	margin-left:80px;
+}
+/* #forgot{ */
+/*     text-align: right; */
+/*     font-size:12pt; */
+/*     color:rgb(164, 164, 164); */
+/*     margin:10px 0px; */
+/* } */
+input:focus, input:not(:placeholder-shown){
+ 	border-bottom:solid 1px #8aa1a1;
+ 	outline:none;
+}
+.input-button {
+	margin-left:660px;
+}
+
 </style>
 <body>
 <%@include file ="header.jsp" %>
-<h3 align=center>회원정보를입력해주세요</h3>
-	<div>
-		<ul class=b>
-			<li><label for="userid">아이디</label></li>
-			<li><input type="text" id="userid">
-				<input type=button value=중복확인 id=btnCheck></li>
-		</ul>
-		<ul class=b>
-			<li><label for="passcode">비밀번호</label></li>
-			<li><input type="password" id="passcode"></li>
-		</ul>
-		<ul class=b>
-			<li><label for="passcode1">비밀번호 확인</label></li>
-			<li><input type="password" id="passcode1"></li>
-		</ul>
-		<ul>
-			<li class=a><label for="name">실명</label></li>
-			<li class=b><input type="text" id="name"></li>
-		</ul>
-		<ul class=b>
-			<li><label for="mobile">전화번호</label></li>
-			<li><input type="number" id="mobile"></li>
-		</ul>
-		<ul class=b>
-			<li><label for="gender">성별</label></li>
-			<li>
-				<input type="radio" id="gender" name="gender" value="남성">
-				<label for="gender">남성</label>
-				<input type="radio" id="gender" name="gender" value="여성">
-				<label for="gender">여성</label>
-			</li>
-		</ul>
+<h1 style="text-align: center; font-weight: bold; font-size: 40px; letter-spacing: 6px;">회원가입</h1>
+			<h2 style="text-align: center; font-weight: bold; color: #ccc; margin-bottom: 30px; font-size: 22px; letter-spacing: 4px;">Sign Up</h2>
+<div>
+	<div class="input-box">
+			<label for="userid">아이디</label>
+			<input type="text" id="userid">
+			<input type=button value=중복확인 id=btnCheck>
 	</div>
-	<br>
-	<div class=b>
+	<div class="input-box">
+			<label for="passcode">비밀번호</label>
+			<input type="password" id="passcode">
+	</div>
+	<div class="input-box">
+			<label for="passcode1">비밀번호 확인</label>
+			<input type="password" id="passcode1">
+	</div>
+	<div class="input-box">
+			<label for="name">실명</label>
+			<input type="text" id="name">
+	</div>
+	<div class="input-box">
+			<label for="mobile">전화번호</label>
+			<input type="text" id="mobile">
+	</div>
+	<div class="input-box">
+			<label for="gender">성별</label>
+			<input type="radio" id="gender" name="gender" value="남성">
+			<label for="gender">남성</label>	
+			<input type="radio" id="gender" name="gender" value="여성">
+			<label for="gender">여성</label>
+	</div>
+	<div class="input-button">
 		<input type="submit" id=btnDone value="완료">
 		<input type="reset" id=btnReset value="비우기">
 		<input type="button" id=btnCancel value="취소">
 	</div>
+</div>
 <%@include file ="footer.jsp" %>
 </body>
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>

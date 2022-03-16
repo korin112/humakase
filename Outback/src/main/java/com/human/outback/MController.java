@@ -109,13 +109,18 @@ public class MController {
 		String str="";
 		String userid = hsr.getParameter("userid");
 		String passcode = hsr.getParameter("passcode");
-		
+		int type=0;
 		iLogin login = sqlSession.getMapper(iLogin.class);
 		ArrayList<Member> m=login.getLogin();
 		for(int i=0; i < m.size(); i++) {
+			System.out.println(m.get(i).getUser_type());
+//			System.out.println(m.get(i).getUser_type().getClass().getName());
 			if(m.get(i).getPasscode().equals(passcode) && m.get(i).getUserid().equals(userid)) {
-				if(m.get(i).getUser_type().equals("관리자")) {
+				if(m.get(i).getUser_type() == 1) {
+					type=1;
 					session.setAttribute("_type_name2","관리자");
+				} else {
+					type=0;
 				}
 				str="ok";
 				break;
@@ -126,6 +131,8 @@ public class MController {
 		if(str.equals("ok")) {
 			login.upLogin(userid);
 			session.setAttribute("userid",userid);
+			session.setAttribute("user_type",type);
+			System.out.println(session.getAttribute("user_type"));
 			return "redirect:/home";
 		} else {
 			model.addAttribute("fail_user",str);
@@ -195,7 +202,7 @@ public class MController {
 		System.out.println("["+hsr.getParameter("userid")+"]");
 		System.out.println("["+hsr.getParameter("user_type")+"]");
 		String userid=hsr.getParameter("userid");
-		String code=hsr.getParameter("user_type");
+		int code=Integer.parseInt(hsr.getParameter("user_type"));
 		try {
 			iLogin log = sqlSession.getMapper(iLogin.class);
 			log.updateMember(userid,code);
@@ -249,7 +256,7 @@ public class MController {
 	public String pwCheck(HttpServletRequest hsr,Model model) {
 		HttpSession session = hsr.getSession();
 		
-		String str="";
+		String retval="";
 		String userid=hsr.getParameter("userid");
 		String passcode=hsr.getParameter("passcode");
 		
@@ -259,58 +266,42 @@ public class MController {
 		for(int i=0; i < a.size(); i++) {
 			if(a.get(i).getPasscode().equals(passcode) && a.get(i).getUserid().equals(userid)) {
 				session.setAttribute("userid", userid);
-				str="ok";
+				retval="ok";
 				break;
 			} 
 			else {
-				str="fail";
+				retval="fail";
 			}
 		}
-		if(str.equals("ok")) {
+		if(retval.equals("ok")) {
 			session.setAttribute("userid",userid);
 			session.setAttribute("passcode",passcode);
 			pw.pwCheck(userid,passcode);
 			session.invalidate();
 			return "home";
 		} else {
-			model.addAttribute("fail_user",str);
-			return "home";
+			model.addAttribute("fail_user",retval);
+			return "redirect:/mypage";
 		}
 	}
 	@RequestMapping(value = "/passEdit")
 	public String passEdit() {
 		return "passEdit";
 	}
-	@RequestMapping(value="/pwEdit",method = RequestMethod.POST)
-	public String pwEdit(HttpServletRequest hsr, Model model) {
-		HttpSession session = hsr.getSession();
-		
-		String str="";
-		String userid=hsr.getParameter("userid");
-		String passcode=hsr.getParameter("passcode");
-		System.out.println(userid);
-//		System.out.println(passcode);
-		iLogin pw = sqlSession.getMapper(iLogin.class);
-		ArrayList<Member> m = pw.getLogin();
-		
-		for(int i=0; i < m.size(); i++) {
-			if(m.get(i).getUserid().equals(userid)) {
-				session.setAttribute("passcode",passcode);
-//				session.setAttribute("passcode",passcode);
-				str="ok";
-				break;
-			}
-			else {
-				str="fail";
-			}
+	@ResponseBody
+	@RequestMapping(value="/pwEdit",method=RequestMethod.POST, produces="application/json;charset=utf-8")
+	public String pwEdit(HttpServletRequest hsr) {
+		String retval="";
+		try {
+			iLogin member = sqlSession.getMapper(iLogin.class);
+			String userid=hsr.getParameter("userid");
+			String passcode=hsr.getParameter("passcode");
+			member.pwEdit(userid,passcode);
+			
+			retval="ok";
+		} catch(Exception e) {
+			retval="fail";
 		}
-		if(str.equals("ok")) {
-			session.setAttribute("passcode",passcode);
-			pw.pwEdit(userid);
-			return "home";
-		} else {
-			model.addAttribute("fail_user",str);
-			return "home";
-		}
+			return retval;
 	}
 }
