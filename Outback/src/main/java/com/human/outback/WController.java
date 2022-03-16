@@ -28,4 +28,5 @@ public class WController {
 		return "spot";
 	}
 	
+
 }
