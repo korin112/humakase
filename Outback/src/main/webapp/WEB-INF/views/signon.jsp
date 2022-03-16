@@ -12,6 +12,9 @@
 <link rel="stylesheet" href="${path}/resources/css/style.css">
 </head>
 <style>
+body {
+	height:100%;
+}
 .input-box {
 	position:relative;
 	margin:10px 0;
