@@ -13,13 +13,16 @@ public class Board {
 	private int spot_code;
 	private int menu_code;
 	
+	private String c_date;
+	
 	private String spot_name;
 	private String menu_name;
 	
 	private int book_id;
 	
 	public Board(int board_id, String title, String content, String writer, Date created, Date updated, String vdate,
-			int spot_code, int menu_code, String spot_name, String menu_name, int book_id) {
+			int spot_code, int menu_code, String spot_name, String menu_name, int book_id,
+			String c_date) {
 		this.board_id = board_id;
 		this.title = title;
 		this.content = content;
@@ -32,6 +35,7 @@ public class Board {
 		this.spot_name = spot_name;
 		this.menu_name = menu_name;
 		this.book_id = book_id;
+		this.c_date = c_date;
 	}
 	public Board() {}
 	public int getBoard_id() {
@@ -105,6 +109,12 @@ public class Board {
 	}
 	public void setBook_id(int book_id) {
 		this.book_id = book_id;
+	}
+	public String getC_date() {
+		return c_date;
+	}
+	public void setC_date(String c_date) {
+		this.c_date = c_date;
 	}
 	
 }
