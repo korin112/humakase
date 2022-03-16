@@ -198,28 +198,33 @@ function initMap() {
 			 });
 	    }
 	    
-		 markers.push(marker); // 생성한 마커를 배열에 담는다.
-		 infoWindows.push(infoWindow); // 생성한 정보창을 배열에 담는다.
+		 markers.push(marker); 
+		 infoWindows.push(infoWindow); 
 		 
-//		 naver.maps.Event.addListener(markers[i], 'click',  getClickHandler(i));
-		 naver.maps.Event.addListener(markers[i], 'click',  function(e) {
+		naver.maps.Event.addListener(markers[i], 'click',  getClickHandler(i));
+		console.log(markers[i] , getClickHandler(i));
+//		 naver.maps.Event.addListener(markers[i], 'click',  function(e) {
 //			 if(infoWindow.getMap()) {
 //				 infoWindow.close();
 //			 } else {
 //				 infoWindow.open(map, marker);
 //			 }
-			alert(markers[i]);
-		 });
+//		 });
 	}	
 }
 
 function getClickHandler(seq) {
 	
-    return function(e) {
-    	
-        marker = markers[seq];
-        infoWindow = infoWindows[seq];
-    }
+    return function(e) {  // 마커를 클릭하는 부분
+        var marker = markers[seq], // 클릭한 마커의 시퀀스로 찾는다.
+            infoWindow = infoWindows[seq]; // 클릭한 마커의 시퀀스로 찾는다
+
+        if (infoWindow.getMap()) {
+            infoWindow.close();
+        } else {
+            infoWindow.open(map, marker); // 표출
+        }
+	}
 }
 
 </script>
