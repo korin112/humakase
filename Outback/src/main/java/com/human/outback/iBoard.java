@@ -28,4 +28,8 @@ public interface iBoard {
 	
 	// session member
 	Member getSession(String userid);
+	
+	// 검색
+	ArrayList<Board> findKeyword(String keyword, int skip, int amount);
+	public int getKeyTotal(String keyword);
 }

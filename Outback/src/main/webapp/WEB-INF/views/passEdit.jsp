@@ -16,19 +16,19 @@
 	<ul>
 		<li>
 			<label for=userid>아이디</label>
-			<input type=hidden id=userid name=userid readonly>
+			<input type=text id=userid name=userid value="${userid}" readonly>
 		</li>
 	</ul>
 	<ul>
 		<li>
 			<label for=passcode>비밀번호변경</label>
-			<input type=text id=passcode name=passcode value="${passcode}"> 
+			<input type=password id=passcode name=passcode> 
 		</li>
 	</ul>
 	<ul>
 		<li>
 			<label for=passcode1>비밀번호 변경확인</label>
-			<input type=text id=passcode1 name=passcode1>
+			<input type=password id=passcode1 name=passcode1>
 		</li>
 	</ul>
 	<ul>
@@ -58,20 +58,23 @@ $(document)
 		alert("비밀번호 확인을 입력해주세요");
 		return false;
 	}
-	
-	if ($("#passcode").val() != $("#passcode1").val()) {
-		alert("비밀번호가 일치하지 않습니다.");
-		return false;
-		}
-	$.ajax({url:"/outback/pwEdit",
+	if($('#passcode').val() == $('#passcode1').val()){
+		$.ajax({url:"/outback/pwEdit",
 			type:"POST",
 			dataType:"text",
-			data:{userid:$('#userid').val()},
-			success:function(){
-				alert("test");
-				document.location='/outback/home';
+			data:{userid:$('#userid').val(),passcode:$('#passcode').val()},
+			success:function(txt){
+				if(txt=="ok"){
+					console.log(txt);
+					alert("비밀번호 변경완료되었습니다.");
+					document.location='/outback/home';			
+				}
 			}
-	})
+		})
+	} else {
+		alert("비밀번호가 다릅니다.");
+		return false;
+		}
 })
 .on('click','#btnCancel',function(){
 	document.location='/outback/home';
