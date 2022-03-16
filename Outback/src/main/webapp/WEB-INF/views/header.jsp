@@ -54,7 +54,7 @@
 							<a class="nav-link" href="/outback/typeadd">메뉴타입관리</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="/outback/member">[관리자페이지]</a>
+							<a class="nav-link" href="/outback/adm/menuadd">[관리자페이지]</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="#" onclick="if(confirm('로그아웃하시겠습니까?')){javascript:document.frm.submit();return false;}">로그아웃</a>
