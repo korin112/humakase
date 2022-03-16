@@ -5,7 +5,7 @@
 <mapper namespace="com.human.outback.iAdmin">
 
 <select id="getAdminBook" resultType="com.human.outback.DTO.Book">
-	select a.book_id, b.spot_name, a.booker, c.name, a.howmany, a.m_qty, a.total, a.vdate, d.time_name, a.msg
+	select a.book_id, b.spot_name, a.booker, c.mobile, c.name, a.howmany, a.m_qty, a.total, a.vdate, d.time_name, a.msg
 	from booking a, spot b, member c, vtime d
 	where a.spot_code = b.spot_code and a.booker = c.userid and a.vtime = d.time_code
 	order by a.vdate desc, d.time_name desc, a.spot_code
