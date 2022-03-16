@@ -172,7 +172,7 @@
 					} else {
 						alert('댓글 삭제 실패했습니다. 다시 삭제해주세요.');
 					}
-				}
+				} 
 			});
 		})
 		.on('click','#upBtn',function() {
