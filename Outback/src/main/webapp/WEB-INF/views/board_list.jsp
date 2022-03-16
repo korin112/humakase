@@ -11,23 +11,13 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <link rel="stylesheet" href="${path}/resources/css/style.css">
 <style>
-	.pageInfo{
-		list-style : none;
-	    display: inline-block;
-	    margin: 50px 0 0 0;      
-	}
-	.pageInfo li{
-		float: left;
-	    margin-left: 18px;
-	    padding: 7px;
- 	    font-weight: 300; 
-  	}
+.adm_paging .page-link:hover{color:inherit;}
 </style>
 </head>
 <body>
 	<%@include file ="header.jsp" %>
 	<div class="container O_container">
-		<table>
+		<table id="getBoard">
 			<thead>
 				<tr>
 					<th>번호</th>
@@ -38,38 +28,51 @@
 				</tr>
 			</thead>
 			<c:forEach items="${b_list}" var="b">
-				<tr id="getBoard">
-					<td><c:out value="${b.board_id}"/></td>
-					<td><c:out value="${b.spot_name}"/></td>
+				<tr id="board_tr">
+					<td>${b.board_id}</td>
+					<td>${b.spot_name}</td>
 <%-- 		            <td><c:out value="${b.menu_name}"/></td> --%>
-		            <td><c:out value="${b.title}"/></td>
-		            <td><c:out value="${b.writer}"/></td>
-		            <td><fmt:formatDate pattern="yy/MM/dd" value="${b.created}"/></td>
+		            <td>${b.title}</td>
+		            <td>${b.writer}</td>
+		            <td><fmt:formatDate pattern="yy.MM.dd" value="${b.created}"/></td>
 		        </tr>
 			</c:forEach>
 		</table>
+		
+		<input type="text" id="keyword" name="keyword" value="${p.page.keyword}">
+		<button id="keyBtn">검색</button>
 		<c:if test="${userid!=null}">
 			<button id="insert">글쓰기</button>
 		</c:if>	
-		<div>
-			<ul id="pageInfo" class="pageInfo">
-				<c:if test="${p.prev}">
-					<li class="previous"><a href="${p.startPage-1}">◀</a></li>
-			    </c:if>
-			            
-			    <c:forEach var="num" begin="${p.startPage}" end="${p.endPage}">
-					<li class="pageInfo_btn ${p.page.pageNum==num}"><a href="${num}">${num}</a></li>
-				</c:forEach>
-			        	
-				<c:if test="${p.next}">
-			        <li class="next"><a href="${p.endPage+1}">▶</a></li>
-			    </c:if>  
-			</ul>
+		
+		<div class="adm_paging">
+			<nav>
+				<ul class="pagination" id="pageInfo">
+					<c:if test="${p.prev}">
+						<li class="page-item">
+							<a class="page-link" href="${p.startPage-1}">&laquo;</a>
+						</li>
+				    </c:if>
+				            
+				    <c:forEach var="num" begin="${p.startPage}" end="${p.endPage}">
+						<li class="page-item <c:out value="${p.page.pageNum==num ? 'active':''}"/>">
+							<a class="page-link" href="${num}">${num}</a>
+						</li>
+					</c:forEach>
+				        	
+					<c:if test="${p.next}">
+				        <li class="page-item">
+				        	<a class="page-link" id="page" href="${p.endPage+1}">&raquo;</a>
+				        </li>
+				    </c:if>  
+				</ul>
+			</nav>
 		</div>	
 		
 		<form id="move" method="get">
 			<input type="hidden" name="pageNum" value="${p.page.pageNum}">
 	        <input type="hidden" name="amount" value="${p.page.amount}">    
+	        <input type="hidden" name="keyword" value="${p.page.keyword}">    
 	    </form>    
 	</div>
 	<%@include file ="footer.jsp" %>
@@ -84,7 +87,7 @@
 		.on('click','#insert',function() {
 			document.location="/outback/board_insert";
 		})
-		.on('click','#getBoard',function() {
+		.on('click','#board_tr',function() {
 			var tr=$(this);
 			var td=tr.children();
 			var board_id=td.eq(0).text();
@@ -100,6 +103,15 @@
 			$('#move').find("input[name='pageNum']").val($(this).attr("href"));
 			$('#move').attr("action", "/outback/board_list");
 			$('#move').submit();
+		})
+		
+		// 검색
+		.on('click','#keyBtn',function(e) {
+			 e.preventDefault();
+		     let val = $("input[name='keyword']").val();
+		     $('#move').find("input[name='keyword']").val(val);
+		     $('#move').find("input[name='pageNum']").val(1);
+		     $('#move').submit();
 		})
 	</script>
 </body>

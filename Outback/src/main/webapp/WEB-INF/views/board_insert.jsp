@@ -35,11 +35,11 @@
 		<article class="booking_info_box">
 			<ul class="fixed">
 				<li>제목</li>
-				<li><input type="text" id="title" name="title" maxlength="30" placeholder="최대 30자까지 가능합니다."></li>
+				<li><input type="text" id="title" name="title" maxlength="30" placeholder="최대 30자까지 가능합니다." spellcheck=false></li>
 			</ul>
 	   		<ul class="fixed">
 				<li>작성자</li>
-				<li><input type="text" name="writer" id="writer" value="${userid}"></li>
+				<li><input type="text" name="writer" id="writer" readonly=readonly value="${userid}"></li>
 			</ul>
 			<ul class="fixed">
 				<li>날짜</li>
@@ -72,7 +72,7 @@
 
 	   		<ul>
 				<li>내용</li>
-				<li><textarea id="content" name="content" maxlength="500" placeholder="최대 500자까지 가능합니다."></textarea></li>
+				<li><textarea id="content" name="content" maxlength="500" placeholder="최대 500자까지 가능합니다." spellcheck=false></textarea></li>
 			</ul>
 	   		<div>
 			    <button id="done">완료</button>
@@ -125,7 +125,7 @@
 				success:function(txt) {
 					//console.log(txt);
 					for(i=0;i<txt.length;i++) {
-						let str="<li class='dropdown-item' data-value='"+txt[i]['menu_code']+"'>"
+						let str="<li data-value='"+txt[i]['menu_code']+"'>"
 								+txt[i]['menu_name']+"</li>"
 						$('#menu').append(str);
 					}
