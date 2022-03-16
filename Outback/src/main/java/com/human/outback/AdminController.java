@@ -100,4 +100,9 @@ public class AdminController {
 		System.out.println(str);
 		return str;
 	}
+	
+	@RequestMapping("/adm/adm_member")
+	public String adm_Member() {
+		return "adm/adm_member";
+	}
 }
