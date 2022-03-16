@@ -12,13 +12,10 @@
 <link rel="stylesheet" href="${path}/resources/css/style.css">
 </head>
 <style>
-body {
-	height:100%;
-}
 .input-box {
 	position:relative;
 	margin:10px 0;
-	left:630px;
+	left:590px;
 	top:20px;
 }
 .input-box > input {
@@ -30,7 +27,6 @@ body {
 	font-size:14pt;
 	margin:10px;
 
-/*  	width:20%; */
 }
 input::placeholder{
  	color:transparent;
@@ -52,18 +48,11 @@ input[type=submit],input[type=button],input[type=reset]{
     width:80px;
     height:45px;
     font-size: 14pt;
-/*     margin-top:140px; */
 }
 input[type=radio]{
 	text-align:center;
 	margin-left:80px;
 }
-/* #forgot{ */
-/*     text-align: right; */
-/*     font-size:12pt; */
-/*     color:rgb(164, 164, 164); */
-/*     margin:10px 0px; */
-/* } */
 input:focus, input:not(:placeholder-shown){
  	border-bottom:solid 1px #8aa1a1;
  	outline:none;
@@ -77,11 +66,11 @@ input:focus, input:not(:placeholder-shown){
 <%@include file ="header.jsp" %>
 <h1 style="text-align: center; font-weight: bold; font-size: 40px; letter-spacing: 6px;">회원가입</h1>
 			<h2 style="text-align: center; font-weight: bold; color: #ccc; margin-bottom: 30px; font-size: 22px; letter-spacing: 4px;">Sign Up</h2>
-<div>
+<div class="container O_container">
 	<div class="input-box">
 			<label for="userid">아이디</label>
-			<input type="text" id="userid">
-			<input type=button value=중복확인 id=btnCheck>
+			<input type="text" id="userid" required>
+			<input type=button value=중복확인 id=btnCheck onclick="confirm()">
 	</div>
 	<div class="input-box">
 			<label for="passcode">비밀번호</label>
@@ -116,11 +105,15 @@ input:focus, input:not(:placeholder-shown){
 </body>
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <script>
+let flag="";
 $(document)
 //유효성 검사
 .on('click','#btnDone',function(){
 	if($('#userid').val() == ''){
 		alert('아이디를 입력하세요.');
+		return false;
+	} else if(flag != "true") {
+		alert("중복검사를 진행해주세요.");
 		return false;
 	}
 	if($('#passcode').val() == ''){
@@ -147,7 +140,6 @@ $(document)
 		alert('성별을 체크하세요.');	
 		return false;
 	}
-
 	$.ajax({
 		url:'/outback/sign_check',
 		type:'POST',
@@ -168,17 +160,6 @@ $(document)
 	});
 	return false;
 })
-//중복된 아이디 체크
-.on('click','#btnCheck',function(txt){
-	$.post('/outback/confirm_check',{userid:$('#userid').val()},function(txt){
-		if(txt=='fail'){
-			alert('아이디가 중복됩니다');
-		}else if(txt=='ok'){	
-			alert('사용가능한 아이디입니다.');
-		}
-	},'text');
-})
-
 
 //취소시 홈
 .on('click','#btnCancel',function(){
@@ -193,6 +174,28 @@ $(document)
 	return false;
 	}
 })
-;
+//중복검사 체크
+function confirm(){
+	if($('#userid').val()==''){
+		return false;
+	}else{
+		$.ajax({
+			url:'confirm_check',
+			type:'POST',
+			dataType:'text',
+			data:{userid:$('#userid').val()},
+			success:function(txt){
+				if (txt == 'fail') {
+					alert('이미 사용중인 아이디 입니다.');
+					return false;
+				} else {
+					alert('사용 가능한 아이디 입니다.');
+					flag="true";
+				}
+			return true;
+			}
+		})
+	}
+}
 </script>
 </html>
