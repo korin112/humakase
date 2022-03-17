@@ -75,7 +75,7 @@ table {
 $(document)
 .ready(function(){
 	member();
-	$('#dlgEdit').dialog({
+	$('#dlgEdit').dialog({ 
 		title:'등급 수정',
 		autoOpen:false,
 		modal:true,
