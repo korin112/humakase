@@ -60,18 +60,18 @@ public class HController {
 		
 		String userid = (String) session.getAttribute("userid");
 		m.addAttribute("m", board.getSession(userid));
-
+		
 		return "board";
 	}
 
 	// 댓글
 	@ResponseBody
 	@RequestMapping(value = "/reList", produces = "application/json;charset=utf-8")
-	public String reBoard(int board_id) {
+	public String reBoard(int board_id, Model m, HttpSession session) {
 		iBoard reBoard = sqlSession.getMapper(iBoard.class);
 		//System.out.println("board_id : " + board_id);
 		ArrayList<ReBoard> re = reBoard.reBoard(board_id);
-
+		
 		JSONArray ja = new JSONArray();
 		for (int i = 0; i < re.size(); i++) {
 			JSONObject jo = new JSONObject();
@@ -79,6 +79,7 @@ public class HController {
 			jo.put("writer", re.get(i).getWriter());
 			jo.put("content", re.get(i).getContent());
 			jo.put("re_date", re.get(i).getRe_date());
+			jo.put("user_type", re.get(i).getUser_type());
 			ja.add(jo);
 		}
 		return ja.toString();
@@ -95,7 +96,7 @@ public class HController {
 		// System.out.println("board_id : "+board_id);
 		// System.out.println("writer : "+writer);
 		// System.out.println("content : "+content);
-
+		
 		String str = "";
 		iBoard re = sqlSession.getMapper(iBoard.class);
 		try {
