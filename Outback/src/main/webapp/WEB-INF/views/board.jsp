@@ -18,24 +18,29 @@
 	.dropdown-menu{max-height:200px; overflow-y:auto; overflow-x:hidden;}
 	.dropdown-item{cursor:pointer;}
 	.book-list{overflow:hidden;}
-	.book-list article{display:block; margin:3.5rem 1.25rem; width:Calc(55% - 1.25rem); height:100%; float:left;}
+	.book-list article{display:block; margin:3.5rem 11.5rem; width:70%; height:100%;}
 	.book-list .comment_article{margin:1.5rem 1.25rem;}
-	.booking_info_box > ul{display:table; width:100%; margin:0; padding:0; border-bottom:1px solid #ddd;}
+	.booking_info_box > ul{display:table; width:100%; margin:0; padding:0; border-bottom:1px solid #ccc;}
 	.booking_info_box > ul:first-child{border-top:1px solid #ddd;}	
-	.booking_info_box > ul > li{width:70%; display:table-cell; padding:1.25rem 0 1.25rem 2.125rem;}
-	.booking_info_box > ul > li:first-child{width:30%; vertical-align:middle; background:#f9f9f9;}
+	.booking_info_box > ul > li{width:80%; display:table-cell; padding:1.25rem 0 1.25rem 2.125rem;}
+	.booking_info_box > ul > li:first-child{width:20%; vertical-align:middle; background:#EAEAEA;}
 	.booking_info_box input{border:none;}
-	.booking_info_box li #content{width:100%; resize:none; border:1px solid #ddd; padding:0.5rem; height:300px;}
+	.booking_info_box li #content{width:100%; resize:none; border:1px solid #ddd; padding:0.5rem; height:300px; outline:0;}
+   	.booking_info_box .menu_name:nth-child(n+2) {padding-top:0;}  
+ 	.booking_info_box .menu_name:nth-last-child(n+2) {padding-bottom:0;}
+	.booking_info_box .menu_name:nth-child(n+3):nth-last-child(n+1) {margin-top:0;}
+	
 	.board_btn{text-align:center; margin:2.125rem 3.375rem;}
 	.board_btn button{border:none; width:24%; padding:1rem 1rem;
 		color:#090909; background:#D5D5D5; font-size:1.125rem; border-radius:5px;}
-	.O_container .book-list{border-bottom:2px solid #ccc;}
+ 	.O_container .book-list{border-bottom:2px solid #ccc;} 
 	.O_container .book-list #comment_div #comment_info_box {padding-bottom:1rem; color:#BDBDBD; font-size:0.75rem;}
 	.O_container .book-list #comment_div a {color:inherit;}
  	.O_container .book-list #comment_div #delBtn {padding-left:1rem; padding-right:0.5rem;}
  	.O_container .book-list #comment_div #upDateBtn {padding-left:1rem;} 	
-  	.O_container .book-list #comment_div #cancel {padding-left:0.5rem;} 
-  	.O_container .book-list .article_wrap {margin:1.5rem 1.25rem;  width:850px;}
+  	.O_container .book-list #comment_div #cancel {padding-left:0.5rem;}
+  	 
+  	.O_container .book-list .article_wrap {margin:1.5rem 11.5rem;  width:70%;}
   	/* 댓글 달기 */
   	.CommentWriter {margin:12px 0 12px; padding:12px 10px 8px 18px; 
   		border:2px solid #A6A6A6; border-radius:6px; box-sizing:border-box; background:#ffffff;}
@@ -46,9 +51,7 @@
     	min-height:1.35rem; max-height:500px; font-size:1rem; padding-right:1px; margin-top:8px;
   		border:0px; resize:none; box-sizing:boder-box; display:block; outline:0;}
   	.CommentWriter .comment_attach {position:relative;  padding-right:10px;}
-  	.CommentWriter .register_box {
-  		text-align:right;
-  	}
+  	.CommentWriter .register_box {text-align:right;}
 </style>
 </head>
 <body>
@@ -75,7 +78,7 @@
 			<ul class="fixed">
 				<li>메뉴</li>
 				<c:forEach items="${menu_name}" var="m">
-					<ul><li data-value="${m.menu_name}">${m.menu_name}</li></ul>
+					<li class="menu_name" style="display:inline-block; font-weight:400;" data-value="${m.menu_name}">${m.menu_name}</li>
 				</c:forEach>
 			</ul>
 			<ul class="fixed">
@@ -142,14 +145,21 @@
 	<script>
 		$(document)
 		.on('click',"#listBtn",function() {
-			document.location="/outback/board_list";
+			var path1='/outback/board_list';
+			var path2='/outback/mypage/myboard';
+			findLink(path1,path2);
 		})
 		.on('click','#updateBtn',function() {
-			document.location="/outback/board_update?board_id="+$('#board_id').val();
+			var path1="/outback/board_update?board_id="+$('#board_id').val();
+			var path2="/outback/mp_board_update?board_id="+$('#board_id').val();
+			findLink(path1,path2);	
 		})
 		.on('click','#deleteBtn',function() {
 			if(!confirm("삭제하시겠습니까?")) return false;
-			document.location="/outback/board_delete?board_id="+$('#board_id').val();
+			
+			var path1="/outback/board_delete?board_id="+$('#board_id').val();
+			var path2="/outback/mp_board_delete?board_id="+$('#board_id').val();
+			findLink(path1,path2);
 		})
 		.on('click','#cmtBtn',function() {
 			if($('#reBoard').css('display')=='none') {
@@ -294,6 +304,17 @@
 		function resize(obj) {
 			obj.style.height = '1px';
 			obj.style.height = obj.scrollHeight+'px';
+		}
+		
+		function findLink(path1,path2) {
+			var link=document.location.href.split('outback/');
+			var link_str=link[1].split('?');
+			if(link_str[0]=='getBoard') {
+				document.location=path1;
+			}
+			if(link_str[0]=="mp_getBoard") {
+				document.location=path2;
+			}
 		}
 	</script>
 </body>

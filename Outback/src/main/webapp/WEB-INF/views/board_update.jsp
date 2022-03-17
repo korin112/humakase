@@ -88,9 +88,18 @@
 					success:function(txt) {
 						console.log($('#board_id').val()+","+$('#title').val()+","+$('#content').val());
 						console.log(txt);
+						var link=document.location.href;
+						console.log(link);
 						if(txt=="ok") {
 							alert('수정 완료했습니다.');
-							document.location='/outback/board_list';
+							var link=document.location.href.split('outback/');
+							var link_str=link[1].split('?');
+							if(link_str[0]=='board_update') {
+								document.location='/outback/board_list';
+							}
+							if(link_str[0]=="mp_board_update") {
+								document.location='/outback/mypage/myboard';
+							}
 						} else {
 							alert('다시 수정해주세요.');
 						}

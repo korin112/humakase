@@ -30,7 +30,7 @@
 	
 	.board_btn_option {padding-top:1rem; padding-bottom:3rem;}
 	.board_btn_option .board_search {width:25%; height:10%; border-radius:6px; border:2px solid #eee; float:right;}
-	.board_btn_option .board_search input {width:85%; padding-left:1rem;  border:0; outline:0;}
+	.board_btn_option .board_search input {width:85%; padding-left:1rem; border:0; outline:0;}
 	.board_btn_option .board_search input::placeholder {color:#A6A6A6;}
  	.board_btn_option .board_search .board_btn_search .bi-search{text-align:right; height:20px; width:10%; cursor:pointer;}
 	

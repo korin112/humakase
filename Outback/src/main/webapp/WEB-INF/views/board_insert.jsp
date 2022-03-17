@@ -163,9 +163,9 @@
 			let spot=$('#spot ul li').attr('data-value');
 			let ar=spot.split(',');
 			
-			let oParam = {title:$('#title').val(), writer:$('#writer').val(),
-						  vdate:$('#vdate a').text(), spot:ar[1],
-						  menu_code:menu_code, content:$('#content').val()};
+			let oParam={title:$('#title').val(), writer:$('#writer').val(),
+						vdate:$('#vdate a').text(), spot:ar[1],
+						menu_code:menu_code, content:$('#content').val()};
 			$.ajax({url:'/outback/board_insert',
 				data:oParam,
 				method:'POST',
@@ -173,7 +173,14 @@
 				success:function(txt) {
 					if(txt=="ok") {
 						alert('작성 완료했습니다.');
-						document.location='/outback/board_list';
+						var link=document.location.href.split('outback/');
+						console.log(link[1]);
+						if(link[1]=='board_insert') {
+							document.location='/outback/board_list';
+						}
+						if(link[1]=="mp_board_insert") {
+							document.location='/outback/mypage/myboard';
+						}
 					} else {
 						alert('다시 작성해주세요.');
 					}

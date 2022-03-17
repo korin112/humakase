@@ -148,7 +148,14 @@
 		     $('#move').submit();
 		})
 		.on('click','#insert',function() {
-			document.location="/outback/board_insert";
+			document.location="/outback/mp_board_insert";
+		})
+		.on('click','#board_tr',function() {
+			var tr=$(this);
+			var td=tr.children();
+			var board_id=td.eq(1).text();
+			
+			document.location="/outback/mp_getBoard?board_id="+board_id;
 		})
 	</script>
 </body>
