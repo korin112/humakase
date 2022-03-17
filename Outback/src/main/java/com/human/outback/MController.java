@@ -108,33 +108,29 @@ public class MController {
 		for(int i=0; i < m.size(); i++) {
 //			System.out.println(m.get(i).getUser_type().getClass().getName());
 			if(m.get(i).getPasscode().equals(passcode) && m.get(i).getUserid().equals(userid)) {
-				if(m.get(i).getUser_type() == 1) {
-					type=1;
-					session.setAttribute("_type_name2","관리자");
-				} else {
-					type=0;
-				}
-				str="ok";
-				break;
-			} else if(m.get(i).getUser_type() == 2) {
-				type=2;
-				str="test";
-				break;
-			} else {
-				str="fail";
+				type=m.get(i).getUser_type();
 			}
 		}
-		if(str.equals("ok")) {
-			login.upLogin(userid);
-			session.setAttribute("userid",userid);
-			session.setAttribute("user_type",type);
-			return "redirect:/home";
+		System.out.println(type);
+		if(type == 1) {
+			session.setAttribute("_type_name2","관리자");
+				login.upLogin(userid);
+				session.setAttribute("userid",userid);
+				session.setAttribute("user_type",type);
+				return "redirect:/home";
+		} else if (type == 2) {
+				str="test";
+				model.addAttribute("error",str);
+				return "login";
+		} else if (type == 0) {
+				str="fail";
+				session.setAttribute("userid",userid);
+				session.setAttribute("user_type",type);
+				model.addAttribute("fail_user",str);
+				return "redirect:/home";
 		} else {
-//			model.addAttribute("fail_user",str);
-			model.addAttribute("error",str);
 			return "login";
 		}
-		
 	}
 	//마이페이지 관리
 	@RequestMapping("/member")
@@ -273,8 +269,8 @@ public class MController {
 			}
 		}
 		if(retval.equals("ok")) {
-			session.setAttribute("userid",userid);
-			session.setAttribute("passcode",passcode);
+//			session.setAttribute("userid",userid);
+//			session.setAttribute("passcode",passcode);
 //			session.setAttribute("user_type",usertype);
 			pw.pwCheck(userid,passcode);
 			session.invalidate();
