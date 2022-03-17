@@ -7,33 +7,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>- My Board -</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <link rel="stylesheet" href="${path}/resources/css/style.css">
-<style>
-	.adm_paging .page-link:hover{color:inherit;}
-	.board_table {width:100%; border-top:1px solid #ccc; border-bottom:1px solid #ccc;  text-align:center;}
-	.board_table thead {background-color:#EAEAEA;}
-	.board_table .board_th_tr {border-bottom:1px solid #ccc;}
-	.board_table thead tr th {padding-top:15px; padding-bottom:15px;}
-	.board_table .th_num {width:3rem;}
-	.board_table .th_spot {width:5rem;}
-	.board_table .th_title {width:20rem;}
-	.board_table .th_writer {width:10rem;}
-	.board_table .th_created {width:10rem;}
- 	.board_table tbody tr td {padding-top:10px; padding-bottom:10px;border-bottom:1px solid #f1f1f1;}
-	.board_table tbody tr:hover td {background-color:#f1f1f1;}
-	
-	.board_btn_option {padding-top:20px; padding-bottom:45px;}
-	
-	.board_btn_option .board_search {float:left;}
-	.board_search input::placeholder {color:#A6A6A6;}
-	
-	.board_btn_option .board_write {float:right;}
-</style>
 </head>
 <body>
-	<%@include file ="header.jsp" %>
+	<%@include file ="../header.jsp" %>
+	<div class="submenu_title_wrap">
+		<div class="container submenu_title">
+			<h1>MY RESERVATION</h1>
+			<p>Mypage - REVIEW BOARD</p>
+		</div>
+	</div>
 	<div class="container O_container">
 		<table id="getBoard" class="board_table">
 			<thead>
@@ -99,44 +84,6 @@
 	        <input type="hidden" name="keyword" value="${p.page.keyword}">    
 	    </form>    
 	</div>
-	<%@include file ="footer.jsp" %>
-	<script>
-		$(document)
-		.ready(function() {
-			let result="${result}";
-			if(result=="delete") {
-				alert("삭제 완료했습니다.");
-			}
-		})
-		.on('click','#insert',function() {
-			document.location="/outback/board_insert";
-		})
-		.on('click','#board_tr',function() {
-			var tr=$(this);
-			var td=tr.children();
-			var board_id=td.eq(0).text();
-			
-			//console.log(board_id);
-			
-			document.location="/outback/getBoard?board_id="+board_id;
-		})
-		
-		// 페이지 이동
-		.on('click','#pageInfo a',function(e) {
-			e.preventDefault();
-			$('#move').find("input[name='pageNum']").val($(this).attr("href"));
-			$('#move').attr("action", "/outback/board_list");
-			$('#move').submit();
-		})
-		
-		// 검색
-		.on('click','#keyBtn',function(e) {
-			 e.preventDefault();
-		     let val = $("input[name='keyword']").val();
-		     $('#move').find("input[name='keyword']").val(val);
-		     $('#move').find("input[name='pageNum']").val(1);
-		     $('#move').submit();
-		})
-	</script>
+	<%@include file ="../footer.jsp" %>
 </body>
 </html>
