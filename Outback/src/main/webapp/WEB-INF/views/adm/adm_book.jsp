@@ -105,7 +105,7 @@
 								<p></p>
 							</div>
 						</div>
-						<table class="adm_bd_table">
+						<table class="bd_table">
 							<thead>
 								<tr><th>메뉴이름</th><th>수량</th><th>가격</th><th>총액</th></tr>
 							</thead>

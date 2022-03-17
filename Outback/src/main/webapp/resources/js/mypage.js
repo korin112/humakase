@@ -40,7 +40,7 @@ $(document)
 		datatype:'json',
 		success:function(data) {
 			let str = '';
-			$('#myBookModal .adm_bd_table tbody').empty();
+			$('#myBookModal .bd_table tbody').empty();
 			for(i = 0; i < data.length; i++){
 				let price = Number(data[i]['price']) ;
 				let total = Number(data[i]['total']) ;
@@ -49,7 +49,7 @@ $(document)
 					  + data[i]['m_qty'] + '</td><td>'
 					  + price.toLocaleString() + '원</td><td>'
 					  + total.toLocaleString() + '원</td></tr>';
-				$('#myBookModal .adm_bd_table tbody').append(str);
+				$('#myBookModal .bd_table tbody').append(str);
 			}
 		}
 	})
@@ -85,6 +85,3 @@ $(document)
 	$(tab_tt).addClass('on');
 })
 ;
-function delConfirm(){
-
-}

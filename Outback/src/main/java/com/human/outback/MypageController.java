@@ -53,23 +53,26 @@ public class MypageController {
 		HttpSession session = hsr.getSession();
 		String userid = (String) session.getAttribute("userid");
 		iMypage iMypage = sqlSession.getMapper(iMypage.class);
-		if(where.equals("prev") || where.equals("later") || userid != null) {
-			if(where.equals("prev")) {
-				// 전체 게시글 개수
-				// Pagination
-				int listCnt = iMypage.getCntPrevMyBook(userid);
-				System.out.println(listCnt);
-				pagination.pageInfo(page, range, listCnt);
-				model.addAttribute("mybook", iMypage.getMyPrevbook(userid, pagination));
+		if(userid != null) {
+			if(where.equals("prev") || where.equals("later")) {
+				System.out.println(userid);
+				if(where.equals("prev")) {
+					// 전체 게시글 개수
+					// Pagination
+					int listCnt = iMypage.getCntPrevMyBook(userid);
+					System.out.println(listCnt);
+					pagination.pageInfo(page, range, listCnt);
+					model.addAttribute("mybook", iMypage.getMyPrevbook(userid, pagination));
+					return "mypage/mybook";
+				} else if(where.equals("later")) {
+					int listCnt = iMypage.getCntLaterMyBook(userid);
+					System.out.println(listCnt);
+					pagination.pageInfo(page, range, listCnt);
+					model.addAttribute("mybook", iMypage.getMylaterbook(userid, pagination));
+				}
+				model.addAttribute("pagination", pagination);
 				return "mypage/mybook";
-			} else if(where.equals("later")) {
-				int listCnt = iMypage.getCntLaterMyBook(userid);
-				System.out.println(listCnt);
-				pagination.pageInfo(page, range, listCnt);
-				model.addAttribute("mybook", iMypage.getMylaterbook(userid, pagination));
 			}
-			model.addAttribute("pagination", pagination);
-			return "mypage/mybook";
 		}
 		return "redirect:/home";
 	}

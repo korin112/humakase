@@ -35,7 +35,7 @@
 		<tr>
 			<td>
 				<button type="button" id="btnDelete" class="btn btn-outline-secondary">
-					<svg class="bi" width="20" height="20" fill="currentColor"><use xlink:href="#bi-trash"></use></svg>
+					<svg class="bi" width="17" height="17" fill="currentColor"><use xlink:href="#bi-trash"></use></svg>
 				</button>
 			</td>
 			<td colspan="9"></td>
