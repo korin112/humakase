@@ -75,7 +75,34 @@ table {
 $(document)
 .ready(function(){
 	member();
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+	$('#dlgEdit').dialog({  
+=======
+	
+})
+//수정버튼 클릭시 다이얼로그 실행
+.on('click','#btnEdit',function(){
+	$('#_userid').val($(this).attr('data-userid'));
+	$.ajax({url:'/outback/digEdit',
+			data:{},
+			method:'GET',
+			dataType:'json',
+			success:function(txt){
+				let user="";
+				for(i=0; i < txt.length; i++){
+					user=txt[i]['_type_code2'];
+					if($('#_type_code').val() == user){
+ 						$('#_type_code').val(txt[i]['_type_code2']);
+						$('#_type_name').val(txt[i]['_type_name2']);
+					}
+				}
+			}
+		});
+>>>>>>> branch 'main' of https://github.com/korin112/humakase.git
 	$('#dlgEdit').dialog({
+>>>>>>> branch 'main' of https://github.com/korin112/humakase.git
 		title:'등급 수정',
 		autoOpen:false,
 		modal:true,
