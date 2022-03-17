@@ -68,6 +68,7 @@
 							<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
 								<li><a class="dropdown-item" href="/outback/mypage/mybook/later">예약확인</a></li>
 								<li><a class="dropdown-item" href="/outback/covid_check">covid</a></li>
+								<li><a class="dropdown-item" href="/outback/passEdit">비밀번호변경</a></li>
 								<li><a class="dropdown-item" href="/outback/mypage">회원탈퇴</a></li>
 							</ul>
 						</li>

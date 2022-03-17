@@ -88,15 +88,19 @@ input[type=submit]{
 	</div>
 	<div class="input-button">
 	<input type=submit value=Login>
-<!-- 	<input type=button name=signon id=signon value='Sign Up'> -->
 	</div>
 	<p>Not a member yet? <a href='/outback/signon'>Sign Up</a><p>
 </div>
 </form>
-<c:if test="${fail_user=='fail'}">
+<%-- <c:if test="${fail_user=='fail'}"> --%>
+<!-- 	<script type="text/javascript"> -->
+<!--   		alert("로그인에 실패했습니다."); -->
+<!-- 	</script> -->
+<%-- </c:if> --%>
+<c:if test="${error == 'test'}">
 	<script type="text/javascript">
-		alert("로그인에 실패했습니다.");
-	</script>
+  		alert("탈퇴한 회원입니다. 다른아이디로 이용해주세요.");
+ 	</script> -->
 </c:if>
 </body>
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
