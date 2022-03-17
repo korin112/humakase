@@ -19,7 +19,7 @@
 
 </style>
 <meta charset="UTF-8">
-<title>관리자 페이지 - 예약관리</title>	
+<title>관리자 페이지 - 예약관리</title> 	
 </head>
 <body>
 	<main class="adm_main">
