@@ -30,14 +30,13 @@ div {
                 <h1 style="text-align: center; font-weight: bold; font-size: 40px; letter-spacing: 6px;">비밀번호 변경</h1>
 					<h2 style="text-align: center; font-weight: bold; color: #ccc; margin-bottom: 30px; font-size: 22px; letter-spacing: 4px;">Change Password</h2>
 	<div>
-			<label for=userid>아이디</label>
-			<input class="form-control form-control-inline text-center" type=text id=userid name=userid value="${userid}" readonly>
+			<input style='width:500px; margin-left:400px;'  class="form-control form-control-inline text-center" type=text id=userid name=userid value="${userid}" readonly>
 	</div>
 	<div>
-			<input class="form-control form-control-inline text-center" type=password id=passcode name=passcode placeholder="비밀번호변경"> 
+			<input style='width:500px; margin-left:400px;'  class="form-control form-control-inline text-center" type=password id=passcode name=passcode placeholder="비밀번호변경"> 
 	</div>
 	<div>
-			<input class="form-control form-control-inline text-center" type=password id=passcode1 name=passcode1 placeholder="비밀번호변경확인">
+			<input style='width:500px; margin-left:400px;'  class="form-control form-control-inline text-center" type=password id=passcode1 name=passcode1 placeholder="비밀번호변경확인">
 	</div>
 			<button class="btn" type=button id=btnDone name=btnDone>변경완료</button>
 			<button class="btn" type=button id=btnCancel name=btnCancel>변경취소</button>
