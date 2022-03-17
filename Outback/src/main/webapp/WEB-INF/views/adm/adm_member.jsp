@@ -203,7 +203,7 @@ function member(){
 						+ txt[i]['userid']
 						+'><svg class="bi" width="20" height="20" fill="currentColor"><use xlink:href="#bi-pen"></use></svg></button></td></tr>';
 // 					let btn='<td align=center><input type=button id=btnEdit value="수정" data-userid='+txt[i]['userid']+'></td></tr>';
-					$('#tblMember tbody').append(box+str+updatebtn);
+					$('#tblMember tbody').append(box+str+updatebtn); 
 				}
 			}
 		});
