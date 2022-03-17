@@ -11,40 +11,65 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <link rel="stylesheet" href="${path}/resources/css/style.css">
 <style>
-.adm_paging .page-link:hover{color:inherit;}
+	.adm_paging .page-link:hover{color:inherit;}
+	.board_table {width:100%; border-top:1px solid #ccc; border-bottom:1px solid #ccc;  text-align:center;}
+	.board_table thead {background-color:#EAEAEA;}
+	.board_table .board_th_tr {border-bottom:1px solid #ccc;}
+	.board_table thead tr th {padding-top:15px; padding-bottom:15px;}
+	.board_table .th_num {width:3rem;}
+	.board_table .th_spot {width:5rem;}
+	.board_table .th_title {width:20rem;}
+	.board_table .th_writer {width:10rem;}
+	.board_table .th_created {width:10rem;}
+ 	.board_table tbody tr td {padding-top:10px; padding-bottom:10px;border-bottom:1px solid #f1f1f1;}
+	.board_table tbody tr:hover td {background-color:#f1f1f1;}
+	
+	.board_btn_option {padding-top:20px; padding-bottom:45px;}
+	
+	.board_btn_option .board_search {float:left;}
+	.board_search input::placeholder {color:#A6A6A6;}
+	
+	.board_btn_option .board_write {float:right;}
 </style>
 </head>
 <body>
 	<%@include file ="header.jsp" %>
 	<div class="container O_container">
-		<table id="getBoard">
+	
+		<table id="getBoard" class="board_table">
 			<thead>
-				<tr>
-					<th>번호</th>
-					<th>지점</th>
-					<th>제목</th>
-					<th>작성자</th>
-					<th>작성일</th>
+				<tr class="board_th_tr">
+					<th class="th_num">번호</th>
+					<th class="th_spot">지점</th>
+					<th class="th_title">제목</th>
+					<th class="th_writer">작성자</th>
+					<th class="th_created">작성일</th>
 				</tr>
 			</thead>
-			<c:forEach items="${b_list}" var="b">
-				<tr id="board_tr">
-					<td>${b.board_id}</td>
-					<td>${b.spot_name}</td>
-<%-- 		            <td><c:out value="${b.menu_name}"/></td> --%>
-		            <td>${b.title}</td>
-		            <td>${b.writer}</td>
-		            <td><fmt:formatDate pattern="yy.MM.dd" value="${b.created}"/></td>
-		        </tr>
-			</c:forEach>
+			<tbody>
+				<c:forEach items="${b_list}" var="b">
+					<tr id="board_tr" class="board_tr">
+						<td>${b.board_id}</td>
+						<td>${b.spot_name}</td>
+						<%-- <td><c:out value="${b.menu_name}"/></td> --%>
+			            <td>${b.title}</td>
+			            <td>${b.writer}</td>
+			            <td><fmt:formatDate pattern="yy.MM.dd" value="${b.created}"/></td>
+			        </tr>
+				</c:forEach>
+			</tbody>
 		</table>
-		
-		<input type="text" id="keyword" name="keyword" spellcheck=false value="${p.page.keyword}">
-		<button id="keyBtn">검색</button>
-		<c:if test="${userid!=null}">
-			<button id="insert">글쓰기</button>
-		</c:if>	
-		
+		<div class="board_btn_option"> 
+			<div class="board_search">
+				<input type="text" id="keyword" name="keyword" spellcheck=false placeholder="검색어를 입력해주세요" value="${p.page.keyword}">
+				<button id="keyBtn">검색</button>
+			</div>
+			<div class="board_write">
+				<c:if test="${userid!=null}">
+					<button  id="insert">글쓰기</button>
+				</c:if>
+			</div>
+		</div>
 		<div class="adm_paging">
 			<nav>
 				<ul class="pagination" id="pageInfo">

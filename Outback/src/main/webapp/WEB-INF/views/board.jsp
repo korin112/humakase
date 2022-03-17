@@ -45,9 +45,9 @@
   	.CommentWriter .comment_inbox_text {overflow:hidden; overflow-wrap:break-word; width:100%;
     	min-height:1.35rem; max-height:500px; font-size:1rem; padding-right:1px; margin-top:8px;
   		border:0px; resize:none; box-sizing:boder-box; display:block; outline:0;}
-  	.CommentWriter .comment_attach {position:relative;}
-  	.CommentWriter .register_box .button {
-  		display:inline-block;
+  	.CommentWriter .comment_attach {position:relative;  padding-right:10px;}
+  	.CommentWriter .register_box {
+  		text-align:right;
   	}
 </style>
 </head>
@@ -121,12 +121,11 @@
 	<section class="book-list fixed" id="reBoard" style="display:none;">
 		<div class="article_wrap">
 			<div id="comment_div"></div>
-			<div class="CommentWriter">
-				<c:if test="${m.userid==b.writer || m.user_type==1}">
+			<c:if test="${m.userid==b.writer || m.user_type==1}">
+				<div class="CommentWriter">
 					<div class="comment_inbox">
-	 					<%-- <input type="text" id="userid" name="userid" readonly=readonly value="${m.userid}" style='border:0px;'> --%>
 						<strong class="comment_inbox_name" id="userid">${m.userid}</strong>
-						<textarea id="cmt" name="cmt" spellcheck=false placeholder="댓글을 남겨보세요." row="1"
+						<textarea id="cmt" name="cmt" spellcheck=false placeholder="댓글을 남겨보세요."
 								class="comment_inbox_text" style="height:1.8rem;" onkeydown="resize(this)" onkeyup="resize(this)"></textarea>
 					</div>
 					<div class="comment_attach">
@@ -134,8 +133,8 @@
 							<a href="#none" role="button" class="button" id="reInsert">등록</a>
 						</div>
 					</div>
-				</c:if>
-			</div>
+				</div>
+			</c:if>
 		</div>
 	</section>
 	</div>
@@ -162,9 +161,14 @@
 			return false;
 		})
 		.on('click','#reInsert',function() {
+			if($('#cmt').val()=='') {
+				alert('댓글을 입력해주세요');
+				return false;
+			}
+
 			$.ajax({url:'/outback/re_insert',
 				data:{board_id:$('#board_id').val(), 
-					  writer:$('#userid').val(),
+					  writer:$('#userid').text(),
 				  	  content:$('#cmt').val()},
 				method:'POST',
 				datatype:'json',
@@ -260,7 +264,7 @@
 				method:'GET',
 				datatype:'json',
 				success:function(txt) {
-					//console.log(txt);
+					console.log(txt);
 					for(i=0;i<txt.length;i++) {
 						let writer="<div><strong>"+txt[i]['writer']+"</strong></div>";
 						let content="<div><span>"+txt[i]['content']+"</span></div>"

@@ -59,7 +59,7 @@
 				<li>지점</li>
 				<li id="spot" class="dropdown option" >
 					<a href="#" class="dropdown-toggle link-dark" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-						지점을 선택해주세요.
+						지점을 선택하세요.
 					</a>
 					<ul class="dropdown-menu"></ul>
 				</li>
@@ -91,7 +91,7 @@
 			$('#vdate a').text(vdate);
 			
 			
-			$('#spot a').text('지점을 선택해주세요.');
+			$('#spot a').text('지점을 선택하세요.');
 			$('#spot a').attr('data-value',null);
 			$('#spot ul').empty();
 			
@@ -133,16 +133,8 @@
 			});
 		})
 		.on('click','#done',function() {
-			if($('#title').val()==null) {
-				alert("제목을 입력해주세요.");
-			} else if($('#content').val()==null) {
-				alert("내용을 입력해주세요.");
-			}
-			console.log("spot : "+$('#spot ul li').attr('data-value'));		
-			console.log("vdate : "+$('#vdate a').text());			
-			
-			let spot=$('#spot ul li').attr('data-value');
-			let ar=spot.split(',');
+			// console.log("spot : "+$('#spot ul li').attr('data-value'));		
+			// console.log("vdate data-value : "+$('#vdate ul li').attr('data-value'));				
 			
 			let m_code='';
 			for(i=0;i<$('#menu li').length;i++) {
@@ -150,7 +142,27 @@
 			}
 			let menu_code=m_code.replace(',','');
 			console.log(menu_code);
-	
+			
+			if($('#title').val()=='') {
+				alert("제목을 입력해주세요.");
+				return false;
+			} else if($.trim($('#vdate a').text())=='날짜를 선택하세요.') {
+				alert("날짜를 선택해주세요.");
+				return false;
+			} else if($.trim($('#spot a').text())=='지점을 선택하세요.') {
+				alert("지점을 선택해주세요.");
+				return false;
+			}  else if(menu_code=='') {
+				alert("메뉴를 선택해주세요.");
+				return false;
+			} else if($('#content').val()=='') {
+				alert("내용을 입력해주세요.");
+				return false;
+			}
+			
+			let spot=$('#spot ul li').attr('data-value');
+			let ar=spot.split(',');
+			
 			let oParam = {title:$('#title').val(), writer:$('#writer').val(),
 						  vdate:$('#vdate a').text(), spot:ar[1],
 						  menu_code:menu_code, content:$('#content').val()};
