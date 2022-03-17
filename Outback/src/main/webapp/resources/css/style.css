@@ -15,6 +15,18 @@ li{list-style:none;}
 /* header.jsp header 영역 */
 .h_logo{font-family: 'Gelasio','Noto Sans KR', sans-serif; font-size:2.125rem !important;}
 
+/* home.jsp 영역 */
+.carousel-indicators{bottom:30px !important;}
+.carousel-inner{overflow:hidden;margin:0 auto;position:relative;width:100%;}
+.carousel-item{overflow:hidden;position:relative;height:850px;}
+.carousel-item img{width:100%;min-width:1920px;position:absolute;left:50%;top:50%;
+	transform:translate(-50%,-50%);}
+.main_section{margin:8rem auto;}
+.main_section h3{text-align:center; padding-bottom:1.5rem; position:relative;
+	font-size:2.125rem; font-weight:700;}
+.main_section h3::after{content:''; position:absolute;left:0; bottom:0; right:0; display:block;
+	height:1px; width:100%; background:#212529; opacity:0.5;}
+
 /* submenu.jsp submenu 영역 */
 
 .submenu_title_wrap{width:100%; padding:5rem 0; background:#f2f2f2;}
@@ -94,13 +106,16 @@ footer .sitemap ul li:nth-child(4) a::after{content:''; width:0;}
 .adm_book_table tbody tr, .adm_member_table tbody tr, .mybook_table tbody tr{
 	border-bottom:1px solid #eee; cursor:pointer;
 }
+.adm_member_table tbody tr{
+	cursor:default;
+}
 .adm_book_table tbody tr:nth-child(even),.adm_member_table tbody tr:nth-child(even),
 .mybook_table tbody tr:nth-child(even){
 	background:#f9f9f9;
 }
-.adm_book_table tbody tr:hover, .adm_member_table tbody tr:hover, .mybook_table tbody tr:hover{background:#f1f1f1;}
+.adm_book_table tbody tr:hover, .mybook_table tbody tr:hover{background:#f1f1f1;}
 .adm_book_table tbody td, .adm_member_table tbody td, .mybook_table tbody td{
-	font-size:0.875rem; padding:1rem 0.5rem; border-left:1px solid #eee;
+	font-size:0.875rem; padding:1rem 0.5rem; border-left:1px solid #eee; transition:0.3s;
 }
 .adm_book_table tbody td:first-child, .bd_table tbody td:first-child, .adm_member_table tbody td:first-child, 
 .mybook_table tbody td:first-child{
