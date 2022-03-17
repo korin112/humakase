@@ -11,61 +11,39 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="${path}/resources/css/sidebars.css">
-<link rel="stylesheet" href="${path}/resources/css/modals.css">
-<link rel="stylesheet" href="${path}/resources/css/style.css">
-<%-- <script src="${path}/resources/js/admin.js"></script> --%>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
-<script src='https://code.jquery.com/ui/1.13.0/jquery-ui.js'></script>
-<style>
-
-</style>
+<link rel="stylesheet" href="${path}/resources/css/sidebars.css">
+<link rel="stylesheet" href="${path}/resources/css/style.css">
+<script src="${path}/resources/js/admin.js"></script>
 <meta charset="UTF-8">
-<title>관리자 페이지 - 회원관리</title>	
+<title>관리자 페이지</title>
 </head>
 <body>
-	<main class="adm_main">
-		<%@include file ="admin_header.jsp" %>
-		<div class="adm_container_wrap">
+<main class="adm_main">
+<%@include file ="admin_header.jsp" %>
+<div class="adm_container_wrap">
 			<div class="container adm_container">
-			
-
-<table class="adm_member_table">
+<table class="adm_member_table" id=tblMember>
 	<thead>
 		<tr>
-			<th>No.</th>
-			<th>아이디</th>
-			<th>패스워드</th>
-			<th>이름</th>
-			<th>모바일</th>
-			<th>성별</th>
-			<th>등급</th>
-			<th>로그인시간</th>
-			<th>로그아웃시간</th>
-			<th><input type=button id=btnDel value=선택삭제></th>
+			<th>No.</th><th>아이디</th><th>패스워드</th><th>이름</th><th>모바일</th><th>성별</th><th>등급</th><th>로그인시간</th><th>로그아웃시간</th><th></th>
 		</tr>
 	</thead>
-	<tbody id=tblMember>
-	</tbody>	 
+	<tbody>
+	</tbody>
+	<tfoot>
+		<tr>
+			<td>
+				<button type="button" id="btnDelete" class="btn btn-outline-secondary">
+					<svg class="bi" width="17" height="17" fill="currentColor"><use xlink:href="#bi-trash"></use></svg>
+				</button>
+			</td>
+			<td colspan="9"></td>
+		</tr>
+	</tfoot>
 </table>
-<div id=dlgEdit style='display:none;'>
-			<table>
-				<tr>
-					<td><select id=selInfo size=10 style='width:250px'></select></td>
-					<td>
-					<table>
-						<tr><td align=center>아이디</td><td><input type=text id=_userid name=_userid readonly></td></tr>
-						<tr><td align=center>번호</td><td><input type=number id=_type_code name=_type_code></td></tr>
-						<tr><td align=center>등급</td><td><input type=text id=_type_name name=_type_name></td></tr>
-						<tr><td colspan=2 align=center><input type=button id=btnDone value=수정완료></td></tr>
-					</table>
-					</td>
-				</tr>
-			</table>
-			</div>
-</div>
-</div>
-</main>
+
+</div><br>
 <div id=dlgEdit style='display:none;'>
 <table>
 	<tr>
@@ -81,37 +59,17 @@
 	</tr>
 </table>
 </div>
+</div>
+
+</main>
 </body>
-
-
+<script src="https:/code.jquery.com/jquery-3.5.0.js"></script>
+<script src='https://code.jquery.com/ui/1.13.0/jquery-ui.js'></script>
 <script>
 $(document)
 .ready(function(){
 	member();
-	$('#dlgEdit').dialog({
-		title:'등급 수정',
-		autoOpen:false,
-		modal:true,
-		width:700,
-		open:function(){
-			$('#selInfo').empty();
-			$.ajax({url:'/outback/getDig',
-					data:{},
-					method:'POST',
-					dataType:'json',
-					success:function(txt){
-						for(i=0; i < txt.length; i++){
-							let str='<option>'+txt[i]['_type_code2']+' '+txt[i]['_type_name2']+'</option>';
-							$('#selInfo').append(str);
-							
-						}
-					}
-				});
-		},
-		close:function(){
-			$('#_type_code,#_type_name').val('');
-		}
-	});
+	
 })
 //수정버튼 클릭시 다이얼로그 실행
 .on('click','#btnEdit',function(){
@@ -131,7 +89,29 @@ $(document)
 				}
 			}
 		});
-	$('#dlgEdit').dialog("open");
+	$('#dlgEdit').dialog({
+		title:'등급 수정',
+		modal:true,
+		width:600,
+		open:function(){ 
+			$('#selInfo').empty();
+			$.ajax({url:'/outback/getDig',
+					data:{},
+					method:'POST',
+					dataType:'json',
+					success:function(txt){
+						for(i=0; i < txt.length; i++){
+							let str='<option>'+txt[i]['_type_code2']+' '+txt[i]['_type_name2']+'</option>';
+							$('#selInfo').append(str);
+							
+						}
+					}
+				});
+		},
+		close:function(){
+			$('#_type_code,#_type_name').val('');
+		}
+	});
 })
 //dialog select 선택옵션
 .on('click','#selInfo option',function(){
@@ -196,7 +176,7 @@ $(document)
 				console.log(txt);
 				if(txt == "ok") {
 					alert("삭제 완료");
-					document.location='/outback/adm/adm_member';
+					document.location='/outback/adm/member_adm';
 				} else {
 					alert("삭제 실패");
 				}
@@ -214,17 +194,20 @@ function member(){
 			data:{},
 			dataType:"json",
 			success:function(txt){
-
 				for(i=0; i < txt.length; i++){
 					let box='<tr><td><input type=checkbox name=box value="'+txt[i]['userid']+'"></td>'
 					let str='<td>'+txt[i]['userid']+'</td><td>'+txt[i]['passcode']+'</td><td>'+txt[i]['name']+
 					'</td><td>'+txt[i]['mobile']+'</td><td>'+txt[i]['gender']+'</td><td>'+txt[i]['user_type']+
 					'</td><td>'+txt[i]['login_time']+'</td><td>'+txt[i]['logout_time']+'</td>';
-					let btn='<td align=center><input type=button id=btnEdit value="수정" data-userid='+txt[i]['userid']+'></td></tr>';
-					$('#tblMember').append(box+str+btn);
+					let updatebtn = '<td><button type="button" id="btnEdit" class="btn btn-outline-secondary" data-userid='
+						+ txt[i]['userid']
+						+'><svg class="bi" width="20" height="20" fill="currentColor"><use xlink:href="#bi-pen"></use></svg></button></td></tr>';
+// 					let btn='<td align=center><input type=button id=btnEdit value="수정" data-userid='+txt[i]['userid']+'></td></tr>';
+					$('#tblMember tbody').append(box+str+updatebtn); 
 				}
 			}
 		});
 }
 </script>
+
 </html>

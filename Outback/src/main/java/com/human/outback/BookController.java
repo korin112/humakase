@@ -154,7 +154,7 @@ public class BookController {
 			model.addAttribute("getCart", cart);
 			return "cart";
 		} else {
-			return "redirect:/home";
+			return "redirect:/login";
 		}
 	}
 	

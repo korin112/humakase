@@ -215,4 +215,12 @@ public class AdminController {
 	      return "redirect:/adm/typeadd";
 	   }
 
+	   
+	   @RequestMapping("/adm/member_adm")
+	   public String adm_member() {
+		   return "/adm/adm_member";
+	   }
+
+
+
 }

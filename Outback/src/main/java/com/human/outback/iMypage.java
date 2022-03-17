@@ -11,7 +11,7 @@ public interface iMypage {
 	//my reservation
 	public int getCntLaterMyBook(String userid);
 	public int getCntPrevMyBook(String userid);
-	ArrayList<Book> getMylaterbook(@Param("param1")String booker, @Param("pagination")Pagination laterPagination);
-	ArrayList<Book> getMyPrevbook(@Param("param1")String booker, @Param("pagination")Pagination prevPagination);
-	void deleteAdmBook(String book_id);
+	ArrayList<Book> getMylaterbook(@Param("param1")String booker, @Param("pagination")Pagination pagination);
+	ArrayList<Book> getMyPrevbook(@Param("param1")String booker, @Param("pagination")Pagination pagination);
+	void deleteMybook(int book_id);
 }
