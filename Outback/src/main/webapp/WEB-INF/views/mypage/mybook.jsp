@@ -95,7 +95,7 @@
 				</div>
 			</div>
 					<!-- Modal -->
-			<div class="modal" tabindex="-1" id="admBookModal">
+			<div class="modal" tabindex="-1" id="myBookModal">
 				<div class="modal-dialog modal-xl modal-dialog-centered">
 					<div class="modal-content">
 						<div class="modal-header">
