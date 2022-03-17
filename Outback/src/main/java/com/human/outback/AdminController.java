@@ -104,6 +104,12 @@ public class AdminController {
 		return str;
 	}
 	
+
+	@RequestMapping("/adm/adm_member")
+	public String adm_Member() {
+		return "adm/adm_member";
+	}
+
 	@RequestMapping("/adm/menuadd") 
 	   public String doMenuAdd(Model m) {
 	      iAdmin menu = sqlSession.getMapper(iAdmin.class);
@@ -208,4 +214,5 @@ public class AdminController {
 	      type.deleteType(mtype_code);
 	      return "redirect:/adm/typeadd";
 	   }
+
 }

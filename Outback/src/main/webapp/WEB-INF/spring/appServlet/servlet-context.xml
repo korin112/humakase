@@ -29,7 +29,7 @@
    <context:component-scan base-package="com.human.outback" />
    <beans:bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
    <beans:property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
-   <beans:property name="url" value="jdbc:mysql://3.37.121.152:3306/teamproject?useSSL=false&amp;serverTimezone=UTC" />
+   <beans:property name="url" value="jdbc:mysql://3.37.121.152:3306/teamproject?useSSL=false&amp;serverTimezone=Asia/Seoul" />
    <beans:property name="username" value="newuser" />
    <beans:property name="password" value="1Q2w3E4r!!@@" />
    </beans:bean>
