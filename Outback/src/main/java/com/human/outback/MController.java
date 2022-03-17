@@ -94,7 +94,7 @@ public class MController {
 		System.out.println("retval="+retval);
 		return retval;
 	}
-	//로그인 시간 체크
+	//로그인 시간 체크 및 탈퇴 체크
 	@RequestMapping(value="/login_check", method = RequestMethod.POST)
 	public String login_check(HttpServletRequest hsr,Model model) {
 		HttpSession session = hsr.getSession();
@@ -106,29 +106,29 @@ public class MController {
 		iLogin login = sqlSession.getMapper(iLogin.class);
 		ArrayList<Member> m=login.getLogin();
 		for(int i=0; i < m.size(); i++) {
-			System.out.println(m.get(i).getUser_type());
 //			System.out.println(m.get(i).getUser_type().getClass().getName());
 			if(m.get(i).getPasscode().equals(passcode) && m.get(i).getUserid().equals(userid)) {
-				if(m.get(i).getUser_type() == 1) {
-					type=1;
-					session.setAttribute("_type_name2","관리자");
-				} else {
-					type=0;
-				}
-				str="ok";
-				break;
-			} else {
-				str="fail";
+				type=m.get(i).getUser_type();
 			}
 		}
-		if(str.equals("ok")) {
-			login.upLogin(userid);
-			session.setAttribute("userid",userid);
-			session.setAttribute("user_type",type);
-			System.out.println(session.getAttribute("user_type"));
-			return "redirect:/home";
+		System.out.println(type);
+		if(type == 1) {
+			session.setAttribute("_type_name2","관리자");
+				login.upLogin(userid);
+				session.setAttribute("userid",userid);
+				session.setAttribute("user_type",type);
+				return "redirect:/home";
+		} else if (type == 2) {
+				str="test";
+				model.addAttribute("error",str);
+				return "login";
+		} else if (type == 0) {
+				str="fail";
+				session.setAttribute("userid",userid);
+				session.setAttribute("user_type",type);
+				model.addAttribute("fail_user",str);
+				return "redirect:/home";
 		} else {
-			model.addAttribute("fail_user",str);
 			return "login";
 		}
 	}
@@ -253,6 +253,7 @@ public class MController {
 		String retval="";
 		String userid=hsr.getParameter("userid");
 		String passcode=hsr.getParameter("passcode");
+//		int usertype=Integer.parseInt(hsr.getParameter("user_type"));
 		
 		iLogin pw=sqlSession.getMapper(iLogin.class);
 		ArrayList<Member> a=pw.getLogin();
@@ -268,13 +269,14 @@ public class MController {
 			}
 		}
 		if(retval.equals("ok")) {
-			session.setAttribute("userid",userid);
-			session.setAttribute("passcode",passcode);
+//			session.setAttribute("userid",userid);
+//			session.setAttribute("passcode",passcode);
+//			session.setAttribute("user_type",usertype);
 			pw.pwCheck(userid,passcode);
 			session.invalidate();
 			return "ok";
 		} else {
-//			model.addAttribute("fail_user",retval);
+			model.addAttribute("fail_user",retval);
 			return "fail";
 		}
 	}
