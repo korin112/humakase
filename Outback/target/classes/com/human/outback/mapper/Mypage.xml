@@ -31,4 +31,7 @@
 	limit #{pagination.startList},#{pagination.listSize}
 	]]>
 </select>
+<delete id="deleteMybook">
+	delete from a, b using booking a left join booking_detail b on a.book_id = b.book_id where b.book_id = #{param1}
+</delete>
 </mapper>

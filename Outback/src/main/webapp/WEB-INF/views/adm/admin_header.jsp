@@ -21,9 +21,15 @@
 		<path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
 		<path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/>
 	</symbol>
+	<symbol id="bi-trash" viewBox="0 0 16 16">
+		<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+		<path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+	</symbol>
+	<symbol id="bi-pen" viewBox="0 0 16 16">
+		 <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"></path>
+	</symbol>
 </svg>
-
-
+ 
 
 <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark adm_header" style="width: 280px;">
 	<a href="/outback/adm" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none adm_logo">
@@ -32,6 +38,8 @@
 	<hr>
 	<ul class="nav nav-pills flex-column mb-auto">
 		<li>
+
+
 
 			<a href="adm/adm_menu" class="nav-link text-white">
 
@@ -45,6 +53,8 @@
 
 			<a href="adm/adm_menutype" class="nav-link text-white">
 
+
+
 			<a href="/outback/adm/typeadd" class="nav-link text-white">
 
 				<svg class="bi me-2" width="24" height="24"><use xlink:href="#bi-card-list"></use></svg>
@@ -52,7 +62,11 @@
 			</a>
 		</li>
 		<li>
+
+			<a href="/outback/adm/member_adm" class="nav-link text-white">
+
 			<a href="/outback/adm/adm_member" class="nav-link text-white">
+
 				<svg class="bi me-2" width="24" height="24"><use xlink:href="#people-circle"></use></svg>
 				<span class="adm_nav_tt">회원관리</span>
 			</a>
