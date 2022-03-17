@@ -1,4 +1,4 @@
-package com.human.outback;
+package com.human.outback.DTO;
 
 public class Menu {
 	private int menu_code;

@@ -8,8 +8,8 @@
 	from member
 	order by userid
 </select>
-<select id="confirm_check" resultType="com.human.outback.Member2">
-	select userid from member
+<select id="confirm_check" resultType="com.human.outback.Member">
+	select userid from member where userid=#{param1}
 </select>
 <insert id="addLogin">
 	insert into member(userid,passcode,name,mobile,gender,user_type,login_time,logout_time)
