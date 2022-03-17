@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" session="true" %>
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
@@ -7,51 +7,65 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title> - 관리자 페이지 - </title>
-<!-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script> -->
-</head>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="${path}/resources/css/sidebars.css">
+<link rel="stylesheet" href="${path}/resources/css/modals.css">
 <link rel="stylesheet" href="${path}/resources/css/style.css">
+<%-- <script src="${path}/resources/js/admin.js"></script> --%>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+<script src='https://code.jquery.com/ui/1.13.0/jquery-ui.js'></script>
 <style>
-table {
-	border-collapse:collapse;
-	margin:0 auto;
-	border:1px solid #ddd;
-	align:center;
-	
-}
-
-#tblMember th, #tblMember td {
-	box-sizing:border-box;
-	border:1px solid #ddd;
-	padding:0.85rem;
-	align:center;
-}
-#dlgEdit td{
-	box-sizing:border-box;
-	border:1px solid black;
-	padding:0.85rem;
-}
-#dlgEdit input {
-	border-collapse:collapse;
-}
-#btnCancel {
-	left:690px;
-	top:680px;
-	padding: 0.5rem 3rem;
-	
-}
 
 </style>
+<meta charset="UTF-8">
+<title>관리자 페이지 - 회원관리</title>	
+</head>
 <body>
-<%@include file ="header.jsp" %>
-<h1 style="text-align: center; font-weight: bold; font-size: 40px; letter-spacing: 6px;">멤버관리</h1>
-			<h2 style="text-align: center; font-weight: bold; color: #ccc; margin-bottom: 30px; font-size: 22px; letter-spacing: 4px;">Member Management</h2>
-<div class="container O_container">
-<table id=tblMember>
+	<main class="adm_main">
+		<%@include file ="admin_header.jsp" %>
+		<div class="adm_container_wrap">
+			<div class="container adm_container">
+			
+
+<table class="adm_member_table">
+	<thead>
+		<tr>
+			<th>No.</th>
+			<th>아이디</th>
+			<th>패스워드</th>
+			<th>이름</th>
+			<th>모바일</th>
+			<th>성별</th>
+			<th>등급</th>
+			<th>로그인시간</th>
+			<th>로그아웃시간</th>
+			<th><input type=button id=btnDel value=선택삭제></th>
+		</tr>
+	</thead>
+	<tbody id=tblMember>
+	</tbody>	 
 </table>
-<input type=button id=btnCancel name=btnCancel value=돌아가기>
-</div><br>
+<div id=dlgEdit style='display:none;'>
+			<table>
+				<tr>
+					<td><select id=selInfo size=10 style='width:250px'></select></td>
+					<td>
+					<table>
+						<tr><td align=center>아이디</td><td><input type=text id=_userid name=_userid readonly></td></tr>
+						<tr><td align=center>번호</td><td><input type=number id=_type_code name=_type_code></td></tr>
+						<tr><td align=center>등급</td><td><input type=text id=_type_name name=_type_name></td></tr>
+						<tr><td colspan=2 align=center><input type=button id=btnDone value=수정완료></td></tr>
+					</table>
+					</td>
+				</tr>
+			</table>
+			</div>
+</div>
+</div>
+</main>
 <div id=dlgEdit style='display:none;'>
 <table>
 	<tr>
@@ -67,38 +81,18 @@ table {
 	</tr>
 </table>
 </div>
-<%@include file ="footer.jsp" %>
 </body>
-<script src="https:/code.jquery.com/jquery-3.5.0.js"></script>
-<script src='https://code.jquery.com/ui/1.13.0/jquery-ui.js'></script>
+
+
 <script>
 $(document)
 .ready(function(){
 	member();
-	
-})
-//수정버튼 클릭시 다이얼로그 실행
-.on('click','#btnEdit',function(){
-	$('#_userid').val($(this).attr('data-userid'));
-	$.ajax({url:'/outback/digEdit',
-			data:{},
-			method:'GET',
-			dataType:'json',
-			success:function(txt){
-				let user="";
-				for(i=0; i < txt.length; i++){
-					user=txt[i]['_type_code2'];
-					if($('#_type_code').val() == user){
- 						$('#_type_code').val(txt[i]['_type_code2']);
-						$('#_type_name').val(txt[i]['_type_name2']);
-					}
-				}
-			}
-		});
 	$('#dlgEdit').dialog({
 		title:'등급 수정',
+		autoOpen:false,
 		modal:true,
-		width:600,
+		width:700,
 		open:function(){
 			$('#selInfo').empty();
 			$.ajax({url:'/outback/getDig',
@@ -118,6 +112,26 @@ $(document)
 			$('#_type_code,#_type_name').val('');
 		}
 	});
+})
+//수정버튼 클릭시 다이얼로그 실행
+.on('click','#btnEdit',function(){
+	$('#_userid').val($(this).attr('data-userid'));
+	$.ajax({url:'/outback/digEdit',
+			data:{},
+			method:'GET',
+			dataType:'json',
+			success:function(txt){
+				let user="";
+				for(i=0; i < txt.length; i++){
+					user=txt[i]['_type_code2'];
+					if($('#_type_code').val() == user){
+ 						$('#_type_code').val(txt[i]['_type_code2']);
+						$('#_type_name').val(txt[i]['_type_name2']);
+					}
+				}
+			}
+		});
+	$('#dlgEdit').dialog("open");
 })
 //dialog select 선택옵션
 .on('click','#selInfo option',function(){
@@ -182,7 +196,7 @@ $(document)
 				console.log(txt);
 				if(txt == "ok") {
 					alert("삭제 완료");
-					document.location='/outback/member';
+					document.location='/outback/adm/adm_member';
 				} else {
 					alert("삭제 실패");
 				}
@@ -193,16 +207,14 @@ $(document)
 	document.location='/outback/home';
 	return false;
 })
+
 function member(){
 	$.ajax({url:"/outback/memberList",
 			method:"GET",
 			data:{},
 			dataType:"json",
 			success:function(txt){
-				let head='<thead><tr><th>No.</th><th>아이디</th><th>패스워드</th><th>이름</th><th>모바일</th><th>성별</th><th>'
-				+'등급</th><th>로그인시간</th><th>로그아웃시간</th><th><input type=button id=btnDel value=선택삭제></th></tr></thead>';
-				$('#tblMember').append(head);
-				
+
 				for(i=0; i < txt.length; i++){
 					let box='<tr><td><input type=checkbox name=box value="'+txt[i]['userid']+'"></td>'
 					let str='<td>'+txt[i]['userid']+'</td><td>'+txt[i]['passcode']+'</td><td>'+txt[i]['name']+

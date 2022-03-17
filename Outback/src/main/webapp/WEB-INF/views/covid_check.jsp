@@ -54,6 +54,11 @@
 </body>
 <script src='https://code.jquery.com/jquery-3.5.0.js'></script>
 <script>
+let vdate= document.getElementById('coviddt');
+let todayData = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().substring(0, 10);
+vdate.value = todayData;
+// 체크인 최소값 : 오늘 날짜
+vdate.setAttribute('max', todayData);
 $(document)
 .on('click','#btnSearch',function(){
 	$('#ctbody').empty();
