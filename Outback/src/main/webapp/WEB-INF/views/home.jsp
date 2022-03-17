@@ -49,19 +49,19 @@
 				<div class="carousel-item">
 					<img src="https://www.outback.co.kr/upload/banner/20190108/20190108172841884005.jpg"  alt="...">
 						<div style="color:white;">
-							
 						</div>
 				</div>
 				<div class="carousel-item">
 					<img src="https://www.outback.co.kr/upload/banner/20201019/20201019101227003222.jpg"  alt="...">
 						<div style="color:white;">
+
+						
 							
 						</div>
 				</div>
 				<div class="carousel-item">
 					<img src="https://www.outback.co.kr/upload/banner/20180627/20180627183609110019.jpg"  alt="...">
 						<div style="color:white;">
-							
 						</div>
 				</div>
 					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
@@ -72,7 +72,7 @@
 						<span class="carousel-control-next-icon" aria-hidden="true"></span>
 						<span class="visually-hidden">Next</span>
 					</button>
-			</div>
+			</div> 
 	</div>
 	
 </div>
