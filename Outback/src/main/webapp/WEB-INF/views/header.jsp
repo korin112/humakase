@@ -69,6 +69,7 @@
 								<li><a class="dropdown-item" href="/outback/mypage/mybook/later">예약확인</a></li>
 								<li><a class="dropdown-item" href="/outback/covid_check">covid</a></li>
 								<li><a class="dropdown-item" href="/outback/mypage">회원탈퇴</a></li>
+								<li><a class="dropdown-item" href="/outback/mypage/myboard">리뷰관리</a></li>
 							</ul>
 						</li>
 						<li class="nav-item">

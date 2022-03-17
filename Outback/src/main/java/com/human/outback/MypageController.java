@@ -88,4 +88,29 @@ public class MypageController {
 		System.out.println(str);
 		return str;
 	}
+	
+	@RequestMapping(value="/mypage/myboard")
+	public String listMyBoard(Model m, Page page, HttpSession session, HttpServletRequest hsr) {
+		iBoard board = sqlSession.getMapper(iBoard.class);
+		int skip = (page.getPageNum() - 1) * page.getAmount();
+		
+		String userid = (String) session.getAttribute("userid");
+		m.addAttribute("m", board.getSession(userid));
+		
+		String keyword=hsr.getParameter("keyword");
+		if(keyword==null) {
+			m.addAttribute("b_list", board.mp_boardList(skip, page.getAmount(),userid));
+
+			int total = board.mp_getTotal(userid);
+			PageMaker p = new PageMaker(page, total);
+			m.addAttribute("p", p);
+		} else {
+			m.addAttribute("b_list", board.mp_findKeyword(keyword, skip, page.getAmount(),userid));
+
+			int total = board.mp_getKeyTotal(keyword,userid);
+			PageMaker p = new PageMaker(page,total);
+			m.addAttribute("p",p);
+		}
+		return "/mypage/myboard";
+	}
 }

@@ -12,29 +12,45 @@
 <link rel="stylesheet" href="${path}/resources/css/style.css">
 <style>
 	.adm_paging .page-link:hover{color:inherit;}
-	.board_table {width:100%; border-top:1px solid #ccc; border-bottom:1px solid #ccc;  text-align:center;}
-	.board_table thead {background-color:#EAEAEA;}
-	.board_table .board_th_tr {border-bottom:1px solid #ccc;}
-	.board_table thead tr th {padding-top:15px; padding-bottom:15px;}
-	.board_table .th_num {width:3rem;}
-	.board_table .th_spot {width:5rem;}
-	.board_table .th_title {width:20rem;}
-	.board_table .th_writer {width:10rem;}
-	.board_table .th_created {width:10rem;}
- 	.board_table tbody tr td {padding-top:10px; padding-bottom:10px;border-bottom:1px solid #f1f1f1;}
-	.board_table tbody tr:hover td {background-color:#f1f1f1;}
+ 	.board_table {width:100%; border-top:2px solid #ccc; border-bottom:1px solid #ccc; text-align:center;}
+	.board_table thead {background-color:#f9f9f9;}
+	.board_table .board_th_tr {border-bottom:2px solid #ccc;}
+	.board_table thead tr th {padding:1.25rem 0;}
+	.board_table .th_num {width:10%;}
+	.board_table .th_spot {width:10%;}
+	.board_table .th_title {width:50%;}
+	.board_table .th_writer {width:15%;}
+	.board_table .th_created {width:15%;}
 	
-	.board_btn_option {padding-top:20px; padding-bottom:45px;}
+ 	.board_table tbody tr td {font-size:0.875rem; padding:1rem 0.5rem; border-bottom:1px solid #eee;}
+/*  	.board_table tbody tr:nth-child(even){background:#f9f9f9;} */
+	.board_table tbody td:first-child{border-left:0;}
+	.board_table tbody tr:hover td {background-color:#f1f1f1; cursor:pointer;}
 	
-	.board_btn_option .board_search {float:left;}
-	.board_search input::placeholder {color:#A6A6A6;}
 	
-	.board_btn_option .board_write {float:right;}
+	.board_btn_option {padding-top:1rem; padding-bottom:3rem;}
+	.board_btn_option .board_search {width:25%; height:10%; border-radius:6px; border:2px solid #eee; float:right;}
+	.board_btn_option .board_search input {width:85%; padding-left:1rem;  border:0; outline:0;}
+	.board_btn_option .board_search input::placeholder {color:#A6A6A6;}
+ 	.board_btn_option .board_search .board_btn_search .bi-search{text-align:right; height:20px; width:10%; cursor:pointer;}
+	
+ 	.board_write {padding-bottom:1rem; float:right;} 
 </style>
 </head>
 <body>
 	<%@include file ="header.jsp" %>
 	<div class="container O_container">
+		<div class="board_write">
+				<c:if test="${userid!=null}">
+					<div class="board_btn_write" id="insert">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+	  						<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+	  						<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+						</svg>
+						<strong>글쓰기</strong>
+					</div>
+				</c:if>
+			</div>
 		<table id="getBoard" class="board_table">
 			<thead>
 				<tr class="board_th_tr">
@@ -60,14 +76,14 @@
 		</table>
 		<div class="board_btn_option"> 
 			<div class="board_search">
-				<input type="text" id="keyword" name="keyword" spellcheck=false placeholder="검색어를 입력해주세요" value="${p.page.keyword}">
-				<button id="keyBtn">검색</button>
+				<input type="text" id="keyword" name="keyword" spellcheck=false placeholder="검색어를 입력해주세요." value="${p.page.keyword}">
+				<span class="board_btn_search" id="keyBtn">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+  						<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+					</svg>
+				</span>
 			</div>
-			<div class="board_write">
-				<c:if test="${userid!=null}">
-					<button  id="insert">글쓰기</button>
-				</c:if>
-			</div>
+		
 		</div>
 		<div class="adm_paging">
 			<nav>
