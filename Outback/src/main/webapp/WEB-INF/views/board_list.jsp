@@ -39,7 +39,7 @@
 			</c:forEach>
 		</table>
 		
-		<input type="text" id="keyword" name="keyword" value="${p.page.keyword}">
+		<input type="text" id="keyword" name="keyword" spellcheck=false value="${p.page.keyword}">
 		<button id="keyBtn">검색</button>
 		<c:if test="${userid!=null}">
 			<button id="insert">글쓰기</button>
