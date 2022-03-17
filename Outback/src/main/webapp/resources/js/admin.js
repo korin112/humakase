@@ -44,7 +44,7 @@ $(document)
 		datatype:'json',
 		success:function(data) {
 			let str = '';
-			$('#admBookModal .adm_bd_table tbody').empty();
+			$('#admBookModal .bd_table tbody').empty();
 			for(i = 0; i < data.length; i++){
 				let price = Number(data[i]['price']) ;
 				let total = Number(data[i]['total']) ;
@@ -53,7 +53,7 @@ $(document)
 					  + data[i]['m_qty'] + '</td><td>'
 					  + price.toLocaleString() + '원</td><td>'
 					  + total.toLocaleString() + '원</td></tr>';
-				$('#admBookModal .adm_bd_table tbody').append(str);
+				$('#admBookModal .bd_table tbody').append(str);
 			}
 		}
 	})
