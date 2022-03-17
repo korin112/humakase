@@ -93,7 +93,7 @@ $(document)
 		title:'등급 수정',
 		modal:true,
 		width:600,
-		open:function(){
+		open:function(){ 
 			$('#selInfo').empty();
 			$.ajax({url:'/outback/getDig',
 					data:{},
