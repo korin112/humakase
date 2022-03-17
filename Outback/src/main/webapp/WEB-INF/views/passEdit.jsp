@@ -10,33 +10,37 @@
 <meta charset="UTF-8">
 <title> - 비밀번호 수정 - </title>
 </head>
+<link rel="stylesheet" href="${path}/resources/css/style.css">
+<style>
+div {
+	align:center;
+	text-align:center;
+}
+#btnDone.btn,#btnCancel.btn {
+    background-color: #8aa1a1;
+    border:none;
+    color:white;
+    border-radius: 5px;
+}
+</style>
 <body>
+<%@include file ="header.jsp" %>
 <form action="/outback/pwEdit" method="POST" id="editForm" name="editForm">
-<div>
-	<ul>
-		<li>
+<div class="container O_container">
+                <h1 style="text-align: center; font-weight: bold; font-size: 40px; letter-spacing: 6px;">비밀번호 변경</h1>
+					<h2 style="text-align: center; font-weight: bold; color: #ccc; margin-bottom: 30px; font-size: 22px; letter-spacing: 4px;">Change Password</h2>
+	<div>
 			<label for=userid>아이디</label>
-			<input type=text id=userid name=userid value="${userid}" readonly>
-		</li>
-	</ul>
-	<ul>
-		<li>
-			<label for=passcode>비밀번호변경</label>
-			<input type=password id=passcode name=passcode> 
-		</li>
-	</ul>
-	<ul>
-		<li>
-			<label for=passcode1>비밀번호 변경확인</label>
-			<input type=password id=passcode1 name=passcode1>
-		</li>
-	</ul>
-	<ul>
-		<li>
-			<input type=button id=btnDone name=btnDone value=변경완료>
-			<input type=button id=btnCancel name=btnCancel value=변경취소>
-		</li>
-	</ul>
+			<input class="form-control form-control-inline text-center" type=text id=userid name=userid value="${userid}" readonly>
+	</div>
+	<div>
+			<input class="form-control form-control-inline text-center" type=password id=passcode name=passcode placeholder="비밀번호변경"> 
+	</div>
+	<div>
+			<input class="form-control form-control-inline text-center" type=password id=passcode1 name=passcode1 placeholder="비밀번호변경확인">
+	</div>
+			<button class="btn" type=button id=btnDone name=btnDone>변경완료</button>
+			<button class="btn" type=button id=btnCancel name=btnCancel>변경취소</button>
 </div>
 </form>
 <c:if test="${fail_user=='fail'}">
@@ -44,6 +48,7 @@
 		alert("변경에 실패했습니다.");
 	</script>
 </c:if>
+<%@include file ="footer.jsp" %>
 </body>
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <script>

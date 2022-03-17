@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.human.outback.DTO.BookingDetail;
+import com.human.outback.DTO.Menu;
+import com.human.outback.DTO.Menutype;
 import com.human.outback.DTO.Pagination;
+
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -101,8 +104,115 @@ public class AdminController {
 		return str;
 	}
 	
+<<<<<<< HEAD
 	@RequestMapping("/adm/adm_member")
 	public String adm_Member() {
 		return "adm/adm_member";
 	}
+=======
+	@RequestMapping("/adm/menuadd") 
+	   public String doMenuAdd(Model m) {
+	      iAdmin menu = sqlSession.getMapper(iAdmin.class);
+	       ArrayList<Menu> alMenu=menu.getMenu();
+	       m.addAttribute("alMenu",alMenu);
+	       ArrayList<Menutype> alType=menu.getMenutype();
+	       m.addAttribute("alType",alType);
+	      return "adm/adm_menu";
+	   }
+	
+	@RequestMapping(value ="/adm/adm_menu", method = RequestMethod.GET  ,produces = "apllication/json;charset=utf-8")
+	   public String doAddMenu(HttpServletRequest hsr) {
+	      String strMenu_code=hsr.getParameter("menu_code");
+	      int menu_type=Integer.parseInt(hsr.getParameter("menu_type"));
+	      System.out.println("menu_type "+hsr.getParameter("menu_type"));
+	      String img=hsr.getParameter("img");
+	      String menu_name=hsr.getParameter("menu_name");
+	      int menu_price=Integer.parseInt(hsr.getParameter("menu_price"));
+	      System.out.println("menu_price "+hsr.getParameter("menu_price"));
+	      String comment=hsr.getParameter("comment");
+	      
+	      iAdmin menu=sqlSession.getMapper(iAdmin.class);
+	      ArrayList<Menu> alMenu=menu.getMenu();
+	      System.out.println(alMenu);
+	      System.out.println("comment "+hsr.getParameter("comment"));
+	      if(strMenu_code.equals("")) { // insert
+	         menu.insertMenu(menu_type,img,menu_name,menu_price,comment);
+	      } else { // update
+	         int menu_code=Integer.parseInt(strMenu_code);
+	         menu.updateMenu(menu_code,menu_type,img,menu_name,menu_price,comment);
+	      }
+	      return "redirect:/adm/menuadd";
+	   }
+	@ResponseBody
+	   @RequestMapping(value="/adm/menulist", method = RequestMethod.POST  ,produces = "apllication/json;charset=utf-8")
+	      public String getMenuList(HttpServletRequest hsr) {
+	         iAdmin menu = sqlSession.getMapper(iAdmin.class);
+	         int menu_code=Integer.parseInt(hsr.getParameter("img"));
+	         ArrayList<Menu> alMenu=menu.getImg(menu_code);
+	         System.out.println(alMenu.size());
+	         JSONArray ja=new JSONArray();
+	         for(int i=0; i < alMenu.size(); i++) {
+	            JSONObject jo=new JSONObject();
+	            jo.put("img", alMenu.get(i).getImg());
+	            jo.put("comment", alMenu.get(i).getComment());
+	            ja.add(jo);
+	         }
+	         return ja.toString();
+	      }
+	
+	   @RequestMapping("/adm/typeadd") 
+	   public String doTypeAdd() {
+	      return "adm/adm_menutype";
+	   }
+	   
+	   @ResponseBody
+	   @RequestMapping(value="/adm/typelist",method = RequestMethod.POST  ,produces = "apllication/json;charset=utf-8")
+	      public String getTypeList() {
+	         iAdmin menu = sqlSession.getMapper(iAdmin.class);
+	         ArrayList<Menutype> alType=menu.getMenutype();
+	         
+	         JSONArray ja=new JSONArray();
+	         for(int i=0; i < alType.size(); i++) {
+	            JSONObject jo=new JSONObject();
+	            jo.put("mtype_code", alType.get(i).getMtype_code());
+	            jo.put("mtype_name", alType.get(i).getMtype_name());
+	            ja.add(jo);
+	         }
+	         return ja.toString();
+	      }
+	   
+	   @RequestMapping("/adm/adm_menutype") 
+	   public String doAddType(HttpServletRequest hsr) {
+	      String strMtype_code=hsr.getParameter("mtype_code");
+	      String mtype_name=hsr.getParameter("mtype_name");
+	      
+	      
+	      iAdmin type=sqlSession.getMapper(iAdmin.class);
+	      if(strMtype_code.equals("")) { // insert
+	         type.insertType(mtype_name);
+	      } else { // update
+	         int mtype_code=Integer.parseInt(strMtype_code);
+	         type.updateType(mtype_code, mtype_name);
+	      }
+	      return "redirect:/adm/typeadd";
+	   }
+	   
+	   @RequestMapping("/adm/deleteMenu")
+	   public String doDeleteMenu(HttpServletRequest hsr) {
+	      int menu_code=Integer.parseInt(hsr.getParameter("menu_code"));
+	      
+	      iAdmin menu = sqlSession.getMapper(iAdmin.class);
+	      menu.deleteMenu(menu_code);
+	      return "redirect:/adm/menuadd";
+	   }
+	   
+	   @RequestMapping("/adm/deleteType")
+	   public String doDeleteType(HttpServletRequest hsr) {
+	      int mtype_code=Integer.parseInt(hsr.getParameter("mtype_code"));
+	      
+	      iAdmin type = sqlSession.getMapper(iAdmin.class);
+	      type.deleteType(mtype_code);
+	      return "redirect:/adm/typeadd";
+	   }
+>>>>>>> branch 'main' of https://github.com/korin112/humakase.git
 }
