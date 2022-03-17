@@ -214,13 +214,13 @@ public class AdminController {
 	      type.deleteType(mtype_code);
 	      return "redirect:/adm/typeadd";
 	   }
-<<<<<<< HEAD
+
 	   
 	   @RequestMapping("/adm/member_adm")
 	   public String adm_member() {
 		   return "/adm/adm_member";
 	   }
-=======
 
->>>>>>> branch 'main' of https://github.com/korin112/humakase.git
+
+
 }

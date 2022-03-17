@@ -14,7 +14,7 @@
 	    </button>
 	    <div id="navbarSupportedContent">
 	    <form name="frm" action="/outback/logout" method="POST">
-			<input type="hidden" name="userid" value="${userid}">
+			<input type="hidden" name="userid" value="${userid}" id=userid>
 		</form> 
 	      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 	        <li class="nav-item">
@@ -35,7 +35,7 @@
 	          <a class="nav-link" href="/outback/board_list">리뷰게시판</a>
 	        </li>
 			<li class="nav-item">
-				<a class="nav-link" href="/outback/cart" id=cart>예약하기</a>
+				<a class="nav-link" id=cart1>예약하기</a>
 			</li>
 		        <c:if test="${userid==null}">
 			        <li class="nav-item">
@@ -54,11 +54,11 @@
 							<a class="nav-link" href="/outback/typeadd">메뉴타입관리</a>
 						</li>
 						<li class="nav-item">
-<<<<<<< HEAD
+
 							<a class="nav-link" href="/outback/adm/menuadd">[관리자페이지]</a>
-=======
+
 							<a class="nav-link" href="/outback/adm/adm_menu">[관리자페이지]</a>
->>>>>>> branch 'main' of https://github.com/korin112/humakase.git
+
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="#" onclick="if(confirm('로그아웃하시겠습니까?')){javascript:document.frm.submit();return false;}">로그아웃</a>
@@ -82,16 +82,13 @@
 </header>
 
 <script>
-// $(document)
-// .on('click','#cart1',function(){
-// 	if(${userid} == ""){
-// 		let result=confirm("로그인 후 이용하시겠습니까?")
-// 		result == true
-// 		console.log(result);
-// 		document.location="/outback/login";
-// 	} else{
-// 			console.log(result);
-// 			return false;
-// 	  }
-// })
+$(document)
+.on('click','#cart1',function(){
+	if($('#userid').val() == ""){
+		if(!confirm("로그인 후 이용해주세요")) return false;
+		document.location="/outback/login";
+	} else{
+		document.location="/outback/cart";
+	}
+})
 </script>
