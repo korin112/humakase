@@ -26,7 +26,6 @@
 	padding:20px 0px 5px 0px;
 	font-size:14pt;
 	margin:10px;
-
 }
 input::placeholder{
  	color:transparent;
@@ -60,7 +59,6 @@ input:focus, input:not(:placeholder-shown){
 .input-button {
 	margin-left:660px;
 }
-
 </style>
 <body>
 <%@include file ="header.jsp" %>
@@ -68,9 +66,9 @@ input:focus, input:not(:placeholder-shown){
 			<h2 style="text-align: center; font-weight: bold; color: #ccc; margin-bottom: 30px; font-size: 22px; letter-spacing: 4px;">Sign Up</h2>
 <div class="container O_container">
 	<div class="input-box">
-			<label for="userid">아이디</label>
-			<input type="text" id="userid" required>
-			<input type=button value=중복확인 id=btnCheck onclick="confirm()">
+			<label for="user">아이디</label>
+			<input type=text id="userids" required>
+			<input type=button value=중복확인 name=btnCheck id=btnCheck>
 	</div>
 	<div class="input-box">
 			<label for="passcode">비밀번호</label>
@@ -109,7 +107,7 @@ let flag="";
 $(document)
 //유효성 검사
 .on('click','#btnDone',function(){
-	if($('#userid').val() == ''){
+	if($('#userids').val() == ''){
 		alert('아이디를 입력하세요.');
 		return false;
 	} else if(flag != "true") {
@@ -144,7 +142,7 @@ $(document)
 		url:'/outback/sign_check',
 		type:'POST',
 		dataType:'text',
-		data:{userid:$('#userid').val(),passcode:$('#passcode').val(),name:$('#name').val(),
+		data:{userid:$('#userids').val(),passcode:$('#passcode').val(),name:$('#name').val(),
  			mobile:$('#mobile').val(),gender:$('input[name=gender]:checked').val()},
  		success:function(txt){
  			console.log(txt);
@@ -160,7 +158,6 @@ $(document)
 	});
 	return false;
 })
-
 //취소시 홈
 .on('click','#btnCancel',function(){
 	document.location="/outback/home";
@@ -169,21 +166,21 @@ $(document)
 //클릭시 비우기
 .on('click','#btnReset',function(){
 	if(confirm("모두 지우시겠습니까?")){
-	$('#userid,#passcode,#passcode1,#name,#mobile').val('');
+	$('#userids,#passcode,#passcode1,#name,#mobile').val('');
 	$('#input[name=gender]:checked').prop('checked',false);
 	return false;
 	}
 })
-//중복검사 체크
-function confirm(){
-	if($('#userid').val()==''){
+//중복확인 검사
+.on('click','#btnCheck',function(){
+	if($('#userids').val()==''){
 		return false;
 	}else{
 		$.ajax({
 			url:'confirm_check',
 			type:'POST',
 			dataType:'text',
-			data:{userid:$('#userid').val()},
+			data:{userid:$('#userids').val()},
 			success:function(txt){
 				if (txt == 'fail') {
 					alert('이미 사용중 및 사용한 아이디 입니다. 다른아이디를 입력해주세요.');
@@ -196,6 +193,6 @@ function confirm(){
 			}
 		})
 	}
-}
+})
 </script>
 </html>
