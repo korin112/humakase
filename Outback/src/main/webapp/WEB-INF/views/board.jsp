@@ -19,7 +19,7 @@
 	.dropdown-item{cursor:pointer;}
 	.book-list{overflow:hidden;}
 	.book-list article{display:block; margin:3.5rem 1.25rem; width:Calc(55% - 1.25rem); height:100%; float:left;}
-	.book-list #comment_article{margin:1.5rem 1.25rem;}
+	.book-list .comment_article{margin:1.5rem 1.25rem;}
 	.booking_info_box > ul{display:table; width:100%; margin:0; padding:0; border-bottom:1px solid #ddd;}
 	.booking_info_box > ul:first-child{border-top:1px solid #ddd;}	
 	.booking_info_box > ul > li{width:70%; display:table-cell; padding:1.25rem 0 1.25rem 2.125rem;}
@@ -33,7 +33,22 @@
 	.O_container .book-list #comment_div #comment_info_box {padding-bottom:1rem; color:#BDBDBD; font-size:0.75rem;}
 	.O_container .book-list #comment_div a {color:inherit;}
  	.O_container .book-list #comment_div #delBtn {padding-left:1rem; padding-right:0.5rem;}
+ 	.O_container .book-list #comment_div #upDateBtn {padding-left:1rem;} 	
   	.O_container .book-list #comment_div #cancel {padding-left:0.5rem;} 
+  	.O_container .book-list .article_wrap {margin:1.5rem 1.25rem;  width:850px;}
+  	/* 댓글 달기 */
+  	.CommentWriter {margin:12px 0 12px; padding:12px 10px 8px 18px; 
+  		border:2px solid #A6A6A6; border-radius:6px; box-sizing:border-box; background:#ffffff;}
+  	.CommentWriter .comment_inbox {position:relative; margin-bottom:10px;}
+  	.CommentWriter .comment_inbox_name {margin-bottom:10px;}
+  	.CommentWriter .comment_inbox_text::placeholder{color:#BDBDBD;}
+  	.CommentWriter .comment_inbox_text {overflow:hidden; overflow-wrap:break-word; width:100%;
+    	min-height:1.35rem; max-height:500px; font-size:1rem; padding-right:1px; margin-top:8px;
+  		border:0px; resize:none; box-sizing:boder-box; display:block; outline:0;}
+  	.CommentWriter .comment_attach {position:relative;}
+  	.CommentWriter .register_box .button {
+  		display:inline-block;
+  	}
 </style>
 </head>
 <body>
@@ -42,6 +57,8 @@
 	<section class="book-list fixed">
 		<article class="booking_info_box">
 			<input type="hidden" id="board_id" value="${b.board_id}">
+			<div><strong>${b.writer}</strong></div>
+			
 			<ul class="fixed">
 				<li>제목</li>
 				<li><input id="title" name="title" readonly="readonly" value="${b.title}"></li>
@@ -62,16 +79,16 @@
 				</c:forEach>
 			</ul>
 			<ul class="fixed">
-					<li>내용</li>
-					<li><textarea id="content" name="content" spellcheck=false readonly="readonly">${b.content}</textarea></li>
+				<li>내용</li>
+				<li><textarea id="content" name="content" spellcheck=false readonly="readonly">${b.content}</textarea></li>
 			</ul>
 			<ul class="fixed">
-					<li>작성자</li>
-					<li><input name="writer" readonly="readonly" value="${b.writer}"></li>
+				<li>작성자</li>
+				<li><input name="writer" readonly="readonly" value="${b.writer}"></li>
 			</ul>
 			<ul class="fixed">
-					<li>수정일</li>
-					<li><input name="updateDate" readonly="readonly" value='<fmt:formatDate pattern="yyyy/MM/dd" value="${b.updated}"/>'></li>
+				<li>수정일</li>
+				<li><input name="updateDate" readonly="readonly" value='<fmt:formatDate pattern="yyyy/MM/dd" value="${b.updated}"/>'></li>
 			</ul>
 			<div class=board_btn>
 				<button id="listBtn">목록페이지</button>
@@ -88,7 +105,7 @@
 		</article>
 	</section>
 	<section class="book-list fixed">
-		<article id="comment_article">
+		<article class="comment_article">
 			<div>
 				<span id="cmtBtn">
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-dots" viewBox="0 0 16 16">
@@ -102,22 +119,24 @@
 		</article>
 	</section>
 	<section class="book-list fixed" id="reBoard" style="display:none;">
-		<article id="comment_article">
+		<div class="article_wrap">
 			<div id="comment_div"></div>
-			<div>
+			<div class="CommentWriter">
 				<c:if test="${m.userid==b.writer || m.user_type==1}">
-					<div>
-						<input type="text" id="userid" name="userid" readonly=readonly value="${m.userid}">
+					<div class="comment_inbox">
+	 					<%-- <input type="text" id="userid" name="userid" readonly=readonly value="${m.userid}" style='border:0px;'> --%>
+						<strong class="comment_inbox_name" id="userid">${m.userid}</strong>
+						<textarea id="cmt" name="cmt" spellcheck=false placeholder="댓글을 남겨보세요." row="1"
+								class="comment_inbox_text" style="height:1.8rem;" onkeydown="resize(this)" onkeyup="resize(this)"></textarea>
 					</div>
-					<div>
-						<textarea id="cmt" name="cmt"  spellcheck=false placeholder="댓글을 입력해주세요" style="width:220px; height:80px;resize:none"></textarea>
-					</div>
-					<div>
-						<button id="reInsert">댓글달기</button>
+					<div class="comment_attach">
+						<div class="register_box">
+							<a href="#none" role="button" class="button" id="reInsert">등록</a>
+						</div>
 					</div>
 				</c:if>
 			</div>
-		</article>
+		</div>
 	</section>
 	</div>
 	<%@include file ="footer.jsp" %>
@@ -174,12 +193,11 @@
 					} else {
 						alert('댓글 삭제 실패했습니다. 다시 삭제해주세요.');
 					}
-				}
+				} 
 			});
 		})
 		.on('click','#upBtn',function() {
-			console.log($(this).attr('data-value'));
-			
+			// console.log($(this).attr('data-value'));
 			let ar=$(this).attr('data-value').split(",");
 			let text="<textarea id='cmtUpdate' name='cmtUpdate' placeholder='수정할 내용을 입력해주세요'>"+ar[1]+"</textarea>";
 			
@@ -188,13 +206,23 @@
 			comment_content.empty();
 			comment_content.append(text);
 			
-			let btnC="<a href='#' role='button' id='cancel'>취소</a>";
+			let btnC="<a href='#none' role='button' id='cancel'>취소</a>";
 			comment_info.append(btnC);
 			
 			$(this).text("완료");
 			$(this).attr('id','upDateBtn');
+			
+			let btnD=comment_info.find('a[id=delBtn]');
+			if(ar[0]==btnD.attr('data-value')) {
+				btnD.css('display','none');
+			}
 		})
 		.on('click','#cancel',function() {
+			let btnD=$(this).parent().find('a[id=delBtn]');
+			if(btnD.css('display')=='none') {
+				btnD.css('display','');
+			}
+			
 			var comment_info=$(this).parent().prev();
 			let comment="<span>"+comment_info.text()+"</span>";
 			comment_info.empty();
@@ -240,8 +268,8 @@
 						let div1="<div id='comment_info_box'>";
 						let div2="</div>"
 
-						let btnD="<a href='#' role='button' id='delBtn' data-value='"+txt[i]['re_id']+"'>삭제</a>";
-						let btnU="<a href='#' role='button' id='upBtn' data-value='"+txt[i]['re_id']+","+txt[i]['content']+"'>수정</a>";
+						let btnD="<a href='#none' role='button' id='delBtn' data-value='"+txt[i]['re_id']+"'>삭제</a>";
+						let btnU="<a href='#none' role='button' id='upBtn' data-value='"+txt[i]['re_id']+","+txt[i]['content']+"'>수정</a>";
 						
 						$('#comment_div').append(writer+content);
 						if(${m.userid==b.writer}) {
@@ -257,6 +285,11 @@
 					$('#reCnt').append(txt.length);
 				}	
 			});
+		}
+		
+		function resize(obj) {
+			obj.style.height = '1px';
+			obj.style.height = obj.scrollHeight+'px';
 		}
 	</script>
 </body>

@@ -133,6 +133,11 @@
 			});
 		})
 		.on('click','#done',function() {
+			if($('#title').val()==null) {
+				alert("제목을 입력해주세요.");
+			} else if($('#content').val()==null) {
+				alert("내용을 입력해주세요.");
+			}
 			console.log("spot : "+$('#spot ul li').attr('data-value'));		
 			console.log("vdate : "+$('#vdate a').text());			
 			
