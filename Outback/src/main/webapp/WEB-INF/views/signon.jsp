@@ -186,7 +186,7 @@ function confirm(){
 			data:{userid:$('#userid').val()},
 			success:function(txt){
 				if (txt == 'fail') {
-					alert('이미 사용중인 아이디 입니다.');
+					alert('이미 사용중 및 사용한 아이디 입니다. 다른아이디를 입력해주세요.');
 					return false;
 				} else {
 					alert('사용 가능한 아이디 입니다.');
