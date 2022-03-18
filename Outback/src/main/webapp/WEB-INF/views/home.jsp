@@ -80,7 +80,6 @@
 			autoplay : true,
 			swipeToSlide : true,
 			arrow : false,
-			centerPadding : '0',
 			slidesToShow : 3,
 			centerPadding: '15%',
 			dots : true,
