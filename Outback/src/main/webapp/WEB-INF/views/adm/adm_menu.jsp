@@ -22,72 +22,74 @@
 		<%@include file ="admin_header.jsp" %>
 		<div class="adm_container_wrap">
 			<div class="container adm_container">
-		
-			<form id=frmAdmMenu action="/outback/adm/adm_menu">
-		<div
-			style="width: 470px; position: relative; margin: auto; margin-top: 40px; margin-bottom: 100px;">
-			
-			<div class="input-group mb-3">
-				<span class="input-group-text" id="inputGroup-sizing-default"
-					style="width: 120px;">Menu_Code</span> <input type="text"
-					class="form-control" aria-label="Sizing example input"
-					aria-describedby="inputGroup-sizing-default" id=menu_code
-					name=menu_code readonly placeholder='메뉴를 선택 해주세요'>
+				<form id=frmAdmMenu action="/outback/adm/adm_menu">
+					<div>
+						<div class="selectfont">
+							<select class="form-select" multiple
+								aria-label="multiple select example" id=getMenu size=15
+								style="margin-bottom: 15px; padding: 5px 5px 5px 5px;">
+								<c:forEach items="${alMenu}" var="Menu">
+									<option value="${Menu.menu_code}">${Menu.menu_type},${Menu.menu_name},${Menu.menu_price}</option>
+								</c:forEach>
+							</select>
+						</div>
+						<div class="adm_input_wrap">
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default" style="width: 120px;">
+									Menu_Code
+								</span>
+								<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id=menu_code name=menu_code readonly placeholder='메뉴를 선택 해주세요'>
+							</div>
+							<select class="form-select" aria-label="Default select example"
+								id=menu_type name=menu_type size=1
+								style="margin-bottom: 15px; padding: 5px 5px 5px 12px;">
+								<c:forEach items="${alType}" var="Type">
+									<option value="${Type.mtype_code}">${Type.mtype_name}</option>
+								</c:forEach>
+							</select>
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default"
+									style="width: 120px;">IMG</span>
+								<input type="text"
+									class="form-control" aria-label="Sizing example input"
+									aria-describedby="inputGroup-sizing-default" id=img name=img
+									placeholder='이미지 URL을 입력해주세요'>
+							</div>
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default"
+									style="width: 120px;">MenuName</span> <input type="text"
+									class="form-control" aria-label="Sizing example input"
+									aria-describedby="inputGroup-sizing-default" id=menu_name
+									name=menu_name placeholder='메뉴명을 입력해주세요'>
+							</div>
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default"
+									style="width: 120px;">Price</span> <input type="text"
+									class="form-control" aria-label="Sizing example input"
+									aria-describedby="inputGroup-sizing-default" id=menu_price
+									name=menu_price placeholder='가격을 입력해주세요'>
+							</div>
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default"
+									style="width: 120px;">Comment</span> 
+<!-- 								<input type="text" -->
+<!-- 									class="form-control" aria-label="Sizing example input" -->
+<!-- 									aria-describedby="inputGroup-sizing-default" id=comment -->
+<!-- 									name=comment placeholder='설명을 입력해주세요'> -->
+								<textarea class="form-control" aria-label="Sizing example input"
+									aria-describedby="inputGroup-sizing-default" id=comment
+									name=comment placeholder='설명을 입력해주세요' spellcheck="false">
+								</textarea>
+							</div>
+							<div style="float: right; margin-bottom: 15px;">
+								<input type="submit" class="btn btn-secondary" value="Add">
+								<button type="button" class="btn btn-secondary" id=btnDelete>Delete</button>
+								<button type="reset" class="btn btn-secondary">Reset</button>
+							</div>
+						</div>
+					</div>
+				</form>
 			</div>
-			<select class="form-select" aria-label="Default select example"
-				id=menu_type name=menu_type size=1
-				style="margin-bottom: 15px; padding: 5px 5px 5px 12px;">
-				<c:forEach items="${alType}" var="Type">
-					<option value="${Type.mtype_code}">${Type.mtype_name}</option>
-				</c:forEach>
-			</select>
-			<div class="input-group mb-3">
-				<span class="input-group-text" id="inputGroup-sizing-default"
-					style="width: 120px;">IMG</span> <input type="text"
-					class="form-control" aria-label="Sizing example input"
-					aria-describedby="inputGroup-sizing-default" id=img name=img
-					placeholder='이미지 URL을 입력해주세요'>
-			</div>
-			<div class="input-group mb-3">
-				<span class="input-group-text" id="inputGroup-sizing-default"
-					style="width: 120px;">MenuName</span> <input type="text"
-					class="form-control" aria-label="Sizing example input"
-					aria-describedby="inputGroup-sizing-default" id=menu_name
-					name=menu_name placeholder='메뉴명을 입력해주세요'>
-			</div>
-			<div class="input-group mb-3">
-				<span class="input-group-text" id="inputGroup-sizing-default"
-					style="width: 120px;">Price</span> <input type="text"
-					class="form-control" aria-label="Sizing example input"
-					aria-describedby="inputGroup-sizing-default" id=menu_price
-					name=menu_price placeholder='가격을 입력해주세요'>
-			</div>
-			<div class="input-group mb-3">
-				<span class="input-group-text" id="inputGroup-sizing-default"
-					style="width: 120px;">Comment</span> 
-					<input type="text"
-					class="form-control" aria-label="Sizing example input"
-					aria-describedby="inputGroup-sizing-default" id=comment
-					name=comment placeholder='설명을 입력해주세요'>
-			</div>
-			<div style="float: right; margin-bottom: 15px;">
-				<input type="submit" class="btn btn-secondary" value="Add">
-				<button type="button" class="btn btn-secondary" id=btnDelete>Delete</button>
-				<button type="reset" class="btn btn-secondary">Reset</button>
-			</div>
-			<div class="selectfont">
-				<select class="form-select" multiple
-					aria-label="multiple select example" id=getMenu size=15
-					style="margin-bottom: 15px; padding: 5px 5px 5px 5px;">
-					<c:forEach items="${alMenu}" var="Menu">
-						<option value="${Menu.menu_code}">${Menu.menu_type},${Menu.menu_name},${Menu.menu_price}</option>
-					</c:forEach>
-				</select>
-			</div>
-		</div>
-		
-	</form>
-		</div>
 		</div>
 	</main>
 </body>
@@ -130,7 +132,7 @@ $(document).ready(
          method : 'post',
          success : function(txt) {
                   $('input[name=img]').val(txt[0]['img']);
-                  $('input[name=comment]').val(txt[0]['comment']);
+                  $('textarea[name=comment]').val(txt[0]['comment']);
          }
       })
 
