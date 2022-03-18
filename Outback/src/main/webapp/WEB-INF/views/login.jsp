@@ -46,7 +46,7 @@ div.input-button {
 	width:20%;
 	text-align:center;
 }
-input[type=submit]{
+input[type=button]{
 	border:none;
 	width:305px;
 	font-size:30px;
@@ -58,7 +58,7 @@ input[type=submit]{
 </style>
 <body align=center>
 <h1 style="color:white; text-align: center; font-weight: bold; font-size: 40px; letter-spacing: 10px;font-family: 'Gelasio','Noto Sans KR', sans-serif; ">La Campanella</h1>
-<form method="POST" action="/outback/login_check" id=frmLogin>
+<!-- <form method="POST" action="/outback/home" id=frmLogin> -->
 <div>
 	<div class="input-box">
 		<label for="username"></label>
@@ -66,16 +66,7 @@ input[type=submit]{
         <path fill="#B1B7C4" d="M8.9,7.2C9,6.9,9,6.7,9,6.5v-4C9,1.1,7.9,0,6.5,0h-1C4.1,0,3,1.1,3,2.5v4c0,0.2,0,0.4,0.1,0.7 C1.3,7.8,0,9.5,0,11.5V13h12v-1.5C12,9.5,10.7,7.8,8.9,7.2z M4,2.5C4,1.7,4.7,1,5.5,1h1C7.3,1,8,1.7,8,2.5v4c0,0.2,0,0.4-0.1,0.6 l0.1,0L7.9,7.3C7.6,7.8,7.1,8.2,6.5,8.2h-1c-0.6,0-1.1-0.4-1.4-0.9L4.1,7.1l0.1,0C4,6.9,4,6.7,4,6.5V2.5z M11,12H1v-0.5 c0-1.6,1-2.9,2.4-3.4c0.5,0.7,1.2,1.1,2.1,1.1h1c0.8,0,1.6-0.4,2.1-1.1C10,8.5,11,9.9,11,11.5V12z"/>
       </svg>
 		<input type=text name=userid id=userid placeholder="ID">
-<c:if test="${fail_user == 'fail'}">
- 	<script type="text/javascript">
-   		alert("로그인에 실패했습니다.");
- 	</script>
-</c:if>
-<c:if test="${error == 'test'}">
-	<script type="text/javascript">
-   		alert("탈퇴한 회원입니다. 다른아이디로 이용해주세요.");
-  	</script>
-</c:if>
+
 	</div>	
 	<div class="input-box">
 		<label for=passcode></label>
@@ -87,16 +78,17 @@ input[type=submit]{
 		<input type=password id=passcode name=passcode placeholder="PASSWORD">
 	</div>
 	<div class="input-button">
-	<input type=submit value=Login>
+	<input type=button id=frmLogin name=frmLogin value=Login>
 	</div>
 	<p>Not a member yet? <a href='/outback/signon'>Sign Up</a><p>
 </div>
-</form>
+<!-- </form> -->
 </body>
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <script>
+let flag="fail";
 $(document)
-.on('submit','#frmLogin',function(){
+.on('click','#frmLogin',function(){
 		if($('#userid').val() == ''){
 			alert('아이디를 입력하세요.');
 			return false;
@@ -105,6 +97,35 @@ $(document)
 			alert('비밀번호를 입력하세요.');
 			return false;
 		}
+			$.post('/outback/login_check',
+					{},
+					function(txt) {
+						for(i=0; i < txt.length; i++) {
+							if($('#userid').val() == txt[i]['userid'] &&
+							   $('#passcode').val() == txt[i]['passcode']) {
+								flag="ok";
+								break;
+							} else {
+								flag="fail";
+							}
+						}
+						if(flag == "ok") {
+							alert(txt[i]['userid']+'환영합니다.');
+							$.post('/outback/upLogin',
+									{userid:$('#userid').val()},
+									function(){
+										if(flag == "ok") {
+											console.log($('#userid').val());
+											document.location="/outback/home";
+										} else {
+											alert("로그인 실패");
+											return false;
+										}
+									},'text');
+						} else {
+							alert("아이디 및 패스워드가 맞지 않습니다.");
+						}
+					},'json');
 })
 //회원가입.jsp로 이동
 .on('click','#signon',function(){
