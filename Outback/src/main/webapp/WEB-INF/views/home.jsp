@@ -98,6 +98,7 @@
 			}, {
 				breakpoint: 950,
 				settings: {
+				centerPadding: '15%',
 				slidesToShow: 1
 				}
 			}]
