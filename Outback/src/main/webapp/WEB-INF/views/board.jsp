@@ -172,19 +172,22 @@
 		.on('click',"#listBtn",function() {
 			var path1='/outback/board_list';
 			var path2='/outback/mypage/myboard';
-			findLink(path1,path2);
+			var path3='/outback/adm/adm_board';
+			findLink(path1,path2,path3);
 		})
 		.on('click','#updateBtn',function() {
 			var path1="/outback/board_update?board_id="+$('#board_id').val();
 			var path2="/outback/mp_board_update?board_id="+$('#board_id').val();
-			findLink(path1,path2);	
+			var path3="/outback/adm_board_update?board_id="+$('#board_id').val();
+			findLink(path1,path2,path3);	
 		})
 		.on('click','#deleteBtn',function() {
 			if(!confirm("삭제하시겠습니까?")) return false;
 			
 			var path1="/outback/board_delete?board_id="+$('#board_id').val();
 			var path2="/outback/mp_board_delete?board_id="+$('#board_id').val();
-			findLink(path1,path2);
+			var path3="/outback/adm_board_delete?board_id="+$('#board_id').val();
+			findLink(path1,path2,path3);
 		})
 		.on('click','#cmtBtn',function() {
 			if($('#reBoard').css('display')=='none') {
@@ -341,7 +344,7 @@
 			obj.style.height = obj.scrollHeight+'px';
 		}
 		
-		function findLink(path1,path2) {
+		function findLink(path1,path2,path3) {
 			var link=document.location.href.split('outback/');
 			var link_str=link[1].split('?');
 			if(link_str[0]=='getBoard') {
@@ -349,6 +352,9 @@
 			}
 			if(link_str[0]=="mp_getBoard") {
 				document.location=path2;
+			}
+			if(link_str[0]=="adm_getBoard") {
+				document.location=path3;
 			}
 		}
 		

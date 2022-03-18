@@ -49,7 +49,7 @@
 	</div>
 	<div class="container O_container">
 		<div class="mybook_comment">
-			<p>* 방문일, 지점코드순으로 정렬되어 있습니다.</p>
+			<p>* 작성일순으로 정렬되어 있습니다.</p>
 		</div>
 		<table id="getBoard" class="board_table">
 			<thead>
