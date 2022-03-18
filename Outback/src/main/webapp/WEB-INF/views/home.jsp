@@ -8,23 +8,13 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css">
 <link rel="stylesheet" href="${path}/resources/css/style.css">
 <meta charset="UTF-8">
 <title>Home</title>	
 </head>
 <style>
-.main_container{
-	background:url('https://www.outback.co.kr/asset/images/content/main_benefit_visual.jpg') center no-repeat;
-	background-size:cover;
-	height:70vh;
-}
-.carousel-inner{
-	overflow:hidden;
-	margin:0 auto;
-	position:relative;
-	width:1390px;
-}
-
 </style>
 
 
@@ -32,51 +22,98 @@
 <body>
 <%@include file ="header.jsp" %>
 <div class="main_container">
-	<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" style="margin-top:45px; margin-left:50px; float:left; width:480px; height:620px;">
-		<div class="carousel-indicators">
-			<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-			<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-			<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-			<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3" aria-label="Slide 4"></button>
-		</div>
+	<div class="visual">
+		<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
 			<div class="carousel-inner">
 				<div class="carousel-item active">
-					<img src="https://www.outback.co.kr/upload/banner/20180627/20180627183554751017.jpg" alt="...">
-						<div style="color:white;">
-							
-						</div>
+					<img src="${path}/resources/images/visual01.jpg">
+					<div class="carousel-caption d-none d-md-block">
+						<img src="${path}/resources/images/visual_txt1.png">
+					</div>
 				</div>
 				<div class="carousel-item">
-					<img src="https://www.outback.co.kr/upload/banner/20190108/20190108172841884005.jpg"  alt="...">
-						<div style="color:white;">
-						</div>
+					<img src="${path}/resources/images/visual02.jpg">
+					<div class="carousel-caption d-none d-md-block">
+						<img src="${path}/resources/images/visual_txt2.png">
+					</div>
 				</div>
-				<div class="carousel-item">
-					<img src="https://www.outback.co.kr/upload/banner/20201019/20201019101227003222.jpg"  alt="...">
-						<div style="color:white;">
-
-						
-							
-						</div>
+				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Previous</span>
+				</button>
+				<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Next</span>
+				</button>
+				<div class="carousel-indicators">
+					<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+					<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
 				</div>
-				<div class="carousel-item">
-					<img src="https://www.outback.co.kr/upload/banner/20180627/20180627183609110019.jpg"  alt="...">
-						<div style="color:white;">
-						</div>
-				</div>
-					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-						<span class="visually-hidden">Previous</span>
-					</button>
-					<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-						<span class="carousel-control-next-icon" aria-hidden="true"></span>
-						<span class="visually-hidden">Next</span>
-					</button>
 			</div> 
+		</div>
 	</div>
-	
+	<section class="main_section1">
+		<div>
+			<h3>NEW MENU</h3>
+			<div>
+				<div class="slide-box">
+					<ul class="new_menu_slide">
+						<c:forEach items="${newmenu}" var="newmenu">
+							<li class="slide-contents">
+								<div class="newmenu_img"><img src="${newmenu.img}"></div>
+								<h5>${newmenu.menu_name}</h5>
+							</li>
+						</c:forEach>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
 </div>
 
 <%@include file ="footer.jsp" %>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.js"></script>
+<script>
+	$(function(){
+		$('.new_menu_slide').slick({
+			centerMode : true,
+			autoplay : true,
+			swipeToSlide : true,
+			arrow : false,
+			centerPadding : '0',
+			slidesToShow : 3,
+			centerPadding: '15%',
+			dots : true,
+			infinite : true,
+			responsive: [{
+				breakpoint: 1650,
+				settings: {
+				centerPadding: '0',
+				slidesToShow: 3
+				}
+			}, {
+				breakpoint: 950,
+				settings: {
+				slidesToShow: 1
+				}
+			}]
+		});
+// 		// slide play,stop button
+// 		$('#slideToggle').click(function() {
+// 			if ($(this).html() == 'pause') {
+// 				$('.new_menu_slide').slick('slickPause')
+// 				$(this).html('play')
+// 				$(this).addClass('play')
+// 				$(this).removeClass('pause')
+// 			} else {
+// 				$('.new_menu_slide').slick('slickPlay')
+// 				$(this).html('pause')
+// 				$(this).addClass('pause')
+// 				$(this).removeClass('play')
+// 			}
+// 		});
+	});
+
+</script>
 </body>
 </html>

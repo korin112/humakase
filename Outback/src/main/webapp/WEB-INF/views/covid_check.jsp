@@ -28,32 +28,38 @@
 </style>
 <body>
 <%@include file ="header.jsp" %>
-<div class="div1">
-		<h1 style="text-align:center; font-weight:bold; font-size:26px; letter-spacing:6px;">코로나바이러스 시/도발생 현황</h1>
-	<br>		
-	<div style="text-align:center;">
-	  	<!-- <input type="text" id=coviddt name=coviddt placeholder='검색할 날짜를 입력해주세요 YYYY-MM-DD' style="width:400px;"> -->
-	  	<input type="date" id=coviddt name=coviddt>
-	  	<input type="button" id=btnSearch name=btnSearch value="Search">
+<div class="submenu_title_wrap">
+	<div class="container submenu_title">
+		<h1>COVID CHECK</h1>
+		<p>La Campanella - COVID CHECK</p>
 	</div>
-	<br>
-	
-			<table id=tbl >
-				<thead>
-					<tr>
-						<th>등록일시</th>
-						<th>사망자 수</th>
-						<th>지역명</th> 
-						<th>전일대비 증감수</th>
-						<th>확진자 수</th>
-						<th>지역발생 수</th>
-					</tr>
-				</thead>
-				<tbody id=ctbody>
-					
-				</tbody>
-			</table>
-</div>	
+</div>
+<div class="container O_container">
+	<div class="div1">
+		<h1 style="text-align:center; font-weight:bold; font-size:26px; letter-spacing:6px;">코로나바이러스 시/도발생 현황</h1>
+		<br>		
+		<div style="text-align:center;">
+	<!-- <input type="text" id=coviddt name=coviddt placeholder='검색할 날짜를 입력해주세요 YYYY-MM-DD' style="width:400px;"> -->
+			<input type="date" id=coviddt name=coviddt>
+			<input type="button" id=btnSearch name=btnSearch value="Search">
+		</div>
+		<br>
+		<table id=tbl >
+			<thead>
+				<tr>
+					<th>등록일시</th>
+					<th>사망자 수</th>
+					<th>지역명</th> 
+					<th>전일대비 증감수</th>
+					<th>확진자 수</th>
+					<th>지역발생 수</th>
+				</tr>
+			</thead>
+			<tbody id=ctbody>
+			</tbody>
+		</table>
+	</div>
+</div>
 <br>
 <%@include file ="footer.jsp" %>
 </body>
