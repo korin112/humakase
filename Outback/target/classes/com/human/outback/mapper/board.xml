@@ -78,9 +78,10 @@
     </select>
 	
 	<select id="reBoard" resultType="com.human.outback.ReBoard">
-		select re_id,writer,content,date_format(re_date, '%Y-%m-%d %H:%i:%s') as re_date
-		from re_board
-		where board_id=#{board_id}
+		select a.re_id, a.writer, a.content, date_format(a.re_date, '%Y-%m-%d %H:%i:%s') as re_date, b.user_type
+		from re_board a, member b
+		where a.writer=b.userid
+		and board_id=#{board_id}
 	</select>
 	
 	<insert id="reInsert">
@@ -117,6 +118,43 @@
 		select count(*) from board a, spot b, member c
 		where a.spot_code=b.spot_code
 		and a.writer=c.userid
+		and (title like concat('%', #{param1}, '%')
+		or userid like concat('%', #{param1}, '%')
+		or spot_name like concat('%',#{param1}, '%'))
+	</select>
+	
+	<!-- myPage -->
+	<select id="mp_boardList" resultType="com.human.outback.Board">
+    	select a.board_id,a.title,b.spot_name,a.content,a.writer,a.created
+		from board a, spot b
+		where a.spot_code=b.spot_code
+		and a.writer=#{param3}
+		order by created desc, board_id desc
+		limit #{param1},#{param2}
+	</select>
+	
+	<select id="mp_getTotal" resultType="int">
+        select count(*) from board where writer=#{param1}
+    </select>
+    
+    <select id="mp_findKeyword" resultType="com.human.outback.Board">
+		select a.board_id, a.title, b.spot_name, a.writer, a.created
+		from board a, spot b, member c
+		where a.spot_code=b.spot_code
+		and a.writer=c.userid
+		and  writer=#{param4}
+		and (title like concat('%', #{param1}, '%')
+		or userid like concat('%', #{param1}, '%')
+		or spot_name like concat('%',#{param1}, '%'))
+		order by created desc, board_id desc
+		limit #{param2},#{param3}
+	</select>
+	
+	<select id="mp_getKeyTotal" resultType="int">
+		select count(*) from board a, spot b, member c
+		where a.spot_code=b.spot_code
+		and a.writer=c.userid
+		and  writer=#{param2}
 		and (title like concat('%', #{param1}, '%')
 		or userid like concat('%', #{param1}, '%')
 		or spot_name like concat('%',#{param1}, '%'))
