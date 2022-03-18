@@ -53,7 +53,7 @@
 		</li>
 		<li>
 
-			<a href="adm/adm_menutype" class="nav-link text-white">
+			
 			<a href="/outback/adm/typeadd" class="nav-link text-white">
 				<svg class="bi me-2" width="24" height="24"><use xlink:href="#bi-card-list"></use></svg>
 				<span class="adm_nav_tt">메뉴타입관리</span>
@@ -62,7 +62,7 @@
 		<li>
 
 
-			<a href="/outback/adm/member_adm" class="nav-link text-white">
+			
 
 
 			<a href="/outback/adm/adm_member" class="nav-link text-white">
