@@ -150,11 +150,6 @@ footer .sitemap ul li:nth-child(4) a::after{content:''; width:0;}
 .adm_paging .page-link{color:inherit;}
 .adm_paging .page-item.active .page-link{background:#c93535; border-color:#c93535;}
 /*adm_menuadd.jsp 영역*/
-.selectfont, .adm_input_wrap{display:inline-block; vertical-align:top; width:35%;}
-
-.selectfont{margin-left:14%;margin-right:1%;}
-.selectfont option{padding:0.25rem 0;}
-.adm_input_wrap{margin-right:14%;}
 /*adm_member.jsp 영역*/
 .adm_member_table thead th:first-child{width:5%;}
 .adm_member_table thead th:nth-child(2){width:15%;}
