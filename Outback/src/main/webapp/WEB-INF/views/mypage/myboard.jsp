@@ -65,7 +65,7 @@
 			<tbody>
 				<c:forEach items="${b_list}" var="b">
 					<tr id="board_tr" class="board_tr">
-						<td><input type="checkbox" name="check" value="${board_id}"></td>
+						<td class="td_check"><input type="checkbox" name="check" value="${board_id}"></td>
 						<td>${b.board_id}</td>
 						<td>${b.spot_name}</td>
 			            <td>${b.title}</td>
@@ -150,13 +150,20 @@
 		.on('click','#insert',function() {
 			document.location="/outback/mp_board_insert";
 		})
-		.on('click','#board_tr',function() {
+		$('#board_tr').not( 'td.td_check' ).click(function() {
 			var tr=$(this);
 			var td=tr.children();
 			var board_id=td.eq(1).text();
 			
 			document.location="/outback/mp_getBoard?board_id="+board_id;
 		})
+// 		.on('click','#board_tr',function() {
+// 			var tr=$(this);
+// 			var td=tr.children();
+// 			var board_id=td.eq(1).text();
+			
+// 			document.location="/outback/mp_getBoard?board_id="+board_id;
+// 		})
 		.on('click','#btnDelete',function() {
 			if($('input[name=check]:checked').length==0) {
 				alert('하나 이상 체크하세요.');
