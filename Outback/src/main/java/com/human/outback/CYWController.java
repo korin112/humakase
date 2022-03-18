@@ -34,36 +34,38 @@ public class CYWController {
    @Autowired
    private SqlSession sqlSession;
    
-   @RequestMapping(value = "/home", method = RequestMethod.GET)
-   public String home(Model model) {
-         
-      return "home";
-   }
+	@RequestMapping("/home")
+	public String home(Model model) {
+		iMypage iMypage = sqlSession.getMapper(iMypage.class);
+		ArrayList<Allmenu> getNewmenu = iMypage.getNewmenu();
+		model.addAttribute("newmenu",getNewmenu);
+		return "home";
+	}
    
-   @RequestMapping("steak")
-   public String Steak() {
-      
-      return "steak";
-   }
-   
-   @RequestMapping("pasta")
-   public String Pasta() {
-      
-      return "pasta";
-   }
-
-   @RequestMapping("sidemenu")
-   public String Sidemenu() {
-      
-      return "sidemenu";
-   }
-
-   @RequestMapping("drink")
-   public String Drink() {
-      
-      return "drink";
-   }
-   
+//   @RequestMapping("steak")
+//   public String Steak() {
+//      
+//      return "steak";
+//   }
+//   
+//   @RequestMapping("pasta")
+//   public String Pasta() {
+//      
+//      return "pasta";
+//   }
+//
+//   @RequestMapping("sidemenu")
+//   public String Sidemenu() {
+//      
+//      return "sidemenu";
+//   }
+//
+//   @RequestMapping("drink")
+//   public String Drink() {
+//      
+//      return "drink";
+//   }
+//   
 //   @RequestMapping("/typeadd") 
 //   public String doTypeAdd() {
 //      return "addType";

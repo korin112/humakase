@@ -22,6 +22,29 @@ public class MypageController {
 	@Autowired
 	private SqlSession sqlSession;
 	
+//	@RequestMapping("/mypage/mybook")
+//	public String mybook(HttpServletRequest hsr, Model model
+//			, @RequestParam(required = false, defaultValue = "1") int page
+//			, @RequestParam(required = false, defaultValue = "1") int range) {
+//		HttpSession session = hsr.getSession();
+//		String userid = (String) session.getAttribute("userid");
+//		iMypage iMypage = sqlSession.getMapper(iMypage.class);
+//		// 전체 게시글 개수
+//		Pagination laterPagination = new Pagination();
+//		Pagination prevPagination = new Pagination();
+//		int listCnt = iMypage.getCntLaterMyBook(userid);
+//		int listCnt2 = iMypage.getCntPrevMyBook(userid);
+//		// Pagination
+//		laterPagination.pageInfo(page, range, listCnt);
+//		prevPagination.pageInfo(page, range, listCnt2);
+//		model.addAttribute("laterPagination", laterPagination);
+//		model.addAttribute("prevPagination", prevPagination);
+//		model.addAttribute("mylaterbook", iMypage.getMylaterbook(userid, laterPagination));
+//		model.addAttribute("myPrevbook", iMypage.getMyPrevbook(userid, prevPagination));
+//		
+//		return "mypage/mybook";
+//	}
+	
 	@RequestMapping("/mypage/mybook/{where}")
 	public String mybook(@PathVariable("where") String where, HttpServletRequest hsr 
 			, Model model, Pagination pagination

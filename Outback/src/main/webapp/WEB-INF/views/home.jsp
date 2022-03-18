@@ -27,10 +27,14 @@
 			<div class="carousel-inner">
 				<div class="carousel-item active">
 					<img src="${path}/resources/images/visual01.jpg">
+					<div class="carousel-caption d-none d-md-block">
+						<img src="${path}/resources/images/visual_txt1.png">
+					</div>
 				</div>
 				<div class="carousel-item">
 					<img src="${path}/resources/images/visual02.jpg">
-					<div style="color:white;">
+					<div class="carousel-caption d-none d-md-block">
+						<img src="${path}/resources/images/visual_txt2.png">
 					</div>
 				</div>
 				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
@@ -48,81 +52,68 @@
 			</div> 
 		</div>
 	</div>
-	<section class="main_section">
-		<div class="container">
+	<section class="main_section1">
+		<div>
 			<h3>NEW MENU</h3>
 			<div>
 				<div class="slide-box">
 					<ul class="new_menu_slide">
-						<li class="slide-contents">
-							<div>이미지 위치</div>
-							<h5>메뉴이름</h5>
-						</li>
+						<c:forEach items="${newmenu}" var="newmenu">
+							<li class="slide-contents">
+								<div class="newmenu_img"><img src="${newmenu.img}"></div>
+								<h5>${newmenu.menu_name}</h5>
+							</li>
+						</c:forEach>
 					</ul>
-					<!-- //event-slide  -->
-
-					<!-- 슬라이드 재생, 정지 버튼 -->
-<!-- 					<div class="slide-btnGR"> -->
-<!-- 						<button class="play-pause pause" id="slideToggle">pause</button> -->
-<!-- 					</div> -->
 				</div>
 			</div>
 		</div>
-	</section>
-	<section>
-		여기에 뭐들어갈까
 	</section>
 </div>
 
 <%@include file ="footer.jsp" %>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.js"></script>
 <script>
-	var slider = $('.new_menu_slide');
-	var option = function(centerMode) {
-		return {
+	$(function(){
+		$('.new_menu_slide').slick({
+			centerMode : true,
 			autoplay : true,
 			swipeToSlide : true,
-			arrow : true,
-			centerMode : true,
-			centerPadding : '20',
-			slidesToShow : centerMode ? 3 : 1,
-			slidesToScroll : 1,
+			arrow : false,
+			centerPadding : '0',
+			slidesToShow : 3,
+			centerPadding: '15%',
 			dots : true,
 			infinite : true,
-			variableWidth : true,
-			responsive : [ {
-				breakpoint : 768,
-				settings : {
-					slidesToShow : 1
+			responsive: [{
+				breakpoint: 1650,
+				settings: {
+				centerPadding: '0',
+				slidesToShow: 3
 				}
-			} ]
-		}
-	}
-
-	// 슬라이드 5개 미만일때
-	slider.each(function(i, el) {
-		if ($(el).find('li').length > 3) {//최대개수
-			$(el).slick(option(true));
-		} else {
-			$(el).slick(option()).addClass('item--center');
-			$('#slideToggle').hide()
-		}
+			}, {
+				breakpoint: 950,
+				settings: {
+				slidesToShow: 1
+				}
+			}]
+		});
+// 		// slide play,stop button
+// 		$('#slideToggle').click(function() {
+// 			if ($(this).html() == 'pause') {
+// 				$('.new_menu_slide').slick('slickPause')
+// 				$(this).html('play')
+// 				$(this).addClass('play')
+// 				$(this).removeClass('pause')
+// 			} else {
+// 				$('.new_menu_slide').slick('slickPlay')
+// 				$(this).html('pause')
+// 				$(this).addClass('pause')
+// 				$(this).removeClass('play')
+// 			}
+// 		});
 	});
 
-	// slide play,stop button
-	$('#slideToggle').click(function() {
-		if ($(this).html() == 'pause') {
-			$('.event-slide').slick('slickPause')
-			$(this).html('play')
-			$(this).addClass('play')
-			$(this).removeClass('pause')
-		} else {
-			$('.event-slide').slick('slickPlay')
-			$(this).html('pause')
-			$(this).addClass('pause')
-			$(this).removeClass('play')
-		}
-	});
 </script>
 </body>
 </html>
