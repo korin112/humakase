@@ -32,4 +32,10 @@ public interface iBoard {
 	// 검색
 	ArrayList<Board> findKeyword(String keyword, int skip, int amount);
 	public int getKeyTotal(String keyword);
+	
+	// mypage
+	ArrayList<Board> mp_boardList(int skip, int amount, String writer);
+	public int mp_getTotal(String writer);
+	ArrayList<Board> mp_findKeyword(String keyword, int skip, int amount, String writer);
+	public int mp_getKeyTotal(String keyword, String writer);
 }
