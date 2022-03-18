@@ -14,7 +14,7 @@ li{list-style:none;}
 
 /* header.jsp header 영역 */
 .h_logo{font-family: 'Gelasio','Noto Sans KR', sans-serif; font-size:2.125rem !important;}
-
+#cart1{cursor:pointer;}
 /* home.jsp 영역 */
 .carousel-indicators{bottom:30px !important;}
 .carousel-inner{overflow:hidden;margin:0 auto;position:relative;width:100%;}
@@ -30,18 +30,22 @@ li{list-style:none;}
 /* 	height:1px; width:100%; background:#212529; opacity:0.5;} */
 /* 신메뉴 영역 */
 .slide-box{overflow:hidden;}
-.new_menu_slide{padding:1rem 0 3rem;}
-.new_menu_slide .slide-contents{padding:1.5rem; background:#fff; color:#212529; transform:scale(0.93);
+.new_menu_slide{padding:1rem 2rem 3rem;}
+.slick-dotted.slick-slider{margin:0;}
+.new_menu_slide .slide-contents{padding:1.25rem; background:#fff; color:#212529; transform:scale(0.93);
 	box-shadow:1px 6px 5px 3px rgba(0,0,0,0.5);}
 .new_menu_slide .slide-contents.slick-center{transform:scale(1.02); color:#c93535;}
-.slide-contents h5{text-align:center; margin:1.55rem 0 0.5rem; font-weight:700; font-size:1.5rem;}
-.slick-center.slide-contents h5{font-size:1.75rem;}
-.newmenu_img{height:400px; background:#585858;}
+.slide-contents h5{text-align:center; margin:1.25rem 0 0.5rem; font-weight:700; font-size:1.375rem;}
+.slick-center.slide-contents h5{font-size:1.5rem;}
+.newmenu_img{height:370px; background:#585858;}
 .newmenu_img img{width:100%; height:100%; object-fit:cover; object-position:center center; transition:0.3s;
 	mix-blend-mode:overlay; opacity:0.8;}
-.slide-contents.slick-center .newmenu_img img{mix-blend-mode:normal; opacity:1;}
+.slide-contents.slick-center .newmenu_img img{mix-blend-mode:luni; opacity:1;}
 /* .slick-list{padding:1rem 0 !important;} */
-
+/* scroll Top 영역*/
+.scrollTop{position:fixed; z-index:9999; bottom:9%; right:4%; color:#fff; width:2.5%; opacity:0.6; cursor:pointer; transition:0.3s;}
+.scrollTop:hover{opacity:1;}
+.scrollTop svg{width:100%; height:100%;}
 /* submenu.jsp submenu 영역 */
 
 .submenu_title_wrap{width:100%; padding:5rem 0; background:#f2f2f2;}
@@ -72,7 +76,7 @@ li{list-style:none;}
 	background:#ccc; border-radius:100%; margin:auto 10px auto 0; vertical-align:middle;}
 	
 /* footer.jsp footer 영역 */
-
+.O_footer{border-top:1px solid #555;}
 footer .sitemap ul{margin:0; text-align:center; border-bottom:1px solid rgba(255,255,255,0.1);}
 footer .sitemap ul li{display:inline-block; position:relative;}
 footer .sitemap ul li::after, footer .sitemap ul li:first-child::before{content:''; width:1px; position:absolute; top:50%; right:0; transform:translateY(-50%);
@@ -81,9 +85,9 @@ footer .sitemap ul li:first-child::before{right:auto; left:0;}
 footer .sitemap ul li a{display:block; padding:1rem 2rem; font-size:1rem; color:rgba(255,255,255,0.5); transition:0.3s;}
 footer .sitemap ul li a:hover{color:rgba(255,255,255,0.8);}
 footer .sitemap ul li:nth-child(4) a::after{content:''; width:0;}
-.f_logo{font-family: 'Gelasio','Noto Sans KR', sans-serif; text-align:center; opacity:0.5; width:29%; display:inline-block;}
-.f_info{padding:2rem 0; color:#fff; opacity:0.25; width:70%; display:inline-block; vertical-align:middle;}
-
+.f_logo{font-family: 'Gelasio','Noto Sans KR', sans-serif; text-align:center; opacity:0.5; width:20%; display:inline-block;}
+.f_info{padding:4rem 0; color:#fff; opacity:0.25; width:79%; display:inline-block; vertical-align:middle;}
+.f_info p{margin:0;}
 
 /* admin 공통 영역 */
 .adm_container_wrap{width:100%;overflow-y:auto;}
