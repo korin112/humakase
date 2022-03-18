@@ -72,9 +72,14 @@ footer .sitemap ul li:nth-child(4) a::after{content:''; width:0;}
 
 
 /* adm_book.jsp admj_book 영역 */
-.adm_book_table, .adm_member_table, .adm_bd_table{width:100%; text-align:center;}
-.adm_book_table thead tr, .adm_member_table thead tr, .adm_bd_table thead tr{width:100%; border-top:2px solid #ccc; border-bottom:2px solid #ccc; background:#f9f9f9;}
-.adm_book_table thead th, .adm_member_table thead th, .adm_book_table tfoot td, .adm_member_table tfoot td{padding:1.25rem 0;}
+.adm_book_table, .adm_member_table, .bd_table, .mybook_table{width:100%; text-align:center;}
+.adm_book_table thead tr, .adm_member_table thead tr, .bd_table thead tr, .mybook_table thead tr{
+	width:100%; border-top:2px solid #ccc; border-bottom:2px solid #ccc; background:#f9f9f9;
+}
+.adm_book_table thead th, .adm_member_table thead th, .mybook_table thead th,
+.adm_book_table tfoot td, .adm_member_table tfoot td, .mybook_table tfoot td{
+	padding:1.25rem 0;
+}
 .adm_book_table thead th:first-child{width:3%;}
 .adm_book_table thead th:nth-child(2){width:9%;}
 .adm_book_table thead th:nth-child(3){width:7%;}
@@ -86,14 +91,26 @@ footer .sitemap ul li:nth-child(4) a::after{content:''; width:0;}
 .adm_book_table thead th:nth-child(9){width:8%;}
 .adm_book_table thead th:nth-child(10){width:9%;}
 .adm_book_table thead th:nth-child(11){width:19%;}
-.adm_book_table tbody tr, .adm_member_table tbody tr{border-bottom:1px solid #eee; cursor:pointer;}
-.adm_book_table tbody tr:nth-child(even),.adm_member_table tbody tr:nth-child(even){background:#f9f9f9;}
-.adm_book_table tbody tr:hover, .adm_member_table tbody tr:hover{background:#f1f1f1;}
-.adm_book_table tbody td, .adm_member_table tbody td{font-size:0.875rem; padding:1rem 0.5rem; border-left:1px solid #eee;}
-.adm_book_table tbody td:first-child, .adm_bd_table tbody td:first-child, .adm_member_table tbody td:first-child {border-left:0;}
-.adm_book_table tbody td:nth-child(11) p{overflow:hidden; text-overflow: ellipsis; display:-webkit-box;
-	-webkit-line-clamp:1; -webkit-box-orient:vertical; margin-bottom:0; text-align:left;}
-.adm_comment{text-align:right; opacity:0.5; font-size:0.875rem;}
+.adm_book_table tbody tr, .adm_member_table tbody tr, .mybook_table tbody tr{
+	border-bottom:1px solid #eee; cursor:pointer;
+}
+.adm_book_table tbody tr:nth-child(even),.adm_member_table tbody tr:nth-child(even),
+.mybook_table tbody tr:nth-child(even){
+	background:#f9f9f9;
+}
+.adm_book_table tbody tr:hover, .adm_member_table tbody tr:hover, .mybook_table tbody tr:hover{background:#f1f1f1;}
+.adm_book_table tbody td, .adm_member_table tbody td, .mybook_table tbody td{
+	font-size:0.875rem; padding:1rem 0.5rem; border-left:1px solid #eee;
+}
+.adm_book_table tbody td:first-child, .bd_table tbody td:first-child, .adm_member_table tbody td:first-child, 
+.mybook_table tbody td:first-child{
+	border-left:0;
+}
+.adm_book_table tbody td:nth-child(11) p, .mybook_table tbody td:last-child p{overflow:hidden;
+	text-overflow: ellipsis; display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical;
+	margin-bottom:0; text-align:left;
+}
+.adm_comment, .mybook_comment{text-align:right; opacity:0.5; font-size:0.875rem;}
 
 .adm_paging .pagination{justify-content:center;}
 .adm_paging .page-link{color:inherit;}
@@ -111,10 +128,27 @@ footer .sitemap ul li:nth-child(4) a::after{content:''; width:0;}
 .adm_member_table thead th:nth-child(9){width:15%;}
 .adm_member_table thead th:nth-child(10){width:5%;}
 
-
-/* adm booking detail modal */
+/* adm_member.jsp 영역 */
+#btnEdit{padding:0.375rem 0.575rem;}
+/* booking detail modal */
 /* .modal.show .modal-dialog{top:50%; transform:translateY(-50%);} */
-.adm_bd_table thead th{padding:0.75rem 0;}
-.adm_bd_table tbody tr{border-bottom:1px solid #eee;}
-.adm_bd_table tbody td{padding:1rem 0.5rem; border-left:1px solid #eee;}
+.bd_table thead th{padding:0.75rem 0;}
+.bd_table tbody tr{border-bottom:1px solid #eee;}
+.bd_table tbody td{padding:1rem 0.5rem; border-left:1px solid #eee;}
 .book_msg p{border:1px solid #ccc; border-radius:5px; padding:1.25rem;}
+.bd_table thead th:first-child{width:40%;}
+.bd_table thead th:nth-child(2){width:10%;}
+.bd_table thead th:nth-child(3){width:25%;}
+.bd_table thead th:nth-child(4){width:25%;}
+/*mybook.jsp 영역*/
+.mybook_table thead th:first-child{width:10%;}
+.mybook_table thead th:nth-child(2){width:10%;}
+.mybook_table thead th:nth-child(3){width:10%;}
+.mybook_table thead th:nth-child(4){width:10%;}
+.mybook_table thead th:nth-child(5){width:10%;}
+.mybook_table thead th:nth-child(6){width:10%;}
+.mybook_table thead th:nth-child(7){width:10%;}
+.mybook_table thead th:nth-child(8){width:30%;}
+.mybook_table tbody td{font-size:1rem;}
+
+

@@ -43,10 +43,10 @@
 		</div>
 		<div class="mybook_ct">
 			<div>
-				<div class="adm_comment mybook_comment">
+				<div class="mybook_comment">
 					<p>* 방문일, 방문시간, 지점코드순으로 정렬되어 있습니다.</p>
 				</div>
-				<table class="adm_book_table mybook_table">
+				<table class="mybook_table">
 					<thead>
 						<tr>
 							<th>예약번호</th><th>지점이름</th>
@@ -109,7 +109,7 @@
 									<p></p>
 								</div>
 							</div>
-							<table class="adm_bd_table">
+							<table class="bd_table">
 								<thead>
 									<tr><th>메뉴이름</th><th>수량</th><th>가격</th><th>총액</th></tr>
 								</thead>

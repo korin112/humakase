@@ -28,13 +28,13 @@
                 <h1 style="text-align: center; font-weight: bold; font-size: 40px; letter-spacing: 6px;">회원 탈퇴</h1>
 					<h2 style="text-align: center; font-weight: bold; color: #ccc; margin-bottom: 30px; font-size: 22px; letter-spacing: 4px;">Member Withdrawal</h2>
                 <div class="form-group">
-                    <input type="text" id="userid" name="userid" value="${userid}"  class="form-control form-control-inline text-center" readonly/>
+                    <input style='width:500px; margin-left:400px;' type="text" id="userid" name="userid" value="${userid}"  class="form-control form-control-inline text-center" readonly/>
 				</div>
                 <div class="form-group">
-                    <input type="password" id = "passcode" name="passcode" class="form-control form-control-inline text-center" placeholder="비밀번호" />
+                    <input style='width:500px; margin-left:400px;'  type="password" id = "passcode" name="passcode" class="form-control form-control-inline text-center" placeholder="비밀번호" />
                 </div>
                 <div class="form-group">
-                    <input type="password" id="passcode1" name="passcode1"  class="form-control form-control-inline text-center" placeholder="비밀번호 확인" />
+                    <input style='width:500px; margin-left:400px;'  type="password" id="passcode1" name="passcode1"  class="form-control form-control-inline text-center" placeholder="비밀번호 확인" />
                 </div>
                 <button type="button" id="btnDel" name="btnDel" class=btn>회원탈퇴</button>
                 <button type="button" id="btnCancel" name="btnCancel" class=btn>취소</button>

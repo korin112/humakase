@@ -78,8 +78,11 @@ $(document)
 <<<<<<< HEAD
 =======
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
 	$('#dlgEdit').dialog({  
 =======
+>>>>>>> branch 'main' of https://github.com/korin112/humakase.git
 	
 })
 //수정버튼 클릭시 다이얼로그 실행
@@ -102,6 +105,9 @@ $(document)
 		});
 >>>>>>> branch 'main' of https://github.com/korin112/humakase.git
 	$('#dlgEdit').dialog({
+<<<<<<< HEAD
+=======
+>>>>>>> branch 'main' of https://github.com/korin112/humakase.git
 >>>>>>> branch 'main' of https://github.com/korin112/humakase.git
 		title:'등급 수정',
 		autoOpen:false,
@@ -221,7 +227,6 @@ $(document)
 	document.location='/outback/home';
 	return false;
 })
-
 function member(){
 	$.ajax({url:"/outback/memberList",
 			method:"GET",

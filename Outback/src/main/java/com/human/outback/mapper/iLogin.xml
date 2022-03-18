@@ -43,9 +43,14 @@
 <delete id="delMember">
 	delete from member where userid=#{param1}
 </delete>
-<delete id="pwCheck">
-	delete from member where userid=#{param1} and passcode=#{param2}
-</delete>
+<!-- 기존 delete mypage -->
+<!-- <delete id="pwCheck"> -->
+<!-- 	delete from member where userid=#{param1} and passcode=#{param2} -->
+<!-- </delete> -->
+<!-- 신규 update mypage -->
+<update id="pwCheck">
+	update member set user_type=2 where userid=#{param1} and passcode=#{param2}
+</update>
 <update id="pwEdit">
 	update member set passcode=#{param2} where userid=#{param1}
 </update>

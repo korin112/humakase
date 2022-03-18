@@ -48,31 +48,27 @@
 	       		<c:if test="${userid!=null}">
 					<c:if test="${user_type != 0}">
 						<li class="nav-item">
-							<a class="nav-link" href="/outback/menuadd">메뉴관리</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="/outback/typeadd">메뉴타입관리</a>
-						</li>
-						<li class="nav-item">
-
-							<a class="nav-link" href="/outback/adm/menuadd">[관리자페이지]</a>
-
-							<a class="nav-link" href="/outback/adm/adm_menu">[관리자페이지]</a>
-
+							<a class="nav-link" href="/outback/adm/menuadd">[관리자페이지 이동]</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="#" onclick="if(confirm('로그아웃하시겠습니까?')){javascript:document.frm.submit();return false;}">로그아웃</a>
 						</li>
-						<li class="nav-link" style="color:#ccc;">${userid}</li>	
 					</c:if>
 					<c:if test="${user_type == 0}">
-						<li class="nav-item">
-							<a class="nav-link" href="/outback/mypage">[마이페이지]</a>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								${userid}님
+							</a>
+							<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+								<li><a class="dropdown-item" href="/outback/mypage/mybook/later">예약확인</a></li>
+								<li><a class="dropdown-item" href="/outback/covid_check">코로나19 감염현황</a></li>
+								<li><a class="dropdown-item" href="/outback/passEdit">비밀번호변경</a></li>
+								<li><a class="dropdown-item" href="/outback/mypage">회원탈퇴</a></li>
+							</ul>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="#" onclick="if(confirm('로그아웃하시겠습니까?')){javascript:document.frm.submit();return false;}">로그아웃</a>
 						</li>
-						<li class="nav-link" style="color:#ccc;">${userid}</li>
 					</c:if>
 				</c:if>		
 	      </ul>
