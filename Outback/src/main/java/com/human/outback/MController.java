@@ -1,6 +1,7 @@
 package com.human.outback;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -95,48 +96,80 @@ public class MController {
 		return retval;
 	}
 	//로그인 시간 체크 및 탈퇴 체크
-	@RequestMapping(value="/login_check", method = RequestMethod.POST)
-	public String login_check(HttpServletRequest hsr,Model model) {
+	@ResponseBody
+	@RequestMapping(value="/login_check",method=RequestMethod.POST,
+	         produces="application/json; charset=utf-8")
+	   public String login_check(HttpServletRequest hsr, Model model) {
+	      iLogin id=sqlSession.getMapper(iLogin.class);
+	      ArrayList<Member> ml = id.getLogin();
+	      JSONArray ja=new JSONArray();
+	      for(int i=0; i<ml.size(); i++) {
+	         JSONObject jo = new JSONObject();
+	         jo.put("userid",ml.get(i).getUserid());
+	         jo.put("passcode",ml.get(i).getPasscode());
+	         ja.add(jo);
+	         }
+	      return ja.toString();
+	   }
+	@ResponseBody
+	@RequestMapping(value="/upLogin",method=RequestMethod.POST,
+			produces = "application/json;charset=UTF-8")
+	public String upLogin(HttpServletRequest hsr, Model model) {
+		String retval="";
+		try {
+		iLogin member = sqlSession.getMapper(iLogin.class);
+		String userid=hsr.getParameter("userid");
+		Member update=member.upLogin(userid);
+		
 		HttpSession session = hsr.getSession();
-		
-		String str="";
-		String userid = hsr.getParameter("userid");
-		String passcode = hsr.getParameter("passcode");
-		int type=0;
-		iLogin login = sqlSession.getMapper(iLogin.class);
-		ArrayList<Member> m=login.getLogin();
-		
-		for(int i=0; i < m.size(); i++) {
-//			System.out.println(m.get(i).getUser_type().getClass().getName());
-			if(m.get(i).getPasscode().equals(passcode) && m.get(i).getUserid().equals(userid)) {
-				type=m.get(i).getUser_type();
-			}  else if(userid == null){
-				str="fail";
-				model.addAttribute("fail_user",str);
-				return "login";
-			}
+		session.setAttribute("userid", userid);
+		session.setAttribute("user_type",update.getUser_type());
+		retval="ok";
+		} catch(Exception e) {
+		retval="fail";
 		}
-		System.out.println(userid);
-		System.out.println(passcode);
-		System.out.println(type);
-		if(type == 1) {
-				login.upLogin(userid);
-				session.setAttribute("userid",userid);
-				session.setAttribute("user_type",type);
-				return "redirect:/home";
-		} else if (type == 2) {
-				str="test";
-				model.addAttribute("error",str);
-				return "login";
-		} else if (type == 0) {
-				login.upLogin(userid);
-				session.setAttribute("userid",userid);
-				session.setAttribute("user_type",type);
-				return "redirect:/home";
-		} else {
-			return "login";
-		}
+		return retval;
 	}
+//	@RequestMapping(value="/login_check", method = RequestMethod.POST)
+//	public String login_check(HttpServletRequest hsr,Model model) {
+//		HttpSession session = hsr.getSession();
+//		
+//		String str="";
+//		String userid = hsr.getParameter("userid");
+//		String passcode = hsr.getParameter("passcode");
+//		int type=0;
+//		iLogin login = sqlSession.getMapper(iLogin.class);
+//		ArrayList<Member> m=login.getLogin();
+//		
+//		for(int i=0; i < m.size(); i++) {
+////			System.out.println(m.get(i).getUser_type().getClass().getName());
+//			if(m.get(i).getPasscode().equals(passcode) && m.get(i).getUserid().equals(userid)) {
+//				type=m.get(i).getUser_type();
+//			}
+//		}
+//		System.out.println(userid);
+//		System.out.println(passcode);
+//		System.out.println(type);
+//		if(type == 1) {
+//				login.upLogin(userid);
+//				session.setAttribute("userid",userid);
+//				session.setAttribute("user_type",type);
+//				return "redirect:/home";
+//		} else if (type == 2) {
+//				str="test";
+//				model.addAttribute("error",str);
+//				return "login";
+//		} else if (type == 0) {
+//				login.upLogin(userid);
+//				session.setAttribute("userid",userid);
+//				session.setAttribute("user_type",type);
+//				return "redirect:/home";
+//		} else {
+//			str="fail";
+//			model.addAttribute("fail_user",str);
+//			return "login";
+//		}
+//	}
 	//마이페이지 관리
 	@RequestMapping("/member")
 	public String member() {
