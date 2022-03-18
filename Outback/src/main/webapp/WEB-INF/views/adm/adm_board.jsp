@@ -119,7 +119,6 @@
 			if(total != checked) $("input[name=checkAll]").prop("checked", false);
 			else $("input[name=checkAll]").prop("checked", true); 
 		});
-		$('#keyword').val('');
 	})
 	.on('click','#pageInfo a',function(e) {
 		e.preventDefault();
