@@ -89,6 +89,7 @@ public class MypageController {
 		return str;
 	}
 	
+	// MyPage 게시판
 	@RequestMapping(value="/mypage/myboard")
 	public String listMyBoard(Model m, Page page, HttpSession session, HttpServletRequest hsr) {
 		iBoard board = sqlSession.getMapper(iBoard.class);
@@ -113,4 +114,21 @@ public class MypageController {
 		}
 		return "/mypage/myboard";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/mypage/myboard/deleteMyBoard", method = RequestMethod.POST)
+	public String deleteMyBoard(HttpServletRequest hsr) {
+		int book_id = Integer.parseInt(hsr.getParameter("mybook_id"));
+		String str="";
+		iMypage iMypage = sqlSession.getMapper(iMypage.class);
+		iMypage.deleteMybook(book_id);
+		try {
+			str="ok";
+		} catch(Exception e) {
+			str="fail";
+		}
+		System.out.println(str);
+		return str;
+	}
+	
 }

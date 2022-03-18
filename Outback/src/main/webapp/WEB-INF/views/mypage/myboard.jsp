@@ -65,7 +65,7 @@
 			<tbody>
 				<c:forEach items="${b_list}" var="b">
 					<tr id="board_tr" class="board_tr">
-						<td><input type="checkbox" name="check"></td>
+						<td><input type="checkbox" name="check" value="${board_id}"></td>
 						<td>${b.board_id}</td>
 						<td>${b.spot_name}</td>
 			            <td>${b.title}</td>
@@ -156,6 +156,30 @@
 			var board_id=td.eq(1).text();
 			
 			document.location="/outback/mp_getBoard?board_id="+board_id;
+		})
+		.on('click','#btnDelete',function() {
+			if($('input[name=check]:checked').length==0) {
+				alert('하나 이상 체크하세요.');
+				return false;
+			}
+			let check='';
+			$('input[name=check]:checked').each(function() {
+				check+=$(this).val()+",";
+			});
+			console.log(check);
+			if(!confirm("정말 삭제하시겠습니까?")) return false;
+// 			$.ajax({url:'/mypage/myboard/deletMyBoard',data:{check:check},
+// 					method:'POST',datatype:'json',
+// 					success:function(txt) {
+// 						console.log(txt);
+// 						if(txt=="ok") {
+// 							alert('삭제 완료.');
+// 							document.location='/mypage/myboard';
+// 						} else {
+// 							alert('다시 삭제해주세요.');
+// 						}
+// 					}
+// 			});
 		})
 	</script>
 </body>

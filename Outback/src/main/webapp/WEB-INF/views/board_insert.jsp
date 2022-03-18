@@ -199,7 +199,15 @@
 		
 		.on('click','#cancel',function() {
 			if(!confirm("취소하시면 작성한 모든 내용이 사라집니다. 취소하시겠습니까?")) return false;
-			document.location="/outback/board_list";
+			
+			var link=document.location.href.split('outback/');
+			console.log(link[1]);
+			if(link[1]=='board_insert') {
+				document.location='/outback/board_list';
+			}
+			if(link[1]=="mp_board_insert") {
+				document.location='/outback/mypage/myboard';
+			}
 		})
 		
 		function optionList(option) {
