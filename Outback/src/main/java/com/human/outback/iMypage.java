@@ -14,4 +14,5 @@ public interface iMypage {
 	ArrayList<Book> getMylaterbook(@Param("param1")String booker, @Param("pagination")Pagination pagination);
 	ArrayList<Book> getMyPrevbook(@Param("param1")String booker, @Param("pagination")Pagination pagination);
 	void deleteMybook(int book_id);
+	ArrayList<Allmenu> getNewmenu();
 }
