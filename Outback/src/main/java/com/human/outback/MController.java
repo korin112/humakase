@@ -70,7 +70,7 @@ public class MController {
 	@RequestMapping(value="/sign_check",method=RequestMethod.POST)
 	public String sign_check(HttpServletRequest hsr,Model model) {
 		String retval="";
-		String userid=hsr.getParameter("userid");
+		String userid=hsr.getParameter("userids");
 		String passcode=hsr.getParameter("passcode");
 		String name=hsr.getParameter("name");
 		String mobile=hsr.getParameter("mobile");
@@ -105,15 +105,21 @@ public class MController {
 		int type=0;
 		iLogin login = sqlSession.getMapper(iLogin.class);
 		ArrayList<Member> m=login.getLogin();
+		
 		for(int i=0; i < m.size(); i++) {
 //			System.out.println(m.get(i).getUser_type().getClass().getName());
 			if(m.get(i).getPasscode().equals(passcode) && m.get(i).getUserid().equals(userid)) {
 				type=m.get(i).getUser_type();
+			}  else if(userid == null){
+				str="fail";
+				model.addAttribute("fail_user",str);
+				return "login";
 			}
 		}
+		System.out.println(userid);
+		System.out.println(passcode);
 		System.out.println(type);
 		if(type == 1) {
-			session.setAttribute("_type_name2","관리자");
 				login.upLogin(userid);
 				session.setAttribute("userid",userid);
 				session.setAttribute("user_type",type);
@@ -123,10 +129,9 @@ public class MController {
 				model.addAttribute("error",str);
 				return "login";
 		} else if (type == 0) {
-				str="fail";
+				login.upLogin(userid);
 				session.setAttribute("userid",userid);
 				session.setAttribute("user_type",type);
-				model.addAttribute("fail_user",str);
 				return "redirect:/home";
 		} else {
 			return "login";
