@@ -103,33 +103,45 @@ public class MController {
 		String userid = hsr.getParameter("userid");
 		String passcode = hsr.getParameter("passcode");
 		int type=0;
+		Integer b=null;
 		iLogin login = sqlSession.getMapper(iLogin.class);
 		ArrayList<Member> m=login.getLogin();
+		
 		for(int i=0; i < m.size(); i++) {
 //			System.out.println(m.get(i).getUser_type().getClass().getName());
 			if(m.get(i).getPasscode().equals(passcode) && m.get(i).getUserid().equals(userid)) {
 				type=m.get(i).getUser_type();
+				break;
+			}else {
+				System.out.println("NO");
+				str="fail";
+				model.addAttribute("error",str);
+				return "login";
 			}
 		}
 		System.out.println(type);
 		if(type == 1) {
+			System.out.println("1 hi");
 			session.setAttribute("_type_name2","관리자");
 				login.upLogin(userid);
 				session.setAttribute("userid",userid);
 				session.setAttribute("user_type",type);
 				return "redirect:/home";
 		} else if (type == 2) {
+			System.out.println("2 hi");
 				str="test";
 				model.addAttribute("error",str);
 				return "login";
 		} else if (type == 0) {
-				str="fail";
+			System.out.println("0 bye");
+				str="true";
 				session.setAttribute("userid",userid);
 				session.setAttribute("user_type",type);
 				model.addAttribute("fail_user",str);
 				return "redirect:/home";
-		} else {
-			return "login";
+		} else  {
+			System.out.println("else bye");
+		return "login";
 		}
 	}
 	//마이페이지 관리

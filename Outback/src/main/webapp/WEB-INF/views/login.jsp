@@ -92,12 +92,17 @@ input[type=submit]{
 	<p>Not a member yet? <a href='/outback/signon'>Sign Up</a><p>
 </div>
 </form>
- <c:if test="${fail_user=='fail'}">
+ <c:if test="${fail_user.equals('fail')}">
  	<script type="text/javascript">
    		alert("로그인에 실패했습니다.");
  	</script>
  </c:if>
-<c:if test="${error == 'test'}">
+ <c:if test="${fail_user.equals('true')}">
+ 	<script type="text/javascript">
+ 		alert("일반 회원입니다.");
+ 	</script>
+ </c:if>	
+<c:if test="${error.equals('test')}">
 	<script type="text/javascript">
    		alert("탈퇴한 회원입니다. 다른아이디로 이용해주세요.");
   	</script>
