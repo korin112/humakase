@@ -34,4 +34,7 @@
 <delete id="deleteMybook">
 	delete from a, b using booking a left join booking_detail b on a.book_id = b.book_id where b.book_id = #{param1}
 </delete>
+<select id="getNewmenu" resultType="com.human.outback.Allmenu">
+	select menu_name, img from menu order by menu_code desc limit 8
+</select>
 </mapper>
