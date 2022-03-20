@@ -4,7 +4,8 @@
 	
 <mapper namespace="com.human.outback.iBook">
 <select id="getCart" resultType="com.human.outback.Cart">
-	select cart_code, menu_name, menu_cnt, menu_price, menu_total from cart where userid = #{param1}
+	select a.cart_code, b.menu_type as menu_code, a.menu_name, a.menu_cnt, a.menu_price, a.menu_total 
+	from cart a, menu b where a.menu_code = b.menu_code and userid = #{param1}
 	order by cart_code desc
 </select>
 <update id="updateCart">
