@@ -7,12 +7,14 @@ public class ReBoard {
 	private String writer;
 	private String content;
 	private String re_date;
+	private int user_type;
 	
-	public ReBoard(int re_id, String writer, String content, String re_date) {
+	public ReBoard(int re_id, String writer, String content, String re_date, int user_type) {
 		this.re_id = re_id;
 		this.writer = writer;
 		this.content = content;
 		this.re_date = re_date;
+		this.user_type = user_type;
 	}
 	public ReBoard() {}
 	
@@ -39,5 +41,12 @@ public class ReBoard {
 	}
 	public void setRe_date(String re_date) {
 		this.re_date = re_date;
+	}
+	public int getUser_type() {
+		return user_type;
+	}
+	public void setUser_type(int user_type) {
+		this.user_type = user_type;
 	}	
+	
 }

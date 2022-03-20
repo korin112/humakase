@@ -46,6 +46,7 @@ div.input-button {
 	width:20%;
 	text-align:center;
 }
+
 /* input[type=button],input[type=submit] { */
 /* 	border:none; */
 /* 	width:170px; */
@@ -55,7 +56,9 @@ div.input-button {
 /* 	color:white; */
 /* 	margin-left:20px; */
 /* } */
-input[type=submit]{
+
+input[type=button]{
+
 	border:none;
 	width:305px;
 	font-size:30px;
@@ -67,7 +70,7 @@ input[type=submit]{
 </style>
 <body align=center>
 <h1 style="color:white; text-align: center; font-weight: bold; font-size: 40px; letter-spacing: 10px;font-family: 'Gelasio','Noto Sans KR', sans-serif; ">La Campanella</h1>
-<form method="POST" action="/outback/login_check" id=frmLogin>
+<!-- <form method="POST" action="/outback/home" id=frmLogin> -->
 <div>
 	<div class="input-box">
 		<label for="username"></label>
@@ -87,10 +90,11 @@ input[type=submit]{
 		<input type=password id=passcode name=passcode placeholder="PASSWORD">
 	</div>
 	<div class="input-button">
-	<input type=submit value=Login>
+	<input type=button id=frmLogin name=frmLogin value=Login>
 	</div>
 	<p>Not a member yet? <a href='/outback/signon'>Sign Up</a><p>
 </div>
+
 </form>
  <c:if test="${fail_user=='fail'}">
  	<script type="text/javascript">
@@ -102,11 +106,15 @@ input[type=submit]{
    		alert("탈퇴한 회원입니다. 다른아이디로 이용해주세요.");
   	</script>
 </c:if>
+
+<!-- </form> -->
+
 </body>
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <script>
+let flag="fail";
 $(document)
-.on('submit','#frmLogin',function(){
+.on('click','#frmLogin',function(){
 		if($('#userid').val() == ''){
 			alert('아이디를 입력하세요.');
 			return false;
@@ -115,6 +123,35 @@ $(document)
 			alert('비밀번호를 입력하세요.');
 			return false;
 		}
+			$.post('/outback/login_check',
+					{},
+					function(txt) {
+						for(i=0; i < txt.length; i++) {
+							if($('#userid').val() == txt[i]['userid'] &&
+							   $('#passcode').val() == txt[i]['passcode']) {
+								flag="ok";
+								break;
+							} else {
+								flag="fail";
+							}
+						}
+						if(flag == "ok") {
+							alert(txt[i]['userid']+'환영합니다.');
+							$.post('/outback/upLogin',
+									{userid:$('#userid').val()},
+									function(){
+										if(flag == "ok") {
+											console.log($('#userid').val());
+											document.location="/outback/home";
+										} else {
+											alert("로그인 실패");
+											return false;
+										}
+									},'text');
+						} else {
+							alert("아이디 및 패스워드가 맞지 않습니다.");
+						}
+					},'json');
 })
 //회원가입.jsp로 이동
 .on('click','#signon',function(){

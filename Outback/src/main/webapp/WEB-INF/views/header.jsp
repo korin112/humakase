@@ -64,6 +64,7 @@
 								<li><a class="dropdown-item" href="/outback/covid_check">코로나19 감염현황</a></li>
 								<li><a class="dropdown-item" href="/outback/passEdit">비밀번호변경</a></li>
 								<li><a class="dropdown-item" href="/outback/mypage">회원탈퇴</a></li>
+								<li><a class="dropdown-item" href="/outback/mypage/myboard">리뷰관리</a></li>
 							</ul>
 						</li>
 						<li class="nav-item">

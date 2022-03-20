@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -50,7 +51,7 @@ public class HController {
 	}
 	
 	// 게시판 조회
-	@RequestMapping("/getBoard")
+	@RequestMapping(value={"/getBoard","/mp_getBoard"})
 	public String Board(HttpSession session, Model m, int board_id) {
 		iBoard board = sqlSession.getMapper(iBoard.class);
 		m.addAttribute("b", board.getBoard(board_id));
@@ -59,18 +60,18 @@ public class HController {
 		
 		String userid = (String) session.getAttribute("userid");
 		m.addAttribute("m", board.getSession(userid));
-
+		
 		return "board";
 	}
 
 	// 댓글
 	@ResponseBody
 	@RequestMapping(value = "/reList", produces = "application/json;charset=utf-8")
-	public String reBoard(int board_id) {
+	public String reBoard(int board_id, Model m, HttpSession session) {
 		iBoard reBoard = sqlSession.getMapper(iBoard.class);
 		//System.out.println("board_id : " + board_id);
 		ArrayList<ReBoard> re = reBoard.reBoard(board_id);
-
+		
 		JSONArray ja = new JSONArray();
 		for (int i = 0; i < re.size(); i++) {
 			JSONObject jo = new JSONObject();
@@ -78,6 +79,7 @@ public class HController {
 			jo.put("writer", re.get(i).getWriter());
 			jo.put("content", re.get(i).getContent());
 			jo.put("re_date", re.get(i).getRe_date());
+			jo.put("user_type", re.get(i).getUser_type());
 			ja.add(jo);
 		}
 		return ja.toString();
@@ -94,7 +96,7 @@ public class HController {
 		// System.out.println("board_id : "+board_id);
 		// System.out.println("writer : "+writer);
 		// System.out.println("content : "+content);
-
+		
 		String str = "";
 		iBoard re = sqlSession.getMapper(iBoard.class);
 		try {
@@ -145,16 +147,21 @@ public class HController {
 	}
 
 	// 게시판 삭제
-	@RequestMapping("/board_delete")
-	public String BoardDelete(int board_id, RedirectAttributes rttr) {
+	@RequestMapping(value="/{mp}board_delete")
+	public String BoardDelete(@PathVariable("mp") String mp, int board_id, RedirectAttributes rttr) {
 		iBoard board = sqlSession.getMapper(iBoard.class);
 		board.deleteBoard(board_id);
 		rttr.addFlashAttribute("result", "delete");
-		return "redirect:/board_list";
+		
+		if(mp.equals("mp_")) {
+			return "redirect:/mypage/myboard";
+		} else {
+			return "redirect:/board_list";
+		}
 	}
 
 	// 게시판 수정
-	@RequestMapping("/board_update")
+	@RequestMapping(value={"/board_update","/mp_board_update"})
 	public String BoardUpdate(Model m, int board_id) {
 		iBoard board = sqlSession.getMapper(iBoard.class);
 		m.addAttribute("b", board.getBoard(board_id));
@@ -185,7 +192,7 @@ public class HController {
 	}
 
 	// 게시판 글 작성
-	@RequestMapping(value = "/board_insert", method = RequestMethod.GET)
+	@RequestMapping(value = {"/board_insert","/mp_board_insert"}, method = RequestMethod.GET)
 	public String BoardInsert(HttpSession session, Model m) {
 		String userid = (String) session.getAttribute("userid");
 		m.addAttribute("userid", userid);
