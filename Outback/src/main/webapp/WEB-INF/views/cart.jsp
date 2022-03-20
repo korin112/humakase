@@ -44,7 +44,7 @@
 					<c:forEach items="${getCart}" var="getCart">
 						<tr data-ctCode="${getCart.cart_code}">
 							<td><input type="checkbox" name="check" value="${getCart.cart_code}"></td>
-							<td>${getCart.menu_name}</td>
+							<td data-mtype="${getCart.menu_code}">${getCart.menu_name}</td>
 							<td data-ctPrice="${getCart.menu_price}"><fmt:formatNumber value="${getCart.menu_price}" type="number"/></td>
 							<td><input type="number" value="${getCart.menu_cnt}" min="1" oninput="valiCheck(this);">
 								<div><input type="button" value="적용" name="updateCt" style="display:none;"></div>
@@ -198,6 +198,9 @@
 				let book_list_contents = '';
 				i = 0;
 				$('.cart tbody tr').each(function(){
+// 					let mtype = $(this,'td:nth-child(2)').attr('data-mtype');
+// 					console.log(mtype);
+// 					if()
 					let cart_code = $('td input[type=checkbox]:checked', this).val();
 					console.log('cart_code: '+cart_code);
 					if(cart_code != null){
@@ -209,7 +212,7 @@
 				});
 				console.log(book_list_contents);
 				$(".bookForm").html(book_list_contents);
-				$('.bookForm').submit();
+// 				$('.bookForm').submit();
 			} else {
 				alert('하나 이상의 메뉴를 선택해주세요.');
 			}
