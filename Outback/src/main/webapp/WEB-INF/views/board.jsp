@@ -18,7 +18,7 @@
 	.dropdown-menu{max-height:200px; overflow-y:auto; overflow-x:hidden;}
 	.dropdown-item{cursor:pointer;}
 	.book-list{overflow:hidden;}
-	.book-list article{display:block; margin:0 11.5rem; width:70%; height:100%;}
+	.book-list article{display:block; margin:0 auto; width:70%; height:100%;}
 	.booking_info_box > ul{display:table; width:100%; margin:0; padding:0; border-bottom:1px solid #ccc;}
 	.booking_info_box > ul:first-child{border-top:1px solid #ddd;}	
 	.booking_info_box > ul > li{width:80%; display:table-cell; padding:1.25rem 0 1.25rem 2.125rem;}
@@ -40,7 +40,7 @@
   	.O_container #comment_div #cancel {padding-left:0.5rem;}
   	 
   	/* 댓글 달기 */
-  	.O_container .article_wrap {margin:1.5rem 11.7rem; width:70%; border-bottom:2px solid #ccc;}
+  	.O_container .article_wrap {margin:1.5rem auto; width:70%; border-bottom:2px solid #ccc;}
   	.O_container .article_wrap .bi-chat-dots{width:20px; height:35px; padding-bottom:0.25rem;}
    	.O_container .article_wrap .comment_icon {float:left;}
    	.O_container .article_wrap .comment_writer_info {display:inline-block;}
@@ -172,19 +172,22 @@
 		.on('click',"#listBtn",function() {
 			var path1='/outback/board_list';
 			var path2='/outback/mypage/myboard';
-			findLink(path1,path2);
+			var path3='/outback/adm/adm_board';
+			findLink(path1,path2,path3);
 		})
 		.on('click','#updateBtn',function() {
 			var path1="/outback/board_update?board_id="+$('#board_id').val();
 			var path2="/outback/mp_board_update?board_id="+$('#board_id').val();
-			findLink(path1,path2);	
+			var path3="/outback/adm_board_update?board_id="+$('#board_id').val();
+			findLink(path1,path2,path3);	
 		})
 		.on('click','#deleteBtn',function() {
 			if(!confirm("삭제하시겠습니까?")) return false;
 			
 			var path1="/outback/board_delete?board_id="+$('#board_id').val();
 			var path2="/outback/mp_board_delete?board_id="+$('#board_id').val();
-			findLink(path1,path2);
+			var path3="/outback/adm_board_delete?board_id="+$('#board_id').val();
+			findLink(path1,path2,path3);
 		})
 		.on('click','#cmtBtn',function() {
 			if($('#reBoard').css('display')=='none') {
@@ -341,7 +344,7 @@
 			obj.style.height = obj.scrollHeight+'px';
 		}
 		
-		function findLink(path1,path2) {
+		function findLink(path1,path2,path3) {
 			var link=document.location.href.split('outback/');
 			var link_str=link[1].split('?');
 			if(link_str[0]=='getBoard') {
@@ -349,6 +352,9 @@
 			}
 			if(link_str[0]=="mp_getBoard") {
 				document.location=path2;
+			}
+			if(link_str[0]=="adm_getBoard") {
+				document.location=path3;
 			}
 		}
 		

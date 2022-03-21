@@ -51,7 +51,7 @@ public class HController {
 	}
 	
 	// 게시판 조회
-	@RequestMapping(value={"/getBoard","/mp_getBoard"})
+	@RequestMapping(value={"/getBoard","/mp_getBoard","/adm_getBoard"})
 	public String Board(HttpSession session, Model m, int board_id) {
 		iBoard board = sqlSession.getMapper(iBoard.class);
 		m.addAttribute("b", board.getBoard(board_id));
@@ -155,13 +155,16 @@ public class HController {
 		
 		if(mp.equals("mp_")) {
 			return "redirect:/mypage/myboard";
+		} else if(mp.equals("adm_")) {
+			return "redirect:/adm/adm_board";
 		} else {
 			return "redirect:/board_list";
 		}
+		
 	}
 
 	// 게시판 수정
-	@RequestMapping(value={"/board_update","/mp_board_update"})
+	@RequestMapping(value={"/board_update","/mp_board_update","adm_board_update"})
 	public String BoardUpdate(Model m, int board_id) {
 		iBoard board = sqlSession.getMapper(iBoard.class);
 		m.addAttribute("b", board.getBoard(board_id));
@@ -192,7 +195,7 @@ public class HController {
 	}
 
 	// 게시판 글 작성
-	@RequestMapping(value = {"/board_insert","/mp_board_insert"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/board_insert","/mp_board_insert","/adm_board_insert"}, method = RequestMethod.GET)
 	public String BoardInsert(HttpSession session, Model m) {
 		String userid = (String) session.getAttribute("userid");
 		m.addAttribute("userid", userid);
