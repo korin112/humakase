@@ -8,6 +8,8 @@ li{list-style:none;}
 .O_container{margin:100px 0 150px;}
 /* 부트스트랩 초기화 */
 .dropdown-menu-dark .dropdown-item.active, .dropdown-menu-dark .dropdown-item:active{background:#c93535; background-color:#c93535 !important;}
+.btn-outline-danger{color:#c93535 !important; border-color:#c93535 !important;}
+.btn-outline-danger:hover {color: #fff !important; background-color: #c93535 !important; border-color: #c93535 !important; }
 /* paging 공통 */
 .page-link{color:inherit;}
 .page-item.active .page-link{background:#c93535; border-color:#c93535;}
