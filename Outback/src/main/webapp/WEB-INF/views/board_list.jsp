@@ -122,7 +122,6 @@
 			if(result=="delete") {
 				alert("삭제 완료했습니다.");
 			}
-			$('#keyword').val('');
 		})
 		.on('click','#insert',function() {
 			document.location="/outback/board_insert";
