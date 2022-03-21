@@ -83,22 +83,23 @@ input[type=submit]{
 	</form>
 	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 	<script>
-		let flag="fail";
 		$(document)
+		//등록된 회원 유효성 검사
 		.ready(function() {
-			let result = '<c:out value="${result}"/>';
+			let result = '<c:out value="${result}"/>'; //rttr.addFlashAttribute("result") 사용
 			if (result == "none"){
 				if(confirm("등록되지 않은 아이디 입니다. 회원가입으로 이동하시겠습니까?")){
 					document.location="/outback/signon";
 				} else{
 					return false;
 				}
-			} else if(result == "idchk"){
+			} else if(result == "idchk"){ //rttr.addFlashAttribute를 사용해서 유효성 검사
 				alert("아이디 혹은 비밀번호를 다시 확인해주세요.");
-			} else if(result == 2){
+			} else if(result == 2){ //user_type이 2번일 때 탈퇴회원
 				alert("탈퇴한 회원입니다.");
 			}
 		})
+		//id & password 체크
 		.on('click','#btnLogin',function(){
 			if($('#userid').val() == ''){
 				alert('아이디를 입력하세요.');
