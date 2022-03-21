@@ -169,18 +169,21 @@
 	<%@include file ="footer.jsp" %>
 	<script>
 		$(document)
+		// 목록
 		.on('click',"#listBtn",function() {
 			var path1='/outback/board_list';
 			var path2='/outback/mypage/myboard';
 			var path3='/outback/adm/adm_board';
 			findLink(path1,path2,path3);
 		})
+		// 수정
 		.on('click','#updateBtn',function() {
 			var path1="/outback/board_update?board_id="+$('#board_id').val();
 			var path2="/outback/mp_board_update?board_id="+$('#board_id').val();
 			var path3="/outback/adm_board_update?board_id="+$('#board_id').val();
 			findLink(path1,path2,path3);	
 		})
+		//삭제
 		.on('click','#deleteBtn',function() {
 			if(!confirm("삭제하시겠습니까?")) return false;
 			
@@ -189,6 +192,7 @@
 			var path3="/outback/adm_board_delete?board_id="+$('#board_id').val();
 			findLink(path1,path2,path3);
 		})
+		// 댓글
 		.on('click','#cmtBtn',function() {
 			if($('#reBoard').css('display')=='none') {
 				$('#reBoard').css('display','block');
@@ -198,6 +202,7 @@
 			}
 			return false;
 		})
+		// 댓글 입력
 		.on('click','#reInsert',function() {
 			if($('#cmt').val()=='') {
 				alert('댓글을 입력해주세요');
@@ -223,6 +228,7 @@
 				}
 			});
 		})
+		// 댓글 삭제
 		.on('click','#delBtn',function() {
 			//console.log($(this).attr('data-value'));
 			if(!confirm("정말 삭제하시겠습니까?")) return false;
@@ -240,6 +246,7 @@
 				} 
 			});
 		})
+		// 댓글 수정
 		.on('click','#upBtn',function() {
 			// console.log($(this).attr('data-value'));
 			let ar=$(this).attr('data-value').split(",");
@@ -262,6 +269,7 @@
 				btnD.css('display','none');
 			}
 		})
+		// 댓글 취소
 		.on('click','#cancel',function() {
 			let btnD=$(this).parent().find('a[id=delBtn]');
 			if(btnD.css('display')=='none') {
@@ -277,6 +285,7 @@
 			$('#upDateBtn').text("수정");
 			$('#upDateBtn').attr('id','upBtn');
 		})
+		// 댓글 수정 완료
 		.on('click','#upDateBtn',function() {
 			if($('#cmtUpdate').val()=="") {
 				alert("수정할 내용을 입력해주세요.");
@@ -322,11 +331,11 @@
 						let btnD="<a href='#none' role='button' id='delBtn' data-value='"+txt[i]['re_id']+"'>삭제</a>";
 						let btnU="<a href='#none' role='button' id='upBtn' data-value='"+txt[i]['re_id']+","+txt[i]['content']+"'>수정</a>";
 						
-// 						console.log(${m.user_type});
+ 						// console.log(${m.user_type});
 						$('#comment_div').append(writer+content);
-						if(${m.userid==b.writer}) {
+						if(${m.userid==b.writer}) {  // 리뷰 작성자와 로그인한 아이디가 같은 경우
 							$('#comment_div').append(div1+re_date+btnD+btnU+div2);
-						} else if(${m.user_type==1}) {
+						} else if(${m.user_type==1}) {  // 관리자인 경우
 							$('#comment_div').append(div1+re_date+btnD+div2);
 						} else {
 							$('#comment_div').append(div1+re_date+div2);
@@ -344,6 +353,7 @@
 			obj.style.height = obj.scrollHeight+'px';
 		}
 		
+		// path1:게시판, path2:마이페이지 리뷰관리, path3:관리자페이지 리뷰관리
 		function findLink(path1,path2,path3) {
 			var link=document.location.href.split('outback/');
 			var link_str=link[1].split('?');
@@ -372,13 +382,13 @@
 		}
 		
 		function Icon(type) {
-			if(type==0) {	
+			if(type==0) {  // 일반 회원인 경우
 				var icon='<div class="comment_icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">';
 				icon+='<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>';
 				icon+='<path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>';
 				icon+='</svg></div>';
 			}
-			if(type==1) {
+			if(type==1) {  // 관리자인 경우
 				var icon='<div class="comment_icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wrench-adjustable-circle" viewBox="0 0 16 16">';  
 				icon+='<path d="M12.496 8a4.491 4.491 0 0 1-1.703 3.526L9.497 8.5l2.959-1.11c.027.2.04.403.04.61Z"/>';
 				icon+='<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0Zm-1 0a7 7 0 1 0-13.202 3.249l1.988-1.657a4.5 4.5 0 0 1 7.537-4.623L7.497 6.5l1 2.5 1.333 3.11c-.56.251-1.18.39-1.833.39a4.49 4.49 0 0 1-1.592-.29L4.747 14.2A7 7 0 0 0 15 8Zm-8.295.139a.25.25 0 0 0-.288-.376l-1.5.5.159.474.808-.27-.595.894a.25.25 0 0 0 .287.376l.808-.27-.595.894a.25.25 0 0 0 .287.376l1.5-.5-.159-.474-.808.27.596-.894a.25.25 0 0 0-.288-.376l-.808.27.596-.894Z"/>';

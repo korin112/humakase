@@ -8,10 +8,10 @@
 <html>
 <head>
 <meta charset="UTF-8" name="viewport" content="width=device-width, height=device-height, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link rel="stylesheet" href="${path}/resources/css/style.css">
 <title> - 로그인 - </title>
 </head>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="${path}/resources/css/style.css">
 
 <style>
 body {
@@ -19,66 +19,72 @@ body {
 	background-color:#e9e9e9;
 	margin-top:200px;
 }
-input {
-    width: 150px;
-    margin: 3px 0;
-    outline: none;
-    text-align: center;
+input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active {
+	transition: background-color 5000s ease-in-out 0s;
+	-webkit-transition: background-color 9999s ease-out;
 }
+.login_wrap{width:30rem; margin:0 auto;}
+.login_logo{text-align:center;font-weight:normal; text-align:center; font-size:2.5rem; margin:0 0 2rem;
+	font-family: 'Gelasio','Noto Sans KR', sans-serif; color:#212529;}
+.login_logo a{color:#212529;}
 div.input-button {
-	left:20px;
+	margin-top:1rem;
 }
 .input-box {
-	position:relative;
-	margin:10px;
 	text-align:center;
-	font-weight:bold;
-	display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    align-items: center;
-    justify-content: center;
+	width: 100%;
+	height: 100%;
+	margin-bottom:1rem;
+	border:1px solid #ccc;
+	background:#fff;
 }
+.input-box label{display:inline-block; width:11%; color:#646c74; opacity:0.8; text-align:center;}
 .input-box input {
-	padding:20px 0px 5px 0px;
-	font-size:14pt;
-	width:20%;
-	text-align:center;
+	padding:0.75rem 1rem 0.75rem 0;
+	display:inline-block;
+	font-size:1rem;
+	width:88%;
+	border:0;
 }
-input[type=submit]{
+.input-box input:focus{outline:none; border:none;}
+.input-button > input[type=submit]{
+	margin-top:1rem;
 	border:none;
-	width:305px;
-	font-size:30px;
-	border-radius:5px;
-	background-color:#8aa1a1;
+	width:100%;
+	font-size:1.5rem;
+	background-color:#c93535;
+	padding:0.75rem 0;
 	color:white;
-	margin-left:18px;
 }
+.go_signon {text-align:center; color:#646c74; margin:0.5rem 0;}
+.go_signon a{color:#c93535; font-weight:500;}
 </style>
-<body align=center>
-	<h1 style="color:white; text-align: center; font-weight: bold; font-size: 40px; letter-spacing: 10px;font-family: 'Gelasio','Noto Sans KR', sans-serif; ">La Campanella</h1>
+<body>
+	<h1 class="login_logo"><a href="/outback/home" title="홈페이지로 이동">La Campanella</a></h1>
 	<form method="POST" action="/outback/loginChk2" id=frmLogin>
-		<div>
+		<div class="login_wrap">
 			<div class="input-box">
-				<label for="username"></label>
-				      <svg x="0px" y="0px" width="12px" height="13px">
-		        <path fill="#B1B7C4" d="M8.9,7.2C9,6.9,9,6.7,9,6.5v-4C9,1.1,7.9,0,6.5,0h-1C4.1,0,3,1.1,3,2.5v4c0,0.2,0,0.4,0.1,0.7 C1.3,7.8,0,9.5,0,11.5V13h12v-1.5C12,9.5,10.7,7.8,8.9,7.2z M4,2.5C4,1.7,4.7,1,5.5,1h1C7.3,1,8,1.7,8,2.5v4c0,0.2,0,0.4-0.1,0.6 l0.1,0L7.9,7.3C7.6,7.8,7.1,8.2,6.5,8.2h-1c-0.6,0-1.1-0.4-1.4-0.9L4.1,7.1l0.1,0C4,6.9,4,6.7,4,6.5V2.5z M11,12H1v-0.5 c0-1.6,1-2.9,2.4-3.4c0.5,0.7,1.2,1.1,2.1,1.1h1c0.8,0,1.6-0.4,2.1-1.1C10,8.5,11,9.9,11,11.5V12z"/>
-		      </svg>
+				<label for="userid">
+					<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+						<path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+					</svg>
+				</label>
 				<input type=text name=userid id=userid placeholder="ID">
 		
 			</div>	
 			<div class="input-box">
-				<label for=passcode></label>
-				      <svg x="0px" y="0px" width="15px" height="5px">
-		          <path fill="#B1B7C4" d="M6,2L6,2c0-1.1-1-2-2.1-2H2.1C1,0,0,0.9,0,2.1v0.8C0,4.1,1,5,2.1,5h1.7C5,5,6,4.1,6,2.9V3h5v1h1V3h1v2h1V3h1 V2H6z M5.1,2.9c0,0.7-0.6,1.2-1.3,1.2H2.1c-0.7,0-1.3-0.6-1.3-1.2V2.1c0-0.7,0.6-1.2,1.3-1.2h1.7c0.7,0,1.3,0.6,1.3,1.2V2.9z"/>
-		      </svg>
+				<label for="passcode">
+					<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-key" viewBox="0 0 16 16">
+						<path d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8zm4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5z"/>
+						<path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+					</svg>
+				</label>
 				<input type=password id=passcode name=passcode placeholder="PASSWORD">
 			</div>
 			<div class="input-button">
 			<input type="submit" id="btnLogin" name="btnLogin" value=Login>
 			</div>
-			<p>Not a member yet? <a href='/outback/signon'>Sign Up</a></p>
+			<p class="go_signon">Not a member yet? <a href='/outback/signon'>Sign On</a></p>
 		</div>
 	</form>
 	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
@@ -86,6 +92,17 @@ input[type=submit]{
 		let flag="fail";
 		$(document)
 		.ready(function() {
+			$('.input-box > input').focus(function(){
+				$('.input-box').css('border','1px solid #ccc');
+				$(this).parent('.input-box').css('border','2px solid rgba(201,25,25,0.75)');
+			});
+			$('html').click(function(e){ //문서 body를 클릭했을때
+				if($(e.target.parentElement).hasClass('input-box') || $(e.target).hasClass('input-box')){
+					return false;
+				} else {
+					$('.input-box').css('border','1px solid #ccc');
+				}
+			});
 			let result = '<c:out value="${result}"/>';
 			if (result == "none"){
 				if(confirm("등록되지 않은 아이디 입니다. 회원가입으로 이동하시겠습니까?")){

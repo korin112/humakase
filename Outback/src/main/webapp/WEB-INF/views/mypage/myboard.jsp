@@ -43,8 +43,8 @@
 	<%@include file ="../header.jsp" %>
 	<div class="submenu_title_wrap">
 		<div class="container submenu_title">
-			<h1>MY RESERVATION</h1>
-			<p>Mypage - REVIEW BOARD</p>
+			<h1>MY REVIEW BOARD</h1>
+			<p>Mypage - MY REVIEW BOARD</p>
 		</div>
 	</div>
 	<div class="container O_container">
