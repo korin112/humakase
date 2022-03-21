@@ -144,6 +144,7 @@ public class MController {
    @RequestMapping(value = "/memberList", produces="application/json;charset=utf-8")
    public String memberList() {
       iLogin login=sqlSession.getMapper(iLogin.class);
+            
       ArrayList<Member> m = login.getLogin();
       JSONArray ja = new JSONArray();
       for(int i=0; i < m.size(); i++) {

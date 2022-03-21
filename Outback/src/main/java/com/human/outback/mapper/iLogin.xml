@@ -15,6 +15,7 @@
 	from member
 	order by userid
 </select>
+
 <select id="confirm_check" resultType="com.human.outback.Member">
 	select userid from member where userid=#{param1}
 </select>
