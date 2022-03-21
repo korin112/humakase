@@ -182,14 +182,7 @@
 				success:function(txt) {
 					if(txt=="ok") {
 						alert('작성 완료했습니다.');
-						var link=document.location.href.split('outback/');
-						console.log(link[1]);
-						if(link[1]=='board_insert') {
-							document.location='/outback/board_list';
-						}
-						if(link[1]=="mp_board_insert") {
-							document.location='/outback/mypage/myboard';
-						}
+						findLink();
 					} else {
 						alert('다시 작성해주세요.');
 					}
@@ -199,15 +192,7 @@
 		
 		.on('click','#cancel',function() {
 			if(!confirm("취소하시면 작성한 모든 내용이 사라집니다. 취소하시겠습니까?")) return false;
-			
-			var link=document.location.href.split('outback/');
-			console.log(link[1]);
-			if(link[1]=='board_insert') {
-				document.location='/outback/board_list';
-			}
-			if(link[1]=="mp_board_insert") {
-				document.location='/outback/mypage/myboard';
-			}
+			findLink();
 		})
 		
 		function optionList(option) {
@@ -230,6 +215,20 @@
 					}
 				}
 			});
+		}
+		
+		function findLink() {
+			var link=document.location.href.split('outback/');
+			console.log(link[1]);
+			if(link[1]=='board_insert') {
+				document.location='/outback/board_list';
+			}
+			if(link[1]=="mp_board_insert") {
+				document.location='/outback/mypage/myboard';
+			}
+			if(link[1]=="adm_board_insert") {
+				document.location='/outback/adm/adm_board';
+			}
 		}
 	</script>
 </body>

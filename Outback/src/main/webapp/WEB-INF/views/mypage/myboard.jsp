@@ -35,7 +35,7 @@
 	.board_btn_option .board_search input::placeholder {color:#A6A6A6;}
  	.board_btn_option .board_search .board_btn_search .bi-search{text-align:right; height:20px; width:10%; cursor:pointer;}
 	
-	.board_btn_option .board_delete_insert {width:10%; float:left;}
+	.board_btn_option .board_delete_insert {width:20%; float:left;}
 	.mybook_comment {float:right;}
 </style>
 </head>
@@ -49,7 +49,7 @@
 	</div>
 	<div class="container O_container">
 		<div class="mybook_comment">
-			<p>* 방문일, 지점코드순으로 정렬되어 있습니다.</p>
+			<p>* 작성일순으로 정렬되어 있습니다.</p>
 		</div>
 		<table id="getBoard" class="board_table">
 			<thead>
@@ -65,7 +65,7 @@
 			<tbody>
 				<c:forEach items="${b_list}" var="b">
 					<tr id="board_tr" class="board_tr">
-						<td><input type="checkbox" name="check" value="${board_id}"></td>
+						<td class="td_check"><input type="checkbox" name="check" value="${b.board_id}"></td>
 						<td>${b.board_id}</td>
 						<td>${b.spot_name}</td>
 			            <td>${b.title}</td>
@@ -96,7 +96,7 @@
 				<button type="button" id="insert" class="btn btn-outline-secondary">
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
   						<path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-					</svg>
+					</svg> 글쓰기
 				</button>
 			</div>
 		</div>
@@ -134,6 +134,20 @@
 	<%@include file ="../footer.jsp" %>
 	<script>
 		$(document)
+		.ready(function() {
+			$("input[name=checkAll]").click(function() {
+				if($("input[name=checkAll]").is(":checked")) $("input[name=check]").prop("checked", true);
+				else $("input[name=check]").prop("checked", false);
+			});
+			
+			$("input[name=check]").click(function() {
+				var total = $("input[name=check]").length;
+				var checked = $("input[name=check]:checked").length;
+				
+				if(total != checked) $("input[name=checkAll]").prop("checked", false);
+				else $("input[name=checkAll]").prop("checked", true); 
+			});
+		})
 		.on('click','#pageInfo a',function(e) {
 			e.preventDefault();
 			$('#move').find("input[name='pageNum']").val($(this).attr("href"));
@@ -150,11 +164,11 @@
 		.on('click','#insert',function() {
 			document.location="/outback/mp_board_insert";
 		})
-		.on('click','#board_tr',function() {
-			var tr=$(this);
-			var td=tr.children();
-			var board_id=td.eq(1).text();
+		.on('click', '.board_tr td:nth-child(n+2)', function() {
+			console.log($(this).parent().children().eq(1).text());
+// 			console.log("★" + $(this).siblings('td:nth-child(n)').text());
 			
+			var board_id=$(this).parent().children().eq(1).text();
 			document.location="/outback/mp_getBoard?board_id="+board_id;
 		})
 		.on('click','#btnDelete',function() {
@@ -162,24 +176,29 @@
 				alert('하나 이상 체크하세요.');
 				return false;
 			}
-			let check='';
+			
+			let check_str='';
 			$('input[name=check]:checked').each(function() {
-				check+=$(this).val()+",";
+				check_str+=","+$(this).val();
 			});
+			let check=check_str.replace(',','');
 			console.log(check);
+			console.log(typeof(check));
+			
 			if(!confirm("정말 삭제하시겠습니까?")) return false;
-// 			$.ajax({url:'/mypage/myboard/deletMyBoard',data:{check:check},
-// 					method:'POST',datatype:'json',
-// 					success:function(txt) {
-// 						console.log(txt);
-// 						if(txt=="ok") {
-// 							alert('삭제 완료.');
-// 							document.location='/mypage/myboard';
-// 						} else {
-// 							alert('다시 삭제해주세요.');
-// 						}
-// 					}
-// 			});
+			
+			$.ajax({url:'/outback/mypage/deleteMyBoard',data:{check:check},
+					method:'POST',datatype:'json',
+					success:function(txt) {
+						console.log(txt);
+						if(txt=="ok") {
+							alert('삭제 완료했습니다.');
+							document.location='/outback/mypage/myboard';
+						} else {
+							alert('다시 삭제해주세요.');
+						}
+					}
+			});
 		})
 	</script>
 </body>
