@@ -28,11 +28,15 @@
 	<symbol id="bi-pen" viewBox="0 0 16 16">
 		 <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"></path>
 	</symbol>
+	<symbol id="bi-file-earmark-text" viewBox="0 0 16 16">
+  		<path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
+  		<path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+	</symbol>
 </svg>
  
 
 <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark adm_header" style="width: 280px;">
-	<a href="/outback/adm" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none adm_logo">
+	<a href="/outback/adm/menuadd" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none adm_logo">
 			La Campanella
 	</a>
 	<hr>
@@ -59,6 +63,12 @@
 			<a href="/outback/adm/adm_book" class="nav-link text-white">
 				<svg class="bi me-2" width="24" height="24"><use xlink:href="#Calendar4-week"></use></svg>
 				<span class="adm_nav_tt">예약관리</span>
+			</a>
+		</li>
+		<li>
+			<a href="/outback/adm/adm_board" class="nav-link text-white">
+				<svg class="bi me-2" width="24" height="24"><use xlink:href="#bi-file-earmark-text"></use></svg>
+				<span class="adm_nav_tt">리뷰관리</span>
 			</a>
 		</li>
 	</ul>

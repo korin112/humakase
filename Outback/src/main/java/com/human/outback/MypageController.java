@@ -116,13 +116,22 @@ public class MypageController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/mypage/myboard/deleteMyBoard", method = RequestMethod.POST)
+	@RequestMapping(value="/mypage/deleteMyBoard", method = RequestMethod.POST)
 	public String deleteMyBoard(HttpServletRequest hsr) {
-		int book_id = Integer.parseInt(hsr.getParameter("mybook_id"));
+		String check=hsr.getParameter("check");
+		String[] id=check.split(",");
+
+		System.out.println(check);
+		System.out.println(id);
+		
 		String str="";
-		iMypage iMypage = sqlSession.getMapper(iMypage.class);
-		iMypage.deleteMybook(book_id);
+		iBoard board = sqlSession.getMapper(iBoard.class);
+		
 		try {
+			for(int i=0; i<id.length; i++) {
+				int board_id=Integer.parseInt(id[i]);
+				board.deleteBoard(board_id);
+			}
 			str="ok";
 		} catch(Exception e) {
 			str="fail";
