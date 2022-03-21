@@ -43,7 +43,7 @@
 
 <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark adm_header" style="width: 280px;">
 
-   <a href="/outback/adm" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none adm_logo">
+   <a href="/outback/adm/menuadd" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none adm_logo">
          La Campanella
    </a>
    <hr>
