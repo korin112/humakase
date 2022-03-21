@@ -35,9 +35,14 @@ public class AdminController {
 	public String admin(HttpServletRequest hsr, Model model) {
 		HttpSession session = hsr.getSession();
 		String userid = (String) session.getAttribute("userid");
-		model.addAttribute("userid", userid);
+		int user_type = (int) session.getAttribute("user_type");
+		if(user_type == 1) {
+			model.addAttribute("userid", userid);
+			return "adm/admin";
+		} else {
+			return "redirect:/home";
+		}
 		
-		return "adm/admin";
 	}
 	
 	@RequestMapping("/adm/adm_book")
@@ -46,18 +51,23 @@ public class AdminController {
 			, @RequestParam(required = false, defaultValue = "1") int range) {
 		HttpSession session = hsr.getSession();
 		String userid = (String) session.getAttribute("userid");
-		model.addAttribute("userid", userid);
-		iAdmin iAdmin = sqlSession.getMapper(iAdmin.class);
-		// 전체 게시글 개수
-		int listCnt = iAdmin.getCntBooking();
-		// Pagination
-		pagination.pageInfo(page, range, listCnt);
-		model.addAttribute("pagination", pagination);
-		model.addAttribute("admBook", iAdmin.getAdminBook(pagination));
-
-//		model.addAttribute("admBook", iAdmin.getAdminBook(skip, page.getAmount()));
-		
-		return "adm/adm_book";
+		int user_type = (int) session.getAttribute("user_type");
+		if(user_type == 1) {
+			model.addAttribute("userid", userid);
+			iAdmin iAdmin = sqlSession.getMapper(iAdmin.class);
+			// 전체 게시글 개수
+			int listCnt = iAdmin.getCntBooking();
+			// Pagination
+			pagination.pageInfo(page, range, listCnt);
+			model.addAttribute("pagination", pagination);
+			model.addAttribute("admBook", iAdmin.getAdminBook(pagination));
+	
+	//		model.addAttribute("admBook", iAdmin.getAdminBook(skip, page.getAmount()));
+			
+			return "adm/adm_book";
+		} else {
+			return "redirect:/home";
+		}
 	}
 	
 	@ResponseBody
@@ -101,43 +111,54 @@ public class AdminController {
 	
 
 	@RequestMapping("/adm/adm_member")
-	public String adm_Member() {
-		return "adm/adm_member";
+	public String adm_Member(HttpServletRequest hsr) {
+		HttpSession session = hsr.getSession();
+		int user_type = (int) session.getAttribute("user_type");
+		if(user_type == 1) {
+			return "adm/adm_member";
+		} else {
+			return "redirect:/home";
+		}
 	}
 
 	@RequestMapping("/adm/menuadd") 
-	   public String doMenuAdd(Model m) {
-	      iAdmin menu = sqlSession.getMapper(iAdmin.class);
-	       ArrayList<Menu> alMenu=menu.getMenu();
-	       m.addAttribute("alMenu",alMenu);
-	       ArrayList<Menutype> alType=menu.getMenutype();
-	       m.addAttribute("alType",alType);
-	      return "adm/adm_menu";
-	   }
+	public String doMenuAdd(HttpServletRequest hsr, Model m) {
+		HttpSession session = hsr.getSession();
+		int user_type = (int) session.getAttribute("user_type");
+		if(user_type == 1) {
+			iAdmin menu = sqlSession.getMapper(iAdmin.class);
+			ArrayList<Menu> alMenu=menu.getMenu();
+			m.addAttribute("alMenu",alMenu);
+			ArrayList<Menutype> alType=menu.getMenutype();
+			m.addAttribute("alType",alType);
+			return "adm/adm_menu";
+		} else {
+			return "redirect:/home";
+		}
+	}
 	
 	@RequestMapping(value ="/adm/adm_menu", method = RequestMethod.GET  ,produces = "apllication/json;charset=utf-8")
-	   public String doAddMenu(HttpServletRequest hsr) {
-	      String strMenu_code=hsr.getParameter("menu_code");
-	      int menu_type=Integer.parseInt(hsr.getParameter("menu_type"));
-	      System.out.println("menu_type "+hsr.getParameter("menu_type"));
-	      String img=hsr.getParameter("img");
-	      String menu_name=hsr.getParameter("menu_name");
-	      int menu_price=Integer.parseInt(hsr.getParameter("menu_price"));
-	      System.out.println("menu_price "+hsr.getParameter("menu_price"));
-	      String comment=hsr.getParameter("comment");
-	      
-	      iAdmin menu=sqlSession.getMapper(iAdmin.class);
-	      ArrayList<Menu> alMenu=menu.getMenu();
-	      System.out.println(alMenu);
-	      System.out.println("comment "+hsr.getParameter("comment"));
-	      if(strMenu_code.equals("")) { // insert
-	         menu.insertMenu(menu_type,img,menu_name,menu_price,comment);
-	      } else { // update
-	         int menu_code=Integer.parseInt(strMenu_code);
-	         menu.updateMenu(menu_code,menu_type,img,menu_name,menu_price,comment);
-	      }
-	      return "redirect:/adm/menuadd";
-	   }
+	public String doAddMenu(HttpServletRequest hsr) {
+		String strMenu_code=hsr.getParameter("menu_code");
+		int menu_type=Integer.parseInt(hsr.getParameter("menu_type"));
+		System.out.println("menu_type "+hsr.getParameter("menu_type"));
+		String img=hsr.getParameter("img");
+		String menu_name=hsr.getParameter("menu_name");
+		int menu_price=Integer.parseInt(hsr.getParameter("menu_price"));
+		System.out.println("menu_price "+hsr.getParameter("menu_price"));
+		String comment=hsr.getParameter("comment");
+		iAdmin menu=sqlSession.getMapper(iAdmin.class);
+		ArrayList<Menu> alMenu=menu.getMenu();
+		System.out.println(alMenu);
+		System.out.println("comment "+hsr.getParameter("comment"));
+		if(strMenu_code.equals("")) { // insert
+			menu.insertMenu(menu_type,img,menu_name,menu_price,comment);
+		} else { // update
+			int menu_code=Integer.parseInt(strMenu_code);
+			menu.updateMenu(menu_code,menu_type,img,menu_name,menu_price,comment);
+		}
+		return "redirect:/adm/menuadd";
+	}
 	@ResponseBody
 	   @RequestMapping(value="/adm/menulist", method = RequestMethod.POST  ,produces = "apllication/json;charset=utf-8")
 	      public String getMenuList(HttpServletRequest hsr) {
@@ -155,14 +176,19 @@ public class AdminController {
 	         return ja.toString();
 	      }
 	
-	   @RequestMapping("/adm/typeadd") 
-	   public String doTypeAdd() {
-	      return "adm/adm_menutype";
-	   }
-	   
-	   @ResponseBody
-	   @RequestMapping(value="/adm/typelist",method = RequestMethod.POST  ,produces = "apllication/json;charset=utf-8")
-	      public String getTypeList() {
+	@RequestMapping("/adm/typeadd") 
+	public String doTypeAdd(HttpServletRequest hsr) {
+		HttpSession session = hsr.getSession();
+		int user_type = (int) session.getAttribute("user_type");
+		if(user_type == 1) {
+			return "adm/adm_menutype";
+		} else {
+			return "redirect:/home";
+		}
+	}
+	@ResponseBody
+	@RequestMapping(value="/adm/typelist",method = RequestMethod.POST  ,produces = "apllication/json;charset=utf-8")
+	public String getTypeList() {
 	         iAdmin menu = sqlSession.getMapper(iAdmin.class);
 	         ArrayList<Menutype> alType=menu.getMenutype();
 	         
@@ -217,29 +243,32 @@ public class AdminController {
 	   }
 
 
-	   // 리뷰 게시판
-	   @RequestMapping("/adm/adm_board")
-	   public String adminBoard(Page page, Model m, HttpServletRequest hsr) {
-		   iBoard board = sqlSession.getMapper(iBoard.class);
-		   int skip = (page.getPageNum() - 1) * page.getAmount();
-		   
-		   String keyword=hsr.getParameter("keyword");
+	// 리뷰 게시판
+	@RequestMapping("/adm/adm_board")
+	public String adminBoard(Page page, Model m, HttpServletRequest hsr) {
+		HttpSession session = hsr.getSession();
+		int user_type = (int) session.getAttribute("user_type");
+		if(user_type == 1) {
+			iBoard board = sqlSession.getMapper(iBoard.class);
+			int skip = (page.getPageNum() - 1) * page.getAmount();
+			String keyword=hsr.getParameter("keyword");
 			if(keyword==null) {
 				m.addAttribute("b_list", board.boardList(skip, page.getAmount()));
-
+	
 				int total = board.getTotal();
 				PageMaker p = new PageMaker(page, total);
 				m.addAttribute("p", p);
 			} else {
 				m.addAttribute("b_list", board.findKeyword(keyword, skip, page.getAmount()));
-
 				int total = board.getKeyTotal(keyword);
 				PageMaker p = new PageMaker(page,total);
 				m.addAttribute("p",p);
 			}
-			
-		   return "/adm/adm_board";
-	   }
+			return "/adm/adm_board";
+		} else {
+			return "redirect:/home";
+		}
+	}
 	   
 	   @ResponseBody
 	   @RequestMapping(value="/adm/adm_board_delete", method = RequestMethod.POST)
