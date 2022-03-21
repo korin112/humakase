@@ -13,6 +13,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="${path}/resources/css/sidebars.css">
 <link rel="stylesheet" href="${path}/resources/css/style.css">
+<script src="${path}/resources/js/admin.js"></script>
 <style>
 	.board_btn_option {padding-top:1rem; padding-bottom:3rem;}
 	.board_btn_option .board_search {width:25%; height:10%; border-radius:6px; border:2px solid #eee; float:right;}

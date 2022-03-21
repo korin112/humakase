@@ -96,10 +96,11 @@
 		.on('click','#vdate ul li',function() {
 			//console.log("vdate : "+$(this).attr('data-value'));
 			
+			// 예약한 날짜 선택(이전 날짜만 선택 가능)
 			let vdate=$(this).attr('data-value');
 			$('#vdate a').text(vdate);
 			
-			
+			// 예약한 날짜와 일치하는 지점 선택
 			$('#spot a').text('지점을 선택하세요.');
 			$('#spot a').attr('data-value',null);
 			$('#spot ul').empty();
@@ -124,6 +125,7 @@
 			$('#spot > a').text($(this).text());
 			let ar=spot.split(',');
 			
+			// 예약한 날짜, 지점과 일치하는 메뉴
 			$('#menu').empty();
 			$.ajax({url:'/outback/menuList',
 				data:{booker:$('#writer').val(),
@@ -132,7 +134,6 @@
 				method:'GET',
 				datatype:'json',
 				success:function(txt) {
-					//console.log(txt);
 					for(i=0;i<txt.length;i++) {
 						let str="<li data-value='"+txt[i]['menu_code']+"'>"
 								+txt[i]['menu_name']+"</li>"
@@ -141,16 +142,13 @@
 				}
 			});
 		})
+		// 글쓰기 완료
 		.on('click','#done',function() {
-			// console.log("spot : "+$('#spot ul li').attr('data-value'));		
-			// console.log("vdate data-value : "+$('#vdate ul li').attr('data-value'));				
-			
 			let m_code='';
 			for(i=0;i<$('#menu li').length;i++) {
 				m_code+=","+$('#menu li:eq('+i+')').attr('data-value');
 			}
 			let menu_code=m_code.replace(',','');
-			console.log(menu_code);
 			
 			if($('#title').val()=='') {
 				alert("제목을 입력해주세요.");
@@ -194,39 +192,17 @@
 			if(!confirm("취소하시면 작성한 모든 내용이 사라집니다. 취소하시겠습니까?")) return false;
 			findLink();
 		})
-		
-		function optionList(option) {
-// 			let vdate=$('#vdate').val();
-// 			let ar=vdate.split(',');
 			
-			$('#'+option).empty();
-			$.ajax({url:'/outback/'+option+'List',
-				data:{booker:$('#writer').val(),
-					  vdate:ar[1],
-					  book_id:ar[0]},
-				method:'GET',
-				datatype:'json',
-				success:function(txt) {
-					console.log(txt);
-					for(i=0;i<txt.length;i++) {
-						let str='<option value='+txt[i][option+'_code']+'>'
-									+txt[i][option+'_name']+'</option>';
-						$('#'+option).append(str);
-					}
-				}
-			});
-		}
-		
 		function findLink() {
 			var link=document.location.href.split('outback/');
 			console.log(link[1]);
-			if(link[1]=='board_insert') {
+			if(link[1]=='board_insert') {  // 리뷰게시판
 				document.location='/outback/board_list';
 			}
-			if(link[1]=="mp_board_insert") {
+			if(link[1]=="mp_board_insert") {  // 마이페이지 리뷰 관리
 				document.location='/outback/mypage/myboard';
 			}
-			if(link[1]=="adm_board_insert") {
+			if(link[1]=="adm_board_insert") {  // 관리자페이지 리뷰 관리
 				document.location='/outback/adm/adm_board';
 			}
 		}
