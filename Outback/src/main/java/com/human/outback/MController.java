@@ -95,7 +95,7 @@ public class MController {
 		System.out.println("retval="+retval);
 		return retval;
 	}
-	//로그인 시간 체크 및 탈퇴 체크
+	//로그인 시간 체크 및 탈퇴회원 체크
 	@ResponseBody
 	@RequestMapping(value="/login_check",method=RequestMethod.POST,
 	         produces="application/json; charset=utf-8")
@@ -122,8 +122,11 @@ public class MController {
 		Member update=member.upLogin(userid);
 		
 		HttpSession session = hsr.getSession();
+		
 		session.setAttribute("userid", userid);
 		session.setAttribute("user_type",update.getUser_type());
+		model.addAttribute("userid",userid);
+		System.out.println(update.getUserid());
 		retval="ok";
 		} catch(Exception e) {
 		retval="fail";

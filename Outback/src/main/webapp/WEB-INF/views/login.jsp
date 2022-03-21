@@ -113,7 +113,7 @@ $(document)
 							alert(txt[i]['userid']+'환영합니다.');
 							$.post('/outback/upLogin',
 									{userid:$('#userid').val()},
-									function(){
+									function(txt){
 										if(flag == "ok") {
 											console.log($('#userid').val());
 											document.location="/outback/home";
