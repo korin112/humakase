@@ -197,10 +197,18 @@
 			if($('.cart tbody tr td input[name=check]').is(':checked') === true){
 				let book_list_contents = '';
 				i = 0;
+				$('.cart tbody tr td input[name=check]:checked').each(function(){
+					let mtype = $(this).parent('td').next().attr('data-mtype');
+					console.log("★" + mtype);
+					if(mtype < 3){
+
+					} else {
+						alert("메인 메뉴를 포함해주세요.");
+						console.log("return" + mtype);
+						return false;
+					}
+				})
 				$('.cart tbody tr').each(function(){
-// 					let mtype = $(this,'td:nth-child(2)').attr('data-mtype');
-// 					console.log(mtype);
-// 					if()
 					let cart_code = $('td input[type=checkbox]:checked', this).val();
 					console.log('cart_code: '+cart_code);
 					if(cart_code != null){
@@ -210,6 +218,12 @@
 						book_list_contents += book_list;
 					}
 				});
+// 				let mtype = $('td input[type=checkbox]:checked', this).parent('td').next('td').attr('data-mtype');
+// 				console.log(mtype);
+// 				if(mtype > 2){
+// 					alert('메인 메뉴를 추가 후 주문 바랍니다.');
+// 					return false;
+// 				}
 				console.log(book_list_contents);
 				$(".bookForm").html(book_list_contents);
 // 				$('.bookForm').submit();
