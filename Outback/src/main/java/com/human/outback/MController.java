@@ -58,7 +58,7 @@ public class MController {
 			produces="application/json;charset=utf-8")
 	public String confirm_check(HttpServletRequest hsr) {
 		iLogin login=sqlSession.getMapper(iLogin.class);
-		Member user = login.confirm_check(hsr.getParameter("userid"));
+		Member user = login.confirm_check(hsr.getParameter("userids"));
 		
 		if (user != null) {
 			return "fail";

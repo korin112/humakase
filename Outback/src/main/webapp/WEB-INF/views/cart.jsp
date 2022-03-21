@@ -74,8 +74,10 @@
 				</tfoot>
 			</table>
 			<div class="ct_btn_wrap">
-				<input type="button" class="submitCheckCart" value="선택예약">
-				<input type="button" class="submitCart" value="전체예약">
+<!-- 				<input type="button" class="submitCheckCart" value="선택예약"> -->
+<!-- 				<input type="button" class="submitCart" value="전체예약"> -->
+				<button type="button" class="btn btn-outline-danger submitCheckCart">선택예약</button>
+				<button type="button" class="btn btn-outline-danger submitCart">전체예약</button>
 			</div>
 		<form action="/outback/book" method="POST" class="bookForm">
 		</form>
@@ -151,16 +153,13 @@
 			if($('input[name=check]:checked').length != 0){
 				let cnt_checkTotal = null;
 				$('.cart > tbody > tr > td:first-child > input[name=check]:checked').each(function(){
-					console.log($(this).val());
 					change_checkTotal_str = $(this).parent('td').siblings('td:last-child').text().split(',');
 					change_checkTotal = '';
 					for(i = 0; i < change_checkTotal_str.length; i++){
 						change_checkTotal += change_checkTotal_str[i];
 					}
-					console.log(change_checkTotal);
 					cnt_checkTotal += parseInt(change_checkTotal);
 				});
-				console.log(cnt_checkTotal);
 				$('.cnt_checkTotal').text(cnt_checkTotal.toLocaleString() + ' 원');
 			} else {
 				$('.cnt_checkTotal').text(0);
@@ -197,37 +196,54 @@
 			if($('.cart tbody tr td input[name=check]').is(':checked') === true){
 				let book_list_contents = '';
 				i = 0;
-				$('.cart tbody tr').each(function(){
-// 					let mtype = $(this,'td:nth-child(2)').attr('data-mtype');
-// 					console.log(mtype);
-// 					if()
-					let cart_code = $('td input[type=checkbox]:checked', this).val();
-					console.log('cart_code: '+cart_code);
-					if(cart_code != null){
-						let book_list = '<input name="cart['+ i +'].cart_code" type="hidden" value="' + cart_code + '">';
-						i++;
-						console.log(book_list);
-						book_list_contents += book_list;
+				flag = 0;
+				$('.cart tbody tr td input[name=check]:checked').each(function(){
+					let mtype = $(this).parent('td').next().attr('data-mtype');
+					if(mtype < 3){
+						flag++;
 					}
-				});
-				console.log(book_list_contents);
-				$(".bookForm").html(book_list_contents);
-// 				$('.bookForm').submit();
+				})
+				console.log("flag: " + flag);
+				if(flag == 0){
+					alert("메인 메뉴를 포함해주세요.");
+					return false;
+				} else {
+					$('.cart tbody tr td input[name=check]:checked').each(function(){
+						let cart_code = $(this).val();
+						if(cart_code != null){
+							let book_list = '<input name="cart['+ i +'].cart_code" type="hidden" value="' + cart_code + '">';
+							i++;
+							book_list_contents += book_list;
+						}
+					})
+					$(".bookForm").html(book_list_contents);
+					$('.bookForm').submit();
+				}
 			} else {
 				alert('하나 이상의 메뉴를 선택해주세요.');
 			}
 		})
 		.on('click', '.submitCart', function(){
 			let book_list_contents = '';
-			$('.cart tbody tr').each(function(index){
-				let cart_code = $('td input[type=checkbox]', this).val();
-				console.log('cart_code: '+cart_code);
-				let book_list = '<input name="cart['+ index +'].cart_code" type="hidden" value="' + cart_code + '">';
-				book_list_contents += book_list;
-			});
-			console.log(book_list_contents);
-			$(".bookForm").html(book_list_contents);
-			$('.bookForm').submit();
+			flag = 0;
+			$('.cart tbody tr').each(function(){
+				let mtype = $(this).children('td:nth-child(2)').attr('data-mtype');
+				if(mtype < 3){
+					flag++;
+				}
+			})
+			if(flag == 0){
+				alert("메인 메뉴를 포함해주세요.");
+				return false;
+			} else {
+				$('.cart tbody tr').each(function(index){
+					let cart_code = $('td input[type=checkbox]', this).val();
+					let book_list = '<input name="cart['+ index +'].cart_code" type="hidden" value="' + cart_code + '">';
+					book_list_contents += book_list;
+				});
+				$(".bookForm").html(book_list_contents);
+				$('.bookForm').submit();
+			}
 		})
 		;
 		function valiCheck(el) {
