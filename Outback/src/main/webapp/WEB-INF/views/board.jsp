@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="${path}/resources/css/style.css">
 <style>
 	*{margin:0; padding:0; outline:0;}
-	ul, li{list-style:none;} 
+	ul, li{list-style:none;}  
 	.fixed::after{content:''; clear:both; display:block;}
 	.option .dropdown-toggle::after{margin-left:1.255rem;}
 	.dropdown-menu{max-height:200px; overflow-y:auto; overflow-x:hidden;}
