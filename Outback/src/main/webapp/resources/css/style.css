@@ -8,6 +8,8 @@ li{list-style:none;}
 .O_container{margin:100px 0 150px;}
 /* 부트스트랩 초기화 */
 .dropdown-menu-dark .dropdown-item.active, .dropdown-menu-dark .dropdown-item:active{background:#c93535; background-color:#c93535 !important;}
+.btn-outline-danger{color:#c93535 !important; border-color:#c93535 !important;}
+.btn-outline-danger:hover {color: #fff !important; background-color: #c93535 !important; border-color: #c93535 !important; }
 /* paging 공통 */
 .page-link{color:inherit;}
 .page-item.active .page-link{background:#c93535; border-color:#c93535;}
@@ -34,7 +36,7 @@ li{list-style:none;}
 .slick-dotted.slick-slider{margin:0;}
 .new_menu_slide .slide-contents{padding:0 0 1.25rem; background:#fff; color:#212529; transform:scale(0.93);
 	box-shadow:1px 6px 5px 3px rgba(0,0,0,0.5);}
-.new_menu_slide .slide-contents.slick-center{transform:scaleX(0.93) scaleY(1.02); color:#c93535;}
+.new_menu_slide .slide-contents.slick-center{transform:scaleX(0.93) scaleY(1.02); color:#c93535; overflow:hidden;}
 .slide-contents h5{text-align:center; margin:1.25rem 0 0.5rem; font-weight:700; font-size:1.375rem; transition:0.3s;}
 .slick-center.slide-contents h5{font-size:1.5rem; transform:scaleX(1.1);}
 .newmenu_img{height:370px; background:#585858; overflow:hidden; transition:0.3s;}
@@ -186,7 +188,11 @@ footer .sitemap ul li:nth-child(4) a::after{content:''; width:0;}
 .mybook_table thead th:nth-child(7){width:10%;}
 .mybook_table thead th:nth-child(8){width:30%;}
 .mybook_table tbody td{font-size:1rem;}
-
+@media (max-width: 950px){
+	.new_menu_slide{
+		padding:1rem 0 3rem;
+	}
+}
 @media (max-width: 991px){
 	.O_footer > .container{display:block;}
 	.f_logo{width:100%; padding:2rem 0;}
