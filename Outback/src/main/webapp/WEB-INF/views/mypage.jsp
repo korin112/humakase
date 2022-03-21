@@ -21,17 +21,23 @@
 	margin-left:20px;
 	margin-right:20px;
 }
+.withdrwal_comment{margin-top:10px; opacity:0.5; margin-bottom:0;}
 </style>
 <body>
 <%@include file ="header.jsp" %>
+<div class="submenu_title_wrap">
+	<div class="container submenu_title">
+		<h1>MEMBER WITHDRWAL</h1>
+		<p>Mypage - MEMBER WITHDRWAL</p>
+	</div>
+</div>
 <form action="/outback/pwCheck" method="POST" id="deleteForm" name="deleteForm">
     <div class="container O_container">
         <div class="panel panel-default panel-margin-10">
             <div class="panel-body panel-body-content text-center">
-                <h1 style="text-align: center; font-weight: bold; font-size: 40px; letter-spacing: 6px;">회원 탈퇴</h1>
-					<h2 style="text-align: center; font-weight: bold; color: #ccc; margin-bottom: 30px; font-size: 22px; letter-spacing: 4px;">Member Withdrawal</h2>
-                <div class="form-group">
-                    <input style='width:500px; margin-left:400px;' type="text" id="userid" name="userid" value="${userid}"  class="form-control form-control-inline text-center" readonly/>
+                <h1 style="text-align: center; font-weight: 500; font-size: 38px; margin-bottom:2rem;">회원 탈퇴</h1>
+				<div class="form-group">
+					<input style='width:500px; margin-left:400px;' type="text" id="userid" name="userid" value="${userid}"  class="form-control form-control-inline text-center" readonly/>
 				</div>
                 <div class="form-group">
                     <input style='width:500px; margin-left:400px;'  type="password" id = "passcode" name="passcode" class="form-control form-control-inline text-center" placeholder="비밀번호" />
@@ -39,6 +45,7 @@
                 <div class="form-group">
                     <input style='width:500px; margin-left:400px;'  type="password" id="passcode1" name="passcode1"  class="form-control form-control-inline text-center" placeholder="비밀번호 확인" />
                 </div>
+                <p class="withdrwal_comment">※ 탈퇴 후 같은 아이디로 재가입이 불가능합니다.</p>
                 <button type="button" id="btnDel" name="btnDel" class=btn>회원탈퇴</button>
                 <button type="button" id="btnCancel" name="btnCancel" class=btn>취소</button>
             </div>

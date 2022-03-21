@@ -33,12 +33,18 @@
 	.board_btn_option .board_search input {width:85%; padding-left:1rem; border:0; outline:0;}
 	.board_btn_option .board_search input::placeholder {color:#A6A6A6;}
  	.board_btn_option .board_search .board_btn_search .bi-search{text-align:right; height:20px; width:10%; cursor:pointer;}
-	
+	.board_btn_write{cursor:pointer;}
  	.board_write {padding-bottom:1rem; float:right;} 
 </style>
 </head>
 <body>
 	<%@include file ="header.jsp" %>
+	<div class="submenu_title_wrap">
+		<div class="container submenu_title">
+			<h1>REVIEW BOARD</h1>
+			<p>Board - REVIEW BOARD</p>
+		</div>
+	</div>
 	<div class="container O_container">
 		<div class="board_write">
 			<c:if test="${userid!=null}">
