@@ -217,5 +217,52 @@ public class AdminController {
 	   }
 
 
+	   // 리뷰 게시판
+	   @RequestMapping("/adm/adm_board")
+	   public String adminBoard(Page page, Model m, HttpServletRequest hsr) {
+		   iBoard board = sqlSession.getMapper(iBoard.class);
+		   int skip = (page.getPageNum() - 1) * page.getAmount();
+		   
+		   String keyword=hsr.getParameter("keyword");
+			if(keyword==null) {
+				m.addAttribute("b_list", board.boardList(skip, page.getAmount()));
 
+				int total = board.getTotal();
+				PageMaker p = new PageMaker(page, total);
+				m.addAttribute("p", p);
+			} else {
+				m.addAttribute("b_list", board.findKeyword(keyword, skip, page.getAmount()));
+
+				int total = board.getKeyTotal(keyword);
+				PageMaker p = new PageMaker(page,total);
+				m.addAttribute("p",p);
+			}
+			
+		   return "/adm/adm_board";
+	   }
+	   
+	   @ResponseBody
+	   @RequestMapping(value="/adm/adm_board_delete", method = RequestMethod.POST)
+	   public String deleteMyBoard(HttpServletRequest hsr) {
+			String check=hsr.getParameter("check");
+			String[] id=check.split(",");
+
+			System.out.println(check);
+			System.out.println(id);
+			
+			String str="";
+			iBoard board = sqlSession.getMapper(iBoard.class);
+			
+			try {
+				for(int i=0; i<id.length; i++) {
+					int board_id=Integer.parseInt(id[i]);
+					board.deleteBoard(board_id);
+				}
+				str="ok";
+			} catch(Exception e) {
+				str="fail";
+			}
+			System.out.println(str);
+			return str;
+	   }
 }
