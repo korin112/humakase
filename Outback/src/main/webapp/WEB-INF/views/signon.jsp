@@ -142,7 +142,7 @@ $(document)
 		url:'/outback/sign_check',
 		type:'POST',
 		dataType:'text',
-		data:{userid:$('#userids').val(),passcode:$('#passcode').val(),name:$('#name').val(),
+		data:{userids:$('#userids').val(),passcode:$('#passcode').val(),name:$('#name').val(),
  			mobile:$('#mobile').val(),gender:$('input[name=gender]:checked').val()},
  		success:function(txt){
  			console.log(txt);
@@ -180,7 +180,7 @@ $(document)
 			url:'confirm_check',
 			type:'POST',
 			dataType:'text',
-			data:{userid:$('#userids').val()},
+			data:{userids:$('#userids').val()},
 			success:function(txt){
 				if (txt == 'fail') {
 					alert('이미 사용중 및 사용한 아이디 입니다. 다른아이디를 입력해주세요.');
