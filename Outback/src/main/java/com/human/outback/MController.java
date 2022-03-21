@@ -95,6 +95,7 @@ public class MController {
 		System.out.println("retval="+retval);
 		return retval;
 	}
+	//로그인 유효성 검사
 	@RequestMapping(value="/loginChk2", method = RequestMethod.POST)
 	public String loginChk2(HttpServletRequest hsr, Model model, RedirectAttributes rttr) {
 		iLogin iLogin = sqlSession.getMapper(iLogin.class);
@@ -135,15 +136,16 @@ public class MController {
 			return "redirect:/login";
 		}
 	}
-	//마이페이지 관리
+	//관리자 회원관리
 	@RequestMapping("/member")
 	public String member() {
 		return "member";
 	}
+	//관리자 회원관리 로그인 정보 select
 	@ResponseBody
 	@RequestMapping(value = "/memberList", produces="application/json;charset=utf-8")
-	public String memberList() {
-		iLogin login=sqlSession.getMapper(iLogin.class);
+	public String memberList(HttpServletRequest hsr) {
+		iLogin login=sqlSession.getMapper(iLogin.class);		
 		ArrayList<Member> m = login.getLogin();
 		JSONArray ja = new JSONArray();
 		for(int i=0; i < m.size(); i++) {
@@ -160,6 +162,53 @@ public class MController {
 		}
 		return ja.toString();
 	}
+	 @ResponseBody
+	   @RequestMapping(value="/paging" ,method=RequestMethod.GET, produces="application/json;charset=UTF-8")
+	   public String getLines(HttpServletRequest hsr, Model model) {
+	      iLogin login=sqlSession.getMapper(iLogin.class);
+	      int lines=10;
+	      int pageno=Integer.parseInt(hsr.getParameter("pageno"));
+	      int start=lines*pageno+1;
+	      System.out.println("start:"+start);
+	      ArrayList<Member> m = login.getLogin1(start);
+	      System.out.println("msize:"+m.size());
+	      JSONArray ja = new JSONArray();
+	     for(int i=0; i<m.size(); i++) { 
+	        JSONObject jo = new JSONObject();
+	        jo.put("userid",m.get(i).getUserid());
+	        jo.put("passcode",m.get(i).getPasscode());
+	        jo.put("name",m.get(i).getName());
+	        jo.put("mobile",m.get(i).getMobile());
+	        jo.put("gender",m.get(i).getGender());
+	        jo.put("user_type",m.get(i).getUser_type());
+	        jo.put("login_time",m.get(i).getLogin_time());
+	        jo.put("logout_time",m.get(i).getLogout_time());
+	        ja.add(jo);
+	  }
+//	     System.out.println(ja.toString());
+	     return ja.toString(); 
+	   }
+	   
+	   @ResponseBody 
+	   @RequestMapping(value="/pagecheck", method=RequestMethod.GET,produces="application/json;charset=UTF-8")
+	   public String pagecheck(HttpServletRequest hsr) {
+	      iLogin login=sqlSession.getMapper(iLogin.class);
+	     int lines=10;
+	      int pageno=Integer.parseInt(hsr.getParameter("pageno"));
+	      System.out.println("pageno:"+pageno);
+	      int start=lines*pageno+1;
+	      ArrayList<Member> m = login.getLogin1(start);
+	      System.out.println("페이지넘어갈때마다 보내는 데이터양:"+m.size());
+	     JSONArray ja=new JSONArray();
+	     for(int i=0; i<m.size(); i++) {
+	        JSONObject jo=new JSONObject();
+	        jo.put("userid",m.get(i).getUserid());
+	        ja.add(jo);
+	     }
+	     return ja.toString();
+	   }
+
+	//관리자 회원관리의 수정버튼 클릭 시 dialog select
 	@ResponseBody
 	@RequestMapping(value = "/getDig",produces="application/json;charset=utf-8")
 	public String getDig(HttpServletRequest hsr) {
@@ -174,6 +223,7 @@ public class MController {
 		}
 		return ja.toString();
 	}
+	//관리자 회원관리의 수정버튼 dialog
 	@ResponseBody
 	@RequestMapping(value = "/digEdit", produces="application/json;charset=utf-8")
 	public String dlgEdit(HttpServletRequest hsr) {
@@ -191,6 +241,7 @@ public class MController {
 		}
 		return ja.toString();
 	}
+	//관리자 권한으로 등급수정 변경
 	@ResponseBody
 	@RequestMapping(value = "/updateMember", method=RequestMethod.POST, produces="application/json;charset=utf-8")
 	public String updateLogin(HttpServletRequest hsr) {
@@ -208,6 +259,7 @@ public class MController {
 		}
 		return retval;
 	}
+	//관리자 권한으로 로그인정보 삭제
 	@ResponseBody
 	@RequestMapping(value = "/delMember", method=RequestMethod.POST, produces="application/json;charset=utf-8")
 	public String delMember(HttpServletRequest hsr) {
@@ -228,6 +280,7 @@ public class MController {
 		}
 		return str;
 	}
+	//마이페이지 이동
 	@RequestMapping("/mypage")
 	public String mypage() {
 		return "mypage";
@@ -248,6 +301,7 @@ public class MController {
 		}
 		return ja.toString();
 	}
+	//로그인 정보의 비밀번호 확인 및 탈퇴
 	@ResponseBody
 	@RequestMapping(value="/pwCheck",method = RequestMethod.POST)
 	public String pwCheck(HttpServletRequest hsr,Model model) {
@@ -256,7 +310,6 @@ public class MController {
 		String retval="";
 		String userid=hsr.getParameter("userid");
 		String passcode=hsr.getParameter("passcode");
-//		int usertype=Integer.parseInt(hsr.getParameter("user_type"));
 		
 		iLogin pw=sqlSession.getMapper(iLogin.class);
 		ArrayList<Member> a=pw.getLogin();
@@ -272,9 +325,6 @@ public class MController {
 			}
 		}
 		if(retval.equals("ok")) {
-//			session.setAttribute("userid",userid);
-//			session.setAttribute("passcode",passcode);
-//			session.setAttribute("user_type",usertype);
 			pw.pwCheck(userid,passcode);
 			session.invalidate();
 			return "ok";

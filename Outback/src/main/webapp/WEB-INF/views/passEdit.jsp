@@ -62,6 +62,7 @@
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <script>
 $(document)
+//비밀번호 변경 가능여부
 .on('click','#btnDone',function(){
 	if($("#passcode").val()==""){
 		alert("비밀번호를 입력해주세요");
@@ -72,7 +73,7 @@ $(document)
 		alert("비밀번호 확인을 입력해주세요");
 		return false;
 	}
-	if($('#passcode').val() == $('#passcode1').val()){
+	if($('#passcode').val() == $('#passcode1').val()){ //로그인 한 아이디를 불러오고(ajax call), 비밀번호 변경 
 		$.ajax({url:"/outback/pwEdit",
 			type:"POST",
 			dataType:"text",

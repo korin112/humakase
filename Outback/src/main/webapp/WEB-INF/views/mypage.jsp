@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>  - 마이 페이지 -  </title>
+<title>  - 회원 탈퇴 -  </title>
 </head>
 <link rel="stylesheet" href="${path}/resources/css/style.css">
 <style>
@@ -63,6 +63,7 @@
 <script type="text/javascript">
 let flag="";
 $(document)
+//비밀번호 유효성검사
 .on('click','#btnDel',function(){
 		if($("#passcode").val()==""){
 			alert("비밀번호를 입력해주세요");
@@ -74,17 +75,17 @@ $(document)
 			return false;
 		}
 		
-		if($('#passcode').val() == $('#passcode1').val()){
+		if($('#passcode').val() == $('#passcode1').val()){ //로그인한 정보의 비밀번호가 맞는지 체크(ajax call)
 			$.ajax({
 				url : "/outback/pwCheck",
 				type : "POST",
 				dataType : "text",
 				data : {userid:$('#userid').val(),passcode:$('#passcode').val()},
 				success: function(txt){
-					if(txt == "fail"){
+					if(txt == "fail"){ //model.addAttribute("fail_user",retval);를 사용해서 다르면 fail
 						alert("비밀번호가 다릅니다.");
 						return false;
-					} else {
+					} else { //session.invalidate(); 로그인 정보가 맞으면 ok
 						alert("그동안 이용해 주셔서 감사합니다.");
 						document.location='/outback/home';
 						flag="true";
