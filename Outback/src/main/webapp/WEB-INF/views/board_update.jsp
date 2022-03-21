@@ -107,8 +107,8 @@
 						console.log(link);
 						if(txt=="ok") {
 							alert('수정 완료했습니다.');
-							var path1='/outback/board_list';
-							var path2='/outback/mypage/myboard';
+							var path1='/outback/board_list';  // 리뷰게시판
+							var path2='/outback/mypage/myboard'; // 마이페이지 리뷰관리
 							findLink(path1,path2);
 						} else {
 							alert('다시 수정해주세요.');

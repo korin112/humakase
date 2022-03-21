@@ -56,8 +56,8 @@ div.input-button {
 	padding:0.75rem 0;
 	color:white;
 }
-.go_signup {text-align:center; color:#646c74; margin:0.5rem 0;}
-.go_signup a{color:#c93535; font-weight:500;}
+.go_signon {text-align:center; color:#646c74; margin:0.5rem 0;}
+.go_signon a{color:#c93535; font-weight:500;}
 </style>
 <body>
 	<h1 class="login_logo"><a href="/outback/home" title="홈페이지로 이동">La Campanella</a></h1>
@@ -84,7 +84,7 @@ div.input-button {
 			<div class="input-button">
 			<input type="submit" id="btnLogin" name="btnLogin" value=Login>
 			</div>
-			<p class="go_signup">Not a member yet? <a href='/outback/signon'>Sign Up</a></p>
+			<p class="go_signon">Not a member yet? <a href='/outback/signon'>Sign On</a></p>
 		</div>
 	</form>
 	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
@@ -97,10 +97,11 @@ div.input-button {
 				$(this).parent('.input-box').css('border','2px solid rgba(201,25,25,0.75)');
 			});
 			$('html').click(function(e){ //문서 body를 클릭했을때
-				if(e.target.parentElement.className =='input-box' || e.target.className == 'input-box'){
+				if($(e.target.parentElement).hasClass('input-box') || $(e.target).hasClass('input-box')){
 					return false;
+				} else {
+					$('.input-box').css('border','1px solid #ccc');
 				}
-				$('.input-box').css('border','1px solid #ccc');
 			});
 			let result = '<c:out value="${result}"/>';
 			if (result == "none"){
