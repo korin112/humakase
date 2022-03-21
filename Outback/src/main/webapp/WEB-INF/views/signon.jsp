@@ -12,91 +12,144 @@
 <link rel="stylesheet" href="${path}/resources/css/style.css">
 </head>
 <style>
-.input-box {
-	position:relative;
-	margin:10px 0;
-	left:590px;
-	top:20px;
+.input-box_wrap{width:50%; margin:0 auto;}
+.input-box{overflow:hidden; margin-bottom:1.25rem; padding:0;}
+.input-box > li{
+	display:block;
+	float:left;
 }
+.input-box > li{width:80%; border-bottom:1px solid #ccc; height:3rem; overflow:hidden;}
+.input-box > li > * {vertical-align:middle; line-height:3rem;}
+.input-box > li > label {font-weight:500;}
+.input-box > li input{border:0; background:transparent; width:100%; line-height:2.5rem;}
+.input-box:first-child > li input:first-child{width:80%;}
+.input-box > li button{line-height:1.5; padding:0.5rem; float:right;}
+.input-box > li:first-child{width:20%; border-bottom:0; line-height:3rem;}
 .input-box > input {
 	list-style:none;
 	background:transparent;
 	border:none;
 	border-bottom:solid 1px #ccc;
-	padding:20px 0px 5px 0px;
-	font-size:14pt;
+	font-size:1rem;
 	margin:10px;
 }
-input::placeholder{
- 	color:transparent;
- }
-input:focus + label,label{
- 	color:#8aa1a1;
- 	font-size:10pt;
- 	pointer-events:none;
-  	position: static;
- 	left:0px;
- 	top:0px;
- 	align:center;
-}
+.input-box_wrap .input-box:nth-child(6) > li:last-child label:first-child{margin-right:1rem;}
+.input-box > li input[type=radio]{width:auto;}
 input[type=submit],input[type=button],input[type=reset]{
-    background-color: #8aa1a1;
-    border:none;
-    color:white;
-    border-radius: 5px;
-    width:80px;
-    height:45px;
-    font-size: 14pt;
+	background: #8aa1a1;
+	border:none;
+	color:white;
+	font-size: 1.125rem;
 }
 input[type=radio]{
 	text-align:center;
-	margin-left:80px;
 }
-input:focus, input:not(:placeholder-shown){
- 	border-bottom:solid 1px #8aa1a1;
- 	outline:none;
+.input-button{
+	margin-top:2.5rem;
+	overflow:hidden;
 }
-.input-button {
-	margin-left:660px;
+.input-button button{
+	float:left; margin-right:0.5rem; font-size:1.125rem; font-weight:500;
 }
+.input-button button:last-child{
+	margin-right:0;
+	float:right;
+}
+.form-floating.genderclick>.form-control:focus, .form-floating.genderclick>.form-control:not(:placeholder-shown){padding-top:1rem !important; padding-bottom:1rem !important;}
+.genderclick h6{display:inline; margin-right:1.5rem; font-weight:normal;}
+#btnCheck{position:absolute; right:0; top:0; bottom:0; padding:1rem 0.75rem; font-weight:500;}
+#userids{padding-right:100px;}
+#btnDone{background-color:#c93535; border-color:#c93535; padding:0.375rem 1.25rem;}
+#btnDone:hover{background-color:#bc2222; border-color:#bc2222;}
 </style>
 <body>
 <%@include file ="header.jsp" %>
-<h1 style="text-align: center; font-weight: bold; font-size: 40px; letter-spacing: 6px;">회원가입</h1>
-			<h2 style="text-align: center; font-weight: bold; color: #ccc; margin-bottom: 30px; font-size: 22px; letter-spacing: 4px;">Sign Up</h2>
+<div class="submenu_title_wrap">
+	<div class="container submenu_title">
+		<h1>SIGN ON</h1>
+		<p>La Campanella - SIGN ON</p>
+	</div>
+</div>
 <div class="container O_container">
-	<div class="input-box">
-			<label for="user">아이디</label>
-			<input type=text id="userids" required>
-			<input type=button value=중복확인 name=btnCheck id=btnCheck>
-	</div>
-	<div class="input-box">
+	<div class="input-box_wrap">
+		<div class="form-floating mb-3">
+			<input type="text" class="form-control" id="userids" placeholder="아이디" required>
+			<label for="userids">아이디</label>
+			<button type="button" id="btnCheck" name="btnCheck" class="btn btn-outline-secondary">중복확인</button>
+		</div>
+		<div class="form-floating mb-3">
+			<input type="password" class="form-control" id="passcode" placeholder="비밀번호">
 			<label for="passcode">비밀번호</label>
-			<input type="password" id="passcode">
-	</div>
-	<div class="input-box">
+		</div>
+		<div class="form-floating mb-3">
+			<input type="password" class="form-control" id="passcode1" placeholder="비밀번호 확인">
 			<label for="passcode1">비밀번호 확인</label>
-			<input type="password" id="passcode1">
-	</div>
-	<div class="input-box">
+		</div>
+		<div class="form-floating mb-3">
+			<input type="text" class="form-control" id="name" placeholder="실명">
 			<label for="name">실명</label>
-			<input type="text" id="name">
-	</div>
-	<div class="input-box">
-			<label for="mobile">전화번호</label>
-			<input type="text" id="mobile">
-	</div>
-	<div class="input-box">
-			<label for="gender">성별</label>
-			<input type="radio" id="gender" name="gender" value="남성">
-			<label for="gender">남성</label>	
-			<input type="radio" id="gender" name="gender" value="여성">
-			<label for="gender">여성</label>
-	</div>
-	<div class="input-button">
-		<input type="submit" id=btnDone value="완료">
-		<input type="reset" id=btnReset value="비우기">
-		<input type="button" id=btnCancel value="취소">
+		</div>
+		<div class="form-floating mb-3">
+			<input type="text" class="form-control" id="mobile" placeholder="연락처">
+			<label for="mobile">연락처</label>
+		</div>
+		<div class="form-floating mb-3 genderclick">
+			<div class="form-control">
+				<h6>성별</h6>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="gender" id="male" value="남성">
+					<label class="form-check-label" for="male">남성</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="gender" id="female" value="여성">
+					<label class="form-check-label" for="female">여성</label>
+				</div>
+			</div>
+		</div>
+		<div class="input-button">
+<!-- 			<input type="button" id=btnCancel value="취소"> -->
+			<button type="button" id="btnCancel"class="btn btn-secondary">취소</button>
+<!-- 			<input type="reset" id=btnReset value="비우기"> -->
+			<button type="reset" id="btnReset" class="btn btn-outline-secondary">비우기</button>
+			<button type="submit" id="btnDone" class="btn btn-danger">완료</button>
+		</div>
+<!-- 		<ul class="input-box"> -->
+<!-- 			<li><label for="userids">아이디</label></li> -->
+<!-- 			<li> -->
+<!-- 				<input type=text id="userids" required> -->
+<!-- 				<button type="button" id="btnCheck" name="btnCheck" class="btn btn-outline-secondary">중복확인</button> -->
+<!-- 			</li> -->
+<!-- 		</ul> -->
+<!-- 		<ul class="input-box"> -->
+<!-- 			<li><label for="passcode">비밀번호</label></li> -->
+<!-- 			<li><input type="password" id="passcode"></li> -->
+<!-- 		</ul> -->
+<!-- 		<ul class="input-box"> -->
+<!-- 			<li><label for="passcode1">비밀번호 확인</label></li> -->
+<!-- 			<li><input type="password" id="passcode1"></li> -->
+<!-- 		</ul> -->
+<!-- 		<ul class="input-box"> -->
+<!-- 			<li><label for="name">실명</label></li> -->
+<!-- 			<li><input type="text" id="name"></li> -->
+<!-- 		</ul> -->
+<!-- 		<ul class="input-box"> -->
+<!-- 			<li><label for="mobile">전화번호</label></li> -->
+<!-- 			<li><input type="text" id="mobile"></li> -->
+<!-- 		</ul> -->
+<!-- 		<ul class="input-box"> -->
+<!-- 			<li>성별</li> -->
+<!-- 			<li> -->
+<!-- 				<label><input type="radio" id="male" name="gender" value="남성"> 남성</label> -->
+<!-- 				<label><input type="radio" id="female" name="gender" value="여성"> 여성</label> -->
+<!-- 			</li> -->
+<!-- 		</ul> -->
+<!-- 		<div class="input-button"> -->
+<!-- 			<input type="button" id=btnCancel value="취소"> -->
+<!-- 			<button type="button" id="btnCancel"class="btn btn-secondary">취소</button> -->
+<!-- 			<input type="reset" id=btnReset value="비우기"> -->
+<!-- 			<button type="reset" id="btnReset" class="btn btn-outline-secondary">비우기</button> -->
+<!-- 			<button type="submit" id="btnDone" class="btn btn-danger">완료</button> -->
+<!-- 		</div> -->
 	</div>
 </div>
 <%@include file ="footer.jsp" %>

@@ -12,7 +12,7 @@
 </head>
 <link rel="stylesheet" href="${path}/resources/css/style.css">
 <style>
-div {
+.O_container div {
 	align:center;
 	text-align:center;
 }
@@ -28,10 +28,15 @@ div {
 </style>
 <body>
 <%@include file ="header.jsp" %>
+<div class="submenu_title_wrap">
+	<div class="container submenu_title">
+		<h1>CHANGE PASSWORD</h1>
+		<p>Mypage - CHANGE PASSWORD</p>
+	</div>
+</div>
 <form action="/outback/pwEdit" method="POST" id="editForm" name="editForm">
 <div class="container O_container">
-                <h1 style="text-align: center; font-weight: bold; font-size: 40px; letter-spacing: 6px;">비밀번호 변경</h1>
-					<h2 style="text-align: center; font-weight: bold; color: #ccc; margin-bottom: 30px; font-size: 22px; letter-spacing: 4px;">Change Password</h2>
+	<h1 style="text-align: center; font-weight:500; font-size:38px; margin-bottom:2rem;">비밀번호 변경</h1>
 	<div>
 			<input style='width:500px; margin-left:400px;'  class="form-control form-control-inline text-center" type=text id=userid name=userid value="${userid}" readonly>
 	</div>
@@ -41,8 +46,10 @@ div {
 	<div>
 			<input style='width:500px; margin-left:400px;'  class="form-control form-control-inline text-center" type=password id=passcode1 name=passcode1 placeholder="비밀번호변경확인">
 	</div>
-			<button class="btn" type=button id=btnDone name=btnDone>변경완료</button>
-			<button class="btn" type=button id=btnCancel name=btnCancel>변경취소</button>
+	<div>
+		<button class="btn" type=button id=btnCancel name=btnCancel>변경취소</button>
+		<button class="btn" type=button id=btnDone name=btnDone>변경완료</button>
+	</div>
 </div>
 </form>
 <c:if test="${fail_user=='fail'}">
