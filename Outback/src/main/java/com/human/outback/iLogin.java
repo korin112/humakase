@@ -9,7 +9,6 @@ public interface iLogin {
 	void upLogin(String userid);
 	ArrayList<MemberType> digList();
 	ArrayList<Member> getLogin();
-	ArrayList<Member> getLogin1(int start,int end);
 	ArrayList<Member> infomation();
 	ArrayList<MemberType> getMembers();
 	void addLogin(String userid,String passcode,String name,String mobile,String gender);

@@ -8,23 +8,10 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>- cart -</title>
+<title>Covid</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <link rel="stylesheet" href="${path}/resources/css/style.css">
 <style>
- table{ 
-    border-collapse: collapse; 
-    border: 1px solid black; 
-   text-align:center; 
-   width:800px;
-} 
-.div1{
-   width:800px;
-   position:relative; 
-   margin:auto;
-   margin-top:40px; 
-}
-
 </style>
 <body>
 <%@include file ="header.jsp" %>
@@ -35,16 +22,12 @@
    </div>
 </div>
 <div class="container O_container">
-   <div class="div1">
-      <h1 style="text-align:center; font-weight:bold; font-size:26px; letter-spacing:6px;">코로나바이러스 시/도발생 현황</h1>
-      <br>      
       <div style="text-align:center;">
-   <!-- <input type="text" id=coviddt name=coviddt placeholder='검색할 날짜를 입력해주세요 YYYY-MM-DD' style="width:400px;"> -->
-         <input type="date" id=coviddt name=coviddt>
+            <input type="date" id=coviddt name=coviddt>
          <input type="button" id=btnSearch name=btnSearch value="Search">
       </div>
       <br>
-      <table id=tbl >
+      <table id=tbl class="covid_table">
          <thead>
             <tr>
                <th>등록일시</th>
@@ -58,7 +41,6 @@
          <tbody id=ctbody>
          </tbody>
       </table>
-   </div>
 </div>
 <br>
 <%@include file ="footer.jsp" %>
