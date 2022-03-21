@@ -95,81 +95,46 @@ public class MController {
 		System.out.println("retval="+retval);
 		return retval;
 	}
-	//로그인 시간 체크 및 탈퇴 체크
-	@ResponseBody
-	@RequestMapping(value="/login_check",method=RequestMethod.POST,
-	         produces="application/json; charset=utf-8")
-	   public String login_check(HttpServletRequest hsr, Model model) {
-	      iLogin id=sqlSession.getMapper(iLogin.class);
-	      ArrayList<Member> ml = id.getLogin();
-	      JSONArray ja=new JSONArray();
-	      for(int i=0; i<ml.size(); i++) {
-	         JSONObject jo = new JSONObject();
-	         jo.put("userid",ml.get(i).getUserid());
-	         jo.put("passcode",ml.get(i).getPasscode());
-	         ja.add(jo);
-	         }
-	      return ja.toString();
-	   }
-	@ResponseBody
-	@RequestMapping(value="/upLogin",method=RequestMethod.POST,
-			produces = "application/json;charset=UTF-8")
-	public String upLogin(HttpServletRequest hsr, Model model) {
-		String retval="";
-		try {
-		iLogin member = sqlSession.getMapper(iLogin.class);
-		String userid=hsr.getParameter("userid");
-		Member update=member.upLogin(userid);
-		
+	@RequestMapping(value="/loginChk2", method = RequestMethod.POST)
+	public String loginChk2(HttpServletRequest hsr, Model model, RedirectAttributes rttr) {
+		iLogin iLogin = sqlSession.getMapper(iLogin.class);
 		HttpSession session = hsr.getSession();
-		session.setAttribute("userid", userid);
-		session.setAttribute("user_type",update.getUser_type());
-		retval="ok";
-		} catch(Exception e) {
-		retval="fail";
+		
+		String userid = hsr.getParameter("userid");
+		String passcode = hsr.getParameter("passcode");
+		
+		int n = iLogin.loginChk2(userid, passcode);
+		System.out.println(userid + passcode);
+		if(n == 1) {
+			int i = iLogin.getUserType(userid);
+			if(i == 0 || i == 1) {
+				session.setAttribute("userid", userid);
+				session.setAttribute("user_type", i);
+				iLogin.upLogin(userid);
+				System.out.println("로그인 성공");
+				System.out.println("user_type " + i);
+				
+				return "redirect:/home";
+			} else {
+				rttr.addFlashAttribute("result", i);
+				System.out.println("로그인 실패");
+				System.out.println("usertype" + i);
+				
+				return "redirect:/login";
+			}
+		} else {
+			Member member = iLogin.confirm_check(userid);
+			System.out.println(userid);
+			if(member != null) {
+				rttr.addFlashAttribute("result", "idchk");
+				System.out.println("비밀번호 틀림");
+			} else {
+				rttr.addFlashAttribute("result", "none");
+				System.out.println("회원가입Go");
+			}
+			return "redirect:/login";
 		}
-		return retval;
 	}
-//	@RequestMapping(value="/login_check", method = RequestMethod.POST)
-//	public String login_check(HttpServletRequest hsr,Model model) {
-//		HttpSession session = hsr.getSession();
-//		
-//		String str="";
-//		String userid = hsr.getParameter("userid");
-//		String passcode = hsr.getParameter("passcode");
-//		int type=0;
-//		iLogin login = sqlSession.getMapper(iLogin.class);
-//		ArrayList<Member> m=login.getLogin();
-//		
-//		for(int i=0; i < m.size(); i++) {
-////			System.out.println(m.get(i).getUser_type().getClass().getName());
-//			if(m.get(i).getPasscode().equals(passcode) && m.get(i).getUserid().equals(userid)) {
-//				type=m.get(i).getUser_type();
-//			}
-//		}
-//		System.out.println(userid);
-//		System.out.println(passcode);
-//		System.out.println(type);
-//		if(type == 1) {
-//				login.upLogin(userid);
-//				session.setAttribute("userid",userid);
-//				session.setAttribute("user_type",type);
-//				return "redirect:/home";
-//		} else if (type == 2) {
-//				str="test";
-//				model.addAttribute("error",str);
-//				return "login";
-//		} else if (type == 0) {
-//				login.upLogin(userid);
-//				session.setAttribute("userid",userid);
-//				session.setAttribute("user_type",type);
-//				return "redirect:/home";
-//		} else {
-//			str="fail";
-//			model.addAttribute("fail_user",str);
-//			return "login";
-//		}
-//	}
 	//마이페이지 관리
 	@RequestMapping("/member")
 	public String member() {
