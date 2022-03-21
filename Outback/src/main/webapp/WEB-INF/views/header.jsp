@@ -12,11 +12,11 @@
 	    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	      <span class="navbar-toggler-icon"></span>
 	    </button>
-	    <div id="navbarSupportedContent">
+	    <div id="navbarSupportedContent" class="navbar-collapse collapse">
 	    <form name="frm" action="/outback/logout" method="POST">
 			<input type="hidden" name="userid" value="${userid}" id=userid>
 		</form> 
-	      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+	      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 	        <li class="nav-item">
 	          <a class="nav-link" aria-current="page" href="/outback/spot">지점위치</a>
 	        </li>
@@ -60,11 +60,11 @@
 								${userid}님
 							</a>
 							<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-								<li><a class="dropdown-item" href="/outback/mypage/mybook/later">예약확인</a></li>
 								<li><a class="dropdown-item" href="/outback/covid_check">코로나19 감염현황</a></li>
+								<li><a class="dropdown-item" href="/outback/mypage/mybook/later">예약확인</a></li>
+								<li><a class="dropdown-item" href="/outback/mypage/myboard">리뷰관리</a></li>
 								<li><a class="dropdown-item" href="/outback/passEdit">비밀번호변경</a></li>
 								<li><a class="dropdown-item" href="/outback/mypage">회원탈퇴</a></li>
-								<li><a class="dropdown-item" href="/outback/mypage/myboard">리뷰관리</a></li>
 							</ul>
 						</li>
 						<li class="nav-item">

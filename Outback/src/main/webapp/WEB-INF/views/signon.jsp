@@ -67,7 +67,7 @@ input[type=radio]{
 <div class="submenu_title_wrap">
 	<div class="container submenu_title">
 		<h1>SIGN ON</h1>
-		<p>La Campanella - Sign on</p>
+		<p>La Campanella - SIGN ON</p>
 	</div>
 </div>
 <div class="container O_container">
