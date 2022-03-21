@@ -3,8 +3,10 @@ package com.human.outback;
 import java.util.ArrayList;
 
 public interface iLogin {
+	int loginChk2(String userid, String passcode);
+	int getUserType(String userid);
 	Member confirm_check(String userid);
-	Member upLogin(String userid);
+	void upLogin(String userid);
 	ArrayList<MemberType> digList();
 	ArrayList<Member> getLogin();
 	ArrayList<Member> infomation();
