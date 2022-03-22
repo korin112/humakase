@@ -36,7 +36,7 @@
    </div>
    <div style="float:right; margin-bottom:15px;">
                <input type="submit" class="btn btn-secondary" value="Add">
-               <button type="button" class="btn btn-secondary" id=btnDelete >Delete</button>
+               <button type="button" class="btn btn-secondary" id=btnDel>Delete</button>
                <button type="reset" class="btn btn-secondary" >Reset</button>
       </div>
       <div class="selectfont">   
@@ -80,7 +80,7 @@
 			})
 			.on(
 					'click',
-					'#btnDelete',
+					'#btnDel',
 					function() {
 						let url = "/outback/adm/deleteType?mtype_code="
 								+ $('#mtype_code').val();

@@ -73,7 +73,7 @@
 			</div>
 			<div style="float: right; margin-bottom: 15px;">
 				<input type="submit" class="btn btn-secondary" value="Add">
-				<button type="button" class="btn btn-secondary" id=btnDelete>Delete</button>
+				<button type="button" class="btn btn-secondary" id=btnDel>Delete</button>
 				<button type="reset" class="btn btn-secondary">Reset</button>
 			</div>
 			<div class="selectfont">
@@ -108,7 +108,7 @@ $(document).ready(
                return false;
             }
             return true;
-         }).on('click', '#btnDelete', function() {
+         }).on('click', '#btnDel', function() {
       let url = "/outback/adm/deleteMenu?menu_code=" + $('#menu_code').val();
       console.log(url);
       document.location = url;
