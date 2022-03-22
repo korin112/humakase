@@ -7,6 +7,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>- Book -</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <link rel="stylesheet" href="${path}/resources/css/style.css">
@@ -199,7 +200,7 @@
 	<script>
 		// 체크인에 오늘 날짜 입력
 		let vdate= document.getElementById('vdate');
-		let todayData = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().substring(0, 10);
+		let todayData = new Date(new Date().getTime() + (1000 * 60 * 60 * 24) - new Date().getTimezoneOffset() * 60000).toISOString().substring(0, 10);
 		vdate.value = todayData;
 		// 체크인 최소값 : 오늘 날짜
 		vdate.setAttribute('min', todayData);

@@ -128,8 +128,8 @@
 	<br>
 	<hr>
 	<br>
-<div id='map' style="width: 100%; height:500px;"></div>
-<div style="width:100%; height:500px; background-color:#464646" id=dlg style='display:none;'></div>
+<!-- <div id='map' style="width: 100%; height:500px;"></div> -->
+<!-- <div style="width:100%; height:500px; background-color:#464646" id=dlg style='display:none;'></div> -->
 <br>
 <br>
 <script src="https:/code.jquery.com/jquery-3.5.0.js"></script>
