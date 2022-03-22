@@ -45,7 +45,7 @@
 <script src="http://code.jquery.com/jquery-3.5.0.js"></script>
 <script>
 	$(document)
-		.ready(function() {
+		.ready(function() { // 메뉴 타입리스트 출력
 		$.ajax({
 				url : '/outback/typelist',
 				data : {},
@@ -63,7 +63,7 @@
 				})
 			})
 
-			.on('click', '#getType option', function() {
+			.on('click', '#getType option', function() { // 메뉴타입 클릭시 옵션 출력
 				console.log($(this).val() + ',' + $(this).text());
 				$('#mtype_code').val($(this).val());
 				let str = $(this).text();
@@ -73,7 +73,7 @@
 			.on(
 					'click',
 					'#btnDelete',
-					function() {
+					function() { // 메뉴 타입 삭제
 						let url = "/outback/deleteType?mtype_code="
 								+ $('#mtype_code').val();
 						console.log(url);
