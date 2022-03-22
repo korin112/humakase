@@ -92,9 +92,7 @@ div.input-button {
 		$(document)
 		//등록된 회원 유효성 검사
 		.ready(function() {
-<<<<<<< HEAD
 			let result = '<c:out value="${result}"/>'; //rttr.addFlashAttribute("result") 사용
-=======
 			$('.input-box > input').focus(function(){
 				$('.input-box').css('border','1px solid #ccc');
 				$(this).parent('.input-box').css('border','2px solid rgba(201,25,25,0.75)');
@@ -107,7 +105,6 @@ div.input-button {
 				}
 			});
 			let result = '<c:out value="${result}"/>';
->>>>>>> branch 'main' of https://github.com/korin112/humakase.git
 			if (result == "none"){
 				if(confirm("등록되지 않은 아이디 입니다. 회원가입으로 이동하시겠습니까?")){
 					document.location="/outback/signon";
