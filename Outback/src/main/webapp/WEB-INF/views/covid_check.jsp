@@ -39,6 +39,7 @@
             </tr>
          </thead>
          <tbody id=ctbody>
+         	<tr><td colspan="6">원하는 날짜를 클릭 후 검색해주세요.</td></tr>
          </tbody>
       </table>
 </div>
