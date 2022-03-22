@@ -304,8 +304,10 @@ public class MController {
 		String retval="";
 		String userid=hsr.getParameter("userid");
 		String passcode=hsr.getParameter("passcode");
+		System.out.println(userid);
+		System.out.println(passcode);
 		iLogin pw=sqlSession.getMapper(iLogin.class);
-		ArrayList<Member> a=pw.getLogin();
+		ArrayList<Member> a=pw.getLogin2();
 		for(int i=0; i < a.size(); i++) {
 			if(a.get(i).getPasscode().equals(passcode) && a.get(i).getUserid().equals(userid)) {
 				session.setAttribute("userid", userid);
@@ -316,12 +318,13 @@ public class MController {
 				retval="fail";
 			}
 		}
+		System.out.println(retval);
 		if(retval.equals("ok")) {
+			
 			pw.pwCheck(userid,passcode);
 			session.invalidate();
 			return "ok";
 		} else {
-			model.addAttribute("fail_user",retval);
 			return "fail";
 		}
 	}

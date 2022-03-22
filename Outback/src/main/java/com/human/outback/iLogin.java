@@ -10,6 +10,7 @@ public interface iLogin {
 	ArrayList<Member> getLogin1(int start);
 	ArrayList<MemberType> digList();
 	ArrayList<Member> getLogin();
+	ArrayList<Member> getLogin2();
 	ArrayList<Member> infomation();
 	ArrayList<MemberType> getMembers();
 	void addLogin(String userid,String passcode,String name,String mobile,String gender);
