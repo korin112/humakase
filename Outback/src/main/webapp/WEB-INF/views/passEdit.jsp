@@ -86,11 +86,12 @@ $(document)
 				}
 			}
 		})
-	} else {
+	} else {	//비밀번호가 다를 시 return
 		alert("비밀번호가 다릅니다.");
 		return false;
 		}
 })
+// 취소버튼 눌렀을 시 home으로 이동
 .on('click','#btnCancel',function(){
 	document.location='/outback/home';
 	return false;
