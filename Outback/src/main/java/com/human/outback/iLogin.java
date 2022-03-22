@@ -7,6 +7,7 @@ public interface iLogin {
 	int getUserType(String userid);
 	Member confirm_check(String userid);
 	void upLogin(String userid);
+	ArrayList<Member> getLogin1(int start);
 	ArrayList<MemberType> digList();
 	ArrayList<Member> getLogin();
 	ArrayList<Member> infomation();

@@ -90,7 +90,7 @@
 						if(txt=="addCart") {
 							alert('장바구니에 추가 되었습니다.');
 						} else if(txt=="updateCart"){
-							alert('이미 추가 되었습니다. + 1')
+							alert('이미 추가된 메뉴입니다.\n수량을 추가하였습니다.')
 						} else {
 							alert('다시 시도해주세요.');
 						}
