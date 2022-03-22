@@ -81,11 +81,11 @@
 <script>
 $(document)
 .on('click','#cart1',function(){
-	if($('#userid').val() == ""){
-		if(!confirm("로그인 후 이용해주세요")) return false;
-		document.location="/outback/login";
-	} else{
-		document.location="/outback/cart";
-	}
+   if($('#userid').val() == ""){
+      if(!confirm("로그인 후 이용해주세요")) return false;
+      document.location="/outback/login";
+   } else{
+      document.location="/outback/cart";
+   }
 })
 </script>
