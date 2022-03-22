@@ -8,12 +8,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title> - 비밀번호 수정 - </title>
 </head>
 <link rel="stylesheet" href="${path}/resources/css/style.css">
 <style>
 .O_container div {
-	align:center;
 	text-align:center;
 }
 #btnDone.btn,#btnCancel.btn {
@@ -25,6 +25,7 @@
 	margin-left:20px;
 	margin-right:20px;
 }
+
 </style>
 <body>
 <%@include file ="header.jsp" %>
@@ -37,14 +38,10 @@
 <form action="/outback/pwEdit" method="POST" id="editForm" name="editForm">
 <div class="container O_container">
 	<h1 style="text-align: center; font-weight:500; font-size:38px; margin-bottom:2rem;">비밀번호 변경</h1>
-	<div>
-			<input style='width:500px; margin-left:400px;'  class="form-control form-control-inline text-center" type=text id=userid name=userid value="${userid}" readonly>
-	</div>
-	<div>
-			<input style='width:500px; margin-left:400px;'  class="form-control form-control-inline text-center" type=password id=passcode name=passcode placeholder="비밀번호변경"> 
-	</div>
-	<div>
-			<input style='width:500px; margin-left:400px;'  class="form-control form-control-inline text-center" type=password id=passcode1 name=passcode1 placeholder="비밀번호변경확인">
+	<div class="editWrap">
+			<input class="form-control form-control-inline text-center" type=text id=userid name=userid value="${userid}" readonly>
+			<input class="form-control form-control-inline text-center" type=password id=passcode name=passcode placeholder="비밀번호변경"> 
+			<input class="form-control form-control-inline text-center" type=password id=passcode1 name=passcode1 placeholder="비밀번호변경확인">
 	</div>
 	<div>
 		<button class="btn" type=button id=btnCancel name=btnCancel>변경취소</button>
