@@ -22,72 +22,70 @@ import net.sf.json.JSONObject;
 
 @Controller
 public class MController {
-	
-	@Autowired
-	private SqlSession sqlSession;
-	//로그인
-	@RequestMapping("/login")	
-	public String login(HttpSession session,Model model,RedirectAttributes rttr) {
-		if(session.getAttribute("userid") != null) {
-			System.out.println("로그아웃 후 로그인이 가능합니다.");
-			rttr.addFlashAttribute("result","already_login");
-			return "redirect:/home";
-		} else {
-		return "login";
-		}
-	}
-	//회원가입
-	@RequestMapping("/signon")
-	public String signon() {
-		return "signon";
-	}
-	//로그아웃
-	@RequestMapping("/logout")
-	public String logout(HttpServletRequest hsr) {
-		HttpSession session = hsr.getSession();
-		iLogin member = sqlSession.getMapper(iLogin.class);
-		
-		String userid = (String)session.getAttribute("userid");
-		member.updateLogout(userid);
-		session.invalidate();
-		return "redirect:/home";
-	}
-	//로그인아이디 체크
-	@ResponseBody
-	@RequestMapping(value="/confirm_check",method=RequestMethod.POST,
-			produces="application/json;charset=utf-8")
-	public String confirm_check(HttpServletRequest hsr) {
-		iLogin login=sqlSession.getMapper(iLogin.class);
-		Member user = login.confirm_check(hsr.getParameter("userids"));
-		
-		if (user != null) {
-			return "fail";
-		} else {
-			return "ok";
-		}
-	}
-	//회원가입 체크
-	@ResponseBody
-	@RequestMapping(value="/sign_check",method=RequestMethod.POST)
-	public String sign_check(HttpServletRequest hsr,Model model) {
-		String retval="";
-		String userid=hsr.getParameter("userids");
-		String passcode=hsr.getParameter("passcode");
-		String name=hsr.getParameter("name");
-		String mobile=hsr.getParameter("mobile");
-		String gender=hsr.getParameter("gender");
-			
-		iLogin member=sqlSession.getMapper(iLogin.class);
-		ArrayList<Member> m=member.getLogin();
-		System.out.println("member count:"+m.size());
-		for(int i=0; i<m.size(); i++) {
-			System.out.println("등록된 ID:"+m.get(i).getUserid());
-			System.out.println("signon ID:"+userid);
-			if(m.get(i).getUserid().equals(userid)) {
-				retval="overlap";
-			} 
-		}
-
+   
+   @Autowired
+   private SqlSession sqlSession;
+   //로그인
+   @RequestMapping("/login")   
+   public String login(HttpSession session,Model model,RedirectAttributes rttr) {
+      if(session.getAttribute("userid") != null) {
+         System.out.println("로그아웃 후 로그인이 가능합니다.");
+         rttr.addFlashAttribute("result","already_login");
+         return "redirect:/home";
+      } else {
+      return "login";
+      }
+   }
+   //회원가입
+   @RequestMapping("/signon")
+   public String signon() {
+      return "signon";
+   }
+   //로그아웃
+   @RequestMapping("/logout")
+   public String logout(HttpServletRequest hsr) {
+      HttpSession session = hsr.getSession();
+      iLogin member = sqlSession.getMapper(iLogin.class);
+      
+      String userid = (String)session.getAttribute("userid");
+      member.updateLogout(userid);
+      session.invalidate();
+      return "redirect:/home";
+   }
+   //로그인아이디 체크
+   @ResponseBody
+   @RequestMapping(value="/confirm_check",method=RequestMethod.POST,
+         produces="application/json;charset=utf-8")
+   public String confirm_check(HttpServletRequest hsr) {
+      iLogin login=sqlSession.getMapper(iLogin.class);
+      Member user = login.confirm_check(hsr.getParameter("userids"));
+      
+      if (user != null) {
+         return "fail";
+      } else {
+         return "ok";
+      }
+   }
+   //회원가입 체크
+   @ResponseBody
+   @RequestMapping(value="/sign_check",method=RequestMethod.POST)
+   public String sign_check(HttpServletRequest hsr,Model model) {
+      String retval="";
+      String userid=hsr.getParameter("userids");
+      String passcode=hsr.getParameter("passcode");
+      String name=hsr.getParameter("name");
+      String mobile=hsr.getParameter("mobile");
+      String gender=hsr.getParameter("gender");
+      iLogin member=sqlSession.getMapper(iLogin.class);
+      ArrayList<Member> m=member.getLogin();
+      System.out.println("member count:"+m.size());
+      for(int i=0; i<m.size(); i++) {
+         System.out.println("등록된 ID:"+m.get(i).getUserid());
+         System.out.println("signon ID:"+userid);
+         if(m.get(i).getUserid().equals(userid)) {
+            retval="overlap";
+         } 
+      }
 		if(!retval.equals("overlap")) {
 			member.addLogin(userid,passcode,name,mobile,gender);
 			retval="ok";
@@ -193,14 +191,14 @@ public class MController {
 	   @RequestMapping(value="/pagecheck", method=RequestMethod.GET,produces="application/json;charset=UTF-8")
 	   public String pagecheck(HttpServletRequest hsr) {
 	      iLogin login=sqlSession.getMapper(iLogin.class);
-	     int lines=10;
+	      int lines=10;
 	      int pageno=Integer.parseInt(hsr.getParameter("pageno"));
 	      System.out.println("pageno:"+pageno);
 	      int start=lines*pageno+1;
 	      ArrayList<Member> m = login.getLogin1(start);
 	      System.out.println("페이지넘어갈때마다 보내는 데이터양:"+m.size());
-	     JSONArray ja=new JSONArray();
-	     for(int i=0; i<m.size(); i++) {
+	      JSONArray ja=new JSONArray();
+	      for(int i=0; i<m.size(); i++) {
 	        JSONObject jo=new JSONObject();
 	        jo.put("userid",m.get(i).getUserid());
 	        ja.add(jo);
@@ -231,7 +229,6 @@ public class MController {
 		ArrayList<MemberType> m = edit.digList();
 		
 		JSONArray ja = new JSONArray();
-
 		for(int i=0; i < m.size(); i++) {
 			JSONObject jo = new JSONObject();
 			jo.put("userid",m.get(i).getUserid());
@@ -266,11 +263,9 @@ public class MController {
 		System.out.println("["+hsr.getParameter("box")+"]");
 		String select=hsr.getParameter("box");
 		String[] user=select.split(",");
-		
 		String str="";
 		try {
 			iLogin mem=sqlSession.getMapper(iLogin.class);
-			
 			for(int i=0; i < user.length; i++) {
 				mem.delMember(user[i]);
 			}
@@ -306,14 +301,13 @@ public class MController {
 	@RequestMapping(value="/pwCheck",method = RequestMethod.POST)
 	public String pwCheck(HttpServletRequest hsr,Model model) {
 		HttpSession session = hsr.getSession();
-		
 		String retval="";
 		String userid=hsr.getParameter("userid");
 		String passcode=hsr.getParameter("passcode");
-		
+		System.out.println(userid);
+		System.out.println(passcode);
 		iLogin pw=sqlSession.getMapper(iLogin.class);
-		ArrayList<Member> a=pw.getLogin();
-		
+		ArrayList<Member> a=pw.getLogin2();
 		for(int i=0; i < a.size(); i++) {
 			if(a.get(i).getPasscode().equals(passcode) && a.get(i).getUserid().equals(userid)) {
 				session.setAttribute("userid", userid);
@@ -324,12 +318,13 @@ public class MController {
 				retval="fail";
 			}
 		}
+		System.out.println(retval);
 		if(retval.equals("ok")) {
+			
 			pw.pwCheck(userid,passcode);
 			session.invalidate();
 			return "ok";
 		} else {
-			model.addAttribute("fail_user",retval);
 			return "fail";
 		}
 	}
@@ -346,7 +341,6 @@ public class MController {
 			String userid=hsr.getParameter("userid");
 			String passcode=hsr.getParameter("passcode");
 			member.pwEdit(userid,passcode);
-			
 			retval="ok";
 		} catch(Exception e) {
 			retval="fail";

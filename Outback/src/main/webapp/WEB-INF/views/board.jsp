@@ -12,12 +12,12 @@
 <link rel="stylesheet" href="${path}/resources/css/style.css">
 <style>
 	*{margin:0; padding:0; outline:0;}
-	ul, li{list-style:none;}
+	ul, li{list-style:none;}  
 	.fixed::after{content:''; clear:both; display:block;}
 	.option .dropdown-toggle::after{margin-left:1.255rem;}
 	.dropdown-menu{max-height:200px; overflow-y:auto; overflow-x:hidden;}
 	.dropdown-item{cursor:pointer;}
-	.book-list{overflow:hidden;}
+	.book-list{overflow:hidden;} 
 	.book-list article{display:block; margin:0 auto; width:70%; height:100%;}
 	.booking_info_box > ul{display:table; width:100%; margin:0; padding:0; border-bottom:1px solid #ccc;}
 	.booking_info_box > ul:first-child{border-top:1px solid #ddd;}	
