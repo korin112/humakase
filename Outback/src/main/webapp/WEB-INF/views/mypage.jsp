@@ -84,7 +84,6 @@ $(document)
 				success: function(txt){
 					if(txt == "fail"){ //model.addAttribute("fail_user",retval);를 사용해서 다르면 fail
 						alert("비밀번호가 다릅니다.");
-						return false;
 					} else { //session.invalidate(); 로그인 정보가 맞으면 ok
 						alert("그동안 이용해 주셔서 감사합니다.");
 						document.location='/outback/home';
