@@ -65,7 +65,7 @@
             <svg class="bi me-2" width="24" height="24"><use xlink:href="#people-circle"></use></svg>
             <span class="adm_nav_tt">회원관리</span>
          </a>
-      </li>
+      </li> 
       <li>
          <a href="/outback/adm/adm_book" class="nav-link text-white">
             <svg class="bi me-2" width="24" height="24"><use xlink:href="#Calendar4-week"></use></svg>
