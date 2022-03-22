@@ -11,9 +11,14 @@
 	select user_type from member where userid = #{param1}
 </select>
 <select id="getLogin" resultType="com.human.outback.Member">
-	select userid, passcode, name, mobile, gender,user_type,login_time,logout_time
-	from member
-	order by userid
+   select userid, passcode, name, mobile, gender,user_type,login_time,logout_time
+   from member
+   order by userid limit 1,10
+</select>
+<select id="getLogin1" resultType="com.human.outback.Member">
+   select userid, passcode, name, mobile, gender,user_type,login_time,logout_time
+   from member
+   order by userid limit #{param1},10
 </select>
 
 <select id="confirm_check" resultType="com.human.outback.Member">
@@ -44,6 +49,7 @@
 	from member as a join memberType as b 
 	on a.user_type=b.type_code
 	order by a.userid
+	
 </select>
 <update id="updateMember">
 	update member set user_type=#{param2} where userid=#{param1}

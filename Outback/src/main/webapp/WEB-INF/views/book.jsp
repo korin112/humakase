@@ -64,129 +64,133 @@
 		<section class="order-list">
 			<div class="book_tap">
 				주문 목록 확인
-				<div class="taptt_arrow">
-					<div class="arrow arrow_hide">
-						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
-			  				<path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
-						</svg>
-					</div>
-					<div class="arrow arrow_show" style="display:none;">
-						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-up" viewBox="0 0 16 16">
-	  						<path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
-						</svg>
-					</div>
-				</div>
+<!-- 				<div class="taptt_arrow"> -->
+<!-- 					<div class="arrow arrow_hide"> -->
+<!-- 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"> -->
+<!-- 			  				<path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/> -->
+<!-- 						</svg> -->
+<!-- 					</div> -->
+<!-- 					<div class="arrow arrow_show" style="display:none;"> -->
+<!-- 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-up" viewBox="0 0 16 16"> -->
+<!-- 	  						<path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/> -->
+<!-- 						</svg> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
 			</div>
-			<table class="cart">
-				<thead><tr><th>상품명</th><th>판매가</th><th>수량</th><th>합계</th></tr></thead>
-				<tbody>
-					<c:set var="getCartlist" value="${getCartlist}" />
-					<c:set var="getMenu" value="${getMenu}" />
-					<c:choose>
-						<c:when test="${!empty getCartlist}">
-							<c:forEach items="${getCartlist}" var="getCartlist">
-								<tr data-ctCode="${getCartlist.cart_code}">
-									<td>${getCartlist.menu_name}</td>
-									<td data-ctPrice="${getCartlist.menu_price}"><fmt:formatNumber value="${getCartlist.menu_price}" type="number"/></td>
-									<td>${getCartlist.menu_cnt}</td>
-									<td><fmt:formatNumber value="${getCartlist.menu_total}" type="number"/></td>
+			<div class="book_ctt">
+				<table class="cart">
+					<thead><tr><th>상품명</th><th>판매가</th><th>수량</th><th>합계</th></tr></thead>
+					<tbody>
+						<c:set var="getCartlist" value="${getCartlist}" />
+						<c:set var="getMenu" value="${getMenu}" />
+						<c:choose>
+							<c:when test="${!empty getCartlist}">
+								<c:forEach items="${getCartlist}" var="getCartlist">
+									<tr data-ctCode="${getCartlist.cart_code}">
+										<td>${getCartlist.menu_name}</td>
+										<td data-ctPrice="${getCartlist.menu_price}"><fmt:formatNumber value="${getCartlist.menu_price}" type="number"/></td>
+										<td>${getCartlist.menu_cnt}</td>
+										<td><fmt:formatNumber value="${getCartlist.menu_total}" type="number"/></td>
+									</tr>
+								</c:forEach>
+							</c:when>
+							<c:otherwise>
+								<tr data-mcode="${getMenu.menu_code}">
+									<td>${getMenu.menu_name}</td>
+									<td data-ctPrice="${getMenu.menu_price}"><fmt:formatNumber value="${getMenu.menu_price}" type="number"/></td>
+									<td>1</td>
+									<td><fmt:formatNumber value="${getMenu.menu_price}" type="number"/></td>
 								</tr>
-							</c:forEach>
-						</c:when>
-						<c:otherwise>
-							<tr data-mcode="${getMenu.menu_code}">
-								<td>${getMenu.menu_name}</td>
-								<td data-ctPrice="${getMenu.menu_price}"><fmt:formatNumber value="${getMenu.menu_price}" type="number"/></td>
-								<td>1</td>
-								<td><fmt:formatNumber value="${getMenu.menu_price}" type="number"/></td>
-							</tr>
-						</c:otherwise>
-					</c:choose>
-				</tbody>
-			</table>
+							</c:otherwise>
+						</c:choose>
+					</tbody>
+				</table>
+			</div>
 		</section>
 		<section class="book-list fixed">
 			<form action="/outback/InsertBook" method="POST" class="insert_bookForm">
 				<div class="book_tap">
 					예약 정보 작성
-					<div class="taptt_arrow">
-						<div class="arrow arrow_hide">
-							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
-				  				<path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
-							</svg>
-						</div>
-						<div class="arrow arrow_show" style="display:none;">
-							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-up" viewBox="0 0 16 16">
-		  						<path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
-							</svg>
-						</div>
-					</div>
+<!-- 					<div class="taptt_arrow"> -->
+<!-- 						<div class="arrow arrow_hide"> -->
+<!-- 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"> -->
+<!-- 				  				<path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/> -->
+<!-- 							</svg> -->
+<!-- 						</div> -->
+<!-- 						<div class="arrow arrow_show" style="display:none;"> -->
+<!-- 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-up" viewBox="0 0 16 16"> -->
+<!-- 		  						<path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/> -->
+<!-- 							</svg> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
 				</div>
-				<article class="booking_info_box">
-					<ul class="fixed">
-						<li>예약지점</li>
-						<li id="spotlist" class="dropdown option">
-							<a href="#" class="dropdown-toggle link-dark" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-								지점을 선택하세요
-							</a>
-							<ul class="dropdown-menu">
-							<c:forEach items="${spot}" var="spot">
-								<li class="dropdown-item" data-value="${spot.spot_code}">${spot.spot_name}</li>
-							</c:forEach>
-							</ul>
-						</li>
-					</ul>
-					<ul class="fixed">
-						<li>방문일</li>
-						<li><input type="date" name="vdate" id="vdate"></li>
-					</ul>
-					<ul class="fixed">
-						<li>예약시간</li>
-						<li id="vtimelist" class="dropdown option" >
-							<a href="#" class="dropdown-toggle link-dark" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-								방문하실 시간을 선택해주세요.
-							</a>
-							<ul class="dropdown-menu">
-	<%-- 						<c:forEach items="${vtime}" var="vtime"> --%>
-	<%-- 							<li class="dropdown-item" data-value="${vtime.time_code}">${vtime.time_name}</li> --%>
-	<%-- 						</c:forEach> --%>
-							</ul>
-						</li>
-					</ul>
-					<ul class="fixed">
-						<li>방문인원</li>
-						<li id="howmany" class="dropdown option">
-							<a href="#" class="dropdown-toggle link-dark" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-								방문인원을 선택해주세요.
-							</a>
-							<ul class="dropdown-menu">
-							</ul>
-						</li>
-					</ul>
-					<ul>
-						<li>예약자명</li>
-						<li><input type="text" class="get_booker" name="booker" value="${userSession.name}" readonly></li>
-					</ul>
-					<ul>
-						<li>연락처</li>
-						<li><input type="text" class="get_mobile" name="mobile" value="${userSession.mobile}" readonly></li>
-					</ul>
-					<ul>
-						<li>요청사항</li>
-						<li><textarea name="msg" maxlength="255" spellcheck="false" placeholder="최대 255자까지 작성 가능합니다."></textarea></li>
-					</ul>
-				</article>
-				<article class="total_payment_box">
-					<ul>
-						<li><h6>총 주문 수량</h6></li>
-						<li><span class="tpb_big cnt_num"></span></li>
-					</ul>
-					<ul>
-						<li><h6>총 주문 금액</h6></li>
-						<li><span class="tpb_big cnt_total"></span>원</li>
-					</ul>
-					<div class="tpb_btn"><button type="button" class="submitBook">예약하기</button></div>
-				</article>
+				<div class="book_ctt">
+					<article class="booking_info_box">
+						<ul class="fixed">
+							<li>예약지점</li>
+							<li id="spotlist" class="dropdown option">
+								<a href="#" class="dropdown-toggle link-dark" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+									지점을 선택하세요
+								</a>
+								<ul class="dropdown-menu">
+								<c:forEach items="${spot}" var="spot">
+									<li class="dropdown-item" data-value="${spot.spot_code}">${spot.spot_name}</li>
+								</c:forEach>
+								</ul>
+							</li>
+						</ul>
+						<ul class="fixed">
+							<li>방문일</li>
+							<li><input type="date" name="vdate" id="vdate"></li>
+						</ul>
+						<ul class="fixed">
+							<li>예약시간</li>
+							<li id="vtimelist" class="dropdown option" >
+								<a href="#" class="dropdown-toggle link-dark" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+									방문하실 시간을 선택해주세요.
+								</a>
+								<ul class="dropdown-menu">
+		<%-- 						<c:forEach items="${vtime}" var="vtime"> --%>
+		<%-- 							<li class="dropdown-item" data-value="${vtime.time_code}">${vtime.time_name}</li> --%>
+		<%-- 						</c:forEach> --%>
+								</ul>
+							</li>
+						</ul>
+						<ul class="fixed">
+							<li>방문인원</li>
+							<li id="howmany" class="dropdown option">
+								<a href="#" class="dropdown-toggle link-dark" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+									방문인원을 선택해주세요.
+								</a>
+								<ul class="dropdown-menu">
+								</ul>
+							</li>
+						</ul>
+						<ul>
+							<li>예약자명</li>
+							<li><input type="text" class="get_booker" name="booker" value="${userSession.name}" readonly></li>
+						</ul>
+						<ul>
+							<li>연락처</li>
+							<li><input type="text" class="get_mobile" name="mobile" value="${userSession.mobile}" readonly></li>
+						</ul>
+						<ul>
+							<li>요청사항</li>
+							<li><textarea name="msg" maxlength="255" spellcheck="false" placeholder="최대 255자까지 작성 가능합니다."></textarea></li>
+						</ul>
+					</article>
+					<article class="total_payment_box">
+						<ul>
+							<li><h6>총 주문 수량</h6></li>
+							<li><span class="tpb_big cnt_num"></span></li>
+						</ul>
+						<ul>
+							<li><h6>총 주문 금액</h6></li>
+							<li><span class="tpb_big cnt_total"></span>원</li>
+						</ul>
+						<div class="tpb_btn"><button type="button" class="submitBook">예약하기</button></div>
+					</article>
+				</div>
 				<div class="displaynone"></div>
 			</form>
 		</section>
@@ -234,6 +238,12 @@
 			$('.cnt_total').text(cnt_total.toLocaleString());
 			$('.cnt_num').text(cnt_num);
 		})
+		// Toggle Tap 하다 접음
+// 		.on('click', '.taptt_arrow', function(){
+// 			let tap = $(this).closest('.book_tap').next('.book_ctt');
+// 			tap.slideToggle();
+// 			$(this).find('.bi-chevron-down').css('transform','translate(-50%, -50%) rotate(180deg)');
+// 		})
 		.on('click', '.option > ul > li', function(){
 			$(this).parent('ul').prev().html($(this).html());
 // 			console.log($(this).parent('ul').prev().text());
