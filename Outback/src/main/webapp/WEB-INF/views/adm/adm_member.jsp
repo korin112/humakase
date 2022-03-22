@@ -83,7 +83,7 @@ $(document)
 .ready(function(){
    member();
 })
-
+//페이지 뒤로 넘길 때
 .on('click','#back',function(){
    pageno=pageno-1;
    if(pageno==-1){
@@ -110,7 +110,7 @@ $(document)
             })
          }
 })
-
+//페이지 넘길 때
 .on('click','#next',function(){
    pageno=pageno+1;
    console.log(pageno);
@@ -198,73 +198,63 @@ $(document)
    $('#_type_name').val($.trim(ar[1]));
    return false;
 })
-.on('click','#btnCancel',function(){
-   document.location='/outback/home';
-   return false;
-})
 //dialog 수정
 .on('click','#btnDone',function(){
-   if($('#_userid').val() == ''){
-      alert("아이디를 입력하세요.");
-      return false;
-   }
-   if($('#_type_code').val() == ''){
+   if($('#_type_code').val() == ''){ //타입코드 유효성
       alert("번호를 입력하세요.");
       return false;
    }
-   if($('#_type_name').val() == ''){
+   if($('#_type_name').val() == ''){ //타입명 유효성
       alert("등급을 입력하세요.");
       return false;
    }
    
    let oParam={userid:$('#_userid').val(),user_type:$('#_type_code').val()};
-   $.ajax({url:"/outback/updateMember",
-         data:oParam,
+   $.ajax({url:"/outback/updateMember", //MController의 updateMember
+         data:oParam, //위에 oParam 선언한 변수를 가져온다.
          method:'POST',
          dataType:'text',
          success:function(txt){
-            if(txt == "ok"){
+            if(txt == "ok"){ // try "ok"일 시 tblMember를 empty를 넣어주고, 새로고침.
                $('#tblMember').empty();
                member();
                alert("수정완료");
+               document.location='/outback/adm/adm_member';
             } else {
                alert("수정실패");
+               return false;
             }
          }
    })
    $('#dlgEdit').dialog('close');
 })
 //선택삭제
-.on('click','#btnDel',function(){
-   if($('input[name=box]:checked').length == 0) {
+.on('click','#btnDelete',function(){
+   if($('input[name=box]:checked').length == 0) { //체크없이 삭제버튼 눌렀을 시 뜨는 오류창
       alert('체크 후 삭제버튼을 누르십시오.');
       return false;
    }
    let select='';
-   $('input[name=box]:checked').each(function(){
+   $('input[name=box]:checked').each(function(){ //여러개 체크 후 가능여부
       select+=$(this).val()+',';
    });
    if(!confirm('삭제 하시겠습니까?')) return false;
-   $.ajax({url:'/outback/delMember',
+   $.ajax({url:'/outback/delMember', //MController에 delMember
          data:{box:select},
          method:'POST',
          dataType:'text',
          success:function(txt){
             console.log(txt);
-            if(txt == "ok") {
+            if(txt == "ok") { //try "OK"일 시 OK
                alert("삭제 완료");
                document.location='/outback/adm/member_adm';
-            } else {
+            } else { //catch "fail"일 시 fail
                alert("삭제 실패");
             }
          }
       });
 })
-.on('click','#btnCancel',function(){
-   document.location='/outback/home';
-   return false;
-})
-
+//로그인 정보를 함수로 만들어서 .ready()에 호출
 function member(){
    $.ajax({url:"/outback/memberList",
          method:"GET",
@@ -272,7 +262,7 @@ function member(){
          dataType:"json",
          success:function(txt){
             for(i=0; i < txt.length; i++){
-               let box='<tr><td><input type=checkbox name=box value="'+txt[i]['userid']+'"></td>'
+               let box='<tr><td><input type=checkbox name=box value="'+txt[i]['userid']+'"></td>'; //check할 시 userid의 값을 불러온다.
                let str='<td>'+txt[i]['userid']+'</td><td>'+txt[i]['passcode']+'</td><td>'+txt[i]['name']+
                '</td><td>'+txt[i]['mobile']+'</td><td>'+txt[i]['gender']+'</td><td>'+txt[i]['user_type']+
                '</td><td>'+txt[i]['login_time']+'</td><td>'+txt[i]['logout_time']+'</td>';
