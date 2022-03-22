@@ -8,7 +8,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>  - 마이 페이지 -  </title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>  - 회원 탈퇴 -  </title>
 </head>
 <link rel="stylesheet" href="${path}/resources/css/style.css">
 <style>
@@ -33,17 +34,13 @@
 </div>
 <form action="/outback/pwCheck" method="POST" id="deleteForm" name="deleteForm">
     <div class="container O_container">
-        <div class="panel panel-default panel-margin-10">
+        <div class="panel panel-default panel-margin-10 editWrap">
             <div class="panel-body panel-body-content text-center">
                 <h1 style="text-align: center; font-weight: 500; font-size: 38px; margin-bottom:2rem;">회원 탈퇴</h1>
 				<div class="form-group">
-					<input style='width:500px; margin-left:400px;' type="text" id="userid" name="userid" value="${userid}"  class="form-control form-control-inline text-center" readonly/>
-				</div>
-                <div class="form-group">
-                    <input style='width:500px; margin-left:400px;'  type="password" id = "passcode" name="passcode" class="form-control form-control-inline text-center" placeholder="비밀번호" />
-                </div>
-                <div class="form-group">
-                    <input style='width:500px; margin-left:400px;'  type="password" id="passcode1" name="passcode1"  class="form-control form-control-inline text-center" placeholder="비밀번호 확인" />
+					<input type="text" id="userid" name="userid" value="${userid}"  class="form-control form-control-inline text-center" readonly/>
+                    <input type="password" id = "passcode" name="passcode" class="form-control form-control-inline text-center" placeholder="비밀번호" />
+                    <input type="password" id="passcode1" name="passcode1"  class="form-control form-control-inline text-center" placeholder="비밀번호 확인" />
                 </div>
                 <p class="withdrwal_comment">※ 탈퇴 후 같은 아이디로 재가입이 불가능합니다.</p>
                 <button type="button" id="btnDel" name="btnDel" class=btn>회원탈퇴</button>
@@ -63,6 +60,7 @@
 <script type="text/javascript">
 let flag="";
 $(document)
+//비밀번호 유효성검사
 .on('click','#btnDel',function(){
 		if($("#passcode").val()==""){
 			alert("비밀번호를 입력해주세요");
@@ -74,17 +72,16 @@ $(document)
 			return false;
 		}
 		
-		if($('#passcode').val() == $('#passcode1').val()){
+		if($('#passcode').val() == $('#passcode1').val()){ //로그인한 정보의 비밀번호가 맞는지 체크(ajax call)
 			$.ajax({
 				url : "/outback/pwCheck",
 				type : "POST",
 				dataType : "text",
 				data : {userid:$('#userid').val(),passcode:$('#passcode').val()},
 				success: function(txt){
-					if(txt == "fail"){
+					if(txt == "fail"){ //model.addAttribute("fail_user",retval);를 사용해서 다르면 fail
 						alert("비밀번호가 다릅니다.");
-						return false;
-					} else {
+					} else { //session.invalidate(); 로그인 정보가 맞으면 ok
 						alert("그동안 이용해 주셔서 감사합니다.");
 						document.location='/outback/home';
 						flag="true";

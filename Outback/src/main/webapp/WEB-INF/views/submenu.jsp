@@ -7,6 +7,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${mtypename}</title>
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <link rel="stylesheet" href="${path}/resources/css/style.css">
@@ -64,7 +65,7 @@
 	<%@include file="footer.jsp"%>
 	<script>
 		$(document)
-		.ready(function(){
+		.ready(function(){ // db데이터 내에 있는 메뉴 정 
 			$('.menu_box').mouseover(function(){
 				$('.menu_info',this).css('top','0');
 			});
@@ -72,12 +73,12 @@
 				$('.menu_info',this).css('top','100%');
 			});
 		})
-		.on('click', '.addCart', function(){
+		.on('click', '.addCart', function(){ // 장바구니에 담기 클릭시 실행
 			let userid = "${userid}";
-			if(userid == ""){
+			if(userid == ""){ // 로그인이 안되어있을 경우
 				alert("로그인 후 이용 가능합니다.");
 			} else {
-				$.ajax({
+				$.ajax({ // 로그인이 되있을 경우 장바구니에 추가
 					url:'/outback/insertCart',
 					data:{
 						menu_code:$(this).closest('.menu_box').attr('data-value'),
@@ -90,7 +91,7 @@
 						if(txt=="addCart") {
 							alert('장바구니에 추가 되었습니다.');
 						} else if(txt=="updateCart"){
-							alert('이미 추가 되었습니다. + 1')
+							alert('이미 추가된 메뉴입니다.\n수량을 추가하였습니다.')
 						} else {
 							alert('다시 시도해주세요.');
 						}
@@ -101,11 +102,11 @@
 				});
 			}
 		})
-		.on('click', '.goBook', function(){
+		.on('click', '.goBook', function(){ // 예약하기 클릭
 			let userid = "${userid}";
-			if(userid == ""){
+			if(userid == ""){ // 예약하기를 비로그인 상태로 클릭시
 				alert("로그인 후 이용 가능합니다.");
-			} else{
+			} else{ // 예약하기를 로그인 상태로 클릭시
 				let menu_code = $(this).closest('.menu_box').attr('data-value');
 				let input_menu_code = '<input name="menu_code" type="hidden" value="' + menu_code + '">';
 				let bookForm = '<form action="/outback/book" method="POST" class="bookForm">' + input_menu_code + '</form>';

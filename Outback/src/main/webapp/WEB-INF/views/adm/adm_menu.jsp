@@ -7,6 +7,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
@@ -73,7 +74,7 @@
 			</div>
 			<div style="float: right; margin-bottom: 15px;">
 				<input type="submit" class="btn btn-secondary" value="Add">
-				<button type="button" class="btn btn-secondary" id=btnDelete>Delete</button>
+				<button type="button" class="btn btn-secondary" id=btnDel>Delete</button>
 				<button type="reset" class="btn btn-secondary">Reset</button>
 			</div>
 			<div class="selectfont">
@@ -108,7 +109,7 @@ $(document).ready(
                return false;
             }
             return true;
-         }).on('click', '#btnDelete', function() {
+         }).on('click', '#btnDel', function() {
       let url = "/outback/adm/deleteMenu?menu_code=" + $('#menu_code').val();
       console.log(url);
       document.location = url;

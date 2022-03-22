@@ -96,7 +96,7 @@ footer .sitemap ul li:nth-child(4) a::after{content:''; width:0;}
 /* admin 공통 영역 */
 .adm_container_wrap{width:100%;overflow-y:auto;}
 .adm_main{height:100vh !important;}
-.adm_container{padding:72px 0;}
+.adm_container{padding:72px 0; min-width:1200px;}
 
 /* admin_header 영역 */
 .adm_logo{font-family: 'Gelasio','Noto Sans KR', sans-serif; font-size:1.75rem !important; margin-left:auto;}
@@ -142,9 +142,11 @@ footer .sitemap ul li:nth-child(4) a::after{content:''; width:0;}
 	font-size:0.875rem; padding:1rem 0.5rem; border-left:1px solid #eee; transition:0.3s;
 }
 .adm_book_table tbody td:first-child, .bd_table tbody td:first-child, .adm_member_table tbody td:first-child, 
-.mybook_table tbody td:first-child{
+.mybook_table tbody td:first-child, #ctbody td:first-child{
 	border-left:0;
 }
+#ctbody td{font-size:1rem;}
+#ctbody{border-bottom:2px solid #ccc}
 .adm_book_table tbody td:nth-child(11) p, .mybook_table tbody td:last-child p{overflow:hidden;
 	text-overflow: ellipsis; display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical;
 	margin-bottom:0; text-align:left;
@@ -197,6 +199,8 @@ footer .sitemap ul li:nth-child(4) a::after{content:''; width:0;}
 .mybook_table thead th:nth-child(7){width:10%;}
 .mybook_table thead th:nth-child(8){width:30%;}
 .mybook_table tbody td{font-size:1rem;}
+/* passEdit.jsp */
+.editWrap{width:500px; margin:0 auto;}
 @media (max-width: 950px){
 	.new_menu_slide{
 		padding:1rem 0 3rem;
@@ -207,4 +211,18 @@ footer .sitemap ul li:nth-child(4) a::after{content:''; width:0;}
 	.f_logo{width:100%; padding:2rem 0;}
 	.f_info{width:100%; padding:0 0 2rem;}
 	
+}
+@media (max-width: 768px){
+	.menu_box{width:100%;}
+	.mybook_table thead th:nth-child(8){display:none;}
+	.mybook_table tbody td:nth-child(8){display:none;}
+	.editWrap{width:300px;}
+}
+@media (max-width: 375px){
+	.covid_table thead th:first-child, .board_table thead th:first-child, .mybook_table thead th:first-child{display:none;}
+	.covid_table tbody td:first-child, .board_table tbody td:first-child, .mybook_table tbody td:first-child{display:none;}
+	.board_table thead th:last-child, .board_table tbody td:last-child{display:none;}
+	.menu-notice{padding:2.5rem 2rem;}
+	.txt li{margin-bottom:1rem;}
+	.editWrap{width:300px;}
 }

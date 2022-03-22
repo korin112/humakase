@@ -8,7 +8,8 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>Covid</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>- Covid -</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <link rel="stylesheet" href="${path}/resources/css/style.css">
 <style>
@@ -39,6 +40,7 @@
             </tr>
          </thead>
          <tbody id=ctbody>
+         	<tr><td colspan="6">원하는 날짜를 클릭 후 검색해주세요.</td></tr>
          </tbody>
       </table>
 </div>

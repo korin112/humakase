@@ -8,7 +8,8 @@
 <head>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <link rel="stylesheet" href="${path}/resources/css/style.css">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>메뉴 관리</title>
 </head>
 <body>
@@ -121,7 +122,7 @@ $(document).ready(
 //          }
 //       })
 })
-.on('submit','#frmMenu',function() {
+.on('submit','#frmMenu',function() { // 클릭시 메뉴 추가 및 업데이트
             if ($('input[name=menu_name]').val() == ''
                   || $('input[name=menu_type]').val() == ''
                   || $('input[name=img]').val() == ''
@@ -131,13 +132,13 @@ $(document).ready(
                return false;
             }
             return true;
-         }).on('click', '#btnDelete', function() {
+         }).on('click', '#btnDelete', function() { // 메뉴 삭제
       let url = "/outback/deleteMenu?menu_code=" + $('#menu_code').val();
       console.log(url);
       document.location = url;
       return false;
    })
-   .on('click', '#getMenu option', function() {
+   .on('click', '#getMenu option', function() { // 메뉴 클릭시 옵션 출
       $('#menu_code').val($(this).val());
       let str = $(this).text();
       let ar = str.split(',');
@@ -147,7 +148,7 @@ $(document).ready(
       $('input[name=menu_name]').val($.trim(ar[1]));
       $('input[name=menu_price]').val($.trim(ar[2]));
       
-      $.ajax({
+      $.ajax({ // 메뉴 이미지 및 설명 출력
          url : '/outback/menulist',
          data : {img:$('#menu_code').val()},
          datatype : 'json',
