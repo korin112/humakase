@@ -34,7 +34,7 @@
    <tfoot>
       <tr>
          <td>
-            <button type="button" id="btnDelete" class="btn btn-outline-secondary">
+            <button type="button" id="btnDel" class="btn btn-outline-secondary">
                <svg class="bi" width="17" height="17" fill="currentColor"><use xlink:href="#bi-trash"></use></svg>
             </button>
          </td>
@@ -229,7 +229,7 @@ $(document)
    $('#dlgEdit').dialog('close');
 })
 //선택삭제
-.on('click','#btnDelete',function(){
+.on('click','#btnDel',function(){
    if($('input[name=box]:checked').length == 0) { //체크없이 삭제버튼 눌렀을 시 뜨는 오류창
       alert('체크 후 삭제버튼을 누르십시오.');
       return false;
