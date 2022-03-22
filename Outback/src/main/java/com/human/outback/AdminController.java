@@ -136,7 +136,7 @@ public class AdminController {
 			return "redirect:/home";
 		}
 	}
-	
+	// 메뉴 관리 페이지
 	@RequestMapping(value ="/adm/adm_menu", method = RequestMethod.GET  ,produces = "apllication/json;charset=utf-8")
 	public String doAddMenu(HttpServletRequest hsr) {
 		String strMenu_code=hsr.getParameter("menu_code");
@@ -159,6 +159,7 @@ public class AdminController {
 		}
 		return "redirect:/adm/menuadd";
 	}
+	// 메뉴 리스트
 	@ResponseBody
 	   @RequestMapping(value="/adm/menulist", method = RequestMethod.POST  ,produces = "apllication/json;charset=utf-8")
 	      public String getMenuList(HttpServletRequest hsr) {
@@ -175,7 +176,7 @@ public class AdminController {
 	         }
 	         return ja.toString();
 	      }
-	
+	// 메뉴 타입추가
 	@RequestMapping("/adm/typeadd") 
 	public String doTypeAdd(HttpServletRequest hsr) {
 		HttpSession session = hsr.getSession();
@@ -186,6 +187,7 @@ public class AdminController {
 			return "redirect:/home";
 		}
 	}
+	// 메뉴 타입 리스트
 	@ResponseBody
 	@RequestMapping(value="/adm/typelist",method = RequestMethod.POST  ,produces = "apllication/json;charset=utf-8")
 	public String getTypeList() {
@@ -201,7 +203,7 @@ public class AdminController {
 	         }
 	         return ja.toString();
 	      }
-	   
+	   // 메뉴 타입 추가
 	   @RequestMapping("/adm/adm_menutype") 
 	   public String doAddType(HttpServletRequest hsr) {
 	      String strMtype_code=hsr.getParameter("mtype_code");
@@ -217,7 +219,7 @@ public class AdminController {
 	      }
 	      return "redirect:/adm/typeadd";
 	   }
-	   
+	   // 메뉴삭제
 	   @RequestMapping("/adm/deleteMenu")
 	   public String doDeleteMenu(HttpServletRequest hsr) {
 	      int menu_code=Integer.parseInt(hsr.getParameter("menu_code"));
@@ -226,7 +228,7 @@ public class AdminController {
 	      menu.deleteMenu(menu_code);
 	      return "redirect:/adm/menuadd";
 	   }
-	   
+	   // 메뉴타입 삭제
 	   @RequestMapping("/adm/deleteType")
 	   public String doDeleteType(HttpServletRequest hsr) {
 	      int mtype_code=Integer.parseInt(hsr.getParameter("mtype_code"));
