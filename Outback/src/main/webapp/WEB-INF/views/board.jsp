@@ -335,7 +335,11 @@
  						// console.log(${m.user_type});
 						$('#comment_div').append(writer+content);
 						if(${m.userid==b.writer}) {  // 리뷰 작성자와 로그인한 아이디가 같은 경우
-							$('#comment_div').append(div1+re_date+btnD+btnU+div2);
+							if('${m.userid}'==txt[i]['writer']) {
+								$('#comment_div').append(div1+re_date+btnD+btnU+div2);
+							} else {
+								$('#comment_div').append(div1+re_date+div2);
+							}
 						} else if(${m.user_type==1}) {  // 관리자인 경우
 							$('#comment_div').append(div1+re_date+btnD+div2);
 						} else {
