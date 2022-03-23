@@ -5,12 +5,12 @@
 <mapper namespace="com.human.outback.iMypage">
 <select id="getCntLaterMyBook" resultType="int">
 	<![CDATA[
-	select count(*) as listCnt from booking where booker = #{param1} and vdate > now()
+	select count(*) as listCnt from booking where booker = #{param1} and vdate >= now()
 	]]>
 </select>
 <select id="getCntPrevMyBook" resultType="int">
 	<![CDATA[
-	select count(*) as listCnt from booking where booker = #{param1} and vdate <= now()
+	select count(*) as listCnt from booking where booker = #{param1} and vdate < now()
 	]]>
 </select>
 <select id="getMylaterbook" resultType="com.human.outback.DTO.Book">
